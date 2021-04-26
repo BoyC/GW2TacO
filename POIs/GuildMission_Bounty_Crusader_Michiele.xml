@@ -1,0 +1,386 @@
+<OverlayData>
+  <MarkerCategory name="Tactical.GuildMission.Bounty">
+    <MarkerCategory name="crusadermichiele" DisplayName="Crusader Michiele"/>
+  </MarkerCategory>
+  <POIs>
+    <Route Name="Crusader Michiele" BackwardDirection="1">
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="-126.058" ypos="15.6917" zpos="387.05" GUID="uYYNWROSFEWEq8c8yi3VEA=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="-119.925" ypos="18.45" zpos="406.499" GUID="tako6Ywdi0WvgEMOP1uL8A=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="-114.75" ypos="26.8863" zpos="433.061" GUID="QDiQzbznIUusZj3i06ovtw=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="-112.202" ypos="28.56" zpos="449.932" GUID="Yuvl4gKQoU+34yXv+ZfwmA=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="-110.038" ypos="28.0388" zpos="473.296" GUID="JdWdv6JMn0CesWhj3HuPfQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="-107.463" ypos="27.6899" zpos="494.57" GUID="weQkJPBqIkmzrCn3NsrIfA=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="-103.068" ypos="28.5641" zpos="517.57" GUID="1GsxZuCzm0Cjf+zlN22ydw=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="-100.188" ypos="27.9324" zpos="534.264" GUID="pj+/j7CuEUGoAJDe7j5nvQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="-92.2838" ypos="23.0464" zpos="555.129" GUID="kcBe3tYm3028OLeWwL0qTA=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="-81.8347" ypos="19.6836" zpos="570.318" GUID="YcwHM0NIt0GwjkiewUMoRw=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="-68.6492" ypos="13.8302" zpos="585.184" GUID="I/AcnB/9ZUyFFB4VHn9suw=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="-50.1848" ypos="8.67015" zpos="593.177" GUID="2tZ0Qn74HkmbGC/c1q6HaA=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="-20.6842" ypos="7.62607" zpos="600.218" GUID="Anqvu7eEK0Gdf+iv7PpGuw=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="0.443906" ypos="8.69704" zpos="601.71" GUID="VQ/hU/+X2UeJYTb/M9E1MQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="19.7314" ypos="8.74119" zpos="611.758" GUID="CKkzGt1dv0OPL5MySIIo5A=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="36.3233" ypos="5.84092" zpos="618.09" GUID="OCBD6vocTEGz1OCHVp2Xsg=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="63.0199" ypos="0.968278" zpos="625.612" GUID="wGNG82JNvE6BbDTNAO4eug=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="86.5346" ypos="-0.37475" zpos="634.825" GUID="sYJrYbpjQkeNiyFkzg2iTg=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="108.854" ypos="0.512267" zpos="623.866" GUID="Ec1FrWqelkmvwBK23sVQjQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="120.137" ypos="0.439044" zpos="608.838" GUID="CladkWXx+0mwizejEDTe3Q=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="137.282" ypos="2.82764" zpos="613.417" GUID="kMI2/1/aoEeUdm5HFalVVQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="157.763" ypos="4.35016" zpos="612.029" GUID="CVrilmEWmU+4vUsX8IQBUw=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="180.969" ypos="0.325537" zpos="614.951" GUID="kOW9axi7OkSEnw2uyW+oUQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="198.326" ypos="0.677368" zpos="617.544" GUID="BGnc3bsGokiwz49iVlZ93A=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="223.19" ypos="0.197148" zpos="608.133" GUID="8U6agH/yfkeK4RyACIsq1g=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="235.195" ypos="-0.419895" zpos="621.612" GUID="I6S4ZK7dUUO43wLJaZFkOQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="240.59" ypos="0.259557" zpos="642.77" GUID="wCqAsZ3zlk6BZ9x6S+JHcQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="239.241" ypos="2.66165" zpos="662.902" GUID="m3kaMjbfqkiQcxl+n+mQBQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="241.056" ypos="3.36104" zpos="683.11" GUID="dE+RwK2c7k+WZ/jO6GmFew=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="233.549" ypos="5.79875" zpos="710.496" GUID="YCfdyx4cakGVZ2B7PIQ2Bg=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="229.528" ypos="8.0412" zpos="728.378" GUID="D/3fhMJYFUyXPqLbfnTNgA=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="234.174" ypos="15.5874" zpos="747.184" GUID="H9j6AreGnU67Hb0ReYGVYg=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="248.449" ypos="32.2989" zpos="776.595" GUID="Zat0kw8Vi0GqQS3f+ePCNg=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="272.684" ypos="31.7129" zpos="770.848" GUID="QVtHviODdk6286ZByLKQnw=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="288.718" ypos="29.5223" zpos="772.316" GUID="Q4nPS6d5JUuS8+3BN3KXyA=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="312.264" ypos="26.0747" zpos="776.567" GUID="kasj0u+iVUGVgprPIY/SlQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="328.383" ypos="25.9781" zpos="794.316" GUID="CO212xcRz0+UlAqZ/Nj1+A=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="343.771" ypos="19.9191" zpos="801.725" GUID="rg6k0zJM00a2qL5ArwDxcA=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="359.098" ypos="16.9828" zpos="805.012" GUID="Ei1rg6IUtUq1+rV0dg/Rqw=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="386.925" ypos="14.4592" zpos="802.143" GUID="5UElxyouIEuWYPXksLvSkQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="437.579" ypos="14.9045" zpos="795.721" GUID="M6yz5uCDj0S6ms8EJihs9g=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="460.717" ypos="12.5843" zpos="782.17" GUID="I9ewETLTf0apt/b+RmwGfg=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="476.817" ypos="10.1416" zpos="768.346" GUID="bAbNcrH8Qkygisoq2UMHGw=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="493.426" ypos="2.06832" zpos="737.947" GUID="WYTXLDjxik6b96BUKjOvpQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="500.192" ypos="1.26782" zpos="704.582" GUID="ejc1VsETJ0CDDq/c82ChGQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="513.317" ypos="0.263426" zpos="669.236" GUID="UR5uZz/Tx0qt/kZeP+c7Jg=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="520.326" ypos="1.37676" zpos="660.706" GUID="S0qlD5YAUUKExBxrpTW4TA=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="541.849" ypos="4.50682" zpos="646.072" GUID="PeTptkT0jECCSzNlEiypyg=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="556.003" ypos="7.22344" zpos="655.53" GUID="GCZVl+hzHUet6S4dwlD7hA=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="568.655" ypos="8.97356" zpos="648.605" GUID="9J5Bvrzp/keGh/Cxt1uTxQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="570.396" ypos="9.16138" zpos="628.763" GUID="rxrtZmfBcki0rh23QG/kOA=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="583.75" ypos="9.13578" zpos="608.411" GUID="3J0jRTu1w0iLzeG7HeB6TQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="591.251" ypos="18.1016" zpos="589.752" GUID="YM8UWllkuECKQHBsryyeBA=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="592.436" ypos="26.0149" zpos="575.067" GUID="p6L6Uusc0ku+SdPSK625Rg=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="584.862" ypos="33.9386" zpos="552.346" GUID="ai5DdFBPgUyNgfcBtwq2Lw=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="576.159" ypos="42.9764" zpos="527.064" GUID="hx8eqV8iG0eBBVHoQLWQsA=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="569.753" ypos="48.5398" zpos="493.422" GUID="M3NBz7h6nUeMP5wwym6tdg=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="569.357" ypos="56.8619" zpos="460.897" GUID="TQLEAOh3B0GaquE7BRGTfQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="578.63" ypos="65.5736" zpos="439.617" GUID="TCMthzoCJ0ua0UfoIbJl3Q=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="598.915" ypos="70.2789" zpos="418.067" GUID="7nult4sAAUaSyGSZeQFZMg=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="616.446" ypos="75.9315" zpos="398.174" GUID="Q9PRcEgAAEOoBk8KeD5Jrg=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="627.12" ypos="79.9959" zpos="369.89" GUID="Adyo+gkB5UWAGX5w+ydWwQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="632.802" ypos="82.2153" zpos="343.147" GUID="mLNfSbyYMEufUOScg6D09g=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="637.012" ypos="80.1781" zpos="324.135" GUID="vFdFBYtuO0GVJ3xJ5GRC7w=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="644.185" ypos="80.4869" zpos="301.98" GUID="gRrL3woZeEaJOuGeaZTTFA=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="652.469" ypos="80.443" zpos="271.327" GUID="qWlsWPuqSkWHrbGonuiZAA=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="646.751" ypos="82.2927" zpos="239.516" GUID="WTJy1Nsx9E+C2BMTxwwVNA=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="637.685" ypos="84.4728" zpos="218.074" GUID="I6AiXmpamUu+LIp/oQ5vJg=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="629.146" ypos="84.7981" zpos="203.467" GUID="rs2laKiuu0igoxLwQucgRg=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="618.717" ypos="83.7925" zpos="182.848" GUID="Mi6H9kPLr0KQvHxbjqkELA=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="614.728" ypos="84.2314" zpos="161.796" GUID="s+tLWtPzcU65Dn1+G4dJtg=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="607.423" ypos="81.5463" zpos="127.53" GUID="x/sMp/oOh0mn+TJgr6yFXw=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="605.523" ypos="79.9799" zpos="101.747" GUID="D0mEbYEjz0ecXR3JY16jkA=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="611.023" ypos="72.1363" zpos="66.5125" GUID="RWlNmBVEBEW1zVAyzKLzCQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="607.557" ypos="62.9837" zpos="47.9505" GUID="qTpBnb1p6U2SlwAnsXeBGg=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="589.02" ypos="44.9705" zpos="23.2014" GUID="prck3WF6okGuBLgRaZM5YA=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="573.538" ypos="37.292" zpos="3.0875" GUID="/hEjNAJSpUeverq/qJr1Rg=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="564.052" ypos="30.8943" zpos="-20.2936" GUID="rPVYp436f0aQoQTPJrTGkw=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="550.427" ypos="27.7089" zpos="-39.8765" GUID="pm52eEWvgkelgapRvuHsdg=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="533.922" ypos="26.7557" zpos="-63.9553" GUID="pCxykDPtKkCGL+xK+32HAA=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="515.074" ypos="27.3965" zpos="-81.3631" GUID="v3hPtYvruEO7Jdw6GxKs6A=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="502.209" ypos="28.2167" zpos="-104.238" GUID="uROZzAMncEK7NqSCYTdBag=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="492.271" ypos="26.5777" zpos="-127.766" GUID="1mN4L5asZ0iQFkHLugWjpw=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="476.631" ypos="25.3795" zpos="-150.217" GUID="iiPkbkMNSU+t6tjwSMh2bw=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="464.489" ypos="23.8028" zpos="-178.93" GUID="BDxr6827c06b1+eNAcB2GQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="455.619" ypos="24.8948" zpos="-193.867" GUID="BvZNBWfUyU6Q4Czp6Eux8w=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="446.331" ypos="26.5655" zpos="-233.158" GUID="yScNs2YYF0WLbZn0UQELBw=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="440.784" ypos="22.814" zpos="-258.303" GUID="CscziCOmLUa/HQyGijAnWg=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="434.587" ypos="16.3727" zpos="-293.509" GUID="ZrqIpdnVmkKAMtgGJHInqQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="436.506" ypos="10.3619" zpos="-320.573" GUID="QKVjyT7DnkigsZPRk4ujsw=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="439.255" ypos="9.38959" zpos="-344.259" GUID="svDhl9zXfkaLkFTTQPStfA=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="443.718" ypos="8.62104" zpos="-369.783" GUID="JxPCUgP2rUaaKF9YCgs2CA=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="448.376" ypos="8.54275" zpos="-391.414" GUID="WsBKoraalE6FpSytreRAxQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="438.425" ypos="7.28059" zpos="-424.946" GUID="lj8OzKsXek2bJXJC8Fg6Yg=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="435.071" ypos="3.99207" zpos="-450.819" GUID="u8ZjZ/82hkenuT6P6AiUSA=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="429.735" ypos="0.270769" zpos="-470.551" GUID="kbI53Nxxhkq1VcKjnVauFg=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="415.826" ypos="3.48417" zpos="-487.745" GUID="M75k+RMB9Ea6cItxF76QUw=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="405.007" ypos="6.16011" zpos="-510.607" GUID="hwMwKyJcskqN3WNnGtb4nw=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="403.407" ypos="6.51204" zpos="-530.985" GUID="VutJ4YrcH0SsygH3AWVZCw=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="408.646" ypos="5.42976" zpos="-553.249" GUID="Scu5k1z+ZUCYy0I6mYin8A=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="431.912" ypos="2.41558" zpos="-574.048" GUID="t6X+cc8GO0iqaahaZS2DxA=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="444.665" ypos="0.254199" zpos="-603.863" GUID="pO1GtTCol0KaVEK183V4fw=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="449.47" ypos="0.0547689" zpos="-630.275" GUID="0wVY/lc8OEKdGyRQtCBpEQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="456.944" ypos="1.04984" zpos="-659.505" GUID="iyUQbbY1OkaftUR9NxBETQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="461.459" ypos="4.88227" zpos="-676.668" GUID="4ReG8VWNL0qzdERL6dgw5w=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="466.636" ypos="8.93794" zpos="-695.609" GUID="5zFsRVHOMUSJgNuucfa44Q=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="444.664" ypos="13.085" zpos="-721.351" GUID="sNxHzdN8GEmg8rsGlccuOg=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="445.74" ypos="12.6141" zpos="-748.593" GUID="rcGihGEocUa1FXbYtD0NUA=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="439.488" ypos="10.8855" zpos="-761.907" GUID="X3jzGCk79EevlX4Kc8w7WQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="422.933" ypos="5.69934" zpos="-792.008" GUID="1FXKmSvt/UGXkKCRe21kuw=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="390.43" ypos="9.72227" zpos="-805.455" GUID="HnflMdg2ak6bBMSUaRmdVQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="356.468" ypos="14.2659" zpos="-803.513" GUID="j0JiDxHjMUiTvwu5eSNm3Q=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="326.208" ypos="16.3301" zpos="-804" GUID="VVSk2s0XFEu6Yi+1D5XCyg=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="292.223" ypos="13.4457" zpos="-807.178" GUID="ukdRw8RZCU2Z8FAbvmDm1w=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="273.245" ypos="11.2345" zpos="-808.727" GUID="toYA4CP3cUemejs047W3Hw=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="247.554" ypos="10.5333" zpos="-811.704" GUID="cbWQgpcK1Ui0W78lOSgDrg=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="223.397" ypos="9.15811" zpos="-794.039" GUID="5Q7QTvJX0k2MyxrhsrdWuw=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="197.029" ypos="5.40565" zpos="-776.544" GUID="6ZNZBGuspkiCc09n4XWNvQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="179.501" ypos="3.98057" zpos="-767.535" GUID="fQKTP/kdE0C9q14i5Wb5bA=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="166.435" ypos="0.901206" zpos="-750.989" GUID="1Hr8cV+2G0S9duWrH/+swA=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="151.391" ypos="0.563663" zpos="-731.603" GUID="NQmWEYdkVkiOdldRVHL7bw=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="132.518" ypos="0.175618" zpos="-716.646" GUID="l84eJMsN4U6YYFKF3WyNFg=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="116.575" ypos="1.79894" zpos="-690.283" GUID="4n36/2aho0ukF0rpFp65pw=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="105.286" ypos="0.666255" zpos="-668.316" GUID="/j5Hfvy8g0S4VfryK6qayg=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="100.089" ypos="-0.393105" zpos="-642.931" GUID="/IWULiYNZEyGI7WGR/+nDA=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="97.9435" ypos="-0.0722314" zpos="-614.471" GUID="bxi2KnYx+0OHDL/3qEdd7g=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="88.5147" ypos="0.57676" zpos="-593.132" GUID="MpMt6uYDsUqRtE0yghYPWQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="75.6366" ypos="2.1473" zpos="-562.691" GUID="QF9fXnJp+EaX+BYewhvnng=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="57.9451" ypos="3.52723" zpos="-534.425" GUID="eIhkFDdpNU6MCk/Qtq6lWA=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="48.8759" ypos="4.02015" zpos="-520.512" GUID="gQvtOBg5S0iElmQLb6N4aQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="38.6928" ypos="-0.485379" zpos="-493.188" GUID="2ShdpgiQbESSntEdLWQt5Q=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="41.4984" ypos="-0.489844" zpos="-465.983" GUID="QosDR1jaBUGLd/yewyT8nA=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="41.715" ypos="-0.124123" zpos="-443.045" GUID="uqyHCSarkUmVRq6WwBXYGg=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="44.4894" ypos="-0.212329" zpos="-415.968" GUID="l4ZAoTRc9UWGKbKoTY3RVg=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="59.1027" ypos="-0.67965" zpos="-392.444" GUID="Al7T5ILwUkSlb5Di0c3hSQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="80.5993" ypos="-0.67965" zpos="-380.979" GUID="A4Xw6gKhv0mmp984K+p/og=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="88.3564" ypos="-0.0301626" zpos="-356.169" GUID="ZzgtEcIo/kSMbRMD+2flFg=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="88.9279" ypos="-0.668339" zpos="-334.673" GUID="SbEnic7h0E+7kl1zSwnRuA=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="104.052" ypos="-0.713186" zpos="-322.308" GUID="uoUtyYOuCkuyxzlm2U5Unw=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="128.234" ypos="6.06962" zpos="-332.166" GUID="iUid8BJEtUqHNpQqq1G+7Q=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="149.499" ypos="7.40173" zpos="-334.991" GUID="bRhuumrJ7kSyJHXxxlyWbA=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="174.185" ypos="7.63599" zpos="-327.082" GUID="M0jYYK1LNUy6fOEMZsiv1g=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="199.645" ypos="10.1982" zpos="-310.15" GUID="qm96y+M7eEqHY4Y80gpLKQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="229.63" ypos="7.06032" zpos="-287.201" GUID="dBs0NXHU40WraeLM2EIkKw=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="256.578" ypos="0.932956" zpos="-287.323" GUID="0tgy1jrgU06TLybY8x88ug=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="280.788" ypos="1.2067" zpos="-272.211" GUID="1i0HOCv+t0S08WNVj+rFAQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="299.779" ypos="0.196454" zpos="-260.718" GUID="DCo/6IOxLEyU0D7saeVV2w=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="319.496" ypos="0.482601" zpos="-264.594" GUID="B7j0dxu2y0Kg7r8Vdzqf0A=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="328.852" ypos="0.318989" zpos="-241.125" GUID="0sPUYbrmqk6qaLwo8CgG/g=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="323.993" ypos="2.11465" zpos="-221.881" GUID="3LLX7UNB10em3ypXx9hvQQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="316.592" ypos="3.31381" zpos="-193.419" GUID="TVgxh71eeUGx07xU/7b87g=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="315.361" ypos="4.81857" zpos="-174.636" GUID="SpB6FrR86UyLgLIlYDFbCw=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="342.173" ypos="6.95912" zpos="-155.894" GUID="u4DWetxZPkm2ZpC5UQGe0A=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="363.323" ypos="15.2843" zpos="-142.324" GUID="spyvdy8LAUWSIPNgRSBC3w=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="379.392" ypos="25.3676" zpos="-127.455" GUID="FidAwBoYQUS6s4Th5rjibg=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="394.083" ypos="32.0022" zpos="-112.184" GUID="R4Oe9GRxJ0m057+dA2ymUA=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="409.063" ypos="37.0277" zpos="-93.0631" GUID="kW6gZZqT7kCboLlpU+URVg=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="430.911" ypos="40.2536" zpos="-66.4557" GUID="WgUNcSBc2UmzP2IGK4g4oQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="448.196" ypos="39.2568" zpos="-41.2241" GUID="AgnQKR/u1k6wjXEE5WQvSA=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="446.86" ypos="37.9804" zpos="-18.4755" GUID="RZb22hl1g0i7N2XcbPV1+w=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="420.442" ypos="46.4234" zpos="2.95047" GUID="2Oamyb7rNU+iLpw9QvBqfA=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="394.203" ypos="50.9987" zpos="20.3072" GUID="30qklIlV0EGci1ijAm/I4A=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="371.654" ypos="58.0729" zpos="44.9717" GUID="OJKioHF3lk2d34Rs6ud2xw=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="350.041" ypos="64.5863" zpos="58.7691" GUID="877yZ37n5kKLb4RBQ9aLUg=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="324.569" ypos="66.0073" zpos="68.6329" GUID="7QFp5mp9FkykLEQlinDg8w=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="295.789" ypos="65.3978" zpos="73.1348" GUID="KB5aK9a0H0Sv/0e/vOCs3Q=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="279.84" ypos="64.9866" zpos="86.4439" GUID="vMubj1gsrk25OUpG/XLTqA=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="262.931" ypos="67.4251" zpos="108.89" GUID="wSHiiQWoJUWK7vIl+WoEXQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="254.061" ypos="62.2178" zpos="128.171" GUID="F7j/RS48o0WwZ0NEVmu9oA=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="238.394" ypos="45.8324" zpos="153.667" GUID="m0PapULYaUyGa5Er69hdqg=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="217.485" ypos="42.0823" zpos="158.001" GUID="wSBXptPQrke8xh5fj2NKQg=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="183.705" ypos="35.463" zpos="159.793" GUID="n6Eh4UqLS0etLGCFlMaieg=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="158.902" ypos="29.8542" zpos="156.404" GUID="bSExhzQsGUK/p25QMhh23A=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="133.677" ypos="14.6294" zpos="162.852" GUID="Tk1+RAYxC0SLYp3frdpHoA=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="106.876" ypos="4.42546" zpos="175.819" GUID="kkrXUp/jcEa8YjZ7cVVE8A=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="90.2013" ypos="0.768748" zpos="196.574" GUID="fw4LUFdDiEidBCDCCvqkOw=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="83.7325" ypos="0.357982" zpos="218.137" GUID="mBDfT0+EI0K322OiA/ReMQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="73.6942" ypos="1.04309" zpos="243.664" GUID="QqdgUJ28SkOobEnLWmT/9w=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="39.277" ypos="12.247" zpos="241.645" GUID="QrEzqCmvZk+ksKRAzNaAgA=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="23.9334" ypos="15.6252" zpos="242.643" GUID="L4qWrXWv7E2/W1tw+FqmVw=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="-11.475" ypos="13.44" zpos="245.191" GUID="aLiGO4SZikuhqVHprn7bHA=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="-35.7844" ypos="11.2056" zpos="240.512" GUID="QQ4UxIM1Lku0HRtMSPeGgQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="-64.097" ypos="10.9988" zpos="232.185" GUID="GHOWDP9GPE+XRzz/aSCcFQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="-87.9227" ypos="9.7941" zpos="254.595" GUID="uNfnSlgArkC+igb6Hh+ytg=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="-102.152" ypos="8.47052" zpos="281.074" GUID="eGNcNyNv9kuWenfFOddkfg=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="-108.497" ypos="7.39737" zpos="293.575" GUID="MtWkqk1XlEG9N3tF9N10Pg=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="-119.981" ypos="9.11515" zpos="324.858" GUID="0OQWFvOlB0iibm/4WPNCIA=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="-127.996" ypos="12.1587" zpos="353.875" GUID="SUyxvXrEzEKHdP5m5FLPeA=="/>
+  
+    <POI type="tactical.guildmission.bounty.crusadermichiele" MapID="53" xpos="-128.205" ypos="14.503" zpos="370.235" GUID="8YJf02zNYE22BTyVI6PLLw=="/>
+    </Route>
+  </POIs>
+</OverlayData>

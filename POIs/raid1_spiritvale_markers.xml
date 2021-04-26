@@ -1,0 +1,19 @@
+<OverlayData>
+  <POIs>
+    <POI MapID="1062" xpos="-126.917" ypos="62.9524" zpos="111.433" type="tactical.raid.direction_n" GUID="T08Wbp3oZ0KZ9KzU1Gnfqw=="/>
+    <POI MapID="1062" xpos="-132.693" ypos="62.9657" zpos="56.4836" type="tactical.raid.direction_s" GUID="xxtnBLbCIEuoxx5nBpDqSA=="/>
+    <POI MapID="1062" xpos="-101.375" ypos="63.0427" zpos="81.268" type="tactical.raid.direction_e" GUID="7AZv3By300CwPslLkQaEnw=="/>
+    <POI MapID="1062" xpos="-157.841" ypos="62.273" zpos="86.823" type="tactical.raid.direction_w" GUID="+oNUkf6Qx0KK4u9MhYitew=="/>
+    <POI MapID="1062" xpos="43.4115" ypos="50.4622" zpos="-71.1892" type="tactical.raid.direction_n" GUID="YDJ1UP0QvEmp9fzx3WN7LA=="/>
+    <POI MapID="1062" xpos="41.5824" ypos="50.6292" zpos="-156.164" type="tactical.raid.direction_s" GUID="f22RmZnGeE+f9J1Y9hFx0Q=="/>
+    <POI MapID="1062" xpos="83.5754" ypos="50.6472" zpos="-112.85" type="tactical.raid.direction_e" GUID="+aLCl1nLXEmJ5++BQi/3hg=="/>
+    <POI MapID="1062" xpos="-1.54911" ypos="50.647" zpos="-110.238" type="tactical.raid.direction_w" GUID="QH6GvY7TSUKtao5Vr8yEGA=="/>
+    <POI MapID="1062" xpos="-9.39439" ypos="52" zpos="-69.4607" type="tactical.raid.counter_1" GUID="ym6ddWd/wkuQ3gXuVKifTw=="/>
+    <POI MapID="1062" xpos="82.4" ypos="52" zpos="-65.25" type="tactical.raid.counter_2" GUID="wukqGmmDoUW2NE3GRpgJQw=="/>
+    <POI MapID="1062" xpos="86.4" ypos="52" zpos="-164.2" type="tactical.raid.counter_3" GUID="qQEQlQ2N8UWC1W2x1tKtvA=="/>
+    <POI MapID="1062" xpos="-7.34" ypos="52" zpos="-163.7" type="tactical.raid.counter_4" GUID="dHcWkg5DQEClRd48tKNjqA=="/>
+    <POI MapID="1062" xpos="-91.0706" ypos="60.9373" zpos="-506.081" type="tactical.timed.speedboostmushroom" GUID="trI4Ikkxf0uEl0Of2dGZUg=="/>
+    <POI MapID="1062" xpos="-151.658" ypos="60.9373" zpos="-507.339" type="tactical.timed.speedboostmushroom" GUID="VVruJ+afv0CW7XgO9/unJg=="/>
+    <POI MapID="1062" xpos="-121.094" ypos="60.9373" zpos="-559.273" type="tactical.timed.speedboostmushroom" GUID="OCw6WOaUKEqltHMKIqH3aA=="/>
+  </POIs>
+</OverlayData>

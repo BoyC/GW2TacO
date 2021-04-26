@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GW2MapTimer>
+  <Map Name="World Bosses" Length="1440" Start="0" id="wb">
+    <Event Name="Taidha" Length="15" Color="8063471c" WorldBossAPIID="admiral_taidha_covington"/>
+    <Event Name="Shaman" Length="15" Color="80b9d0d5" WorldBossAPIID="svanir_shaman_chief"/>
+    <Event Name="Destroyer" Length="15" Color="80ff2e0d" WorldBossAPIID="megadestroyer"/>
+    <Event Name="Fire Elem" Length="15" Color="80eab700" WorldBossAPIID="fire_elemental"/>
+    <Event Name="Shatterer" Length="15" Color="80aba6d3" WorldBossAPIID="the_shatterer"/>
+    <Event Name="Wurm" Length="15" Color="806dac2f" WorldBossAPIID="great_jungle_wurm"/>
+    <Event Name="Ulgoth" Length="15" Color="8063471c" WorldBossAPIID="modniir_ulgoth"/>
+    <Event Name="Behemoth" Length="15" Color="80303030" WorldBossAPIID="shadow_behemoth"/>
+    <Event Name="Golem" Length="15" Color="80a0a0a0" WorldBossAPIID="inquest_golem_mark_ii"/>
+    <Event Name="Shaman" Length="15" Color="80b9d0d5" WorldBossAPIID="svanir_shaman_chief"/>
+    <Event Name="Jormag" Length="15" Color="8079afff" WorldBossAPIID="claw_of_jormag"/>
+    <Event Name="Fire Elem" Length="15" Color="80eab700" WorldBossAPIID="fire_elemental"/>
+    <Event Name="Taidha" Length="15" Color="8063471c" WorldBossAPIID="admiral_taidha_covington"/>
+    <Event Name="Wurm" Length="15" Color="806dac2f" WorldBossAPIID="great_jungle_wurm"/>
+    <Event Name="Destroyer" Length="15" Color="80ff2e0d" WorldBossAPIID="megadestroyer"/>
+    <Event Name="Behemoth" Length="15" Color="80303030" WorldBossAPIID="shadow_behemoth"/>
+    <Event Name="Shatterer" Length="15" Color="80aba6d3" WorldBossAPIID="the_shatterer"/>
+    <Event Name="Shaman" Length="15" Color="80b9d0d5" WorldBossAPIID="svanir_shaman_chief"/>
+    <Event Name="Ulgoth" Length="15" Color="8063471c" WorldBossAPIID="modniir_ulgoth"/>
+    <Event Name="Fire Elem" Length="15" Color="80eab700" WorldBossAPIID="fire_elemental"/>
+    <Event Name="Golem" Length="15" Color="80a0a0a0" WorldBossAPIID="inquest_golem_mark_ii"/>
+    <Event Name="Wurm" Length="15" Color="806dac2f" WorldBossAPIID="great_jungle_wurm"/>
+    <Event Name="Jormag" Length="15" Color="8079afff" WorldBossAPIID="claw_of_jormag"/>
+    <Event Name="Behemoth" Length="15" Color="80303030" WorldBossAPIID="shadow_behemoth"/>
+    <Event Name="Taidha" Length="15" Color="8063471c" WorldBossAPIID="admiral_taidha_covington"/>
+    <Event Name="Shaman" Length="15" Color="80b9d0d5" WorldBossAPIID="svanir_shaman_chief"/>
+    <Event Name="Destroyer" Length="15" Color="80ff2e0d" WorldBossAPIID="megadestroyer"/>
+    <Event Name="Fire Elem" Length="15" Color="80eab700" WorldBossAPIID="fire_elemental"/>
+    <Event Name="Shatterer" Length="15" Color="80aba6d3" WorldBossAPIID="the_shatterer"/>
+    <Event Name="Wurm" Length="15" Color="806dac2f" WorldBossAPIID="great_jungle_wurm"/>
+    <Event Name="Ulgoth" Length="15" Color="8063471c" WorldBossAPIID="modniir_ulgoth"/>
+    <Event Name="Behemoth" Length="15" Color="80303030" WorldBossAPIID="shadow_behemoth"/>
+    <Event Name="Golem" Length="15" Color="80a0a0a0" WorldBossAPIID="inquest_golem_mark_ii"/>
+    <Event Name="Shaman" Length="15" Color="80b9d0d5" WorldBossAPIID="svanir_shaman_chief"/>
+    <Event Name="Jormag" Length="15" Color="8079afff" WorldBossAPIID="claw_of_jormag"/>
+    <Event Name="Fire Elem" Length="15" Color="80eab700" WorldBossAPIID="fire_elemental"/>
+    <Event Name="Taidha" Length="15" Color="8063471c" WorldBossAPIID="admiral_taidha_covington"/>
+    <Event Name="Wurm" Length="15" Color="806dac2f" WorldBossAPIID="great_jungle_wurm"/>
+    <Event Name="Destroyer" Length="15" Color="80ff2e0d" WorldBossAPIID="megadestroyer"/>
+    <Event Name="Behemoth" Length="15" Color="80303030" WorldBossAPIID="shadow_behemoth"/>
+    <Event Name="Shatterer" Length="15" Color="80aba6d3" WorldBossAPIID="the_shatterer"/>
+    <Event Name="Shaman" Length="15" Color="80b9d0d5" WorldBossAPIID="svanir_shaman_chief"/>
+    <Event Name="Ulgoth" Length="15" Color="8063471c" WorldBossAPIID="modniir_ulgoth"/>
+    <Event Name="Fire Elem" Length="15" Color="80eab700" WorldBossAPIID="fire_elemental"/>
+    <Event Name="Golem" Length="15" Color="80a0a0a0" WorldBossAPIID="inquest_golem_mark_ii"/>
+    <Event Name="Wurm" Length="15" Color="806dac2f" WorldBossAPIID="great_jungle_wurm"/>
+    <Event Name="Jormag" Length="15" Color="8079afff" WorldBossAPIID="claw_of_jormag"/>
+    <Event Name="Behemoth" Length="15" Color="80303030" WorldBossAPIID="shadow_behemoth"/>
+    <Event Name="Taidha" Length="15" Color="8063471c" WorldBossAPIID="admiral_taidha_covington"/>
+    <Event Name="Shaman" Length="15" Color="80b9d0d5" WorldBossAPIID="svanir_shaman_chief"/>
+    <Event Name="Destroyer" Length="15" Color="80ff2e0d" WorldBossAPIID="megadestroyer"/>
+    <Event Name="Fire Elem" Length="15" Color="80eab700" WorldBossAPIID="fire_elemental"/>
+    <Event Name="Shatterer" Length="15" Color="80aba6d3" WorldBossAPIID="the_shatterer"/>
+    <Event Name="Wurm" Length="15" Color="806dac2f" WorldBossAPIID="great_jungle_wurm"/>
+    <Event Name="Ulgoth" Length="15" Color="8063471c" WorldBossAPIID="modniir_ulgoth"/>
+    <Event Name="Behemoth" Length="15" Color="80303030" WorldBossAPIID="shadow_behemoth"/>
+    <Event Name="Golem" Length="15" Color="80a0a0a0" WorldBossAPIID="inquest_golem_mark_ii"/>
+    <Event Name="Shaman" Length="15" Color="80b9d0d5" WorldBossAPIID="svanir_shaman_chief"/>
+    <Event Name="Jormag" Length="15" Color="8079afff" WorldBossAPIID="claw_of_jormag"/>
+    <Event Name="Fire Elem" Length="15" Color="80eab700" WorldBossAPIID="fire_elemental"/>
+    <Event Name="Taidha" Length="15" Color="8063471c" WorldBossAPIID="admiral_taidha_covington"/>
+    <Event Name="Wurm" Length="15" Color="806dac2f" WorldBossAPIID="great_jungle_wurm"/>
+    <Event Name="Destroyer" Length="15" Color="80ff2e0d" WorldBossAPIID="megadestroyer"/>
+    <Event Name="Behemoth" Length="15" Color="80303030" WorldBossAPIID="shadow_behemoth"/>
+    <Event Name="Shatterer" Length="15" Color="80aba6d3" WorldBossAPIID="the_shatterer"/>
+    <Event Name="Shaman" Length="15" Color="80b9d0d5" WorldBossAPIID="svanir_shaman_chief"/>
+    <Event Name="Ulgoth" Length="15" Color="8063471c" WorldBossAPIID="modniir_ulgoth"/>
+    <Event Name="Fire Elem" Length="15" Color="80eab700" WorldBossAPIID="fire_elemental"/>
+    <Event Name="Golem" Length="15" Color="80a0a0a0" WorldBossAPIID="inquest_golem_mark_ii"/>
+    <Event Name="Wurm" Length="15" Color="806dac2f" WorldBossAPIID="great_jungle_wurm"/>
+    <Event Name="Jormag" Length="15" Color="8079afff" WorldBossAPIID="claw_of_jormag"/>
+    <Event Name="Behemoth" Length="15" Color="80303030" WorldBossAPIID="shadow_behemoth"/>
+    <Event Name="Taidha" Length="15" Color="8063471c" WorldBossAPIID="admiral_taidha_covington"/>
+    <Event Name="Shaman" Length="15" Color="80b9d0d5" WorldBossAPIID="svanir_shaman_chief"/>
+    <Event Name="Destroyer" Length="15" Color="80ff2e0d" WorldBossAPIID="megadestroyer"/>
+    <Event Name="Fire Elem" Length="15" Color="80eab700" WorldBossAPIID="fire_elemental"/>
+    <Event Name="Shatterer" Length="15" Color="80aba6d3" WorldBossAPIID="the_shatterer"/>
+    <Event Name="Wurm" Length="15" Color="806dac2f" WorldBossAPIID="great_jungle_wurm"/>
+    <Event Name="Ulgoth" Length="15" Color="8063471c" WorldBossAPIID="modniir_ulgoth"/>
+    <Event Name="Behemoth" Length="15" Color="80303030" WorldBossAPIID="shadow_behemoth"/>
+    <Event Name="Golem" Length="15" Color="80a0a0a0" WorldBossAPIID="inquest_golem_mark_ii"/>
+    <Event Name="Shaman" Length="15" Color="80b9d0d5" WorldBossAPIID="svanir_shaman_chief"/>
+    <Event Name="Jormag" Length="15" Color="8079afff" WorldBossAPIID="claw_of_jormag"/>
+    <Event Name="Fire Elem" Length="15" Color="80eab700" WorldBossAPIID="fire_elemental"/>
+    <Event Name="Taidha" Length="15" Color="8063471c" WorldBossAPIID="admiral_taidha_covington"/>
+    <Event Name="Wurm" Length="15" Color="806dac2f" WorldBossAPIID="great_jungle_wurm"/>
+    <Event Name="Destroyer" Length="15" Color="80ff2e0d" WorldBossAPIID="megadestroyer"/>
+    <Event Name="Behemoth" Length="15" Color="80303030" WorldBossAPIID="shadow_behemoth"/>
+    <Event Name="Shatterer" Length="15" Color="80aba6d3" WorldBossAPIID="the_shatterer"/>
+    <Event Name="Shaman" Length="15" Color="80b9d0d5" WorldBossAPIID="svanir_shaman_chief"/>
+    <Event Name="Ulgoth" Length="15" Color="8063471c" WorldBossAPIID="modniir_ulgoth"/>
+    <Event Name="Fire Elem" Length="15" Color="80eab700" WorldBossAPIID="fire_elemental"/>
+    <Event Name="Golem" Length="15" Color="80a0a0a0" WorldBossAPIID="inquest_golem_mark_ii"/>
+    <Event Name="Wurm" Length="15" Color="806dac2f" WorldBossAPIID="great_jungle_wurm"/>
+    <Event Name="Jormag" Length="15" Color="8079afff" WorldBossAPIID="claw_of_jormag"/>
+    <Event Name="Behemoth" Length="15" Color="80303030" WorldBossAPIID="shadow_behemoth"/>
+  </Map>
+  <Map Name="Hardcore World Bosses" Length="1440" Start="0" id="hcwb">
+    <Event Name="Tequatl" Length="15" Color="80ea568f" WorldBossAPIID="tequatl_the_sunless"/>
+    <Event Name="" Length="45" Color="00000000"/>
+    <Event Name="Triple Trouble" Length="15" Color="80ea568f" WorldBossAPIID="triple_trouble_wurm"/>
+    <Event Name="" Length="45" Color="00000000"/>
+    <Event Name="Karka Queen" Length="15" Color="80ea568f" WorldBossAPIID="karka_queen"/>
+    <Event Name="" Length="45" Color="00000000"/>
+    <Event Name="Tequatl" Length="15" Color="80ea568f" WorldBossAPIID="tequatl_the_sunless"/>
+    <Event Name="" Length="45" Color="00000000"/>
+    <Event Name="Triple Trouble" Length="15" Color="80ea568f" WorldBossAPIID="triple_trouble_wurm"/>
+    <Event Name="" Length="105" Color="00000000"/>
+    <Event Name="Karka Queen" Length="15" Color="80ea568f" WorldBossAPIID="karka_queen"/>
+    <Event Name="" Length="45" Color="00000000"/>
+    <Event Name="Tequatl" Length="15" Color="80ea568f" WorldBossAPIID="tequatl_the_sunless"/>
+    <Event Name="" Length="45" Color="00000000"/>
+    <Event Name="Triple Trouble" Length="15" Color="80ea568f" WorldBossAPIID="triple_trouble_wurm"/>
+    <Event Name="" Length="135" Color="00000000"/>
+    <Event Name="Karka Queen" Length="15" Color="80ea568f" WorldBossAPIID="karka_queen"/>
+    <Event Name="" Length="45" Color="00000000"/>
+    <Event Name="Tequatl" Length="15" Color="80ea568f" WorldBossAPIID="tequatl_the_sunless"/>
+    <Event Name="" Length="45" Color="00000000"/>
+    <Event Name="Triple Trouble" Length="15" Color="80ea568f" WorldBossAPIID="triple_trouble_wurm"/>
+    <Event Name="" Length="135" Color="00000000"/>
+    <Event Name="Karka Queen" Length="15" Color="80ea568f" WorldBossAPIID="karka_queen"/>
+    <Event Name="" Length="45" Color="00000000"/>
+    <Event Name="Tequatl" Length="15" Color="80ea568f" WorldBossAPIID="tequatl_the_sunless"/>
+    <Event Name="" Length="45" Color="00000000"/>
+    <Event Name="Triple Trouble" Length="15" Color="80ea568f" WorldBossAPIID="triple_trouble_wurm"/>
+    <Event Name="" Length="45" Color="00000000"/>
+    <Event Name="Karka Queen" Length="15" Color="80ea568f" WorldBossAPIID="karka_queen"/>
+    <Event Name="" Length="45" Color="00000000"/>
+    <Event Name="Tequatl" Length="15" Color="80ea568f" WorldBossAPIID="tequatl_the_sunless"/>
+    <Event Name="" Length="45" Color="00000000"/>
+    <Event Name="Triple Trouble" Length="15" Color="80ea568f" WorldBossAPIID="triple_trouble_wurm"/>
+    <Event Name="" Length="165" Color="00000000"/>
+    <Event Name="Karka Queen" Length="15" Color="80ea568f" WorldBossAPIID="karka_queen"/>
+    <Event Name="" Length="45" Color="00000000"/>
+  </Map>
+  <Map Name="Daytime" Length="120" Start="25" id="daytime">
+    <Event Name="Dawn" Length="5" Color="80ffe37f"/>
+    <Event Name="Day" Length="70" Color="80ffe37f"/>
+    <Event Name="Dusk" Length="5" Color="80ffe37f"/>
+    <Event Name="Night" Length="40" Color="809f99cc"/>
+  </Map>
+  <Map Name="Verdant Brink" Length="120" Start="30" id="vb" ChestAPIID="verdant_brink_heros_choice_chest">
+    <Event Name="VB Daytime" Length="75" Color="80c4e2a5"/>
+    <Event Name="VB Night" Length="25" Color="8084c147"/>
+    <Event Name="Night Bosses" Length="20" Color="806dac2f"/>
+  </Map>
+  <Map Name="Auric Basin" Length="120" Start="60" id="ab" ChestAPIID="auric_basin_heros_choice_chest">
+    <Event Name="Octovine" Length="20" Color="80eab700"/>
+    <Event Name="Reset" Length="10" Color="80fff1c1"/>
+    <Event Name="Pillars" Length="75" Color="80ffe37f"/>
+    <Event Name="Challenges" Length="15" Color="80ffd53d"/>
+  </Map>
+  <Map Name="Tangled Depths" Length="120" Start="50" id="td" ChestAPIID="tangled_depths_heros_choice_chest">
+    <Event Name="Help the outposts" Length="95" Color="80ffd7d7"/>
+    <Event Name="Prep" Length="5" Color="80ffbdbd"/>
+    <Event Name="Chak Gerent" Length="20" Color="80ff9999"/>
+  </Map>
+  <Map Name="Dragon's Stand" Length="120" Start="90" id="ds" ChestAPIID="dragons_stand_heros_choice_chest">
+    <Event Name="Dragon's Stand Start" Length="120" Color="80aba6d3"/>
+  </Map>
+  <Map Name="Dry Top" Length="60" Start="0" id="dt">
+    <Event Name="Crash Site" Length="40" Color="80fcfadc"/>
+    <Event Name="Sandstorm" Length="20" Color="80ded98a"/>
+  </Map>
+  <Map Name="Ley-Line Anomalies" Length="360" Start="20" id="lla">
+    <Event Name="Spawn" Length="20" Color="80c0392b"/>
+    <Event Name="Next: Iron Marches" Length="100" Color="80e74c3c"/>
+    <Event Name="Spawn" Length="20" Color="80c0392b"/>
+    <Event Name="Next: Gendarran Fields" Length="100" Color="80e74c3c"/>
+    <Event Name="Spawn" Length="20" Color="80c0392b"/>
+    <Event Name="Next: Timberline Falls" Length="100" Color="80e74c3c"/>
+  </Map>
+  <Map Name="Crystal Oasis" Length="120" Start="5" id="cro" ChestAPIID="crystal_oasis_heros_choice_chest">
+    <Event Name="Coins" Length="16" Color="80efac74"/>
+    <Event Name="Pinata" Length="9" Color="80e3771e"/>
+    <Event Name="" Length="95" Color="00000000"/>
+  </Map>
+  <Map Name="Desert Highlands" Length="120" Start="60" id="dhl">
+    <Event Name="Treasure" Length="20" Color="807aaeda"/>
+    <Event Name="" Length="100" Color="00000000"/>
+  </Map>
+  <Map Name="Elon Riverlands" Length="120" Start="90" id="erl" ChestAPIID="elon_riverlands_heros_choice_chest">
+    <Event Name="Ascension" Length="30" Color="80dae3b4"/>
+    <Event Name="" Length="90" Color="00000000"/>
+  </Map>
+  <Map Name="The Desolation" Length="120" Start="30" id="des" ChestAPIID="the_desolation_heros_choice_chest">
+    <Event Name="Junundu" Length="20" Color="80cebca2"/>
+    <Event Name="" Length="10" Color="00000000"/>
+    <Event Name="Maws" Length="20" Color="80d1aa71"/>
+    <Event Name="" Length="10" Color="00000000"/>
+    <Event Name="Junundu" Length="20" Color="80cebca2"/>
+    <Event Name="" Length="40" Color="00000000"/>
+  </Map>
+  <Map Name="Domain of Vabbi" Length="120" Start="0" id="dov" ChestAPIID="domain_of_vabbi_heros_choice_chest">
+    <Event Name="Forged" Length="30" Color="80afa2ce"/>
+    <Event Name="Zealots" Length="30" Color="80967ada"/>
+    <Event Name="Forged" Length="30" Color="80afa2ce"/>
+    <Event Name="" Length="30" Color="00000000"/>
+  </Map>
+  <Map Name="Domain of Istan" Length="120" Start="105" id="doi">
+    <Event Name="Palawadan" Length="30" Color="80de53ab"/>
+    <Event Name="" Length="90" Color="00000000"/>
+  </Map>
+  <Map Name="Jahai Bluffs" Length="120" Start="60" id="jhb">
+    <Event Name="Escorts" Length="15" Color="809787ab"/>
+    <Event Name="Shatterer" Length="15" Color="808a70aa"/>
+    <Event Name="" Length="90" Color="00000000"/>
+  </Map>
+  <Map Name="Thunderhead Peaks" Length="120" Start="45" id="thp">
+    <Event Name="South Meta" Length="15" Color="809dbfb7"/>
+    <Event Name="" Length="45" Color="00000000"/>
+    <Event Name="North Meta" Length="20" Color="80a3e4e4"/>
+    <Event Name="" Length="40" Color="00000000"/>
+  </Map>
+  <Map Name="Grothmar Valley" Length="120" Start="10" id="gv">
+    <Event Name="Effigy" Length="28" Color="80f0380e"/>
+    <Event Name="Doomlore Shrine" Length="27" Color="80f55b38"/>
+    <Event Name="Oooze Pits" Length="34" Color="80f0380e"/>
+    <Event Name="Metal Concert" Length="31" Color="80f55b38"/>
+  </Map>
+
+  <Map Name="Bjora Marches" Length="120" Start="0" id="s5e2bm">
+    <Event Name="Icebrood Champions" Length="15" Color="8065b0e8"/>
+    <Event Name="" Length="45" Color="00000000"/>
+    <Event Name="Drakkar" Length="30" Color="8079afff"/>
+    <Event Name="" Length="5" Color="00000000"/>
+    <Event Name="Prep" Length="5" Color="8065b0e8"/>
+    <Event Name="Raven Shrines" Length="10" Color="8065b0e8"/>
+    <Event Name="Shards and Construct" Length="10" Color="804199d8"/>
+  </Map>
+</GW2MapTimer>

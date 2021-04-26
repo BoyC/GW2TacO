@@ -1,0 +1,209 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Header Files\Resources">
+      <UniqueIdentifier>{8b1f3144-fd99-4113-b0f2-3c8e922c673f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Resources">
+      <UniqueIdentifier>{0c5f0d02-0cf9-4705-90e5-3276dddd0f97}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\System">
+      <UniqueIdentifier>{48aaf481-2f3c-45f3-a9f1-982c04f5120d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\System">
+      <UniqueIdentifier>{f75f65d9-1111-4ace-acb9-bc7aa0510c78}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\DX11">
+      <UniqueIdentifier>{6632387d-1461-4d16-9580-8c6ccdc3afe2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\DX11">
+      <UniqueIdentifier>{bf3b2170-8388-4af6-ad55-956b3a1b4303}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="WindowHandler.h">
+      <Filter>Header Files\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture.h">
+      <Filter>Header Files\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Device.h">
+      <Filter>Header Files\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Enums.h">
+      <Filter>Header Files\System</Filter>
+    </ClInclude>
+    <ClInclude Include="VertexBuffer.h">
+      <Filter>Header Files\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="IndexBuffer.h">
+      <Filter>Header Files\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="VertexFormat.h">
+      <Filter>Header Files\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>Header Files\System</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderState.h">
+      <Filter>Header Files\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Shader.h">
+      <Filter>Header Files\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Core2.h" />
+    <ClInclude Include="Core2_Config.h" />
+    <ClInclude Include="DX11Device.h">
+      <Filter>Header Files\DX11</Filter>
+    </ClInclude>
+    <ClInclude Include="DX11Enums.h">
+      <Filter>Header Files\DX11</Filter>
+    </ClInclude>
+    <ClInclude Include="DX11IndexBuffer.h">
+      <Filter>Header Files\DX11</Filter>
+    </ClInclude>
+    <ClInclude Include="DX11Shader.h">
+      <Filter>Header Files\DX11</Filter>
+    </ClInclude>
+    <ClInclude Include="DX11Texture.h">
+      <Filter>Header Files\DX11</Filter>
+    </ClInclude>
+    <ClInclude Include="DX11VertexBuffer.h">
+      <Filter>Header Files\DX11</Filter>
+    </ClInclude>
+    <ClInclude Include="DX11VertexFormat.h">
+      <Filter>Header Files\DX11</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderLayer.h">
+      <Filter>Header Files\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Atom.h">
+      <Filter>Header Files\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>Header Files\System</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneNodes.h">
+      <Filter>Header Files\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Material.h">
+      <Filter>Header Files\System</Filter>
+    </ClInclude>
+    <ClInclude Include="ConstantBuffer.h">
+      <Filter>Source Files\System</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectGroup.h">
+      <Filter>Header Files\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Model.h">
+      <Filter>Header Files\System</Filter>
+    </ClInclude>
+    <ClInclude Include="DX11ConstantBuffer.h">
+      <Filter>Header Files\DX11</Filter>
+    </ClInclude>
+    <ClInclude Include="DX11RenderState.h">
+      <Filter>Header Files\DX11</Filter>
+    </ClInclude>
+    <ClInclude Include="BasePCH.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DDSTextureLoader.h">
+      <Filter>Header Files\DX11</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Core2.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="WindowHandler.cpp">
+      <Filter>Source Files\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Resource.cpp">
+      <Filter>Source Files\System</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderState.cpp">
+      <Filter>Source Files\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Shader.cpp">
+      <Filter>Source Files\System</Filter>
+    </ClCompile>
+    <ClCompile Include="DX11Device.cpp">
+      <Filter>Source Files\DX11</Filter>
+    </ClCompile>
+    <ClCompile Include="DX11Enums.cpp">
+      <Filter>Source Files\DX11</Filter>
+    </ClCompile>
+    <ClCompile Include="DX11IndexBuffer.cpp">
+      <Filter>Source Files\DX11</Filter>
+    </ClCompile>
+    <ClCompile Include="DX11Texture.cpp">
+      <Filter>Source Files\DX11</Filter>
+    </ClCompile>
+    <ClCompile Include="DX11VertexBuffer.cpp">
+      <Filter>Source Files\DX11</Filter>
+    </ClCompile>
+    <ClCompile Include="DX11VertexFormat.cpp">
+      <Filter>Source Files\DX11</Filter>
+    </ClCompile>
+    <ClCompile Include="DX11Shader.cpp">
+      <Filter>Source Files\DX11</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderLayer.cpp">
+      <Filter>Source Files\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Atom.cpp">
+      <Filter>Source Files\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>Source Files\System</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneNodes.cpp">
+      <Filter>Source Files\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Material.cpp">
+      <Filter>Source Files\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Device.cpp">
+      <Filter>Header Files\System</Filter>
+    </ClCompile>
+    <ClCompile Include="ConstantBuffer.cpp">
+      <Filter>Source Files\System</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectGroup.cpp">
+      <Filter>Source Files\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Model.cpp">
+      <Filter>Source Files\System</Filter>
+    </ClCompile>
+    <ClCompile Include="DX11ConstantBuffer.cpp">
+      <Filter>Source Files\DX11</Filter>
+    </ClCompile>
+    <ClCompile Include="DX11RenderState.cpp">
+      <Filter>Source Files\DX11</Filter>
+    </ClCompile>
+    <ClCompile Include="Enums.cpp">
+      <Filter>Source Files\System</Filter>
+    </ClCompile>
+    <ClCompile Include="BasePCH.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DDSTextureLoader.cpp">
+      <Filter>Source Files\DX11</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="TODO.txt" />
+  </ItemGroup>
+</Project>

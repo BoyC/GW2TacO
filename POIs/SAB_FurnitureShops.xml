@@ -1,0 +1,78 @@
+<OverlayData>
+ 
+  <MarkerCategory name="Festivals">
+    <MarkerCategory name="SAB">
+    	<MarkerCategory name="FurnitureShops" iconFile="Data\storyline_purple.png" behavior="2" iconSize="0.2" alpha="0.9" heightOffset="0" fadeNear="2000" fadeFar="2200"/> 
+    </MarkerCategory>
+  </MarkerCategory>
+ 
+  <POIs>
+  
+    <POI MapID="895" type="Festivals.SAB.FurnitureShops" xpos="-976.586" ypos="47.2095" zpos="437.98" GUID="dWHWm/cAvkOwx6CuBvRfRg=="/>
+  
+    <POI MapID="895" type="Festivals.SAB.FurnitureShops" xpos="-950.239" ypos="28.396" zpos="430.027" GUID="ACVQH5kCCUaWheBA0eFMVA=="/>
+  
+    <POI MapID="895" type="Festivals.SAB.FurnitureShops" xpos="-963.017" ypos="28.3976" zpos="434.436" GUID="7QqMjI4/b0KtQkALaF4yAA=="/>
+  
+    <POI MapID="895" type="Festivals.SAB.FurnitureShops" xpos="-935.959" ypos="28.3948" zpos="426.38" GUID="yTW1FNN9ukmxJr05kkIxvQ=="/>
+  
+    <POI MapID="895" type="Festivals.SAB.FurnitureShops" xpos="-932.813" ypos="28.3983" zpos="436.784" GUID="j+ONJehW306izWIp6r0Yjg=="/>
+  
+    <POI MapID="895" type="Festivals.SAB.FurnitureShops" xpos="-811.006" ypos="52.2292" zpos="497.634" GUID="81QD8RfWdEKy3S+1oEXZuw=="/>
+  
+    <POI MapID="895" type="Festivals.SAB.FurnitureShops" xpos="-816.785" ypos="50.8639" zpos="496.184" GUID="oAE+U+xc3U+wuZRQpRkB6Q=="/>
+  
+    <POI MapID="895" type="Festivals.SAB.FurnitureShops" xpos="-811.006" ypos="42.2543" zpos="502.537" GUID="xD/NIRnZaU6CV9SoKbqtjg=="/>
+  
+    <POI MapID="895" type="Festivals.SAB.FurnitureShops" xpos="-814.300" ypos="39.9414" zpos="515.035" GUID="iRE33e8pwk+IraYPb3tlFw=="/>
+	
+    <POI MapID="895" type="Festivals.SAB.FurnitureShops" xpos="-182.034" ypos="51.7255" zpos="454.364" GUID="HuuWM8cqskqcwt4AEYYgww=="/>
+  
+    <POI MapID="895" type="Festivals.SAB.FurnitureShops" xpos="-43.2204" ypos="51.0562" zpos="525.164" GUID="21Xnf8kwPkmSJsIUC1onag=="/>
+	
+    <POI MapID="895" type="Festivals.SAB.FurnitureShops" xpos="-571.313" ypos="40.4734" zpos="350.088" GUID="m1S8NCkH00O6vyd+HsBjIA=="/>
+  
+    <POI MapID="895" type="Festivals.SAB.FurnitureShops" xpos="-586.25" ypos="18.7634" zpos="352.814" GUID="I/qw3xFBX0+gwpTJqSr1uA=="/>
+  
+    <POI MapID="895" type="Festivals.SAB.FurnitureShops" xpos="-618.748" ypos="8.900" zpos="350" GUID="g5t/8obTB0i4BCzieT8ytg=="/>	
+	
+    <POI MapID="895" type="Festivals.SAB.FurnitureShops" xpos="-362.283" ypos="36.432" zpos="291.864" GUID="VfeLS1SHk0ybkVoHGTrnEw=="/>
+  
+    <POI MapID="895" type="Festivals.SAB.FurnitureShops" xpos="-323.8" ypos="52.0526" zpos="287.956" GUID="9i5RT+yTL0S1W+46/S7rKA=="/>
+  
+    <POI MapID="895" type="Festivals.SAB.FurnitureShops" xpos="-318" ypos="36.2602" zpos="290.281" GUID="brc5apafqkadXqu3qyuOWQ=="/>
+
+    <POI MapID="934" type="Festivals.SAB.FurnitureShops" xpos="-569.001" ypos="223.664" zpos="-441.555" GUID="0t60sne05U2b0/DRKXcrow=="/>
+  
+    <POI MapID="934" type="Festivals.SAB.FurnitureShops" xpos="-591.475" ypos="217.02" zpos="-409.861" GUID="CaB9vRNhcUiHF/IyW7G8bw=="/>
+  
+    <POI MapID="934" type="Festivals.SAB.FurnitureShops" xpos="-578.589" ypos="216.892" zpos="-417.686" GUID="+ZJK6zsyLkSdot9PmOq+aQ=="/>
+  
+    <POI MapID="934" type="Festivals.SAB.FurnitureShops" xpos="-593.848" ypos="223.377" zpos="-417.589" GUID="jcTTmCvpZ0CZuCcCw5CujA=="/>
+  
+    <POI MapID="934" type="Festivals.SAB.FurnitureShops" xpos="-587.018" ypos="228.415" zpos="-429.422" GUID="wy7R90BQ8Uef8pa/EgqPsQ=="/>
+
+    <POI MapID="934" type="Festivals.SAB.FurnitureShops" xpos="-243.691" ypos="226.984" zpos="-327.394" GUID="MOabkwSXlEO3Oe2J42hnVQ=="/>
+  
+    <POI MapID="934" type="Festivals.SAB.FurnitureShops" xpos="-264.221" ypos="224.065" zpos="-293.142" GUID="GtzEDxac4EOCoTSeJvv9Fw=="/>
+  
+    <POI MapID="934" type="Festivals.SAB.FurnitureShops" xpos="-245.895" ypos="232.547" zpos="-308.924" GUID="a2FwlUDI60ySc071XR/4FQ=="/>	
+	
+    <POI MapID="934" type="Festivals.SAB.FurnitureShops" xpos="313.372" ypos="244.999" zpos="21.4582" GUID="w3TMDuvgFki2V+PTBYWFTg=="/>
+  
+    <POI MapID="934" type="Festivals.SAB.FurnitureShops" xpos="301.593" ypos="262.918" zpos="-42.6873" GUID="l4Q518p690Wz2GtS8PBsdQ=="/>
+
+    <POI MapID="934" type="Festivals.SAB.FurnitureShops" xpos="504.458" ypos="275.852" zpos="112.01" GUID="J444q3RrVEmiejKiXD3NgQ=="/>
+  
+    <POI MapID="934" type="Festivals.SAB.FurnitureShops" xpos="505.617" ypos="276.744" zpos="103.966" GUID="SczFYaJNk0uUsP364GPpBA=="/>
+  
+    <POI MapID="934" type="Festivals.SAB.FurnitureShops" xpos="520.491" ypos="277.953" zpos="98.2783" GUID="mbFkjVJT8UWekJS6+Jqp2w=="/>
+
+    <POI MapID="934" type="Festivals.SAB.FurnitureShops" xpos="-63.2739" ypos="239.222" zpos="387.783" GUID="UwxiJre1ykSvezaK5wok7A=="/>
+
+    <POI MapID="934" type="Festivals.SAB.FurnitureShops" xpos="-377.289" ypos="334.571" zpos="188.503" GUID="4+1EcWOxGEmuv9VvMY2ukA=="/>
+  
+    <POI MapID="934" type="Festivals.SAB.FurnitureShops" xpos="-374.529" ypos="339.603" zpos="200.683" GUID="raeKYM/kxEKNS5NHtb8ILQ=="/>	
+    
+  </POIs>
+</OverlayData>

@@ -1,0 +1,106 @@
+<OverlayData>
+ 
+  <MarkerCategory name="Festivals">
+  	<MarkerCategory name="SAB">
+  		<MarkerCategory name="Shop" iconFile="Data\Gold_coin.png" alpha="0.9" iconSize="0.5"/>
+  	</MarkerCategory>
+  </MarkerCategory>
+ 
+  <POIs>
+  
+    <POI MapID="895" type="Festivals.SAB.Shop" xpos="-1164.08" ypos="48" zpos="517.246" GUID="zJs6S5iDB0qxxI2+6JXuhg=="/>
+	
+    <POI MapID="895" type="Festivals.SAB.Shop" xpos="-838.702" ypos="49.3" zpos="455.899" GUID="aQiwwYzHh0y7/fukrvZ6Hg=="/>	
+    
+    <POI MapID="895" type="Festivals.SAB.Shop" xpos="-371.8" ypos="53.7" zpos="466.048" GUID="MpycK9NfPUGlPIsVN+042g=="/>
+
+    <POI MapID="895" type="Festivals.SAB.Shop" xpos="-289.572" ypos="53.7" zpos="458.324" GUID="H565wcLeMU2O7kCuorWeTg=="/>
+
+    <POI MapID="895" type="Festivals.SAB.Shop" xpos="-227.143" ypos="53.7" zpos="431.387" GUID="Z9KDB8yRjEqSaDBQvYXioA=="/>
+
+    <POI MapID="895" type="Festivals.SAB.Shop" xpos="-449.04" ypos="63.9824" zpos="293.344" GUID="yIDN/ibqBEG6rgxkuA4Cnw=="/>
+
+    <POI MapID="895" type="Festivals.SAB.Shop" xpos="-353.989" ypos="57.2" zpos="353.148" GUID="0V3J5dq20UybKdJigBA65g=="/>
+
+    <POI MapID="895" type="Festivals.SAB.Shop" xpos="-282.48" ypos="40" zpos="341.835" GUID="1EQi0m5wAkuHtC7h+vwwBg=="/>
+
+    <POI MapID="895" type="Festivals.SAB.Shop" xpos="-358.809" ypos="39.0914" zpos="351.325" GUID="MBh59T1WZEa/JYiqDxMqyQ=="/>
+  
+    <POI MapID="895" type="Festivals.SAB.Shop" xpos="-358.772" ypos="40.7275" zpos="371.528" GUID="Yr7IR1hxxkiJAg0RUXt47w=="/>
+  
+    <POI MapID="895" type="Festivals.SAB.Shop" xpos="-355.078" ypos="44.0959" zpos="384.469" GUID="IYVpPBGfO0OubC3wKgcpsw=="/>
+  
+    <POI MapID="895" type="Festivals.SAB.Shop" xpos="-358.522" ypos="44.0835" zpos="375.263" GUID="NyO71oS860OOy7eQuAzjcQ=="/>
+  
+    <POI MapID="895" type="Festivals.SAB.Shop" xpos="-354.145" ypos="50.2808" zpos="386.162" GUID="puqTkWcURE+KpJZvNkp5iA=="/>
+	
+    <POI MapID="934" type="Festivals.SAB.Shop" xpos="-353.187" ypos="208.1" zpos="-399.181" GUID="eyQ3dEmuDU+gLaOk7xBfhQ=="/>
+
+    <POI MapID="934" type="Festivals.SAB.Shop" xpos="-113.295" ypos="210.614" zpos="-302.159" GUID="oO5rLrdcTk2JILEkmjmmbQ=="/>
+
+    <POI MapID="934" type="Festivals.SAB.Shop" xpos="-128.776" ypos="239.27" zpos="-390.357" GUID="rni76AsbDkCx1MMBQXoxMg=="/>
+	
+	<POI MapID="934" type="Festivals.SAB.Shop" xpos="-93.2491" ypos="239.229" zpos="-331.941" GUID="GOrqMiyaaEGy5VXxrZ6UJA=="/>
+  
+    <POI MapID="934" type="Festivals.SAB.Shop" xpos="-178.273" ypos="212.172" zpos="-242.472" GUID="hL9txEctAUicyThl4kJSAg=="/>
+  
+    <POI MapID="934" type="Festivals.SAB.Shop" xpos="-157.124" ypos="195.466" zpos="-213.566" GUID="2zOBi1XFGkm3w1mJD9Jwxw=="/>
+  
+    <POI MapID="934" type="Festivals.SAB.Shop" xpos="-171.722" ypos="197.18" zpos="-200.036" GUID="+TtxfkC8UkKcLSvE9NA/Gw=="/>
+  
+    <POI MapID="934" type="Festivals.SAB.Shop" xpos="-171.606" ypos="211.041" zpos="-208.366" GUID="2dvtFb9hRUi48MoY706QHQ=="/>
+  
+    <POI MapID="934" type="Festivals.SAB.Shop" xpos="-190.49" ypos="229.609" zpos="-219.546" GUID="fwUVXOJHkku92wtPat6Mag=="/>
+  
+    <POI MapID="934" type="Festivals.SAB.Shop" xpos="-223.29" ypos="234" zpos="-273.275" GUID="NogjRHqL+UChCFCnXS4NPg=="/>
+	
+    <POI MapID="934" type="Festivals.SAB.Shop" xpos="470.3" ypos="255.497" zpos="-201" GUID="ZS5KkyU3GESAktCadmA/QA=="/>
+
+    <POI MapID="934" type="Festivals.SAB.Shop" xpos="358.83" ypos="246.808" zpos="-223.396" GUID="iyf6aAxv0kuNvDEA9Gxn0Q=="/>
+  
+    <POI MapID="934" type="Festivals.SAB.Shop" xpos="385.211" ypos="250.631" zpos="-214.834" GUID="hitovWNsz0CT+3QuILNbwA=="/>
+
+    <POI MapID="934" type="Festivals.SAB.Shop" xpos="342.359" ypos="284.954" zpos="-51.2108" GUID="POdeO6XVjkWJGgd0sMcogA=="/>
+
+    <POI MapID="934" type="Festivals.SAB.Shop" xpos="482.505" ypos="278.604" zpos="-82.1174" GUID="qVlGpOlVVUu80u/lkDlKhQ=="/>
+
+    <POI MapID="934" type="Festivals.SAB.Shop" xpos="-4.73681" ypos="80.6409" zpos="62.887" GUID="A7KGjT3kIUWoJg1QipzV8A=="/>
+	
+	<POI MapID="934" type="Festivals.SAB.Shop" xpos="-2.63903" ypos="68.7121" zpos="104.07" GUID="xPv92cRfnUWigBC3HSTbEw=="/>
+  
+    <POI MapID="934" type="Festivals.SAB.Shop" xpos="-19.2665" ypos="69.2" zpos="121.803" GUID="jRtVgywrWUeNb9mseeQgDQ=="/>
+	
+    <POI MapID="934" type="Festivals.SAB.Shop" xpos="-414.017" ypos="360.1" zpos="472.589" GUID="rJ14kql+GECLxIGEzuIaBQ=="/>
+  
+    <POI MapID="934" type="Festivals.SAB.Shop" xpos="-420.72" ypos="360.1" zpos="467.138" GUID="mJwj8F9Ld0StnHsuWpJWCQ=="/>
+	
+	<POI MapID="934" type="Festivals.SAB.Shop" xpos="-415.046" ypos="359.914" zpos="387.615" GUID="7eCsGUENJUeWdV/HL6d2Yw=="/>
+  
+    <POI MapID="934" type="Festivals.SAB.Shop" xpos="-404.533" ypos="359.687" zpos="406.021" GUID="wFubP74fUkG523Rk6Wo2hg=="/>
+  
+    <POI MapID="934" type="Festivals.SAB.Shop" xpos="-412.109" ypos="360.074" zpos="390.943" GUID="/3vI3FN4/EycWJKMfIYcdQ=="/>
+  
+    <POI MapID="934" type="Festivals.SAB.Shop" xpos="-407.214" ypos="359.687" zpos="397.771" GUID="abY44L4GGEaQWu9dDVNlHQ=="/>
+  
+    <POI MapID="934" type="Festivals.SAB.Shop" xpos="-401.481" ypos="361.026" zpos="412.771" GUID="Xs7ADyVb/UWroZ4SgJ5T4w=="/>
+  
+    <POI MapID="934" type="Festivals.SAB.Shop" xpos="-395.281" ypos="362.109" zpos="410.867" GUID="EGWhZomHNEi+P18poPY4Xw=="/>
+  
+    <POI MapID="934" type="Festivals.SAB.Shop" xpos="-390.308" ypos="362.859" zpos="413.252" GUID="AvfN2Y3Zf0mnJmGfMFgnpg=="/>
+  
+    <POI MapID="934" type="Festivals.SAB.Shop" xpos="-392.789" ypos="363.638" zpos="419.137" GUID="+8yLFOZYR0Cl4obSPwzhvg=="/>
+  
+    <POI MapID="934" type="Festivals.SAB.Shop" xpos="-394.672" ypos="364.413" zpos="427.791" GUID="KToezn78+EG1jlwt0I+R0Q=="/>
+  
+    <POI MapID="934" type="Festivals.SAB.Shop" xpos="-399.018" ypos="365.38" zpos="431.346" GUID="cCClvlU6YU6l+38DddsbNw=="/>
+  
+    <POI MapID="934" type="Festivals.SAB.Shop" xpos="-403.542" ypos="365.99" zpos="435.013" GUID="1w8laPaMQkaOMVIxgGAp3g=="/>
+  
+    <POI MapID="934" type="Festivals.SAB.Shop" xpos="-407.349" ypos="366.6" zpos="438.118" GUID="iBghmxiU1UG6XXsBjemHDQ=="/>
+  
+    <POI MapID="934" type="Festivals.SAB.Shop" xpos="-413.134" ypos="364.068" zpos="443.687" GUID="Bo+rQsVgnUyV4cAo8MbDHA=="/>
+  
+    <POI MapID="934" type="Festivals.SAB.Shop" xpos="-411.041" ypos="363.649" zpos="448.595" GUID="QOqsj37Y+E61dMNR071jjQ=="/>
+	
+  </POIs>
+</OverlayData>

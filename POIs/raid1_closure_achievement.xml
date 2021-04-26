@@ -1,0 +1,28 @@
+<OverlayData>
+  <MarkerCategory name="Collectible">
+    <MarkerCategory name="SoldierTag" iconFile="Data\raid1_achievements.png" behavior="3"/>
+  </MarkerCategory>  
+
+  <POIs>
+    <POI MapID="1062" type="collectible.soldiertag" xpos="-179.417" ypos="43.4912" zpos="-715.788" GUID="Ha0HiR+q70SwZX4mRprajA=="/>
+  
+    <POI MapID="1062" type="collectible.soldiertag" xpos="-83.1274" ypos="44.0782" zpos="-704.972" GUID="aOD6CL4b3k64KFfm+Gd77A=="/>
+  
+    <POI MapID="1062" type="collectible.soldiertag" xpos="-149.886" ypos="50.1062" zpos="-631.796" GUID="WeKIm5iLTEypdR56CK8OwA=="/>
+  
+    <POI MapID="1062" type="collectible.soldiertag" xpos="-81.8997" ypos="50.0209" zpos="-654.667" GUID="4bMVAKjQSky6Kq02pFrNxg=="/>
+  
+    <POI MapID="1062" type="collectible.soldiertag" xpos="-61.063" ypos="43.87" zpos="-700.162" GUID="gVRI8xpFUUCb73jg+Kyrjg=="/>
+  
+    <POI MapID="1062" type="collectible.soldiertag" xpos="-204.635" ypos="67.4591" zpos="-475.968" GUID="4Bth3atRTkq83XmRWjq0ww=="/>
+  
+    <POI MapID="1062" type="collectible.soldiertag" xpos="-132.132" ypos="63.1783" zpos="-445.195" GUID="qW+Qdi/eFkuf6/aO/rFeGg=="/>
+  
+    <POI MapID="1062" type="collectible.soldiertag" xpos="-121.779" ypos="61.4288" zpos="-448.753" GUID="gmM+lMm9/0GdSaPtvEGr5g=="/>
+  
+    <POI MapID="1062" type="collectible.soldiertag" xpos="-147.091" ypos="26.7585" zpos="-222.407" GUID="9GrYsC+ztkGrNjtc/+FGGw=="/>
+  
+    <POI MapID="1062" type="collectible.soldiertag" xpos="-152.229" ypos="26.924" zpos="-221.959" GUID="9i8qCL3NJ0CuoHB7ws7rSQ=="/>
+  
+  </POIs>
+</OverlayData>

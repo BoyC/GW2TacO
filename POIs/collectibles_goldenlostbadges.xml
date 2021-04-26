@@ -1,0 +1,67 @@
+<OverlayData>
+  <MarkerCategory name="Collectible">
+    <MarkerCategory name="GoldenLostBadges" DisplayName="Golden Lost Badges" iconFile="Data\The_Silverwastes.png" behavior="3" heightOffset="0"/>
+  </MarkerCategory>  
+
+  <POIs>
+    <POI MapID="1015" type="collectible.goldenlostbadges" xpos="271.727" ypos="245.843" zpos="102.463" GUID="2RSAGsuS5EaPrU+n4y1Jjw=="/>
+  
+    <POI MapID="1015" type="collectible.goldenlostbadges" xpos="273.552" ypos="274.036" zpos="170.275" GUID="JsKyTBTgKk6GgXGsnC07Bw=="/>
+  
+    <POI MapID="1015" type="collectible.goldenlostbadges" xpos="211.109" ypos="280.176" zpos="148.19" GUID="mOzN3v/a4k+ful+6jmoL3g=="/>
+  
+    <POI MapID="1015" type="collectible.goldenlostbadges" xpos="144.663" ypos="254.505" zpos="93.7588" GUID="ncE5bnI79k6abG/601pr2A=="/>
+  
+    <POI MapID="1015" type="collectible.goldenlostbadges" xpos="255.594" ypos="328.936" zpos="-30.945" GUID="Yb3EQtGCek69Mrhq1fu5nQ=="/>
+  
+    <POI MapID="1015" type="collectible.goldenlostbadges" xpos="247.56" ypos="306.079" zpos="8.31207" GUID="YG8o5JQViEOOJcaYx8Jshw=="/>
+  
+    <POI MapID="1015" type="collectible.goldenlostbadges" xpos="394.653" ypos="343.797" zpos="47.8903" GUID="ntoMqGjELke7EGNp70fNkg=="/>
+  
+    <POI MapID="1015" type="collectible.goldenlostbadges" xpos="423.651" ypos="297.004" zpos="31.3475" GUID="4Ff4jQC/0UKDd4mlI6WSnA=="/>
+  
+    <POI MapID="1015" type="collectible.goldenlostbadges" xpos="265.335" ypos="305.936" zpos="-169.644" GUID="1dSKJL/FE0KFixBj1A+xOw=="/>
+  
+    <POI MapID="1015" type="collectible.goldenlostbadges" xpos="374.878" ypos="329.405" zpos="-91.7335" GUID="UMTLsnSA1EOt13ceLHQRYQ=="/>
+  
+    <POI MapID="1015" type="collectible.goldenlostbadges" xpos="304.875" ypos="347.475" zpos="-414.911" GUID="PQlZccT0RkGXB55+Yerfdg=="/>
+  
+    <POI MapID="1015" type="collectible.goldenlostbadges" xpos="352.522" ypos="449.088" zpos="-301.148" GUID="zFCVG1Rat0SIC7PZtef4xA=="/>
+  
+    <POI MapID="1015" type="collectible.goldenlostbadges" xpos="493.533" ypos="443.444" zpos="-348.823" GUID="bkMV0rwpTU2/dpdeNomZBA=="/>
+  
+    <POI MapID="1015" type="collectible.goldenlostbadges" xpos="442.705" ypos="460.087" zpos="-246.666" GUID="8+uqjh3VLU6IRbCCGmmQ7Q=="/>
+  
+    <POI MapID="1015" type="collectible.goldenlostbadges" xpos="239.944" ypos="383.803" zpos="-156.469" GUID="CniPybfTi06RsxX0WGki8A=="/>
+  
+    <POI MapID="1015" type="collectible.goldenlostbadges" xpos="-45.6952" ypos="462.714" zpos="-66.6085" GUID="O4QppRalm0yR5D39KKq1/g=="/>
+  
+    <POI MapID="1015" type="collectible.goldenlostbadges" xpos="-23.8932" ypos="369.91" zpos="-0.320774" GUID="0KuTfbdlP06A5zRoDDAu9g=="/>
+  
+    <POI MapID="1015" type="collectible.goldenlostbadges" xpos="-6.31905" ypos="256.683" zpos="45.286" GUID="XhuN2WncrUW8gDDvDHWsPA=="/>
+  
+    <POI MapID="1015" type="collectible.goldenlostbadges" xpos="71.6221" ypos="240.503" zpos="-67.8006" GUID="QhP11HRb8kuNccgk9RSKrQ=="/>
+  
+    <POI MapID="1015" type="collectible.goldenlostbadges" xpos="-169.923" ypos="185.576" zpos="-75.4225" GUID="f9/4oq6Wfk6JMt4kfFyuew=="/>
+  
+    <POI MapID="1015" type="collectible.goldenlostbadges" xpos="-273.593" ypos="16.1565" zpos="-21.388" GUID="Irg7vdLr60KbDSn+GWXD4Q=="/>
+  
+    <POI MapID="1015" type="collectible.goldenlostbadges" xpos="-540.171" ypos="65.4292" zpos="-208.837" GUID="yQDKJVLTpkm/E2trpQq3xA=="/>
+  
+    <POI MapID="1015" type="collectible.goldenlostbadges" xpos="-575.12" ypos="175.688" zpos="-235.567" GUID="60p91JeNq0yciG98bx8SxQ=="/>
+  
+    <POI MapID="1015" type="collectible.goldenlostbadges" xpos="-484.173" ypos="316.97" zpos="-267.727" GUID="jo19vvk6g02qj2CEFP9yxw=="/>
+  
+    <POI MapID="1015" type="collectible.goldenlostbadges" xpos="219.445" ypos="376.681" zpos="406.931" GUID="6vtpsgd4JUGEn9ARLQi7UA=="/>
+  
+    <POI MapID="1015" type="collectible.goldenlostbadges" xpos="219.379" ypos="385.194" zpos="267.368" GUID="T24OiyE+k0afu3d42moQfA=="/>
+  
+    <POI MapID="1015" type="collectible.goldenlostbadges" xpos="-22.822" ypos="419.677" zpos="461.986" GUID="nGOvk8n+1kiWOqMdY25xtw=="/>
+  
+    <POI MapID="1015" type="collectible.goldenlostbadges" xpos="-127.584" ypos="421.197" zpos="-50.7451" GUID="WExdRNlQNkGnCm6P3Dz0xg=="/>
+  
+    <POI MapID="1015" type="collectible.goldenlostbadges" xpos="-440.667" ypos="27.13" zpos="-123.067" GUID="z+OWDoi6MEa5Xg1oh4eq5w=="/>
+  
+    <POI MapID="1015" type="collectible.goldenlostbadges" xpos="410.315" ypos="300.78" zpos="166.161" GUID="Ofrs5YjVq0O7ljW1dLL2eQ=="/>
+  </POIs>
+</OverlayData>

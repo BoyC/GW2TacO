@@ -1,0 +1,37 @@
+*	Bounding Box
+*	Line
+*	Matrix
+*	Plane
+*	PRS
+*	Quaternion
+*	Rectangle (mfc-t csekk)
+x	Sphere
+	Spline
+*	Vector
+*	Color
+G	DateTime
+*	Logger
+*	Random
+*	String
+*	Timer
+-	Profile
+*	RingBuffer
+*	Array
+*	Assert
+*	Constants
+*	CriticalSection
+*	Dictionary
+*	Memory
+*	StreamReader
+*	StreamWriter
+*	Types
+*	Socket <- !!!!!!!!! GetTickCount-T NEM IDE KENE RAKNI!; Incoming streamre sajat buffert hogy lehessen tudni mennyi adat jott mar be es akkor lehessen feldolgozni ha mar eleg
+	-buffered socket
+x	Filelist
+*	FloatControl
+	Hashing
+
+*	xml parser
+*	zlib compress
+*	stringarray
+	

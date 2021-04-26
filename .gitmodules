@@ -1,0 +1,3 @@
+[submodule "Bedrock"]
+	path = Bedrock
+	url = https://github.com/ConspiracyHu/Bedrock

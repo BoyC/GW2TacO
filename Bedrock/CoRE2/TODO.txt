@@ -1,0 +1,80 @@
+x	VertexBuffer
+x	IndexBuffer
+x	Texture
+x	RenderTarget
+	Shader
+x	RenderState
+x	VertexFormat
+	Material
+	Mesh
+	Spline
+	Camera
+*	WindowHandler
+*	Resource
+*	Device
+
+*	DX9 Vertexbuffer create refactor
+*	DX11 Vertexbuffer create refactor
+	DX9 Indexbuffer create refactor
+	DX11 Indexbuffer create refactor
+	DX11 Textures
+
+	UpdateSubResource a vertexbuffer valtoztatasra
+
+
+Shader constant types
+
+-Scene
+	*Scene constants (camera position, lights)
+	-Layer
+		*Layer constants (shadow matrices, rendertarget positions, etc) (can these be merged into scene constants?)
+
+		-Render list sorted by materials and passes
+			*Tech constants
+			*Pass constants
+			-Atoms
+				*Variables (tech+pass vars combined)
+				*External variables (separate buffer accessed by the game)
+
+
+Scene: Per frame, global
+	Camera, Cam and View Matrices
+	Fog data
+	Lighting data
+	Shadow fadeout data
+	
+Layer: Per layer, global
+	Shadow Matrices (could be merged with cam/view matrices?)
+	Rendertarget, viewport data
+
+Object: (automatic + game data) Per frame, per object
+	worldmat
+	tintcolor
+	decay
+
+Pass-static: Init/edit time, object
+	static/non animatable material settings
+
+Pass-dynamic: per frame, per pass, per object
+	selfillumcolor
+
+	texture
+	datalayer
+	envmap
+	envmap
+	shadowmap
+
+
+	Scene -> Object -> Layer -> Tech -> Pass
+	Scene - global scene data
+	Object - global object data (position, etc)
+	Object - game data
+	Layer - global layer data (rendertarget size, viewport, etc)
+	Tech - common tech data (static/dynamic)
+	pass - pass data (static/dynamic)
+
+	sc=1 < lc << oc
+
+	Scene (1*sc) < Layer (1*lc) < ObjectGroup (1*og) < Object (1*oc) < Techs (init time) < Atoms (1*oc*tc)
+					^-layer stat	^-game data			^-boning	    ^-tech static		^-tech dynamic
+													

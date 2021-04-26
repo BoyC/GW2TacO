@@ -1,0 +1,38 @@
+<hpgrids>
+	<grid mapid="1062" centerx="-121.367" centery="61.005" centerz="-523.903" radius="40" name="ValeGuardian">
+		<percentage value="33" color="80ffffff"/>
+		<percentage value="66" color="80ffffff"/>
+	</grid>
+	<grid mapid="1062" centerx="41.755" centery="50.5964" centerz="-112.6103" radius="90" name="Gorseval">
+		<percentage value="32" color="80ffffff"/>
+		<percentage value="65" color="80ffffff"/>
+	</grid>
+	<grid mapid="1062" centerx="-129.058" centery="62.4114" centerz="84.9046" radius="80" name="Sabetha">
+		<percentage value="25" color="80ffffff"/>
+		<percentage value="50" color="80ffffff"/>
+		<percentage value="75" color="80ffffff"/>
+	</grid>
+	<grid mapid="1149" centerx="197.181" centery="0.604144" centerz="-13.8096" radius="60" name="Slothasor">
+		<percentage value="10" color="80ffffff"/>
+		<percentage value="19" color="80ffffff"/>
+		<percentage value="40" color="80ffffff"/>
+		<percentage value="59" color="80ffffff"/>
+		<percentage value="79" color="80ffffff"/>
+	</grid>
+	<grid mapid="1149" centerx="-150.859" centery="131.523" centerz="149.735" radius="41.432106" name="Matthias">
+		<percentage value="20" color="40ffffff"/>
+		<percentage value="40" color="80ffffff"/>
+		<percentage value="60" color="80ffffff"/>
+		<percentage value="80" color="80ffffff"/>
+	</grid>
+	<grid mapid="1156" centerx="-97.98" centery="150.15" centerz="237.25" radius="30.60" name="Keep Construct">
+		<percentage value="33" color="80ffffff"/>
+		<percentage value="66" color="80ffffff"/>
+	</grid>
+	<grid mapid="1156" centerx="-77.0612" centery="512.354" centerz="-80.4387" radius="100" name="Xera">
+		<percentage value="90" color="80ffffff"/>
+		<percentage value="50" color="80ffffff"/>
+		<percentage value="40" color="8080ff80"/>
+		<percentage value="20" color="8080ff80"/>
+	</grid>
+</hpgrids>

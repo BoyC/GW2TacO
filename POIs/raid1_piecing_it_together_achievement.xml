@@ -1,0 +1,33 @@
+<OverlayData>
+  <MarkerCategory name="Collectible">
+    <MarkerCategory name="JournalEntry" iconFile="Data\raid1_achievements.png" behavior="3"/>
+  </MarkerCategory>  
+
+  <POIs>
+    <POI MapID="1062" type="collectible.journalentry" xpos="-266.477" ypos="52.4114" zpos="-628.789" GUID="XtFDXUUJO0aDsDzjZOt7NQ=="/>
+  
+    <POI MapID="1062" type="collectible.journalentry" xpos="-32.8246" ypos="57.4231" zpos="-574.184" GUID="cYtCeJ+oH0iECNETdKVO1Q=="/>
+  
+    <POI MapID="1062" type="collectible.journalentry" xpos="-32.5553" ypos="39.9995" zpos="-295.739" GUID="agiWbTxiUkepAJ5IIzyETg=="/>
+  
+    <POI MapID="1062" type="collectible.journalentry" xpos="-136.047" ypos="42.1139" zpos="-275.673" GUID="WbD16EVNO0OmQKSkbsJB/A=="/>
+  
+    <POI MapID="1062" type="collectible.journalentry" xpos="-45.4445" ypos="46.154" zpos="-228.635" GUID="nk9srGgQm06moQezvQ2EXQ=="/>
+  
+    <POI MapID="1062" type="collectible.journalentry" xpos="-140.928" ypos="63.2188" zpos="-170.182" GUID="RoUkk+JEQky8euDL7PxT/A=="/>
+  
+    <POI MapID="1062" type="collectible.journalentry" xpos="29.325" ypos="55.7629" zpos="213.281" GUID="obi+y3rf00u3JNiqrtWlaQ=="/>
+  
+    <POI MapID="1062" type="collectible.journalentry" xpos="-23.981" ypos="49.9197" zpos="176.47" GUID="jOramCCU8kiFw+LxVl5lnQ=="/>
+  
+    <POI MapID="1062" type="collectible.journalentry" xpos="-16.6295" ypos="61.3915" zpos="83.0691" GUID="8BDVIXBL6UCV6DFH20w2ig=="/>
+  
+    <POI MapID="1062" type="collectible.journalentry" xpos="-214.192" ypos="99.729" zpos="4.45443" GUID="sCzJWn5BMkSqCrsQ7Z8Aew=="/>
+  
+    <POI MapID="1062" type="collectible.journalentry" xpos="-218.852" ypos="96.2856" zpos="116.541" GUID="QfguGY/v7k6mLDQTgerE9A=="/>
+  
+    <POI MapID="1062" type="collectible.journalentry" xpos="-173.447" ypos="98.5591" zpos="40.5802" GUID="UgbmPW5nb06kEeu0Kp7fUg=="/>
+  
+    <POI MapID="1062" type="collectible.journalentry" xpos="-233.641" ypos="122.353" zpos="8.14578" GUID="FvuHMk92oU6AdJ+90wKehA=="/>
+  </POIs>
+</OverlayData>

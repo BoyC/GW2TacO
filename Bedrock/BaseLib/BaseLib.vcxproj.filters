@@ -1,0 +1,257 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Header Files\Basic Classes">
+      <UniqueIdentifier>{4b09fadc-ec52-4a35-92b8-ca96b59ffaa0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\System">
+      <UniqueIdentifier>{97d932b1-5c79-49a0-b5af-710b8a7e74a9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Basic Classes\Math">
+      <UniqueIdentifier>{29fcc7d4-cfcb-4ba7-bed8-003010349051}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\System">
+      <UniqueIdentifier>{f12d7b4c-3824-42e7-9041-e3bac36673b5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Basic Classes">
+      <UniqueIdentifier>{85dd8594-25fe-43d3-a8f5-f33d6bbef747}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Basic Classes\Math">
+      <UniqueIdentifier>{57f4bc48-dd88-456f-b08b-12dc7e63ad1e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Basic Classes\I/O">
+      <UniqueIdentifier>{79d70707-d271-48eb-ab36-1490dbe218a0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Basic Classes\I/O">
+      <UniqueIdentifier>{92e4ca3c-6cd2-4032-9ec7-54d0af856e5e}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Array.h">
+      <Filter>Header Files\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Dictionary.h">
+      <Filter>Header Files\System</Filter>
+    </ClInclude>
+    <ClInclude Include="BBox.h">
+      <Filter>Header Files\Basic Classes\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Line.h">
+      <Filter>Header Files\Basic Classes\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Matrix.h">
+      <Filter>Header Files\Basic Classes\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Plane.h">
+      <Filter>Header Files\Basic Classes\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="PRS.h">
+      <Filter>Header Files\Basic Classes\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Quaternion.h">
+      <Filter>Header Files\Basic Classes\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Rectangle.h">
+      <Filter>Header Files\Basic Classes\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Sphere.h">
+      <Filter>Header Files\Basic Classes\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Spline.h">
+      <Filter>Header Files\Basic Classes\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector.h">
+      <Filter>Header Files\Basic Classes\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Color.h">
+      <Filter>Header Files\Basic Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Constants.h">
+      <Filter>Header Files\System</Filter>
+    </ClInclude>
+    <ClInclude Include="CriticalSection.h">
+      <Filter>Header Files\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Memory.h">
+      <Filter>Header Files\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Random.h">
+      <Filter>Header Files\Basic Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="DateTime.h">
+      <Filter>Header Files\Basic Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Types.h">
+      <Filter>Header Files\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Assert.h">
+      <Filter>Header Files\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer.h">
+      <Filter>Header Files\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Profile.h">
+      <Filter>Header Files\System</Filter>
+    </ClInclude>
+    <ClInclude Include="FloatControl.h">
+      <Filter>Header Files\System</Filter>
+    </ClInclude>
+    <ClInclude Include="SpecMath.h">
+      <Filter>Header Files\Basic Classes\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="StackTracker.h">
+      <Filter>Header Files\System</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseConfig.h" />
+    <ClInclude Include="BaseLib.h" />
+    <ClInclude Include="ImageDecompressor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Hash.h">
+      <Filter>Header Files\Basic Classes\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Archive.h">
+      <Filter>Header Files\Basic Classes\I/O</Filter>
+    </ClInclude>
+    <ClInclude Include="FileList.h">
+      <Filter>Header Files\Basic Classes\I/O</Filter>
+    </ClInclude>
+    <ClInclude Include="Socket.h">
+      <Filter>Header Files\Basic Classes\I/O</Filter>
+    </ClInclude>
+    <ClInclude Include="StreamReader.h">
+      <Filter>Header Files\Basic Classes\I/O</Filter>
+    </ClInclude>
+    <ClInclude Include="StreamWriter.h">
+      <Filter>Header Files\Basic Classes\I/O</Filter>
+    </ClInclude>
+    <ClInclude Include="Logger.h">
+      <Filter>Header Files\Basic Classes\I/O</Filter>
+    </ClInclude>
+    <ClInclude Include="EnumHelpers.h">
+      <Filter>Header Files\Basic Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="CrashTracker.h">
+      <Filter>Header Files\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Thread.h">
+      <Filter>Header Files\System</Filter>
+    </ClInclude>
+    <ClInclude Include="JobHandler.h">
+      <Filter>Header Files\Basic Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="String.h">
+      <Filter>Header Files\Basic Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="RingBuffer.h">
+      <Filter>Header Files\System</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="TODO.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="CriticalSection.cpp">
+      <Filter>Source Files\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Timer.cpp">
+      <Filter>Source Files\System</Filter>
+    </ClCompile>
+    <ClCompile Include="String.cpp">
+      <Filter>Source Files\Basic Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Memory.cpp">
+      <Filter>Source Files\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Dictionary.cpp">
+      <Filter>Source Files\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Profile.cpp">
+      <Filter>Source Files\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Quaternion.cpp">
+      <Filter>Source Files\Basic Classes\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="StackTracker.cpp">
+      <Filter>Source Files\System</Filter>
+    </ClCompile>
+    <ClCompile Include="ImageDecompressor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Archive.cpp">
+      <Filter>Source Files\Basic Classes\I/O</Filter>
+    </ClCompile>
+    <ClCompile Include="FileList.cpp">
+      <Filter>Source Files\Basic Classes\I/O</Filter>
+    </ClCompile>
+    <ClCompile Include="Socket.cpp">
+      <Filter>Source Files\Basic Classes\I/O</Filter>
+    </ClCompile>
+    <ClCompile Include="StreamReader.cpp">
+      <Filter>Source Files\Basic Classes\I/O</Filter>
+    </ClCompile>
+    <ClCompile Include="StreamWriter.cpp">
+      <Filter>Source Files\Basic Classes\I/O</Filter>
+    </ClCompile>
+    <ClCompile Include="Logger.cpp">
+      <Filter>Source Files\Basic Classes\I/O</Filter>
+    </ClCompile>
+    <ClCompile Include="EnumHelpers.cpp">
+      <Filter>Source Files\Basic Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Rectangle.cpp">
+      <Filter>Source Files\Basic Classes\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="CrashTracker.cpp">
+      <Filter>Source Files\System</Filter>
+    </ClCompile>
+    <ClCompile Include="JobHandler.cpp">
+      <Filter>Source Files\Basic Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="BBox.cpp">
+      <Filter>Source Files\Basic Classes\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Line.cpp">
+      <Filter>Source Files\Basic Classes\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Matrix.cpp">
+      <Filter>Source Files\Basic Classes\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Plane.cpp">
+      <Filter>Source Files\Basic Classes\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="PRS.cpp">
+      <Filter>Source Files\Basic Classes\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="SpecMath.cpp">
+      <Filter>Source Files\Basic Classes\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Sphere.cpp">
+      <Filter>Source Files\Basic Classes\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Vector.cpp">
+      <Filter>Source Files\Basic Classes\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Color.cpp">
+      <Filter>Source Files\Basic Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Random.cpp">
+      <Filter>Source Files\Basic Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="FloatControl.cpp">
+      <Filter>Source Files\System</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,75 @@
+<OverlayData>
+  <MarkerCategory name="Tactical.GuildMission.Bounty">
+    <MarkerCategory name="SotzzTheScallywag" iconFile="Data/Bounty_bw.png" color="ff80ff80" DisplayName="Sotzz The Scallywag"/>
+  </MarkerCategory>
+  <POIs>
+    <POI type="tactical.guildmission.bounty.sotzzthescallywag" MapID="24" xpos="398.382" ypos="11.7069" zpos="-121.632" GUID="KJbdFJqllEOTRWCrZPksnQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.sotzzthescallywag" MapID="24" xpos="444.341" ypos="1.84666" zpos="-40.5923" GUID="WFC7Ym5G00C3Z1LnZMKMTQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.sotzzthescallywag" MapID="24" xpos="365.772" ypos="11.6316" zpos="-200.264" GUID="pRFtJbbx9EGqEGohiS7ZoQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.sotzzthescallywag" MapID="24" xpos="288.938" ypos="5.7166" zpos="-153.153" GUID="CyQaAAvb0022H4JA6uXCKw=="/>
+  
+    <POI type="tactical.guildmission.bounty.sotzzthescallywag" MapID="24" xpos="321.624" ypos="1.6767" zpos="-86.6726" GUID="hpL6+InEq0+F4PSxUIe4EA=="/>
+  
+    <POI type="tactical.guildmission.bounty.sotzzthescallywag" MapID="24" xpos="279.008" ypos="1.56052" zpos="-67.0668" GUID="zZCirNB0R0uBhMFa7fsXVA=="/>
+  
+    <POI type="tactical.guildmission.bounty.sotzzthescallywag" MapID="24" xpos="170.218" ypos="1.23756" zpos="-81.1223" GUID="1w2CUPS9o0aPwDMV9fSc+w=="/>
+  
+    <POI type="tactical.guildmission.bounty.sotzzthescallywag" MapID="24" xpos="127.22" ypos="0.648991" zpos="-108.379" GUID="3V1E7+qp0kyzIl9fRbZDkg=="/>
+  
+    <POI type="tactical.guildmission.bounty.sotzzthescallywag" MapID="24" xpos="96.8577" ypos="6.73161" zpos="-135.29" GUID="NfJdmqvMc0iVxzDMHJsI3Q=="/>
+  
+    <POI type="tactical.guildmission.bounty.sotzzthescallywag" MapID="24" xpos="83.3042" ypos="16.4715" zpos="-359.121" GUID="3u6/tx310UuwVrzftVTfhA=="/>
+  
+    <POI type="tactical.guildmission.bounty.sotzzthescallywag" MapID="24" xpos="67.5974" ypos="16.0769" zpos="-372.982" GUID="RWljoWS6Y0GUDJO0oFSEoA=="/>
+  
+    <POI type="tactical.guildmission.bounty.sotzzthescallywag" MapID="24" xpos="151.489" ypos="18.1895" zpos="-306.352" GUID="IN6MM/TEREukDBPB3K2Awg=="/>
+  
+    <POI type="tactical.guildmission.bounty.sotzzthescallywag" MapID="24" xpos="321.261" ypos="6.57256" zpos="-267.129" GUID="7iDjCxn8B0mbFiPFef17tQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.sotzzthescallywag" MapID="24" xpos="322.663" ypos="12.5111" zpos="-373.202" GUID="sai2fBLnjkShOtkMpDv/5A=="/>
+  
+    <POI type="tactical.guildmission.bounty.sotzzthescallywag" MapID="24" xpos="384.571" ypos="9.54089" zpos="-390.867" GUID="v0O0tTtLmkOCiJ3Y36eYqQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.sotzzthescallywag" MapID="24" xpos="402.543" ypos="7.42485" zpos="-349.716" GUID="148WktChE0KZ6rwinWetXA=="/>
+  
+    <POI type="tactical.guildmission.bounty.sotzzthescallywag" MapID="24" xpos="434.637" ypos="5.98955" zpos="-314.11" GUID="CwCRCBowNUC1QLzXUTmoqw=="/>
+  
+    <POI type="tactical.guildmission.bounty.sotzzthescallywag" MapID="24" xpos="484.266" ypos="2.12527" zpos="-261.1" GUID="l/X5gzS4WE+VFYlIwFlVLQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.sotzzthescallywag" MapID="24" xpos="428.341" ypos="10.3793" zpos="-414.169" GUID="eSDxyUkX5EOiyUpv5uV9jQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.sotzzthescallywag" MapID="24" xpos="577.446" ypos="3.09404" zpos="-92.0194" GUID="9okyVUPl5kqxQfVlFXf2Bg=="/>
+  
+    <POI type="tactical.guildmission.bounty.sotzzthescallywag" MapID="24" xpos="637.627" ypos="13.1428" zpos="-53.6154" GUID="NCad9mz0hE+0wdxseDULbQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.sotzzthescallywag" MapID="24" xpos="689.471" ypos="21.23" zpos="-75.9956" GUID="nUm5OTQfl0Kl96EuDFFVag=="/>
+  
+    <POI type="tactical.guildmission.bounty.sotzzthescallywag" MapID="24" xpos="735.566" ypos="23.4302" zpos="-59.4109" GUID="hOwkMij9sEe/ZdfO9MTYdw=="/>
+  
+    <POI type="tactical.guildmission.bounty.sotzzthescallywag" MapID="24" xpos="600.635" ypos="14.1354" zpos="38.3925" GUID="s/o5crbPbkaTgtHGA6hRWQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.sotzzthescallywag" MapID="24" xpos="566.081" ypos="4.65069" zpos="90.2126" GUID="d5zz35fKgE+MwrUV1pFrHw=="/>
+  
+    <POI type="tactical.guildmission.bounty.sotzzthescallywag" MapID="24" xpos="538.833" ypos="3.59331" zpos="122.983" GUID="wAjNvp3FokajmJIZZJ9wEw=="/>
+  
+    <POI type="tactical.guildmission.bounty.sotzzthescallywag" MapID="24" xpos="423.948" ypos="1.43252" zpos="235.123" GUID="f/5ja1a8vEysx2GAzgvKIQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.sotzzthescallywag" MapID="24" xpos="400.162" ypos="1.59633" zpos="285.832" GUID="al5UeB7fwUiJ81cj33Z56g=="/>
+  
+    <POI type="tactical.guildmission.bounty.sotzzthescallywag" MapID="24" xpos="308.332" ypos="1.84527" zpos="341.385" GUID="7c3+MkHOM0OU1g7/cnq9Aw=="/>
+  
+    <POI type="tactical.guildmission.bounty.sotzzthescallywag" MapID="24" xpos="235.519" ypos="1.82513" zpos="380.711" GUID="HiTrDf5P5kyTlmWXja9ScA=="/>
+  
+    <POI type="tactical.guildmission.bounty.sotzzthescallywag" MapID="24" xpos="248.672" ypos="1.004" zpos="172.684" GUID="XNRd8vAuLUC7gkyROfE0VA=="/>
+  
+    <POI type="tactical.guildmission.bounty.sotzzthescallywag" MapID="24" xpos="213.993" ypos="1.89578" zpos="-166.014" GUID="F3ASFJANXky96vGykSKJsQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.sotzzthescallywag" MapID="24" xpos="84.4191" ypos="16.2365" zpos="-265.275" GUID="SvxIZm+vkkeMboFxTpx9MA=="/>
+  
+    <POI type="tactical.guildmission.bounty.sotzzthescallywag" MapID="24" xpos="-1003.7" ypos="14.0247" zpos="-350.309" GUID="jI+BJas5E0Ki3c3qHrjjGw=="/>
+
+  </POIs>
+</OverlayData>

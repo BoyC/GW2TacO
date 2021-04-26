@@ -1,0 +1,172 @@
+* 
+{
+	font:UniFont;
+	text-transform:uppercase;
+	scrollbar-size:11px;
+	scrollbar-button-size:11px;
+	scrollbar-thumb-minimum-size:16px;
+	scrollbar-background-horizontal:skin(sb_h_b);
+	scrollbar-background-vertical:skin(sb_v_b);
+	scrollbar-thumb-horizontal:skin(thumb_horizontal_normal);
+	scrollbar-thumb-vertical:skin(thumb_vertical_normal);
+	scrollbar-up:skin(sb_u_n);
+	scrollbar-down:skin(sb_d_n);
+	scrollbar-left:skin(sb_l_n);
+	scrollbar-right:skin(sb_r_n);
+}
+          
+label
+{
+	text-align:left;
+}    
+
+list
+{
+	text-align:left;
+}
+
+tpgui
+{
+	margin:0px;
+}
+
+#listnames label
+{
+	text-align:center;
+}
+
+#topbox
+{
+	margin:1px;
+	child-layout:vertical;
+	child-fill-x:true;
+	child-fill-y:true;
+	child-spacing:1px;
+}
+
+#itemname
+{
+	height:15px;
+	child-layout:horizontal;
+	child-fill-x:true;
+	child-fill-y:true;
+	padding:1px;
+	width:100%;
+}
+
+.listbox
+{
+	width:100%;
+	left:0px;
+	child-layout:horizontal;
+	child-fill-x:true;
+	child-fill-y:true;
+	child-spacing:1px;
+	height:15px;
+	child-align-x:center;
+}
+
+#lists
+{
+	height:350px;
+}
+
+#params
+{
+	height:200px;
+}
+
+label
+{                
+	height:15px;
+}
+
+button
+{
+	height:15px;
+	width:150px;
+}
+
+textbox
+{
+	width:150px;
+	border:1px;
+}
+
+#itembox label
+{
+	width:100%;
+	text-align:left;
+	left:3px;
+}
+
+#ID
+{
+	width:50px;
+}
+
+#name
+{
+	height:15px;
+}
+
+#itembox
+{
+	child-layout:vertical;
+	child-spacing:1px;
+	padding: 1px;
+	margin:0px;
+}
+
+.labelinput
+{
+	child-layout:horizontal;
+	child-fill-x:true;
+	child-fill-y:true;
+	child-spacing:1px;
+	width:100%;
+	height:15px;
+}
+
+.labelinput label
+{
+	width:120px;
+}
+
+textbox
+{
+	padding:1px;
+	padding-left:2px;
+}
+
+list
+{
+	padding:0px;
+}
+
+#itembox
+{
+	margin:1px;
+}
+
+console
+{
+	border:1px;
+	width:100%;
+	padding:1px;
+}
+
+.smalltext {
+    font:codelight32;
+    padding-top:8px;
+    height:44px;
+    text-align:center;
+    vertical-align:top;
+}
+
+.largetext {
+    font:codebold64;
+    height:68px;
+    text-align:center;
+    vertical-align:top;
+}

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<deployconfig>
+	<compiler>C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\IDE\devenv.com</compiler>
+	<buildcountheaderdir>.\</buildcountheaderdir>
+	<buildcountexe>buildcounter.exe</buildcountexe>
+	<compilerparams>GW2TacO.sln /rebuild Release</compilerparams>
+	<compiledexe>release\GW2TacO.exe</compiledexe>
+	<buildidformat>GW2TacO_%.3dr</buildidformat>
+	<outputdir>Builds\</outputdir>
+	<archivemask>GW2TacO_%.3dr</archivemask>
+
+	<buildfile>
+		<sourcepath>release\</sourcepath>
+		<mask>GW2TacO.exe</mask>
+		<mask>GW2TacO.pdb</mask>
+	</buildfile>
+
+	<buildfile>
+		<sourcepath>Data\</sourcepath>
+		<destpath>Data\</destpath>
+		<mask>*.png</mask>
+	</buildfile>
+
+	<buildfile>
+		<sourcepath>Data\Guildraces\</sourcepath>
+		<destpath>Data\Guildraces\</destpath>
+		<mask>*.png</mask>
+	</buildfile>
+
+	<buildfile>
+		<sourcepath>POIs\</sourcepath>
+		<destpath>POIs\</destpath>
+		<mask>!pois.txt</mask>
+		<mask>keyrequired*.xml</mask>
+		<mask>collectibles*.xml</mask>
+		<mask>raid1*.xml</mask>
+		<mask>SAB*.xml</mask>
+		<mask>GuildMission*.xml</mask>
+		<mask>Adventure*.xml</mask>
+		<mask>Festival*.xml</mask>
+		<mask>JP*.xml</mask>
+		<mask>GuildRaces*.xml</mask>
+	</buildfile>
+
+	<buildfile>
+		<sourcepath>POIs\Data\</sourcepath>
+		<destpath>POIs\Data\</destpath>
+		<mask>*.png</mask>
+	</buildfile>
+
+	<buildfile>
+		<sourcepath>.\</sourcepath>
+		<destpath>.\</destpath>
+		<mask>maptimer.xml</mask>
+		<mask>hpgrids.xml</mask>
+		<mask>categorydata.xml</mask>
+		<mask>locationaltimers.xml</mask>
+		<mask>UI_small.css</mask>
+		<mask>UI_normal.css</mask>
+		<mask>UI_large.css</mask>
+		<mask>UI_larger.css</mask>
+		<mask>UI.wbs</mask>
+		<mask>UI.xml</mask>
+		<mask>TacO_Language_*.xml</mask>
+	</buildfile>
+
+</deployconfig>

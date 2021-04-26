@@ -1,0 +1,41 @@
+<OverlayData>
+  <MarkerCategory name="Collectible">
+    <MarkerCategory name="AStudyInGold" DisplayName="A Study in Gold" iconFile="Data\Auric_Basin.png" behavior="3"/>
+  </MarkerCategory>
+
+  <POIs>  
+    <POI MapID="1043" type="collectible.astudyingold" xpos="-234.738" ypos="229.223" zpos="-90.0956" GUID="8qO+yrwYqEqaRdNnXQjRag=="/>
+  
+    <POI MapID="1043" type="collectible.astudyingold" xpos="-41.6912" ypos="125.853" zpos="41.6473" GUID="4w6ms4OK0EqZRzhUjXvOvA=="/>
+  
+    <POI MapID="1043" type="collectible.astudyingold" xpos="-40.3729" ypos="125.88" zpos="-41.2648" GUID="808fc4b2QUacVE8RoLDtwQ=="/>
+  
+    <POI MapID="1043" type="collectible.astudyingold" xpos="41.2785" ypos="125.419" zpos="-40.9006" GUID="x9nmIzmK4kqzcW8lOD/avg=="/>
+  
+    <POI MapID="1043" type="collectible.astudyingold" xpos="155.676" ypos="152.893" zpos="-82.8294" GUID="SDNNaN3d1Ei2YBiVZ+DvLA=="/>
+  
+    <POI MapID="1043" type="collectible.astudyingold" xpos="72.2263" ypos="5.89378" zpos="-9.54762" GUID="TFTL3lXO9k2YcK17s8fWWw=="/>
+  
+    <POI MapID="1043" type="collectible.astudyingold" xpos="0.603023" ypos="278.644" zpos="201.491" GUID="sUZmhabL4Eun3bM29Crw+A=="/>
+  
+    <POI MapID="1043" type="collectible.astudyingold" xpos="136.307" ypos="172.377" zpos="207.735" GUID="Tn99LjvmGEuhRltOk/bW3Q=="/>
+  
+    <POI MapID="1043" type="collectible.astudyingold" xpos="349.279" ypos="154.031" zpos="-25.5383" GUID="xBsVS5GWd0Cdn/Ucb/yCsQ=="/>
+  
+    <POI MapID="1043" type="collectible.astudyingold" xpos="0.162529" ypos="245.022" zpos="-242.677" GUID="bakzatn200C4ChpqrnAUkA=="/>
+  
+    <POI MapID="1043" type="collectible.astudyingold" xpos="-200.783" ypos="184.052" zpos="-219.684" GUID="VVYf51UWE0ODwCevSA2ACg=="/>
+  
+    <POI MapID="1043" type="collectible.astudyingold" xpos="-188.182" ypos="266.698" zpos="-207.437" GUID="gjghCGwXFUO/E0VHtgqbgQ=="/>
+  
+    <POI MapID="1043" type="collectible.astudyingold" xpos="-213.483" ypos="311.237" zpos="31.9068" GUID="qqf0DPvqWEyPoGbgo3TNjA=="/>
+  
+    <POI MapID="1043" type="collectible.astudyingold" xpos="-198.209" ypos="47.841" zpos="320.696" GUID="qPsm32BbI0OYJ1+k21DVbA=="/>
+  
+    <POI MapID="1043" type="collectible.astudyingold" xpos="319.096" ypos="0.716301" zpos="-272.401" GUID="+XMuQQvFqkanyoCAZBrRKw=="/>
+  
+    <POI MapID="1043" type="collectible.astudyingold" xpos="5.76272" ypos="21.4135" zpos="212.473" GUID="yO+RQ7kqbUOKbnwX8xWKIg=="/>
+  
+    <POI MapID="1043" type="collectible.astudyingold" xpos="557.971" ypos="235.603" zpos="306.002" iconFile="Data\Herta.png" GUID="531XXZFiRUWq7UiBkOJYtw=="/>
+  </POIs>
+</OverlayData>

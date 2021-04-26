@@ -1,0 +1,73 @@
+<OverlayData>
+
+  <MarkerCategory name="Festivals">
+    <MarkerCategory name="SAB">
+	<MarkerCategory name="DigLocations" iconFile="Data\Chest.png" behavior="2"/>
+    </MarkerCategory>
+  </MarkerCategory>
+
+  <POIs>
+
+    <POI MapID="895" xpos="-432.638" ypos="84.3929" zpos="539.283" type="Festivals.SAB.DigLocations" GUID="OfcMMNYUAEutfdHayZSnFg=="/>
+  
+    <POI MapID="895" xpos="-244.164" ypos="78.7125" zpos="463.559" type="Festivals.SAB.DigLocations" GUID="jPYkk38BiEuC/QYt/9xSRg=="/>
+  
+    <POI MapID="895" xpos="-97.546" ypos="54.2084" zpos="495.937" type="Festivals.SAB.DigLocations" GUID="D0weDwb0NkO8tuKolaGiWg=="/>
+  
+    <POI MapID="895" xpos="-75.7488" ypos="71.2271" zpos="486.209" type="Festivals.SAB.DigLocations" GUID="dER+MO4KQ02yJ1+CmBAIig=="/>
+  
+    <POI MapID="895" xpos="-65.4625" ypos="71.2271" zpos="491.343" type="Festivals.SAB.DigLocations" GUID="z5QVbgU+XEei6bRuMa1anw=="/>
+  
+    <POI MapID="895" xpos="-47.7199" ypos="62.409" zpos="450.881" type="Festivals.SAB.DigLocations" GUID="aP6QxBCt7U677915tTOgMQ=="/>
+  
+    <POI MapID="895" xpos="-850.625" ypos="63.6356" zpos="369.235" type="Festivals.SAB.DigLocations" GUID="KS7id5OmGUi59nI5NBdwmA=="/>
+  
+    <POI MapID="895" xpos="-769.788" ypos="60.1633" zpos="296.652" type="Festivals.SAB.DigLocations" GUID="ZvUQO3iS20qVschxJ9CIBw=="/>
+  
+    <POI MapID="895" xpos="-781.241" ypos="45.2525" zpos="371.504" type="Festivals.SAB.DigLocations" GUID="NLwicyZ1gkqsCZ4/Phw7pQ=="/>
+  
+    <POI MapID="895" xpos="-742.027" ypos="46.2487" zpos="360.438" type="Festivals.SAB.DigLocations" GUID="Fr2BhvOmEk2FnSklp4LYuQ=="/>
+  
+    <POI MapID="895" xpos="-325.242" ypos="62.3591" zpos="319.694" type="Festivals.SAB.DigLocations" GUID="kWVOyxNdI0eoJZnTWSJnRQ=="/>
+
+<POI MapID="895" xpos="-1109.35" ypos="59.7836" zpos="440.471" type="Festivals.SAB.DigLocations" GUID="fxx+QHErJkKZp8WZB7h/3Q=="/>
+  
+    <POI MapID="895" xpos="-1109.66" ypos="56.0786" zpos="472.138" 
+type="Festivals.SAB.DigLocations" GUID="dQJEoDRjUEuf8eek6gdG+w=="/>
+  
+    <POI MapID="895" xpos="-645.038" ypos="54.7314" zpos="490.73" 
+type="Festivals.SAB.DigLocations" GUID="xqpuhed8v0a0GA+8vwUEXQ=="/>
+  
+    <POI MapID="895" xpos="-456.181" ypos="54.5034" zpos="513.351" 
+type="Festivals.SAB.DigLocations" GUID="X40ZNPKNA0OS2yTFoLx3kg=="/>
+  
+    <POI MapID="895" xpos="-446.536" ypos="62.9966" zpos="478.959" 
+type="Festivals.SAB.DigLocations" GUID="6KA69DEQx0Wjl4XS422INQ=="/>
+  
+    <POI MapID="895" xpos="-376.384" ypos="54.2252" zpos="465.86" 
+type="Festivals.SAB.DigLocations" GUID="7U9HnaSgbkeUm8ECYqhcTA=="/>
+  
+    <POI MapID="895" xpos="-340.137" ypos="50.7179" zpos="478.629"
+type="Festivals.SAB.DigLocations"  GUID="pOpTNvHNWUmS3hyf6pO9RQ=="/>
+  
+    <POI MapID="895" xpos="-250.907" ypos="66.7185" zpos="537.816" 
+type="Festivals.SAB.DigLocations" GUID="lnpRRJofOU6ErWqwFPY5Jg=="/>
+
+<POI MapID="934" xpos="-541.336" ypos="187.097" zpos="-432.669" type="Festivals.SAB.DigLocations" GUID="NVBQbFdkDUC9CmLTJjYwFQ=="/>
+
+    <POI MapID="934" xpos="-12.4254" ypos="42.172" zpos="70.7686" type="Festivals.SAB.DigLocations" GUID="jHd4g1JuwUOExr1xrl1MhQ=="/>
+  
+    <POI MapID="934" xpos="-533.064" ypos="217.181" zpos="-386.853" type="Festivals.SAB.DigLocations" GUID="bdKTf97Rh06JQ1Dkp5BJ9w=="/>
+  
+    <POI MapID="934" xpos="-592.973" ypos="223.986" zpos="-437.338" type="Festivals.SAB.DigLocations" GUID="EasAmfoACEO4dVZGfpYtIQ=="/>
+  
+    <POI MapID="934" xpos="-613.735" ypos="219.229" zpos="-486.164" type="Festivals.SAB.DigLocations" GUID="5LPe8RzSGUigouexVurccA=="/>
+  
+    <POI MapID="934" xpos="-262.401" ypos="202.171" zpos="-439.479" type="Festivals.SAB.DigLocations" GUID="Z7EAHIGyvkWlUUIXwmyGTw=="/>
+  
+    <POI MapID="934" xpos="-164.26" ypos="210.872" zpos="-331.851" type="Festivals.SAB.DigLocations" GUID="p4sKLT6XaUSWJHIgBA5x8g=="/>
+  
+    <POI MapID="934" xpos="-213.341" ypos="208.046" zpos="-213.274" type="Festivals.SAB.DigLocations" GUID="uQZ2dtYjJ0i6QB49RqhLuQ=="/>
+
+  </POIs>
+</OverlayData>

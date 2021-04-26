@@ -1,0 +1,343 @@
+*
+{
+	font:trebuchet_large;
+}
+
+GW2TacO 
+{
+	width:100%;
+	height:100%;
+	opacity:1.0f;
+	font:menomonia_large;
+}
+
+#tactical
+{
+	width:100%;
+	height:100%;
+	background:#ff0000;
+	opacity:1.0f;
+	font:menomonia_large;
+}
+
+#trail
+{
+	width:100%;
+	height:100%;
+	background:#ff0000;
+	opacity:1.0f;
+	font:menomonia_large;
+}
+
+#compass
+{
+	width:100%;
+	height:100%;
+	background:#ff0000;
+	opacity:1.0f;
+	font:menomonia_large;
+}
+
+#ranges
+{
+	width:100%;
+	height:100%;
+	background:#ff0000;
+	opacity:1.0f;
+}
+
+#locationaltimer
+{
+	width:100%;
+	height:100%;
+	opacity:1.0f;
+	font:menomonia_large;
+}
+
+#gw2dialog
+{
+	width:100%;
+	height:100%;
+	opacity:1.0f;
+	font:dialog_large;
+}
+
+#maptimer
+{
+	width:500px;
+	height:500px;
+	bottom:700px;
+	left:80px;
+}
+
+maptimer
+{
+	margin:0px;
+	background-color:rgba(0,0,0,0.5);
+}
+
+#mousehighlight
+{
+	width:100%;
+	height:100%;
+	opacity:1.0f;
+}
+
+#background
+{
+	width:100%;
+	height:100%;
+	background:#000000;
+	opacity:0.0f;
+	child-layout: vertical;
+	child-fill-y: true;
+	child-fill-x: true;
+}
+
+#MenuButton
+{
+	width:35px;
+	height:35px;
+	left:320px;
+	top:0px;
+	opacity:0.5;
+	background-color:none;
+	background: skin(taco_large_dark) top left;
+}
+
+#MenuButton:hover
+{
+	background: skin(taco_large_light) top left;
+	opacity:1.0;
+}
+
+#MenuButton:active
+{
+	background: skin(taco_large_light) top left;
+	opacity:1.0;
+}
+
+#RedCircle
+{
+	width:38px;
+	height:38px;
+	left:292px;
+	top:8px;
+	opacity:1.0;
+	background-color:none;
+	background: skin(shine) top left;
+}
+
+#TPButton
+{
+	width:36px;
+	height:35px;
+	left:286px;
+	top:0px;
+	background-color:none;
+}
+
+window
+{
+	border:0px;
+	opacity:0.75;
+	padding:3px;
+	padding-top:15px;	
+	width:150px;
+	height:150px;
+	left:5px;
+	top:5px;
+	font:UniFont;
+	text-transform:uppercase;
+}
+
+window:active
+{
+	background:#000000;
+}
+
+window:title
+{
+	top:3px;
+	left:15px;
+	right:15px;
+	height:11px;
+}
+
+window:close
+{
+	top:3px;
+	right:3px;
+	width:11px;
+	height:11px;
+	background:#2d2d30;
+}
+
+OverlayWindow
+{       	
+	border:0px;
+	opacity:0.75;
+	padding:3px;
+	padding-top:15px;	
+	background:skin(window_normal);
+	background-color:none;
+	text-transform:uppercase;
+	font-family:UniFont;
+}
+
+OverlayWindow:hover
+{
+	border:1px;
+	border-color:#707070;
+}
+
+OverlayWindow:active
+{
+	background:skin(window_active);
+}
+
+OverlayWindow:title
+{
+	top:3px;
+	left:15px;
+	right:15px;
+	height:11px;
+}
+
+OverlayWindow:close
+{
+	top:3px;
+	right:3px;
+	width:11px;
+	height:11px;
+	background:#2d2d30;
+}
+
+OverlayWindow:close:active
+{
+	background:#1c97ea;
+}
+
+OverlayWindow:close:hover
+{
+	background:#3e3e40;
+}
+
+contextmenu
+{
+	text-transform:none;
+	border:1px;
+	border-color:#808080;
+	background:#000000;
+	opacity:0.7;
+}
+
+contextmenu:hover
+{
+	background:#808080;
+}
+
+ts3control
+{
+	margin:0px;
+	background-color:rgba(0,0,0,0);
+}
+
+markereditor
+{
+	margin:0px;
+	background-color:rgba(0,0,0,0);
+}
+
+#markereditorbox
+{
+	margin:0px;
+	child-layout: vertical;
+	child-fill-x: false;
+	child-fill-y: false;
+	child-spacing: 1px;
+}
+
+markereditor label
+{
+	width:100%;
+	height:23px;
+	text-align:left;
+}
+
+markereditor button
+{
+	width:190px;
+	height:23px;
+        padding-bottom:4px;
+}
+
+#hpgrid
+{
+	width:283px;
+	height:15px;
+	left:50%-199px;
+	top:96px;
+}
+
+#notepadbox
+{
+	margin:0px;
+}
+
+notepad
+{
+	margin:0px;
+}
+
+notepad textbox
+{
+	background:rgba(0,0,0,0.7);
+	margin:1px;
+	padding:1px;
+	border:1px;
+}
+
+notepad textbox:selection:active
+{
+	background:rgba(64,64,64,1);
+}
+
+notepad textbox:selection:hover
+{
+	background:rgba(192,192,192,1);
+}
+
+tptracker
+{
+	margin:0px;
+}
+
+#APIkeyInput
+{
+	background:rgba(0,0,0,0.7);
+	padding:1px;
+	border:1px;
+	width:565px;
+	height:21px;
+	top:50%+20px;
+}
+
+#MenuHoverBox
+{
+	left:0px;
+	top:0px;
+	width:355px;
+	height:35px;
+	background-color:none;
+}
+
+#startnewsection
+{
+	visibility:hidden;
+}
+
+contextmenu:active
+{
+	font-color:#ffffcc77;
+}

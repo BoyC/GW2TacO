@@ -1,0 +1,25 @@
+<OverlayData>
+  <POIs>
+    <POI MapID="1149" xpos="208.926" ypos="4.93307" zpos="25.22" type="tactical.raid.counter_1" GUID="orHk62LZ8EyzraKa0gGXKg=="/>
+  
+    <POI MapID="1149" xpos="174.536" ypos="2.41479" zpos="-10.0162" type="tactical.raid.counter_2" GUID="FYA1LPmOl0SeX4qUTWMoyw=="/>
+  
+    <POI MapID="1149" xpos="192.923" ypos="0.846338" zpos="-35.958" type="tactical.raid.counter_3" GUID="y/MQHT7wCkagUkPZlpFa6A=="/>
+  
+    <POI MapID="1149" xpos="224.968" ypos="-0.177503" zpos="-13.498" type="tactical.raid.counter_4" GUID="K4lINKdqcEeKpuQMv9sU1g=="/>
+
+    <POI MapID="1149" xpos="-1.95322" ypos="1.53214" zpos="-235.489" type="tactical.raid.counter_1" GUID="eoxxKScsskiX+qOPk1EYdQ=="/>
+  
+    <POI MapID="1149" xpos="-0.567632" ypos="1.01967" zpos="-290.812" type="tactical.raid.counter_2" GUID="uF937Qyrt0qXElHSMUW5nw=="/>
+  
+    <POI MapID="1149" xpos="-32.9359" ypos="5.87644" zpos="-221.024" type="tactical.raid.counter_3" GUID="yrpc6HFBLUa1dwelKFK/vQ=="/>
+  
+    <POI MapID="1149" xpos="-173.504" ypos="131.625" zpos="126.676" type="tactical.raid.counter_1" GUID="pCa90+bN6k2VQkym8Ova6w=="/>
+  
+    <POI MapID="1149" xpos="-174.113" ypos="131.625" zpos="172.825" type="tactical.raid.counter_2" GUID="C4QcRORmNU+5rMn682ag9g=="/>
+  
+    <POI MapID="1149" xpos="-128.033" ypos="131.625" zpos="173.313" type="tactical.raid.counter_3" GUID="bAdGkZB4kkisSFhyPTn1bw=="/>
+  
+    <POI MapID="1149" xpos="-127.271" ypos="131.625" zpos="127.033" type="tactical.raid.counter_4" GUID="s6fhrG1hNkmW5cJJHZsbJg=="/>
+  </POIs>
+</OverlayData>

@@ -1,0 +1,490 @@
+<OverlayData>
+  <MarkerCategory name="Tactical.GuildMission.Bounty">
+    <MarkerCategory name="BookwormBwikki" DisplayName="Bookworm Bwikki"/>
+  </MarkerCategory>
+  <POIs>
+    <Route Name="BookwormBwikki" BackwardDirection="1">
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-153.298" ypos="98.5845" zpos="359.553" GUID="lxV7IlRZcUq8/ueH0zwd8w=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-144.08" ypos="111.739" zpos="390.701" GUID="rbLDk5QTRkmw71TwjqQK0Q=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-106.274" ypos="122.573" zpos="410.208" GUID="4paUeV9Phk6liHZT9NJdjw=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-69.2065" ypos="131.657" zpos="420.722" GUID="lw2OELkBL0aiiJ3oX7n6bQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-27.6237" ypos="133.192" zpos="428.614" GUID="Ln4+sDaOQkmBHItp6UsiTQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="5.04955" ypos="130.12" zpos="433.806" GUID="kGuWbZHZrUGpSrDPOejqbw=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="36.2018" ypos="122.125" zpos="444.697" GUID="kIrjXvmCE0GcAGnHbcSgIg=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="63.4304" ypos="117.226" zpos="459.276" GUID="B3+0YA423EejjZ+aVpMUEA=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="90.4479" ypos="117.226" zpos="478.411" GUID="qcxzpsK7MESdFQU8Bv5Xuw=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="118.318" ypos="117.227" zpos="498.326" GUID="ea5UOHllnUuf6mwyxbkPTA=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="143.335" ypos="117.363" zpos="516.258" GUID="hlDHsjnOWkSGTbSZhIo+Dg=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="155.485" ypos="117.478" zpos="545.158" GUID="t8Ql+gtlB0O6YhQ9oDfiGQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="183.831" ypos="117.226" zpos="568.662" GUID="ht/ghzHC5kSUCY6woeT2Tw=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="212.173" ypos="117.234" zpos="595.534" GUID="1BcLPxLrMUOzMqCxr6PMwA=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="231.089" ypos="119.288" zpos="615.566" GUID="8v7pcfjTDE+cC5toRVgOuw=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="257.065" ypos="123.966" zpos="637.038" GUID="8ADEB2K64USoi+rrZSr8MQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="246.734" ypos="130.138" zpos="664.924" GUID="qrZB/X1rAUueFDJkwWURPw=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="233.643" ypos="142.451" zpos="690.53" GUID="HTB+nFHWHUyulCB55a5lSA=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="259.161" ypos="153.905" zpos="705.658" GUID="LB0Ikws8XEGNWz49TlObfA=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="282.748" ypos="159.341" zpos="717.501" GUID="MVCziWlvdkOLG4tnQ6GxBA=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="291.535" ypos="176.34" zpos="748.9" GUID="e/UoJW1llEypiaifOs7rEQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="288.936" ypos="186.223" zpos="785.313" GUID="4rTit4mKgESf+LGW9HPfWg=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="288.944" ypos="193.717" zpos="811.003" GUID="/0wHvy3gO06fsc1EeI8Mcg=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="271.779" ypos="190.314" zpos="841.06" GUID="Wsp6ELUonU+hSr5LSRTuoA=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="249.534" ypos="189.43" zpos="865.086" GUID="F4WyZn3iIkm43NNUrx4Nmg=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="272.866" ypos="196.287" zpos="882.582" GUID="+xcmN23DNESBVRFzVj+yeA=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="299.523" ypos="203.234" zpos="888.272" GUID="zqlYkgc5PEKAkklGxCNQ+A=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="322.686" ypos="211.374" zpos="906.94" GUID="23jijzc50UeluPZYIuo1PQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="338.495" ypos="203.338" zpos="934.555" GUID="3Dz9Fh3Bt0mI74QgfT1XWg=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="357.023" ypos="196.097" zpos="959.188" GUID="YlnbaAmKf0OdklHsZ6nYRw=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="378.041" ypos="187.89" zpos="975.865" GUID="Fiba6qLGZk+BnyVhutxPjA=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="389.11" ypos="182.162" zpos="996.142" GUID="sCTxsqynYUOwIK+K+qUoTg=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="378.949" ypos="179.727" zpos="1014.96" GUID="PJ6jjJm94UqQF/R2YX0tpg=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="357.556" ypos="174.974" zpos="1035.15" GUID="WDuh/7BDkUWWGY8DtrdL9Q=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="336.864" ypos="170.216" zpos="1059.62" GUID="f3QKOizTbkKAEcIk1g30NA=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="321.387" ypos="167.44" zpos="1090.47" GUID="urMSGHfMOUWfXgunomFEXQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="304.845" ypos="160.546" zpos="1100.71" GUID="CCrneiM7n0GtTWFfRtIsVw=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="275.71" ypos="154.155" zpos="1110.04" GUID="6cbFn4R3r0mqXGCu2pL6BA=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="249.152" ypos="149.044" zpos="1113.55" GUID="v9Rpamzra0u1Qgdxz/y87w=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="225.783" ypos="143.062" zpos="1110.07" GUID="jIdiVUDfFkKEHfMblJwAfw=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="201.527" ypos="140.932" zpos="1100.31" GUID="Y241nUvOqkSEgBjrSS3CpA=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="169.001" ypos="130.908" zpos="1082.01" GUID="1KdDSvdaAUGsC4/MVqeQzg=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="144.114" ypos="122.799" zpos="1069.26" GUID="Q74g3mK4EEmRW0F+nDjmaA=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="109.543" ypos="113.14" zpos="1057.64" GUID="Iqu/VpeBsUiGvQZntR0FkQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="82.6864" ypos="104.155" zpos="1055.55" GUID="4qYMRtGhsU+KMX6MLcYQ3Q=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="47.885" ypos="96.4079" zpos="1051.94" GUID="ZCfSuKdR30SsSBE+/tw4Sg=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="23.6512" ypos="92.572" zpos="1040.16" GUID="xoA7uOyfZ0CX7HX2imySCw=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-0.612479" ypos="93.1173" zpos="1024.98" GUID="srowpv18IUWqyvpHk94kJA=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-22.0774" ypos="91.9761" zpos="1011.22" GUID="/cdypzruR0GzJ3Wa67+GFQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-55.6592" ypos="87.7073" zpos="1003.02" GUID="/j9EuwmqHU+8m0Od2Dh3PA=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-68.5903" ypos="86.1237" zpos="976.665" GUID="r9XGgN+nf0afqMxJOtaWcw=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-68.7247" ypos="88.0702" zpos="955.605" GUID="jvX/gxsff02pT7dqI+H29A=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-77.8139" ypos="88.556" zpos="927.727" GUID="Trw76Wa/O0SCX8DACnsxKw=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-82.9038" ypos="85.6331" zpos="912.793" GUID="geswB1A0h06NIWeEDk8LKg=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-99.3561" ypos="85.4666" zpos="904.619" GUID="NvAxAsLwn06bLa7IHdpQGA=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-114.146" ypos="78.9904" zpos="893.647" GUID="gaGmrB4j40SpAVVfTRzlfA=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-128.954" ypos="67.7232" zpos="880.287" GUID="bCgwyMZeVkuuD90Z56WT+g=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-138.113" ypos="58.2075" zpos="863.471" GUID="LlmX09tmgUmGL0e45Mjpag=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-146.44" ypos="49.0077" zpos="847.755" GUID="4ERyXdROJUiNMbks2tPjLw=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-147.359" ypos="40.0708" zpos="830.936" GUID="OVlKPWBKl0GWLuPH+9ZjVQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-148.542" ypos="24.0439" zpos="812.867" GUID="DL8HNh8qp0maQ7DY3ICqSQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-160.427" ypos="19.4248" zpos="789.688" GUID="r7kIhPPUykKcFW1m1LMcyw=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-170.282" ypos="16.9674" zpos="774.9" GUID="dZRpyCIANUiEHfkF7HOCJA=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-180.461" ypos="26.5939" zpos="755.278" GUID="RtBABA6LeUqB3YDJ+HIALw=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-181.891" ypos="37.8063" zpos="726.043" GUID="H3mrdrGyF0u/My35UcIUMQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-158.62" ypos="50.0176" zpos="704.616" GUID="OyTjaAKvxEStRWmuTuqEEQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-152.581" ypos="51.4442" zpos="666.576" GUID="MahWy75TE0KiYyS9mYI9qA=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-153.522" ypos="55.0807" zpos="637.802" GUID="Hs/zuTHDhkesdHn29JJB0Q=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-161.49" ypos="53.7429" zpos="611.295" GUID="I9CV/2DpKEu8TvUa78INsg=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-161.334" ypos="53.0499" zpos="590.469" GUID="PXMpbF3fokyE4l/XQKnmCg=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-168.037" ypos="44.3556" zpos="558.127" GUID="K5L9LhXbFkSvqbRpS4ICRA=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-180.244" ypos="36.5545" zpos="538.252" GUID="AY4yHy7SvUWvvKvasJtx1g=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-194.725" ypos="29.5808" zpos="510.24" GUID="5xFm7olfmU+m27hz22uHUw=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-220.235" ypos="34.5553" zpos="474.201" GUID="4KCPg7AOCEyimCmeGuHXxQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-234.772" ypos="37.2225" zpos="441.241" GUID="mp/KHFenFE+fzGgPaGl2pA=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-244.83" ypos="35.3032" zpos="403.768" GUID="NiXVwJPu4UqQXPxQHWZitg=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-250.175" ypos="31.5274" zpos="377.44" GUID="FjcUeLAYZU6K0dgeH0TN1Q=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-252.672" ypos="31.7417" zpos="351.646" GUID="6CFnxzW4b0SgyMFSgnhfBw=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-272.654" ypos="37.2071" zpos="358.062" GUID="TElwBJknCUuuW1lFOSbipQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-277.92" ypos="45.9798" zpos="377.29" GUID="+jWukAaoGEaqAiMKil1p9Q=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-280.267" ypos="56.7681" zpos="404.662" GUID="E/DoRlr5VE6ZjmHSm9fHVQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-286.178" ypos="72.8086" zpos="429.781" GUID="g7T6FqD+P0S7piZG8RcGkg=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-299.996" ypos="89.4579" zpos="456.708" GUID="jNNuMEEey0KwUdlDPMylyQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-305.563" ypos="95.2682" zpos="482.118" GUID="n9rBoua42EGhSC5iJ211Cg=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-290.79" ypos="97.5828" zpos="496.2" GUID="cwUGMli+vEyNVeiiY+Qr4w=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-265.054" ypos="96.4132" zpos="481.779" GUID="aZFbHq4jckqI8NpoNA++WA=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-236.413" ypos="96.4132" zpos="465.605" GUID="t2rLXR8Is0mBZdsBTpHCnw=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-207.778" ypos="96.4132" zpos="444.764" GUID="kRE5GG24bUOH4eqx9s+wZQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-186.387" ypos="96.4132" zpos="429.083" GUID="1h7/WWPI60SV3e6ynO2YQA=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-163.236" ypos="94.4553" zpos="410.96" GUID="fOx7ChHA/EyXV29HJ4Cjtw=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-170.402" ypos="92.0602" zpos="389.496" GUID="vVGPCxnRUEGMgIjbQbWCbw=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-167.82" ypos="89.4241" zpos="355.301" GUID="vJLWiw8oMku5Hii6YipyUg=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-172.923" ypos="80.4952" zpos="323.228" GUID="MojczOAFwkq8Ki7HFl2rbQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-168.982" ypos="78.596" zpos="294.069" GUID="EvwWdhubo0WY0Lm49Fr6Hg=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-155.26" ypos="81.3544" zpos="270.279" GUID="BvqpTzmx802jBZCUMLl7mQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-136.344" ypos="87.0424" zpos="251.126" GUID="spptEdZmAE2ULy1L0s8Wnw=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-119.084" ypos="92.5583" zpos="239.998" GUID="hJvhlGWr0U2GZ9P2wmSQ1g=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-99.2757" ypos="97.0679" zpos="232.564" GUID="uag9oYy5UEWdSJYGLB0bdA=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-83.8665" ypos="100.187" zpos="220.978" GUID="ll/5drsu6Uad+gHu3vgqBQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-71.9098" ypos="99.9527" zpos="199.477" GUID="lU5CI/id4UCl/rNnqB915A=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-60.4247" ypos="100.816" zpos="174.059" GUID="7KyK6MTJdUOSQNcBCSHK5A=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-53.1614" ypos="102.721" zpos="155.903" GUID="WXxZROoUGUmokIo431KErg=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-44.8787" ypos="100.892" zpos="130.918" GUID="15Sm2ET53U2voF0itcbQLQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-51.996" ypos="98.7038" zpos="116.24" GUID="v+Y9idzkQ0SDHW1vz3pbMQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-72.9169" ypos="93.2137" zpos="107.909" GUID="Iz5Vf8+54EO0ZUNbq70wRQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-96.4883" ypos="84.8092" zpos="91.4619" GUID="BlpBJi2xZU2ovnogOhBv0Q=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-122.616" ypos="72.0381" zpos="72.7783" GUID="vR1w/VUZTUe87LSaS867/g=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-151.411" ypos="62.9739" zpos="49.8536" GUID="0DQuV4rbZEKyym1h7UGS/A=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-170.895" ypos="57.0723" zpos="34.9979" GUID="UdHemFlzXkmaWMUz/eQsNA=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-194.304" ypos="47.5444" zpos="14.0823" GUID="p4P8cN8MVUqO5rSVoe/aTQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-216.256" ypos="40.897" zpos="-5.54872" GUID="IXX4Ywx16EWdNo0W7TJDDQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-240.841" ypos="37.8456" zpos="-21.5582" GUID="hgH//gkBnk25RJ7irMTToA=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-260.857" ypos="36.6738" zpos="-43.6213" GUID="v1de66RSwUiF/WdIxRz+UA=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-287.342" ypos="39.9264" zpos="-53.6483" GUID="hIc57zvLlku4vj/F2NpmEg=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-307.717" ypos="42.0286" zpos="-62.0224" GUID="i6/s/PdfD0O/LR+LnYuIwQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-320.436" ypos="45.2229" zpos="-84.4425" GUID="OTeWbLCNZU2qwk7SYr9Rrg=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-340.95" ypos="49.0756" zpos="-111.144" GUID="3pvYhp0HTkqQ8pmTRqblPA=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-353.829" ypos="53.8904" zpos="-138.439" GUID="ZuN65jdKT0Cx829NUbRhYg=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-363.926" ypos="51.9672" zpos="-161.147" GUID="RxX78TWKyka8/Fq+ydeRSA=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-376.171" ypos="48.4332" zpos="-191.88" GUID="90ydj7GwFEqeQ6eL0Tz11Q=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-369.432" ypos="45.7115" zpos="-210.29" GUID="kjO77pKGAkmyruCU/9K23A=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-357.242" ypos="40.3083" zpos="-244.821" GUID="IN4sRaoEV0K6FdVRYXmI8w=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-341.913" ypos="35.3228" zpos="-268.047" GUID="It6ERLqTCEyQ6bZSiwi+xQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-330.603" ypos="31.9499" zpos="-290.821" GUID="50IScQonokuoGuFBKi7Ieg=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-321.502" ypos="33.2415" zpos="-311.809" GUID="+0vYZNAO1kmUPph1/hWkEw=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-310.696" ypos="33.1885" zpos="-334.444" GUID="omjCklTEIEObvgoCg/t7LQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-301.158" ypos="31.4907" zpos="-363.927" GUID="iP14l6kzrESieRHOmLjGow=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-297.1" ypos="29.6425" zpos="-394.272" GUID="xIeSQCTFD0aJq3ZMYkZbeg=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-296.635" ypos="25.8489" zpos="-421.535" GUID="Aara5/+np0uT8iP1axwBUA=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-297.673" ypos="18.9375" zpos="-463.289" GUID="9q/h6WgXGESB86Jn/Uen+A=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-297.945" ypos="16.5563" zpos="-493.222" GUID="No8ZaqVuGkOLiU8jIWSFHg=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-298.194" ypos="21.0437" zpos="-521.15" GUID="fb6fT7X9D0OhtTFTEaPGlg=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-291.501" ypos="24.892" zpos="-548.111" GUID="n73T4/1+gkqpQllG0X6LKw=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-287.623" ypos="32.6396" zpos="-580.631" GUID="uc8ajHEO5kOowq2lgyvp5A=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-303.075" ypos="35.3759" zpos="-608.948" GUID="oetDP1O8lUyd2mpnne7WzA=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-314.132" ypos="31.2372" zpos="-639.011" GUID="ramsALZ0l0un55IjXtXUHQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-323.449" ypos="32.1392" zpos="-666.394" GUID="q4JOuAJSGUuJhgNokd40lw=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-325.928" ypos="37.4453" zpos="-702.691" GUID="AuwsPzEKqkWjDJw1nGTNtA=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-321.418" ypos="43.8968" zpos="-734.094" GUID="lWAm6qGsY0ufZ/DlTdg4/A=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-325.126" ypos="44.0353" zpos="-767.469" GUID="I6TCej7DtUmF9jY+k/tm8g=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-341.208" ypos="39.6619" zpos="-794.078" GUID="IkBQz06Y9E+GEiHkuQoTDg=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-373.978" ypos="29.788" zpos="-823.571" GUID="VL+Yrp8esEK60SRilgshaw=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-390.763" ypos="25.6684" zpos="-839.017" GUID="8l330XPweEWf2hRl/PNOLg=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-406.341" ypos="29.0161" zpos="-857.363" GUID="pKwo/mTY3U2KMGNdzEF0Fw=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-431.991" ypos="35.8686" zpos="-885.244" GUID="uQLQhBZWnUKGfm4aua+aFw=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-435.431" ypos="32.6174" zpos="-914.239" GUID="oMXY3BRi3USiVK2lECvXLw=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-443.833" ypos="27.2535" zpos="-945.119" GUID="Dl1piI/kp0eWl9/3xJMRVA=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-458.546" ypos="31.6777" zpos="-970.773" GUID="OCOduZ14Z0mT0QkMAG0KRQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-466.412" ypos="36.45" zpos="-993.124" GUID="R1LXzsGyn0y2ldY7Fmt4hA=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-447.073" ypos="31.6543" zpos="-1016.03" GUID="05PnkUhFy0C3fVos4FZsZQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-425.647" ypos="25.7744" zpos="-1050.62" GUID="6Kf0HDOBgUuJzhvvQts6Vg=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-411.538" ypos="16.4086" zpos="-1078.72" GUID="DDXTTUPUOEOXtP7x1dwrog=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-391.894" ypos="14.763" zpos="-1102.1" GUID="fujkNnqNOk2D/GFU4b+wzA=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-376.663" ypos="16.0558" zpos="-1123.09" GUID="bfZLL+YlJ0qCZXmzQeoVrA=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-353.87" ypos="18.1977" zpos="-1138.83" GUID="2Z+ugkU7a0+sUy1/E8W8gw=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-325.859" ypos="19.0027" zpos="-1154.48" GUID="uIgqME83L0KAifmTclSKeQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-294.242" ypos="22.9875" zpos="-1158.59" GUID="4a2Gm7UXU0KEIIfaJakuLA=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-276.376" ypos="24.9854" zpos="-1143.35" GUID="BK0PMdAvHkCNVrRLyTSWig=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-258.406" ypos="24.3152" zpos="-1125.08" GUID="iBPz0fAnqEKzL1gx1fgzSA=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-241.625" ypos="23.8086" zpos="-1108.77" GUID="FsNkQUFvtEKIikBC+4wxeA=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-222.663" ypos="24.9908" zpos="-1091.99" GUID="O8HS2BpSJUCbmS/gbLJrHA=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-207.383" ypos="27.3426" zpos="-1080.52" GUID="tMWlJ7JLi0ChWdkA3v/1GQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-168.114" ypos="32.061" zpos="-1054.5" GUID="xqvqndjAkEaAq8Iae+VERw=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-145.841" ypos="33.7011" zpos="-1037" GUID="i7+i30BGhEmkoE6o7H23tQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-123.4" ypos="35.5084" zpos="-1025.51" GUID="o9GrPWtVGEeOqtdv1Pk1/A=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-90.0812" ypos="49.0392" zpos="-1011.17" GUID="r06JBUmGRkGll5EhD2QYhw=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-66.6408" ypos="54.5847" zpos="-1005.11" GUID="bbCWlpT2gkaGZv0BQpSSFw=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-40.2319" ypos="66.2435" zpos="-1031.68" GUID="mzO+f7DeP0ywlKCznRoK/w=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-15.0463" ypos="67.3331" zpos="-1044.37" GUID="6M5J2Kq/nEGrfhPpgRXOAA=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="11.2744" ypos="70.6486" zpos="-1057.48" GUID="n59/ltyHLkGkZPrKeu7uXw=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="27.571" ypos="69.2647" zpos="-1091.4" GUID="3bOlrwPSU0m9nqt7Ms3jbg=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="54.019" ypos="72.9271" zpos="-1116.84" GUID="KvJylD7r7kilrKh+SxGPeA=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="78.9452" ypos="75.5949" zpos="-1133.05" GUID="zeZJ2W6cz0GzFYY1qYyjJw=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="109.746" ypos="80.6869" zpos="-1130.51" GUID="bT37Z8gs7UOp756Ygk3Fmg=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="136.864" ypos="85.8192" zpos="-1118.12" GUID="Su1jVZ5fHEW69DyW3Vrzsw=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="159.706" ypos="87.6323" zpos="-1086.13" GUID="7CRNTU9mWUCFn3T/pFrdvg=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="176.52" ypos="87.6083" zpos="-1060.77" GUID="pk8b9WaGQk+WbNSSdtyDHQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="188.245" ypos="90.5863" zpos="-1028.25" GUID="9TZAtHtwd0KXqdgBKN34ww=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="192.85" ypos="85.0968" zpos="-992.425" GUID="MxPNr5D1WUeZHXXaC/UKuQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="204.339" ypos="78.2828" zpos="-952.904" GUID="zr1MV4eShUa1WHSO29R37Q=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="210.521" ypos="78.4206" zpos="-908.12" GUID="PHEtYKT4PE2CTkkqfzLHNQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="214.793" ypos="83.1914" zpos="-881.141" GUID="ErhF7hlBW0WSKpC91Wif3Q=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="220.384" ypos="90.433" zpos="-853.753" GUID="gs8FMAKCQk2KEjgRdYgwVQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="224.062" ypos="91.8821" zpos="-827.755" GUID="s394UyFC+kmNxePe2wnF+A=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="239.825" ypos="94.8062" zpos="-805.495" GUID="h/KwLkbrekSAQIpZeS0uTw=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="248.342" ypos="100.02" zpos="-785.64" GUID="/pge8LppPUCphbiQvL2mtg=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="267.768" ypos="104.877" zpos="-757.812" GUID="sHGmPytSckyAf2ec+evvZA=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="281.537" ypos="104.743" zpos="-735.909" GUID="OMgWA0YViE6sfIT1ZVouxQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="287.606" ypos="96.3541" zpos="-699.839" GUID="FeavnVTdd0y/+DFNk/9JSA=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="295.175" ypos="91.3729" zpos="-675.465" GUID="GvVAna5B40apT+cee47QNQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="303.02" ypos="88.0198" zpos="-650.15" GUID="CvcsVR9iYEGAXaQNXIERGQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="310.036" ypos="85.8856" zpos="-613.786" GUID="HeItuZ2JAE60XIITYbuaEw=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="315.186" ypos="87.4886" zpos="-576.088" GUID="xPh4N8COo0CFLSuTRQHlgA=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="309.289" ypos="88.6893" zpos="-541.16" GUID="nwxGzJDYskywQLqwkVyihQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="288.559" ypos="86.4022" zpos="-532.538" GUID="6gx495VHW0qFeLI1W6Q+og=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="252.707" ypos="82.1749" zpos="-527.674" GUID="kWFHdhLCgUKLaogEMuYUIw=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="228.642" ypos="81.6925" zpos="-519.457" GUID="j31iHDtVBE+K6EkuzZfPVA=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="207.401" ypos="87.0685" zpos="-497.3" GUID="P2nNa70MU0e6hqZtm7xKdg=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="192.409" ypos="90.0881" zpos="-463.685" GUID="hJaszDAm7EOtdSEnrAHXNA=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="175.119" ypos="90.4367" zpos="-435.291" GUID="6uY33gDFwEytkTZlDyed8w=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="150.651" ypos="84.986" zpos="-397.87" GUID="IQ8vixBfLkmCvGhKRWJbGQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="135.509" ypos="74.8406" zpos="-357.255" GUID="ihJPd2hqAUekprpCsvpNAw=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="160.282" ypos="79.7233" zpos="-325.59" GUID="7Uz+yrFS9kmsHztQXxMKtQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="170.219" ypos="82.9154" zpos="-298.821" GUID="eFTnkMVN0EOkEBdp83rlKg=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="167.024" ypos="80.5852" zpos="-272.91" GUID="0rul0PXu/0uZcEkfj3yvvA=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="168.903" ypos="81.8923" zpos="-243.931" GUID="udO2opUIWEOXNcLijVWvTw=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="172.385" ypos="85.1967" zpos="-217.928" GUID="SreFnTDIU0mxDH4LpzemFg=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="166.943" ypos="89.571" zpos="-186.616" GUID="tXJeB57qGEGXxy2dPiwVNQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="158.506" ypos="93.3294" zpos="-157.587" GUID="F2JXuzpg/kyXub7cwHQ5AQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="142.512" ypos="93.1249" zpos="-137.477" GUID="MgtQI1lEdEaewVD0b24QDQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="107.156" ypos="95.9459" zpos="-118.394" GUID="HLzEDIW4wEiImy0ivJPMew=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="83.6448" ypos="98.0052" zpos="-105.467" GUID="oBqAl2HVFkGggy/O0H3Zlg=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="72.0489" ypos="98.1032" zpos="-132.946" GUID="Bfa2D5CjGEaNbo2elpjXgw=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="53.452" ypos="96.1766" zpos="-153.171" GUID="LGXpfa6rXEGotsPLHI0ZrA=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="35.5857" ypos="93.1564" zpos="-179.001" GUID="8PuQH1xc/ECpG74Kh/HJig=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="12.8354" ypos="109.139" zpos="-168.917" GUID="A7+iDrHs9kKd1Oy3xKHYFw=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-9.4126" ypos="110.158" zpos="-175.308" GUID="kj9kWEjaVEypsBQBx+4AJQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-34.6047" ypos="107.377" zpos="-190.947" GUID="hEsBdOMlzki8OOHbE7MG/w=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-60.0246" ypos="105.968" zpos="-199.63" GUID="KTf0zKy/rUGuqilQ/SIIKg=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-92.3004" ypos="97.7408" zpos="-202.186" GUID="xoXp7p1uDEWrmmgjiEJhWA=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-116.71" ypos="94.0164" zpos="-181.519" GUID="6+FlsZtgDUaG1iYcvON0ZQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-126.177" ypos="94.0513" zpos="-154.652" GUID="DBuiEjMZMU+MBkuSHN/lsQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-128.555" ypos="93.4771" zpos="-130.885" GUID="TO70mMv7CEW25fQBixWUng=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-135.348" ypos="95.5223" zpos="-101.306" GUID="ns0ergSRJEaL/8CJ45q7rA=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-136.43" ypos="93.4039" zpos="-79.2697" GUID="0bqXlbrTC0mgJY9bi8gtIw=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-130.737" ypos="90.9711" zpos="-55.3604" GUID="Z2oF48d4zU6Euq15boe6Tg=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-111.303" ypos="85.402" zpos="-25.5126" GUID="s/X+l69VZ0+7S4ygunCzUA=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-86.5676" ypos="85.8856" zpos="6.05464" GUID="kYBPCH4NnEyXTz022G9nhg=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-69.1723" ypos="88.2934" zpos="37.5028" GUID="GOlks2HwskS8r8EpheuPxA=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-53.8859" ypos="92.804" zpos="63.6473" GUID="UKJAzYlj2EOrPTbrpx0P3Q=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-46.616" ypos="95.5964" zpos="89.5367" GUID="pOcDeTFTOkWasVy7tWcwwQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-48.3452" ypos="100.797" zpos="123.558" GUID="5F8g/Lfw6UaOYTRAy0YHsg=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-47.0648" ypos="101.396" zpos="152.112" GUID="J1gayTxu0EScq5J+hRMYhQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-62.9118" ypos="100.609" zpos="187.597" GUID="ylo+6IShvk+3/2JiOv3DHQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-90.6027" ypos="98.9473" zpos="228.143" GUID="dqLqSBfk4EeGqcP5SpysyA=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-110.031" ypos="94.5167" zpos="240.95" GUID="0+HaOdutPUqd2v20T82haw=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-138.295" ypos="86.09" zpos="256.033" GUID="bEWWvWZON0KaGewQpfjySw=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-158.174" ypos="80.7074" zpos="279.14" GUID="e+InafsRn0i2xwx9GdhJRQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-170.638" ypos="79.5833" zpos="305.084" GUID="gK1M71+R8UukAvR5zsEyRg=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-167.863" ypos="85.2937" zpos="336.114" GUID="UyN/sdHgL0OnHjfoAspCyQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.bookwormbwikki" MapID="27" xpos="-158.531" ypos="92.3024" zpos="349.423" GUID="nTBqIUr13UinJlU7kl0Q4g=="/>
+    </Route>
+  </POIs>
+</OverlayData>

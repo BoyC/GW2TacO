@@ -1,0 +1,89 @@
+<timers>
+	<areatriggeredtimer mapid="1062" enterspherex="-129.058" enterspherey="62.4114" enterspherez="84.9046" entersphererad="27.347263" exitspherex="-129.058" exitspherey="62.4114" exitspherez="84.9046" exitsphererad="100" length="540" resetpointx="-59.5703" resetpointy="72.231" resetpointz="192.469" startdelay="2">
+		<timeevent text="SOUTH CANNON (1)" timestamp="35" countdown="15" onscreentime="10"/>
+		<timeevent text="WEST CANNON (2)"  timestamp="65" countdown="15" onscreentime="10"/>
+		<timeevent text="NORTH CANNON (1)" timestamp="95" countdown="15" onscreentime="10"/>
+		<timeevent text="EAST CANNON (2)"  timestamp="125" countdown="15" onscreentime="10"/>
+		<timeevent text="SOUTH CANNON (1)" timestamp="155" countdown="15" onscreentime="10"/>
+		<timeevent text="NORTH CANNON (2)" timestamp="185" countdown="15" onscreentime="10"/>
+		<timeevent text="WEST CANNON (1)"  timestamp="215" countdown="15" onscreentime="10"/>
+		<timeevent text="EAST CANNON (2)"  timestamp="245" countdown="15" onscreentime="10"/>
+		<timeevent text="SOUTH CANNON (1)" timestamp="275" countdown="15" onscreentime="10"/>
+		<timeevent text="WEST CANNON (2)"  timestamp="305" countdown="15" onscreentime="10"/>
+		<timeevent text="NORTH CANNON (1)" timestamp="335" countdown="15" onscreentime="10"/>
+		<timeevent text="EAST CANNON (2)"  timestamp="365" countdown="15" onscreentime="10"/>
+		<timeevent text="SOUTH CANNON (1)" timestamp="395" countdown="15" onscreentime="10"/>
+		<timeevent text="NORTH CANNON (2)" timestamp="425" countdown="15" onscreentime="10"/>
+		<timeevent text="WEST CANNON (1)"  timestamp="455" countdown="15" onscreentime="10"/>
+		<timeevent text="EAST CANNON (2)"  timestamp="485" countdown="15" onscreentime="10"/>
+		<timeevent text="SOUTH CANNON (1)" timestamp="515" countdown="15" onscreentime="10"/>
+		<timeevent text="ENRAGE"       timestamp="540" countdown="30" onscreentime="10"/>
+	</areatriggeredtimer>
+	<areatriggeredtimer mapid="1149" enterspherex="-150.859" enterspherey="131.523" enterspherez="149.735" entersphererad="41.432106" exitspherex="-150.859" exitspherey="131.523" exitspherez="149.735" exitsphererad="41.432106" length="600" resetpointx="-65.7187" resetpointy="109.563" resetpointz="79.9329" startdelay="4">
+		<timeevent text="POISON" timestamp="5" countdown="5" onscreentime="0"/>
+		<timeevent text="POISON" timestamp="35" countdown="5" onscreentime="0"/>
+		<timeevent text="POISON" timestamp="65" countdown="5" onscreentime="0"/>
+		<timeevent text="POISON" timestamp="95" countdown="5" onscreentime="0"/>
+		<timeevent text="POISON" timestamp="125" countdown="5" onscreentime="0"/>
+		<timeevent text="POISON" timestamp="155" countdown="5" onscreentime="0"/>
+		<timeevent text="POISON" timestamp="185" countdown="5" onscreentime="0"/>
+		<timeevent text="POISON" timestamp="215" countdown="5" onscreentime="0"/>
+		<timeevent text="POISON" timestamp="245" countdown="5" onscreentime="0"/>
+		<timeevent text="POISON" timestamp="275" countdown="5" onscreentime="0"/>
+		<timeevent text="POISON" timestamp="305" countdown="5" onscreentime="0"/>
+		<timeevent text="POISON" timestamp="335" countdown="5" onscreentime="0"/>
+		<timeevent text="POISON" timestamp="365" countdown="5" onscreentime="0"/>
+		<timeevent text="POISON" timestamp="395" countdown="5" onscreentime="0"/>
+		<timeevent text="POISON" timestamp="425" countdown="5" onscreentime="0"/>
+		<timeevent text="POISON" timestamp="455" countdown="5" onscreentime="0"/>
+		<timeevent text="POISON" timestamp="485" countdown="5" onscreentime="0"/>
+		<timeevent text="POISON" timestamp="515" countdown="5" onscreentime="0"/>
+		<timeevent text="POISON" timestamp="545" countdown="5" onscreentime="0"/>
+		<timeevent text="POISON" timestamp="575" countdown="5" onscreentime="0"/>
+		<timeevent text="ENRAGE" timestamp="600" countdown="25" onscreentime="10"/>
+	</areatriggeredtimer>
+	<areatriggeredtimer mapid="1156" length="600" resetpointx="-31.5387" resetpointy="521.007" resetpointz="5.07386" startdelay="2">
+		<phase enterspherex="-77.0612" enterspherey="512.354" enterspherez="-80.4387" entersphererad="30" nextphasespherex="-97.7282" nextphasespherey="512.745" nextphasespherez="-134.54" nextphasesphererad="18">
+			<timeevent timestamp="">
+				<polypoint xpos="-90.904" ypos="513.076" zpos="-104.617"/>
+				<polypoint xpos="-63.1111" ypos="512.737" zpos="-57.161"/>
+				<polypoint xpos="-53.2498" ypos="512.793" zpos="-67.0011"/>
+				<polypoint xpos="-49.9294" ypos="512.678" zpos="-80.6054"/>
+				<polypoint xpos="-53.6036" ypos="512.654" zpos="-93.9985"/>
+				<polypoint xpos="-63.4743" ypos="512.659" zpos="-103.856"/>
+				<polypoint xpos="-76.9918" ypos="512.726" zpos="-107.594"/>
+			</timeevent>
+			<timeevent timestamp="">
+				<polypoint xpos="-53.6036" ypos="512.654" zpos="-93.9985"/>
+				<polypoint xpos="-100.663" ypos="512.93" zpos="-66.5217"/>
+				<polypoint xpos="-90.8823" ypos="512.971" zpos="-56.6332"/>
+				<polypoint xpos="-76.8888" ypos="512.749" zpos="-53.3311"/>
+				<polypoint xpos="-63.1111" ypos="512.737" zpos="-57.161"/>
+				<polypoint xpos="-53.2498" ypos="512.793" zpos="-67.0011"/>
+				<polypoint xpos="-49.9294" ypos="512.678" zpos="-80.6054"/>
+			</timeevent>
+			<timeevent timestamp="">
+				<polypoint xpos="-90.904" ypos="513.076" zpos="-104.617"/>
+				<polypoint xpos="-101.141" ypos="513.056" zpos="-94.188"/>
+				<polypoint xpos="-104.464" ypos="512.924" zpos="-80.3902"/>
+				<polypoint xpos="-100.663" ypos="512.93" zpos="-66.5217"/>
+				<polypoint xpos="-90.8823" ypos="512.971" zpos="-56.6332"/>
+				<polypoint xpos="-76.8888" ypos="512.749" zpos="-53.3311"/>
+				<polypoint xpos="-63.1111" ypos="512.737" zpos="-57.161"/>
+			</timeevent>
+			<timeevent timestamp="">
+				<polypoint xpos="-100.663" ypos="512.93" zpos="-66.5217"/>
+				<polypoint xpos="-90.8823" ypos="512.971" zpos="-56.6332"/>
+				<polypoint xpos="-76.8888" ypos="512.749" zpos="-53.3311"/>
+				<polypoint xpos="-63.1111" ypos="512.737" zpos="-57.161"/>
+				<polypoint xpos="-53.2498" ypos="512.793" zpos="-67.0011"/>
+				<polypoint xpos="-49.9294" ypos="512.678" zpos="-80.6054"/>
+				<polypoint xpos="-53.6036" ypos="512.654" zpos="-93.9985"/>
+			</timeevent>
+		</phase>
+		<phase enterspherex="-77.0612" enterspherey="512.354" enterspherez="-80.4387" entersphererad="30" >
+		</phase>
+	</areatriggeredtimer>
+	<areatriggeredtimer mapid="1188" enterspherex="364.78" enterspherey="33.60" enterspherez="51.19" entersphererad="34.91" exitspherex="364.78" exitspherey="33.60" exitspherez="51.19" exitsphererad="37" length="600" startdelay="4">
+	</areatriggeredtimer>
+</timers>

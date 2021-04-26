@@ -1,0 +1,564 @@
+<OverlayData>
+  <MarkerCategory name="Tactical.GuildMission.Bounty">
+    <MarkerCategory name="deputybrooke" DisplayName="Deputy Brooke"/>
+  </MarkerCategory>
+  <POIs>
+    <Route Name="Deputy Brooke" BackwardDirection="1">
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="656.536" ypos="106.818" zpos="-534.839" GUID="Vv7erQGkXke9MxS5NlolEQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="630.447" ypos="109.996" zpos="-542.554" GUID="oE25GuG6dE+7gqTXPSbXrQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="605.282" ypos="114.473" zpos="-549.392" GUID="+Bf7Iyrx1UOeDhC0dHezGw=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="581.039" ypos="112.75" zpos="-541.251" GUID="j7pDF1mMv0qMGpD7LoXHRA=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="561.582" ypos="107.852" zpos="-534.332" GUID="gb1e/w2PWUGFld6thbYq8g=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="541.419" ypos="99.2822" zpos="-532.589" GUID="FZnJ9f6RiUSFJWHGmU19VQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="519.094" ypos="90.5848" zpos="-524.764" GUID="VxNoT19OI06VzzPLgsbUUw=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="526.48" ypos="81.4518" zpos="-504.537" GUID="/gClP20XiEeqxIKr/Zt3xA=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="552.116" ypos="84.7871" zpos="-499.052" GUID="Z1+yxEyUq0O6mhzFYlHuCA=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="578.601" ypos="81.6275" zpos="-493.83" GUID="aCekoyTS+EGPfp64Nh/mnw=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="595.13" ypos="76.8228" zpos="-469.784" GUID="N8WhMVTbG0mwrAg5bWA1oA=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="581.535" ypos="74.3382" zpos="-443.763" GUID="64KpWV+OqEijHDeG6Br3iQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="567.339" ypos="70.557" zpos="-426.553" GUID="AlVVinU5tEuc5Mn1uG3k8w=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="560.25" ypos="64.256" zpos="-404.637" GUID="U+ffs5opVkOBLwZE0c+gig=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="561.248" ypos="59.6877" zpos="-384.936" GUID="ZmnOSZqM1UO9rX71v3g74g=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="555.437" ypos="50.043" zpos="-361.037" GUID="PI7kgjL230WqozN9wk/jCA=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="552.928" ypos="41.9569" zpos="-338.47" GUID="EnDrXdH4mU2obg8cP1lAkQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="554.993" ypos="36.0695" zpos="-315.192" GUID="gKa7nAn+FkK3dP4+9X2qiQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="563.935" ypos="26.8959" zpos="-285.618" GUID="iOZLVKLvokekF8SSjQYmqw=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="565.358" ypos="23.3618" zpos="-264.258" GUID="I48O/TeTjEaDwm08KSimEw=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="569.988" ypos="27.3957" zpos="-235.751" GUID="lSc3dqWgDUeD+VXWNpbFmA=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="584.963" ypos="32.9775" zpos="-214.372" GUID="It7QRBfE806cBp4UQKTLAA=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="586.516" ypos="38.7115" zpos="-194.027" GUID="dv+qIdUFIk2MhUqDiKnIFQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="582.634" ypos="44.6741" zpos="-175.511" GUID="TUfVB/z/MkSUTydjC8dssA=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="574.965" ypos="49.263" zpos="-153.476" GUID="Mffy2/drRUeftvs0W8ttQg=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="553.442" ypos="53.3042" zpos="-134.67" GUID="f4XO5b97F06yzgFh9y9OzA=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="528.71" ypos="59.3091" zpos="-124.378" GUID="3W/d3AZfR0+4BzbShjcEMw=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="500.714" ypos="63.1229" zpos="-110.188" GUID="RreqQcxeoU2o8DC3qqWY0g=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="489.449" ypos="56.3111" zpos="-93.3957" GUID="Gs9KxcM+H063KxMkWQcahQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="493.272" ypos="51.1005" zpos="-74.9091" GUID="Y+6BUN1OA0ya73pvtclgqw=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="479.672" ypos="48.8468" zpos="-60.8041" GUID="ChwC1KoAL0SRvYSgGqTFBw=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="462.751" ypos="48.5947" zpos="-47.1855" GUID="GEN9Q9wuEEyzcM6so+7CPA=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="441.4" ypos="47.1947" zpos="-49.7586" GUID="8YVCxfQ91E2zxQ+OdowMVg=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="417.908" ypos="43.3503" zpos="-44.03" GUID="qfG2D/7FPk63rvF35vbQ6g=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="404.249" ypos="38.4651" zpos="-27.9314" GUID="h+fHtV5aLUWF7c2Sua6kow=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="391.445" ypos="33.9229" zpos="-9.90612" GUID="CWw0KDkz2EWiCFp2JE/0Lg=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="374.056" ypos="32.695" zpos="2.17051" GUID="gPTNwQIX7UGIzlEczdTB3Q=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="358.295" ypos="31.2809" zpos="4.29658" GUID="g5Nn0XMEuUu7qrFRTUBaNg=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="337.724" ypos="34.1749" zpos="-3.55105" GUID="Pa91dHd5SE2omQRSCxQyNg=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="322.147" ypos="36.7012" zpos="-18.3823" GUID="RZYbAnSEOEC99WBaMXag6A=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="305.737" ypos="34.7276" zpos="-35.9134" GUID="FNvL+ipptkWeO+U1QpPhjg=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="293.686" ypos="31.528" zpos="-52.8275" GUID="MIswdgrIXUu4xbGZ5fFj3Q=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="272.56" ypos="28.1114" zpos="-79.1754" GUID="g22UR+f/JUSQcwXAIxulCQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="280.821" ypos="22.6524" zpos="-94.3488" GUID="94hPVUkhSEKqP6TditVPRg=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="271.454" ypos="14.445" zpos="-118.038" GUID="DjEuKzx7fEi1iu5nWvOBSA=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="255.28" ypos="15.0262" zpos="-129.631" GUID="RDSrWKSeWESDSTvaRrLQ7w=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="233.409" ypos="18.201" zpos="-142.474" GUID="XdUUxmQGoUObuDz2k5hpCA=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="219.981" ypos="21.9771" zpos="-159.08" GUID="c7WW+8NZ1USF5RDHDjw1uw=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="205.021" ypos="24.5119" zpos="-174.471" GUID="w768knjAbUyPhCn10R0Fxw=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="187.725" ypos="21.9207" zpos="-192.155" GUID="n5dAPUpyqEar1l9UqM26QA=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="167.495" ypos="28.4829" zpos="-207.164" GUID="B9mErJ7Hy02sZM0gMkN/aw=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="149.046" ypos="36.3607" zpos="-218.307" GUID="GNi9u5wpcUKeEIjzTV1qbw=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="123.982" ypos="43.2919" zpos="-230.234" GUID="m6+VWJHXD0egv3yIklrkZQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="99.3825" ypos="49.8152" zpos="-244.841" GUID="Xwpl0GR2u0Gw0kogP9XGtw=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="71.5322" ypos="56.2441" zpos="-254.339" GUID="0ZUzmwGzmUaeApm+025A6g=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="42.3621" ypos="65.6308" zpos="-253.47" GUID="44XRwN0KAkmFkoe/ItxZUQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="18.6738" ypos="73.8035" zpos="-250.742" GUID="NX6IaueBXEKEc80ri5wmiw=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="0.0203399" ypos="81.0252" zpos="-243.448" GUID="jRhenOlyxU+hveMeAo5Dpg=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="-21.0076" ypos="78.0642" zpos="-230.806" GUID="y18O+PZu8ECAn6vD175O2w=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="-38.0877" ypos="71.6038" zpos="-213.616" GUID="PnfWlVob9U2CC08P/iiRYw=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="-48.3475" ypos="65.295" zpos="-194.352" GUID="2IVP6EjIhUOfISpYmNAl2A=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="-53.5587" ypos="58.9201" zpos="-172.669" GUID="EhnMFu3IsUa4ei1FUmQf6A=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="-65.0385" ypos="55.106" zpos="-152.611" GUID="dg0vyg4a3k6LQOhR8YMF/A=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="-78.673" ypos="49.6973" zpos="-130.979" GUID="iBg2nW9jfk6WZeU66lHtig=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="-95.1584" ypos="40.2539" zpos="-119.887" GUID="G4B4RJRx8EKcXCXPckeoZg=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="-114.097" ypos="37.725" zpos="-116.878" GUID="mMcv2vMZz0yWTDOtgGjc4g=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="-134.419" ypos="34.6085" zpos="-104.943" GUID="cynePns3hEK8x6PNukTgUA=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="-164.079" ypos="33.3411" zpos="-93.7472" GUID="dhAJu7UXUku03/W4MDwbpw=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="-199.214" ypos="27.559" zpos="-100.549" GUID="uloF9lMrHE6Mf5G4cA0RSw=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="-232.903" ypos="31.1217" zpos="-102.418" GUID="hpsctd7S5UaFyCSofM5mPQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="-258.531" ypos="38.9092" zpos="-111.386" GUID="w+MVX41UXkSvJ9/OaJc49Q=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="-281.702" ypos="40.5897" zpos="-120.18" GUID="Uy6yu0CdrkCKz25R61p2+Q=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="-308.53" ypos="43.4438" zpos="-131.52" GUID="sf/lyh64bEuPssj1tqNAfw=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="-325.859" ypos="44.4715" zpos="-146.966" GUID="pxQiNWr1NkSIMcHWU/D0ug=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="-336.697" ypos="40.8532" zpos="-168.475" GUID="45tvRRvVzUeUMIK7MvAXgw=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="-348.258" ypos="41.1268" zpos="-188.506" GUID="Vw+7MbnDl0GbxX6/Jx4jMw=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="-353.087" ypos="38.1202" zpos="-211.478" GUID="4Jy75XvKjkqa6JcRNG+mtw=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="-362.831" ypos="32.0391" zpos="-239.169" GUID="hVW1dfglg0CxJ2b1STPpxA=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="-369.789" ypos="29.1017" zpos="-259.854" GUID="fdevHsV/50iaANc8b8kqnw=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="-392.248" ypos="23.3373" zpos="-268.401" GUID="0hHTD7JUIEqvYJCYq7y8dw=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="-421.696" ypos="17.3391" zpos="-257.812" GUID="yCN768128kCegrdIAfFy6Q=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="-445.019" ypos="13.7297" zpos="-240.979" GUID="RGies8nC7EyrUNvLtL6JIA=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="-467.789" ypos="10.3296" zpos="-226.704" GUID="xx5jGnkX3ESvZypDRgNYUA=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="-502.81" ypos="5.79588" zpos="-213.247" GUID="3yBSFcPJo06n2XQ9VUsOgA=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="-525.786" ypos="6.18323" zpos="-212.65" GUID="NzoKw5wjmk2Um8Wer6bUNw=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="-556.8" ypos="9.50766" zpos="-215.22" GUID="etiq/H0aP0CAVGoBhnauhg=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="-582.922" ypos="11.4931" zpos="-213.682" GUID="LnlLtk2bk0qDn7P8C0RK0A=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="-615.237" ypos="13.9252" zpos="-207.246" GUID="QCimm2o+Zk6HC5E4UXlF5A=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="-639.476" ypos="13.9691" zpos="-192.609" GUID="rXwesP1gRUSjLzOQstWhQA=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="-664.37" ypos="14.9477" zpos="-167.99" GUID="qc5QXYwZKk69FJ9D1yAsqw=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="-681.761" ypos="15.7342" zpos="-147.534" GUID="TQqQTP6FRkOhvSntNzFd8Q=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="-699.277" ypos="19.5637" zpos="-129.399" GUID="tF9tbMjKPUywsCJkJjikpg=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="-712.415" ypos="29.0742" zpos="-105.748" GUID="jubKYPDyqESD3orO1T6iZQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="-723.881" ypos="34.7085" zpos="-81.435" GUID="/RYL91UnTEW883kQNhoOMA=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="-750.043" ypos="37.7769" zpos="-64.9175" GUID="GZrufljbbkmH7HR3UF9+Gw=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="-789.81" ypos="34.7731" zpos="-53.5158" GUID="jrWb3UPMoUyInuqM3zJa3A=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="-818.188" ypos="32.9217" zpos="-60.8415" GUID="1C7fxlos2EK0u1Plhu3+5g=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="-846.617" ypos="32.5537" zpos="-62.5599" GUID="xo5WNlSG8kSUagq53/Dqrg=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="-875.413" ypos="33.3886" zpos="-65.0417" GUID="gSkmj36ZD0O1pmCu4aInUw=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="-927.547" ypos="48.6424" zpos="-83.8224" GUID="zI6Dvk+VCkSn0fUXBhRPdw=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="-960.558" ypos="56.9756" zpos="-98.2567" GUID="bJnnRrzV50GUuht4g9XA/Q=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="-987.863" ypos="61.6926" zpos="-108.497" GUID="P7N1Ai4y8kSvKdS+oinJMw=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="-1018.07" ypos="59.4489" zpos="-120.075" GUID="j47sUeMWpEmWCpF5T6UsPg=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="-1044.84" ypos="58.9003" zpos="-142.111" GUID="UkCuwlNSfk2p23GGL8OtlA=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="-1068.16" ypos="55.603" zpos="-148.386" GUID="1pjcZFUeGE+i3Z+DTWptZQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="-1101.11" ypos="56.5012" zpos="-127.134" GUID="xUcU20J8z0C/505GcEHsog=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="-1097.48" ypos="58.6277" zpos="-104.256" GUID="49ZY6s3B30S0Wx8HPFXfHw=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="-1084.54" ypos="58.6639" zpos="-81.4169" GUID="kuwKKrbDg0CnbAqvPCaJ6Q=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="-1040.5" ypos="62.718" zpos="-59.4632" GUID="J0Z7ykQnr0abffPzQ2XjGw=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="-1017.14" ypos="61.62" zpos="-46.1725" GUID="0QLF2QD39UKlOst20BeTLQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="-1003.47" ypos="57.9328" zpos="-34.7442" GUID="O5ZLoL6MSkGhwcusRXZyzQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="-976.003" ypos="54.4907" zpos="-25.2512" GUID="TSNtBnKG0UictV9OTRZgXw=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="-959.001" ypos="51.2977" zpos="-9.74876" GUID="PLeNeM8g30qauLKuleU1jw=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="-933.867" ypos="46.9051" zpos="11.8335" GUID="w+P0OfSWN0+2d2ga8y6Y4Q=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="-929.436" ypos="45.8295" zpos="42.7611" GUID="Vo/ZaKPaAUe7g+IjCt4uCQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="-942.346" ypos="48.6835" zpos="64.0314" GUID="u2oYcOObnEaA7TPERVgIOQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="-961.701" ypos="57.6231" zpos="90.6383" GUID="A1Xj9G6UO02xECFmEejJIw=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="-988.983" ypos="64.5223" zpos="104.484" GUID="aIwqHq0Zk0ulF/VJoCVEJw=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="-1005.16" ypos="71.2739" zpos="126.755" GUID="ZlASEKMNQ0iLhA2a9x/MlA=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="-1010.63" ypos="75.7204" zpos="156.134" GUID="GKYZsTcLFECgAbXAebxnGA=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="-1003.29" ypos="74.6214" zpos="180.655" GUID="5hhZ8UvIDEqFtd4hiJ2QTw=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="-974.346" ypos="68.2033" zpos="202.44" GUID="8zynHI980UWdymDWFsW7TQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="-942.636" ypos="63.4057" zpos="205.485" GUID="htYeBZA+KEWiUcnKNMsOoQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="-921.812" ypos="63.3773" zpos="207.16" GUID="U2D+E31MJEKl0BK6nzRj8Q=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="-892.996" ypos="62.3426" zpos="209.544" GUID="TS/GhnykPE6JbjOcusxLvg=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="-860.651" ypos="62.3259" zpos="208.769" GUID="N1l7KuudkEKhIViUjntNjg=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="-831.641" ypos="56.6736" zpos="201.333" GUID="AGyuJNRKwESouiBZAdLSuA=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="-828.536" ypos="52.2927" zpos="176.487" GUID="DKyWOdWeykKrMx5hl1QcEA=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="-841.73" ypos="51.6063" zpos="154.537" GUID="ju4G/obxxESr+hGxXoygaQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="-855.527" ypos="50.6666" zpos="135.218" GUID="8ODfQo4kj0GnLAN0tU3KZw=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="-876.615" ypos="45.0991" zpos="108.283" GUID="vMg9IDTQaE+c1YX8ByfEyQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="-897.64" ypos="42.8601" zpos="79.5964" GUID="PfjZFMgCDkedRMle7mbcJw=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="-903.96" ypos="42.3319" zpos="53.9551" GUID="LMMYT4mIXUGqUNREAkpFPA=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="-895.477" ypos="39.4092" zpos="27.6008" GUID="2OWTkNo1H0i0YfPAAcaLFA=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="-878.565" ypos="34.3796" zpos="-5.87039" GUID="ReDNugyXT0OoCsxND+9bow=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="-858.62" ypos="32.9512" zpos="-25.468" GUID="2F3CJb+J/EOxFsT5N4duGg=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="-838.189" ypos="33.3973" zpos="-37.0697" GUID="moktRJs9J0Wdq/HtAp+Cag=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="-813.95" ypos="35.8567" zpos="-43.9485" GUID="iISVyJaKoUiR4P8hnTIiTQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="-769.85" ypos="35.4828" zpos="-53.4537" GUID="pOTC7svkfEyL9zIO7Suedg=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="-734.741" ypos="36.1519" zpos="-71.9404" GUID="TDpuGQcgdk6ViLOyJMQDzw=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="-709.284" ypos="30.8553" zpos="-96.0497" GUID="WvucYpBaEUO8SXe6eMev0Q=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="-702.036" ypos="23.6398" zpos="-116.617" GUID="uvNQRkObGkqCaVWG/JVghg=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="-691.286" ypos="17.1963" zpos="-138.618" GUID="ibLba2cDQUG+BiZmEZGkdQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="-671.889" ypos="15.1026" zpos="-157.888" GUID="MYsamabblEWZA+N+utPtjg=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="-650.878" ypos="15.2858" zpos="-176.951" GUID="nHjQEmXtL02la/dtsmxS6g=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="-626.982" ypos="14.0751" zpos="-198.824" GUID="pBwnPiM0KkiKEppHV18mdw=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="-597.384" ypos="12.5186" zpos="-205.405" GUID="hZNH8gpwXkeXgk6X3Uwz2Q=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="-570.141" ypos="10.4328" zpos="-211.832" GUID="L5UgWT2M0E69UkeOwlWhXg=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="-544.915" ypos="8.2067" zpos="-212.62" GUID="RHgFN0SPdkOBQURG8YAlZw=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="-514.535" ypos="4.83692" zpos="-208.35" GUID="E3G2NkPp2Uu37EkOWDbWRw=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="-479.26" ypos="8.63919" zpos="-214.101" GUID="CjQHf4pbhEmP+8PTN93x9A=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="-455.274" ypos="13.0725" zpos="-229.895" GUID="NS9P0h+P1kGzaL5u/qINhg=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="-431.812" ypos="15.5185" zpos="-247.104" GUID="G35yGcxaZ0eTWNzC3J1Xsw=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="-407.418" ypos="20.1672" zpos="-260.28" GUID="k0UY0YUBKE+fpHFfmhi1aw=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="-381.756" ypos="26.2468" zpos="-264.247" GUID="0+8BSlK/PkmYkr0LqXh1tg=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="-368.303" ypos="29.9401" zpos="-251.254" GUID="nkUWmH3igkSn6mLilF+BjA=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="-361.133" ypos="34.996" zpos="-223.952" GUID="R/qnueJbSkixHm5Dl8o3MA=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="-358.455" ypos="40.6259" zpos="-197.437" GUID="ukMgbIVJXk+KdMdf8qFEDw=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="-345.553" ypos="40.9377" zpos="-178.135" GUID="GuYrHsCgU0mDdVp46DoszA=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="-330.998" ypos="42.7811" zpos="-157.815" GUID="qAwbf0wcSkG2llrUEPTc6Q=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="-316.912" ypos="45.7602" zpos="-134.289" GUID="gZo5LLquOUmhOR9Vw2UeXA=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="-296.019" ypos="42.7576" zpos="-121.272" GUID="Ky5cafc6zUeS8Y+4ooRAPg=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="-274.271" ypos="41.2333" zpos="-102.022" GUID="OIzU6yQhS0eW/xYDWJGwxQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="-257.79" ypos="39.7019" zpos="-88.2297" GUID="D4bxqrO65kyQD6Pom/Af7Q=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="-243.357" ypos="35.2835" zpos="-69.7273" GUID="rqE3RoDzKk6V8Jycjo4OPg=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="-226.478" ypos="33.3422" zpos="-52.0819" GUID="pHoc7dCb6E6uP/D3hVaSTg=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="-210.626" ypos="35.0066" zpos="-30.9534" GUID="TcxKpkDwvUWBfkVPwiSt0g=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="-194.683" ypos="35.3045" zpos="-10.2682" GUID="KeJyBdpdf0iA0OsDbhtEsA=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="-173.039" ypos="37.4284" zpos="8.36624" GUID="sWc4fnPhQ0yxEaCQqRj9SQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="-155.253" ypos="43.4319" zpos="22.0634" GUID="np81hODiJEGvHJ67yrNhQA=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="-135.805" ypos="47.8775" zpos="32.5866" GUID="MtKt1qL3f0GsKuLAVVPbLA=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="-116.1" ypos="51.3768" zpos="48.5329" GUID="GzzJ/SdY3EajclYcHgEOaA=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="-103.644" ypos="53.2368" zpos="66.1242" GUID="jN/B0euNX0CSAxwXeylm9Q=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="-96.7856" ypos="54.866" zpos="79.938" GUID="pDmXjFZdBki2SwNLNul1nA=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="-95.2982" ypos="54.5166" zpos="102.906" GUID="DWemjy2OxUue+lhIPoO4cQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="-95.5402" ypos="55.9922" zpos="133.054" GUID="mNR3W5VPNk2SZ5H4US2suA=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="-86.2532" ypos="59.2877" zpos="151.876" GUID="u1gHuuFmak66A0DhGGkIMw=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="-80.2731" ypos="61.7621" zpos="172.865" GUID="NBv+Q7D8r0qVz2kdWUFTGA=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="-78.4267" ypos="63.6649" zpos="197.323" GUID="Alvf56SO2Eyewzhb0wZeiA=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="-75.9574" ypos="68.8501" zpos="217.303" GUID="NG5o++R6pEynNYaP9XaxKg=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="-72.9054" ypos="68.0865" zpos="240.298" GUID="bK+fCbc3uUikcijMDrfBBQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="-61.4581" ypos="64.2727" zpos="259.841" GUID="cNnRDN7lakSGvCORuWlnFg=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="-43.9983" ypos="65.4909" zpos="288.231" GUID="WZpxaNjNAEmi/xUVih7RHA=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="-32.3006" ypos="62.9974" zpos="308.619" GUID="+vmiZwOevka6DrITT8UIrg=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="-18.1147" ypos="60.46" zpos="330.281" GUID="Y0d8U02fCUaMgIi4TIBDMw=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="1.37726" ypos="60.6934" zpos="350.426" GUID="gAd6JLQOgk+d4I3/UMEH0w=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="21.2291" ypos="63.3249" zpos="363.103" GUID="oD5EjDGQfEm9Hv9BqWhdaQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="19.5251" ypos="58.378" zpos="389.807" GUID="AjCKIqANo0GhrW9KObODJg=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="10.5034" ypos="52.7152" zpos="417.631" GUID="bGHeVTpB2k+Bqevi5kRUdg=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="7.56336" ypos="45.6766" zpos="445.948" GUID="S7wyZ0fj80STm+wbAU2cTA=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="7.82064" ypos="44.1226" zpos="463.861" GUID="/fsmFNObMU2wO+BHtV/Azw=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="24.8389" ypos="49.0668" zpos="479.078" GUID="Z3JpH/oBk0CpnOFpl7J3Zw=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="45.4445" ypos="49.2009" zpos="494.582" GUID="pW/cQruGYEOP6I7rtfRQKQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="76.4212" ypos="51.8058" zpos="499.871" GUID="sPD9E8s+3k6GMOlsqjruEg=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="107.282" ypos="59.1651" zpos="503.32" GUID="jHojmtE/8kOdqIlx2wTEjg=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="124.801" ypos="62.5051" zpos="515.978" GUID="SDHiVYs2QkKhBoG9d5UiKg=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="143.313" ypos="62.4003" zpos="525.192" GUID="dB1zcZYTF02loTt7XK3YtQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="167.735" ypos="58.44" zpos="528.129" GUID="1HL+ZgruD0Sl2jPkcfk9pA=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="190.349" ypos="53.466" zpos="530.541" GUID="jzPWMwiK0keR7cToeguNUQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="212.062" ypos="51.5523" zpos="530.232" GUID="wi2gqnSddkiAe15PsBQG8Q=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="230.538" ypos="51.6959" zpos="521.199" GUID="/e0kcbFLTkiBr2DgHjtN/g=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="248.627" ypos="53.5836" zpos="502.008" GUID="j0jBHdD7R0ajepP9Ctqd0w=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="264.645" ypos="58.6873" zpos="479.717" GUID="elnr4l3kKkWA+DNZal3AjA=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="280.307" ypos="64.8949" zpos="459.651" GUID="8uj3oEWEJ0KI9sH3LxHhnA=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="298.716" ypos="70.8973" zpos="443.287" GUID="g+wf8xTAu0aLCt/GGstadA=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="326.124" ypos="66.3835" zpos="432.844" GUID="NbHXHaRj8UKEN67IBJZt7A=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="351.805" ypos="65.2514" zpos="430.082" GUID="Dq8fDdbOaUWjgy5Rj8XsMA=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="372.444" ypos="64.0078" zpos="419.378" GUID="p9IhBVf8oU22DbWXFHjN9A=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="394.42" ypos="62.439" zpos="416.107" GUID="oBy8NPeus0+mX3odpat+aw=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="416.775" ypos="59.2794" zpos="407.144" GUID="ChQs3EZ7HUWQBn1Nks5M9w=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="436.657" ypos="58.4825" zpos="382.604" GUID="2HnwJtEv0UuRCB7XCYfplA=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="444.216" ypos="55.0605" zpos="354.114" GUID="PjMHEGsg2UCytD8o6i176g=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="441.66" ypos="52.9646" zpos="329.872" GUID="236/t1wcz0eHkX0lCrXSYw=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="429.18" ypos="52.8803" zpos="310.617" GUID="IeVK6LmzhkmEW3D3t9JVRA=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="448.254" ypos="56.1203" zpos="280.981" GUID="QrHiWfUXfUeG6rQKUiDDkw=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="478.028" ypos="56.3157" zpos="261.638" GUID="gOev/XlccE2zDiDBJSp1lQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="490.53" ypos="56.1531" zpos="235.265" GUID="17+fy8km6U+HMywo1DiKaA=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="491.242" ypos="53.1887" zpos="212.031" GUID="JU0aoMyToEqMtt8KaSAzwg=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="492.905" ypos="53.2034" zpos="189.262" GUID="5/S5j5wraE6UtnVFNUO00Q=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="501.894" ypos="50.1642" zpos="165.519" GUID="8GKwpBrixEq+36kDCNVsHQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="523.163" ypos="49.3839" zpos="147.054" GUID="xtBkgGjVPEmUZCTGyC6vxw=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="546.289" ypos="46.7623" zpos="141.843" GUID="npDXa0LF6kKIbkF698krUw=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="568.373" ypos="40.2872" zpos="141.655" GUID="dJq15ZQedkyevRabcIQp7g=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="587.75" ypos="34.5741" zpos="139.011" GUID="covOVNNJaEqfSkFOpI2LpA=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="607.556" ypos="31.9733" zpos="135.214" GUID="7QW9+PJvhk+B128qDR9qxQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="633.956" ypos="24.4355" zpos="129.308" GUID="LDlCd9gNCUiXwqXbZwW/Og=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="659.362" ypos="19.9157" zpos="125.179" GUID="KaOqRfcPfEydgHxzSFQ02Q=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="686.204" ypos="21.165" zpos="130.844" GUID="CmS2/rWtqkyaLUr8gdGneg=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="710.333" ypos="24.4114" zpos="149.05" GUID="xy27WTYeGk2kK+EVtcXttA=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="729.51" ypos="27.655" zpos="161.05" GUID="OwOIAn7owEOdCthdnSjwiw=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="744.088" ypos="31.1322" zpos="171.277" GUID="UqKCUOOM0kC1lCG0PQP7wA=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="760.509" ypos="34.6717" zpos="183.436" GUID="VOkCHr/uR02hEVRKMlZu2Q=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="781.367" ypos="38.6017" zpos="196.265" GUID="TylyS4XGt0uucj2ieoz4kw=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="800.685" ypos="42.984" zpos="207.561" GUID="vxvQFIpQXUas5xMBgs4wKw=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="824.184" ypos="43.6143" zpos="220.962" GUID="Ui1xtnAaR0W+Jthi65GMCw=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="847.104" ypos="40.1549" zpos="235.684" GUID="I4jNQw3G8E2JlAdNx8mArQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="868.708" ypos="36.833" zpos="244.816" GUID="AJtMPEeSPU6Btj9ru4IilA=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="887.984" ypos="28.0423" zpos="241.303" GUID="fgHEqgQGpUu08Jkzu8dIUQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="902.354" ypos="21.1567" zpos="224.512" GUID="rgCU9mNQK0OkK0H/N6j6eg=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="902.742" ypos="19.627" zpos="204.409" GUID="rKaOiiG6HUG+sNXPHCuTEQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="901.597" ypos="19.4961" zpos="183.674" GUID="S7u3bvWxNEqzf3jZo2w2Jg=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="897.823" ypos="19.7014" zpos="155.862" GUID="RicFfxKID0G4UG7GHbm9lA=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="901.445" ypos="23.466" zpos="129.113" GUID="MS5OLSWr8Eyiw0MFmBwHwQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="924.2" ypos="30.6356" zpos="126.34" GUID="xltOEBcQ2ky7PdUvuQPB7w=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="941.994" ypos="33.6327" zpos="119.077" GUID="FRnoJzkhuEC5gjhYjUiVjg=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="955.331" ypos="36.7578" zpos="95.8443" GUID="xn813hleA02fNt3LqcW5IA=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="956.782" ypos="39.6565" zpos="70.8463" GUID="zNdF5fUczkGPqArKIhvG1A=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="963.929" ypos="46.6702" zpos="41.7206" GUID="VRIOiZXjIEOhZ3eSC2mSCg=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="970.229" ypos="47.8371" zpos="26.6924" GUID="Yy8nuMGsZ0GIb+Ek7SlLFQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="975.526" ypos="48.4979" zpos="12.0837" GUID="5E6/9jT5XEOAuyUdjzT9DA=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="976.079" ypos="50.9851" zpos="-6.7714" GUID="r0129iWTQ0Kp1GLYKEaxEg=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="973.115" ypos="56.3543" zpos="-29.2073" GUID="Mma4+92WzUqZHA1zkl0ZDA=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="970.378" ypos="60.5377" zpos="-47.3283" GUID="/psFAKZl9UOAfq44Udb3Pw=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="967.01" ypos="65.2647" zpos="-67.3797" GUID="ATnpNNczYUi2J0U64BFuwA=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="963.88" ypos="72.6073" zpos="-87.0105" GUID="RPyS7UzuEkO18NwwgpjXhg=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="960.376" ypos="79.76" zpos="-109.045" GUID="DvfurnSqFU28Vq7sCs8RaA=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="955.936" ypos="82.7264" zpos="-126.052" GUID="SvDV2hs2JkCEuyzmz4Wu/w=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="946.824" ypos="87.7722" zpos="-147.3" GUID="+9NVOinQi0SoOt0RjNbtcg=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="930.091" ypos="88.1738" zpos="-171.425" GUID="nAGGC9wuOU29fWs99fZlhw=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="904.673" ypos="84.9069" zpos="-196.874" GUID="HPhNv92DkE2rYqM2t2kmAQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="878.466" ypos="78.9124" zpos="-214.938" GUID="RngEhd7tZEucpjS5SOEikw=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="850.73" ypos="71.8278" zpos="-230.828" GUID="nvvhw5W3wk6QrN8MO6U3VQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="826.805" ypos="67.6903" zpos="-241.08" GUID="wYXcP22jbkGEV8MVdHIRNQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="803.297" ypos="61.9865" zpos="-255.178" GUID="oQEgPD52LkuVZakZ/ofiBQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="787.081" ypos="60.5665" zpos="-272.62" GUID="W2rDi30rTUaOkcrIvpmwuw=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="775.989" ypos="63.7983" zpos="-295.169" GUID="DDta1FsvhE2TyvvVcTjTKg=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="767.602" ypos="65.672" zpos="-315.756" GUID="P3cWCmhpb0Wi9UF8fhEnZA=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="762.299" ypos="66.9085" zpos="-333.463" GUID="wp2hzyohqk20zF5u1VMZrg=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="751.236" ypos="66.0657" zpos="-350.443" GUID="34X/IcJCDEun6YXwWZH2yQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="735.085" ypos="70.9609" zpos="-372.758" GUID="46eWBgQP1k2uw7CPpA85kA=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="728.377" ypos="78.9459" zpos="-392.966" GUID="V/2Qmhp3RUmqFu8cAeirxA=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="720.423" ypos="80.3592" zpos="-407.562" GUID="29S+GdyWNESsg8HOyAiiEA=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="700.319" ypos="81.3744" zpos="-425.084" GUID="1XKOTj+vB02/SO6J8uAQ6A=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="686.317" ypos="80.7917" zpos="-444.301" GUID="0rP5MvDCgU6VJ5yNw7+dWQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="667.576" ypos="84.7318" zpos="-461.924" GUID="5sJs3LAXLU+cW2e9LPp2og=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="664.968" ypos="87.7942" zpos="-480.678" GUID="A5nUdNmCb0KHsHbFPTgu5A=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="663.943" ypos="92.732" zpos="-499.736" GUID="Mc5Afghcek+x4rRug3+wMw=="/>
+  
+    <POI type="tactical.guildmission.bounty.deputybrooke" MapID="31" xpos="664.064" ypos="98.4797" zpos="-518.981" GUID="t3KmS5SvXEaqX4Q7AJOTqw=="/>
+    </Route>
+  </POIs>
+</OverlayData>

@@ -1,0 +1,26 @@
+<OverlayData>
+  <MarkerCategory name="Repeatable"> 
+    <MarkerCategory name="FireCracker" iconFile="data/Lunar_New_Year_Dailies.png" behavior="2" iconSize="0.5"/>
+  </MarkerCategory>
+  <POIs>
+    <POI MapID="18" xpos="-198.928" ypos="71.5371" zpos="-48.227" type="repeatable.firecracker" GUID="HI38S6B7GUiWuIMVFIj/cg=="/>
+  
+    <POI MapID="18" xpos="-214.867" ypos="60.8518" zpos="-64.4222" type="repeatable.firecracker" GUID="CbM8SxGfsk2anSJYO05Q6w=="/>
+  
+    <POI MapID="18" xpos="-184.247" ypos="63.8125" zpos="8.18487" type="repeatable.firecracker" GUID="/hkY3lfTTUCiIhgTGOTNyw=="/>
+  
+    <POI MapID="18" xpos="-292.065" ypos="66.0403" zpos="16.0286" type="repeatable.firecracker" GUID="dJASyiIDiEO+MI6qwaZOMQ=="/>
+  
+    <POI MapID="18" xpos="-376.19" ypos="65.3149" zpos="-91.5152" type="repeatable.firecracker" GUID="4ph/qp0XxE+1xBrFKB66+g=="/>
+  
+    <POI MapID="18" xpos="-198.12" ypos="72.366" zpos="-66.7535" type="repeatable.firecracker" GUID="aK4UTlX1FUSGE/livl1GAg=="/>
+  
+    <POI MapID="18" xpos="-251.34" ypos="68.1947" zpos="33.8816" type="repeatable.firecracker" GUID="aWNI7dpTiEqOjXSODSShCA=="/>
+  
+    <POI MapID="18" xpos="-352.032" ypos="43.2021" zpos="-56.2944" type="repeatable.firecracker" GUID="fGpPw/vn/U6KCY3y73ap9w=="/>
+  
+    <POI MapID="18" xpos="-264.62" ypos="60.5782" zpos="38.8673" type="repeatable.firecracker" GUID="BlU65DJ9YEGfZUqEyWeRzQ=="/>
+  
+    <POI MapID="18" xpos="-223.663" ypos="60.581" zpos="-164.712" type="repeatable.firecracker" GUID="7GOzFq7UYkyf5zgaM5Sdlw=="/>
+  </POIs>
+</OverlayData>

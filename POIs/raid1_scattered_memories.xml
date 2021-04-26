@@ -1,0 +1,22 @@
+<OverlayData>
+  <MarkerCategory name="Collectible">
+    <MarkerCategory name="TornPage" iconFile="Data\raid1_achievements.png" behavior="3"/>
+  </MarkerCategory>  
+
+  <POIs>
+    <POI MapID="1149" xpos="235.716" ypos="6.91139" zpos="214.193" type="collectible.tornpage" GUID="rokpb47+4kqAaTVOhfeCuQ=="/>
+  
+    <POI MapID="1149" xpos="-46.8976" ypos="81.2647" zpos="-128.95" type="collectible.tornpage" GUID="B7uLmTFIsECR0JjL8XvixA=="/>
+  
+    <POI MapID="1149" xpos="-34.0507" ypos="105.324" zpos="38.1796" type="collectible.tornpage" GUID="SX8REcbBrEWY/iPaVHCtCg=="/>
+  
+    <POI MapID="1149" xpos="-49.0637" ypos="110.495" zpos="134.163" type="collectible.tornpage" GUID="2xKQ9X8b/0aCTr/SI5gU/w=="/>
+  
+    <POI MapID="1149" xpos="-89.8785" ypos="119.824" zpos="63.1894" type="collectible.tornpage" GUID="3gv+CT/Exk+ps9vIdyisLg=="/>
+  
+    <POI MapID="1149" xpos="1.41447" ypos="105.787" zpos="120.156" type="collectible.tornpage" GUID="b+uEf74Qgkm8WVguIstkiA=="/>
+  
+    <POI MapID="1149" xpos="-79.015" ypos="109.883" zpos="180.033" type="collectible.tornpage" GUID="h/r+Cddzt02KYb/TzUzWwg=="/>
+  
+  </POIs>
+</OverlayData>

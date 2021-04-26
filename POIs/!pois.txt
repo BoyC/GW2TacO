@@ -1,0 +1,1 @@
+Xml or zip files put in this directory will be read as POI data and show up as markers on the tactical overlay.

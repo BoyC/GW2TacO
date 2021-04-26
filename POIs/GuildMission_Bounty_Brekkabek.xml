@@ -1,0 +1,344 @@
+<OverlayData>
+  <MarkerCategory name="Tactical.GuildMission.Bounty">
+    <MarkerCategory name="Brekkabek"/>
+  </MarkerCategory>
+  <POIs>
+    <Route Name="Brekkabek" BackwardDirection="1">
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-707.128" ypos="9.55915" zpos="331.792" GUID="jGC2o2YeBESRwQA0euizOg=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-695.455" ypos="9.15384" zpos="309.928" GUID="AcjKj92gvUqhNoq96bMNvA=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-686.402" ypos="9.89094" zpos="287.333" GUID="4s7QO8I57EC0CsCn5+LRRA=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-678.65" ypos="10.2225" zpos="270.19" GUID="RYobEx3OrEmCPYt++Lpf3g=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-664.27" ypos="9.91068" zpos="253.215" GUID="0T587K2VZkyXRrLpqE/iJA=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-657.592" ypos="10.0163" zpos="236.405" GUID="+15UDcqtQkumsPiWQheqQw=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-669.035" ypos="13.7077" zpos="216.293" GUID="s61NeyLb502vYj3QZCe8SQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-678.004" ypos="18.7912" zpos="198.678" GUID="YcvRiIlNvUGBs8is7CLl6Q=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-680.537" ypos="21.6896" zpos="181.307" GUID="An/k8TeREUeECsSLjV3FbQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-672.889" ypos="25.2074" zpos="154.144" GUID="N5MXqUjtBE6SoMRr1by3Lg=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-664.085" ypos="27.0462" zpos="136.984" GUID="/s0YqWa/C02wqMBiDHC2yA=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-657.785" ypos="27.3708" zpos="112.427" GUID="kNq4ZQE5W0S5ETX6p1adWg=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-654.037" ypos="26.8405" zpos="94.7704" GUID="VuSXCoUyNU+JRyzqWH7mNA=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-665.532" ypos="27.9806" zpos="81.7132" GUID="pk0B7zAS8kGWyp/k41TAeg=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-682.541" ypos="29.3717" zpos="66.214" GUID="Yk8DFry/lEi1jegivySH7g=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-695.036" ypos="31.1144" zpos="49.2338" GUID="0YOsBv/d4UOlwbQMFR4hBA=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-707.412" ypos="31.3989" zpos="28.6756" GUID="nBgEHCZ/3EWtjMc4TppNLg=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-695.624" ypos="28.3166" zpos="9.17021" GUID="NbPLW30vUUq+rOAinFrFrg=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-677.409" ypos="24.8069" zpos="1.13229" GUID="qFbiZr9jn0+ivi3+3WAfnA=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-655.839" ypos="22.5435" zpos="-0.47764" GUID="O7CGc6wz9kmdnH6eoMHEbQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-633.227" ypos="24.3188" zpos="-0.655639" GUID="VQT4V0Cr4Uer3ktXM4nzEA=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-615.58" ypos="26.6208" zpos="-15.3802" GUID="UJ4voZ9TCEm41jMzdZVlrQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-598.371" ypos="29.3304" zpos="-23.8965" GUID="OsKnQgLYVUG+8nxbGKAWVw=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-579.132" ypos="32.6423" zpos="-36.3972" GUID="QJwp7k/kAk2hz67N7Y0yMA=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-557.215" ypos="36.2767" zpos="-37.8321" GUID="E++GldncDEeZIVfa1rnUyQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-529.993" ypos="41.6836" zpos="-31.9285" GUID="aEm4ZRL8kk6rZ5/ONBNeSQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-506.513" ypos="43.6891" zpos="-28.733" GUID="bCwu2TazvUqF1538eDX7SA=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-483.152" ypos="43.8312" zpos="-38.1705" GUID="Jbz4YU/ecki2tNuSU9KB5g=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-465.237" ypos="42.2464" zpos="-52.7466" GUID="MEiTkh4o7UqARksPvkScgw=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-453.586" ypos="39.4184" zpos="-68.7252" GUID="ZeKp7aiqcEW0S+i+klYY4w=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-441.763" ypos="37.7574" zpos="-96.9791" GUID="lFBq+U+zwUah2nDnE+adAg=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-445.404" ypos="34.4201" zpos="-120.859" GUID="MHul4vP3ZUC7PxNFwDIGSg=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-438.264" ypos="30.8843" zpos="-137.308" GUID="TSH658zXIkOVuPsKw2aYUg=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-432.11" ypos="28.5659" zpos="-170.295" GUID="mlmBirjnC0ipVz5QZfE/TA=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-428.127" ypos="28.0798" zpos="-193.726" GUID="UkVRgfvUM0+EIm+9HzHLiA=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-405.458" ypos="27.2535" zpos="-195.611" GUID="ig0qGNmdkkyls1n31EfrDg=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-380.302" ypos="26.8479" zpos="-190.186" GUID="43JTD/R4CEOsM3jRjHPP6Q=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-363.665" ypos="26.4197" zpos="-175.965" GUID="9ZhVoXZ780+yr2X7FvTjFg=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-344.793" ypos="25.8994" zpos="-155.177" GUID="4AfjNhasGUOleoKxspTULw=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-329.998" ypos="28.6576" zpos="-131.539" GUID="VfCtueg+yU6t0SwO2KP+jg=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-322.765" ypos="33.3523" zpos="-107.339" GUID="EPV5nK5vFECz7MewhO8cUg=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-311.508" ypos="37.2678" zpos="-79.5169" GUID="1hfLtROfzUaGwX1WHygqGg=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-299.028" ypos="40.8093" zpos="-52.2544" GUID="2YLPEAf6N0CT+7DmiP4clQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-291.329" ypos="41.84" zpos="-31.5905" GUID="yGDQKfxHcEG65LRq5fuIAg=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-277.959" ypos="39.0389" zpos="-10.6572" GUID="hAqrfBVWE02Gy8jXLJa3Sw=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-262.858" ypos="34.7329" zpos="9.00591" GUID="WuNE1gAcnEmS2UNSF29S7Q=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-244.08" ypos="30.7526" zpos="33.5179" GUID="79T3TVDlmUqN4a2AdAGgCw=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-255.533" ypos="29.7455" zpos="59.9608" GUID="4/79b+RbfUu2LZTeunJzMw=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-271.505" ypos="29.7803" zpos="78.0807" GUID="LeMla8UJm0CFPGuMbLjYHg=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-299.18" ypos="33.8194" zpos="91.76" GUID="7VwIRxfnWkGZVu0iMgvz2Q=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-326.162" ypos="38.9165" zpos="104.445" GUID="CrBd0oIet0unSG2PTu50yA=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-351.268" ypos="39.3274" zpos="111.912" GUID="ojmIisO9/ESSf2y/E4gMHA=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-379.152" ypos="33.4846" zpos="117.519" GUID="DhXerx3nCkKnoauSpack9g=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-405.616" ypos="28.3767" zpos="133.512" GUID="Ms6RuxPSUUqCNobwZNTAxw=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-422.712" ypos="23.7752" zpos="151.479" GUID="NWjbaPrr3kmPYD9A0kg1UA=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-423.212" ypos="19.8235" zpos="176.945" GUID="E2xKQPbN6kWqvvYaAmo0vw=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-412.858" ypos="17.12" zpos="204.427" GUID="hKGrvHVrZke2V1ksFatCgQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-418.139" ypos="14.1086" zpos="233.328" GUID="NhGSsiMoyEi7W1hEejVdEQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-445.973" ypos="8.61935" zpos="256.276" GUID="1T6XWtV+c0GcQ5AmvU1GKQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-479.98" ypos="6.72417" zpos="267.985" GUID="JuJprVeemESq9gZN51RS/Q=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-512.609" ypos="5.95601" zpos="273.369" GUID="ukKAneUrC0KVtcExPuwcDw=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-542.601" ypos="7.00029" zpos="273.036" GUID="U/UNM9Fvsk+tz6jjfxRQ/Q=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-569.742" ypos="8.51388" zpos="270.349" GUID="QYazzXmE4UqvETKQJwnW1g=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-593.35" ypos="7.97383" zpos="261.793" GUID="qooVxHNgRUq2c5ou4v4IjA=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-612.826" ypos="8.15719" zpos="248.192" GUID="snfTKNyI60CC/fRHttO4jQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-634.373" ypos="8.76986" zpos="240.674" GUID="dvwQHAvZl0agZ8TZ5CmH+w=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-668.61" ypos="10.3091" zpos="258.113" GUID="skVW4IdktkSx/gfbYRmIqw=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-683.998" ypos="10.109" zpos="280.241" GUID="wn5htATpo02kNUhJEXaOdQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-691.176" ypos="9.44118" zpos="302.639" GUID="a5rB/sd1b0S4ObE3830hUw=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-702.269" ypos="9.56729" zpos="324.85" GUID="5KdAyXjQeUqQYw1ji+cH3Q=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-717.966" ypos="9.75124" zpos="347.343" GUID="NcbyODGBDkyKIX/A5ckhYg=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-721.109" ypos="9.72207" zpos="366.607" GUID="361HxITCZkGMaEc8SL8/sA=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-726.305" ypos="10.6576" zpos="386.785" GUID="tHNlx1+bHEWCxk5Wu3k0rQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-733.58" ypos="14.0355" zpos="409.159" GUID="bCVQ7NjTH0qiK1GpRp3TWA=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-734.848" ypos="16.5738" zpos="432.319" GUID="W4v3DJF060u5nCfOQoxpgg=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-736.222" ypos="17.0045" zpos="452.936" GUID="gJgr0zgCa0mCr0AoaaCe4w=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-738.011" ypos="16.0834" zpos="474.611" GUID="9DvRhQov4Eq98tAUsMT34g=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-740.377" ypos="17.1529" zpos="496.543" GUID="HeFLNMoQM0mEZkcisHeFxw=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-742.169" ypos="15.8827" zpos="515.96" GUID="iVUaPlaVUkuocaCstAMvvw=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-742.018" ypos="13.0473" zpos="535.082" GUID="7SAVCiJEs0KEkA9GUqB3eQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-737.998" ypos="8.49781" zpos="560.981" GUID="gfSu8h0ALU2S+0mQQTfXQw=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-723.702" ypos="6.71186" zpos="585.025" GUID="KVvXE+N7/0i6FU+WYbPprQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-712.703" ypos="6.03043" zpos="600.361" GUID="4BJD/5y/DkeHrWBT0HY7yA=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-694.761" ypos="7.24844" zpos="619.755" GUID="9feJt5gi9EaeG8GKbY8YCg=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-658.004" ypos="4.13098" zpos="620.847" GUID="9/hrtDUDWki7/OI5crq1ag=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-632.75" ypos="5.2082" zpos="622.592" GUID="DrKtSRIc3UGqCbfKnBi22A=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-608.713" ypos="6.29554" zpos="626.737" GUID="QJ9qutA9t0C/KmSKBkdaSw=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-585.39" ypos="10.2292" zpos="632.65" GUID="wZtfzKB2UEKijYULg10veg=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-565.208" ypos="17.7328" zpos="639.566" GUID="vmkdHnbAukuEjutP33S4lw=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-541.349" ypos="27.5023" zpos="650.843" GUID="nAaN85ohGUivl2/iugQMvw=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-518.938" ypos="30.0866" zpos="647.224" GUID="nQHRkkx4yUSUEHjpxk00WQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-500.14" ypos="30.6417" zpos="628.042" GUID="Tqkny+lDLUeGiWfCWZkqIQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-483.153" ypos="30.6417" zpos="609.224" GUID="FDyqGc/gtEubYIunO08O/Q=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-468.405" ypos="30.6417" zpos="592.53" GUID="cg1oLyO5iU2nEi2iZz7QjQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-451.556" ypos="30.7878" zpos="570.505" GUID="h/Hi9cvTj02pSFRiKMEGwg=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-433.318" ypos="32.1328" zpos="552.993" GUID="eblxu2X31EmFqkCN36Qt/g=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-407.187" ypos="35.5057" zpos="547.678" GUID="3g3HSvC2YUOxycs/+gyzeg=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-378.095" ypos="39.1927" zpos="551.559" GUID="OWg2Zu/TOkOPl2Nnlqlk/A=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-352.08" ypos="44.8394" zpos="547.086" GUID="ETCyYihV7kyeJDyw71rmvA=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-330.391" ypos="47.2332" zpos="558.804" GUID="j6uPIWgRQEOqPcxh8Hzlqw=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-306.599" ypos="48.2454" zpos="566.306" GUID="O9OyBg7cxES6ABhNXLIePA=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-268.337" ypos="54.3148" zpos="571.059" GUID="m8iSzqofqU+gtMK/RDDewA=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-245.11" ypos="56.7995" zpos="575.263" GUID="81qgxsC3QUOTOsrzQQ+Mhg=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-221.883" ypos="58.4899" zpos="580.644" GUID="Yu6mxiQ4VUyNfLEzxXgJ6g=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-200.136" ypos="54.5121" zpos="588.637" GUID="2rE3B6Z77E2j6qMqW/bGRQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-173.558" ypos="50.8427" zpos="573.94" GUID="HylMK1MGeU+o5ljDCbMQfw=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-155.37" ypos="48.1621" zpos="560.226" GUID="2riHxVMGLUWkrDOFDLeZ/g=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-127.578" ypos="44.5392" zpos="556.263" GUID="qbjBktgghEmt/MoA/q6nqA=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-103.076" ypos="42.7052" zpos="561.292" GUID="pknOTssW3kSFHK+i2H0pWw=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-79.6141" ypos="44.9877" zpos="562.253" GUID="oU9oSH00+E+3iZGpZY2XWg=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-55.6552" ypos="49.493" zpos="584.99" GUID="m2M7k143Y0a1Ictogb5eFQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-44.7314" ypos="53.2389" zpos="606.755" GUID="xaY9VNXTEUmAkvRUSRAS5g=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-40.0337" ypos="56.7544" zpos="626.81" GUID="rKOhrfzYcE+vK/PSXIdksg=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-35.8577" ypos="61.3178" zpos="656.753" GUID="jZquTaVzGkOIaTaVw08jww=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-45.1648" ypos="62.2355" zpos="678.141" GUID="whXMw0x/qUibIWJruMo87g=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-66.5088" ypos="62.1579" zpos="690.865" GUID="ZoCyO1Cbr0K0iqZ/bwcLaA=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-95.3597" ypos="59.1693" zpos="699.691" GUID="2MfKe7PocEi8Kls4xjNXqQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-105.615" ypos="55.9232" zpos="719.409" GUID="ISv6YXWPokeQ5X/7L9Wjlg=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-103.625" ypos="51.3897" zpos="738.973" GUID="/k4bmi17jkuGSms45qmrLQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-92.4378" ypos="47.2102" zpos="764.875" GUID="B6squFJVVEmV0EHY/BJOkg=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-121.769" ypos="41.1301" zpos="777.563" GUID="cU1WTykC/EaGrA6AsQEAtA=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-140.493" ypos="35.0034" zpos="784.415" GUID="paHq5W+h8kim73DGM7L5WA=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-161.754" ypos="28.4513" zpos="782.556" GUID="e16A/NVsh0yR6XNhI2M8Dg=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-176.588" ypos="23.3524" zpos="764.258" GUID="QL3p4bGYmkaRtun812AKJw=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-193.703" ypos="16.5068" zpos="752.593" GUID="jkqcvo8JRkeNzJs1OXX6fg=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-217.348" ypos="7.34806" zpos="748.397" GUID="6K1l5OJFCkGmHp6/G58zFQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-240.493" ypos="1.36307" zpos="742.656" GUID="Wp+WI7HWv0ComYDTvxHbFw=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-261.404" ypos="-0.203796" zpos="722.976" GUID="mvZAWUKqWUuSLWput/IKEQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-269.295" ypos="6.59498" zpos="691.088" GUID="EqT6ukWQ5UizjR8lkWbMAQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-281.148" ypos="14.0038" zpos="667.66" GUID="fQOaA6YgTU+x9CPFFoujBA=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-294.045" ypos="22.2268" zpos="650.744" GUID="EcB85yM5HU+OK6Dd5SqJAg=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-313.449" ypos="30.6628" zpos="633.712" GUID="tC+SJ7NPREKVzCRp07TlIw=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-320.831" ypos="39.2162" zpos="609.051" GUID="xUIHjaxRYkGtm+ay04MjAw=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-317.094" ypos="43.5849" zpos="591.235" GUID="J8SG0z3l9UqTchH7q/4FcQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-318.057" ypos="47.1559" zpos="569.916" GUID="Kjolmcyqq0CJWZvD7P+AZQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-339.534" ypos="46.3787" zpos="553.398" GUID="881X3jlh00K5z+SCDL7XIA=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-363.7" ypos="42.2424" zpos="548.118" GUID="QqUzYXiT1UmDwkY5JpXH0w=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-396.112" ypos="36.7973" zpos="550.394" GUID="lpGL+rlaXU6Ky66M+1Dz2g=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-419.845" ypos="33.3689" zpos="548.317" GUID="bZVQXjyU8kiCaNWMV7GF5Q=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-443.596" ypos="31.766" zpos="559.877" GUID="YMVe/TUvk0W8Klae8ZrVHg=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-457.994" ypos="29.7872" zpos="581.919" GUID="MM3u+1KjoUm20h+RUaTRnA=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-475.547" ypos="30.6417" zpos="601.244" GUID="cgwMzk9QHEuv/seGG1ofcg=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-491.028" ypos="30.6417" zpos="618.245" GUID="/vQdwdyv00KNQnNI7Cbu0A=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-510.245" ypos="29.9938" zpos="639.991" GUID="EAdY+wFBpEy6FSmmwlO3AA=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-530.159" ypos="29.3369" zpos="651.225" GUID="PaM0pAgrG02yAzUHLZFXnQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-550.147" ypos="24.6567" zpos="647.266" GUID="WWX8n4nj90y3ytXAEljcBg=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-574.9" ypos="13.7746" zpos="636.433" GUID="A+ltXgioGUGIvjDdhJndvw=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-596.59" ypos="8.17147" zpos="629.539" GUID="cFQEVrvnvEmE0rLcq3EAZg=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-622.513" ypos="5.55577" zpos="625.623" GUID="pjnWWRT8akyn2IF7LgVxdg=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-641.014" ypos="6.11457" zpos="633.23" GUID="kIKPYvj0QUmJBOW/vo07/Q=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-662.04" ypos="11.1711" zpos="645.823" GUID="dV/UbWhdJUiiEkk1PVjeuw=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-691.58" ypos="18.0261" zpos="650.961" GUID="kRQeFEvMCUi2mjfo5tW38Q=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-716.83" ypos="21.1012" zpos="651.975" GUID="ICXufY8hNUyPUtiE2VKMmw=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-732.75" ypos="24.9652" zpos="652.549" GUID="5AeB8gJOe0qUk3qfl/NSIg=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-748.692" ypos="26.7036" zpos="643.386" GUID="PQ3HC9bKgUye5gfdrDlTgQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-759.632" ypos="24.3818" zpos="624.591" GUID="LYZlh+y/u0uWs99Hza0enQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-763.619" ypos="20.6115" zpos="607.064" GUID="PSP7KtJ7eEmd+YuhpfSohg=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-758.975" ypos="14.9702" zpos="584.435" GUID="dXpjPUj87kisy4/U5QAsuw=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-743.011" ypos="9.11654" zpos="561.438" GUID="zsmvK52Pbk+tlHOVdHt5ew=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-743.917" ypos="11.6811" zpos="542.5" GUID="dLvry5Eayk68MXxZmHXRXg=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-745.297" ypos="14.3162" zpos="525.467" GUID="I5P8RvfD6UOjBjtys5ESPw=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-742.18" ypos="17.0503" zpos="508.795" GUID="DxsW73923kKiOd3E/Q3yMQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-739.301" ypos="16.6469" zpos="485.928" GUID="U17etSTx3ESxzzr4EVDHFQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-737.252" ypos="16.3109" zpos="463.158" GUID="ihRDDObQi0uow2iXnl1wXQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-735.219" ypos="17.2254" zpos="439.141" GUID="ejzDO4wSaEC87XB8UFdYWA=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-734.246" ypos="15.263" zpos="421.591" GUID="XSoMO6qzwkWRvf3uavf2CQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-733.2" ypos="13.026" zpos="396.527" GUID="xt7x11b1Y0iEoYUJ6nwZSw=="/>
+  
+    <POI type="tactical.guildmission.bounty.brekkabek" MapID="17" xpos="-738.064" ypos="11.7149" zpos="377.045" GUID="NSXfF01JPkq0PaPQ4fRHdw=="/>
+    </Route>
+  </POIs>
+</OverlayData>

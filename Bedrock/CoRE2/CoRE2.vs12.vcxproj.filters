@@ -1,0 +1,135 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Header Files\DX9">
+      <UniqueIdentifier>{5cdca03c-437a-4490-8b03-4aaa5b4de8f8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\DX9">
+      <UniqueIdentifier>{c036ea61-5c94-4e48-91d3-c1e6feafeeaa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Resources">
+      <UniqueIdentifier>{8b1f3144-fd99-4113-b0f2-3c8e922c673f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Resources">
+      <UniqueIdentifier>{0c5f0d02-0cf9-4705-90e5-3276dddd0f97}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\System">
+      <UniqueIdentifier>{48aaf481-2f3c-45f3-a9f1-982c04f5120d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\System">
+      <UniqueIdentifier>{f75f65d9-1111-4ace-acb9-bc7aa0510c78}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Core2_Config.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Core2.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WindowHandler.h">
+      <Filter>Header Files\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture.h">
+      <Filter>Header Files\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Device.h">
+      <Filter>Header Files\System</Filter>
+    </ClInclude>
+    <ClInclude Include="DX9Texture.h">
+      <Filter>Header Files\DX9</Filter>
+    </ClInclude>
+    <ClInclude Include="DX9Device.h">
+      <Filter>Header Files\DX9</Filter>
+    </ClInclude>
+    <ClInclude Include="Enums.h">
+      <Filter>Header Files\System</Filter>
+    </ClInclude>
+    <ClInclude Include="DX9Enums.h">
+      <Filter>Header Files\DX9</Filter>
+    </ClInclude>
+    <ClInclude Include="VertexBuffer.h">
+      <Filter>Header Files\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="IndexBuffer.h">
+      <Filter>Header Files\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="DX9VertexBuffer.h">
+      <Filter>Header Files\DX9</Filter>
+    </ClInclude>
+    <ClInclude Include="DX9IndexBuffer.h">
+      <Filter>Header Files\DX9</Filter>
+    </ClInclude>
+    <ClInclude Include="VertexFormat.h">
+      <Filter>Header Files\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="DX9VertexFormat.h">
+      <Filter>Header Files\DX9</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>Header Files\System</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderState.h">
+      <Filter>Header Files\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Shader.h">
+      <Filter>Header Files\System</Filter>
+    </ClInclude>
+    <ClInclude Include="DX9Shader.h">
+      <Filter>Header Files\DX9</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Core2.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="WindowHandler.cpp">
+      <Filter>Source Files\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Device.cpp">
+      <Filter>Source Files\System</Filter>
+    </ClCompile>
+    <ClCompile Include="DX9Device.cpp">
+      <Filter>Source Files\DX9</Filter>
+    </ClCompile>
+    <ClCompile Include="DX9Texture.cpp">
+      <Filter>Source Files\DX9</Filter>
+    </ClCompile>
+    <ClCompile Include="DX9Enums.cpp">
+      <Filter>Source Files\DX9</Filter>
+    </ClCompile>
+    <ClCompile Include="DX9VertexBuffer.cpp">
+      <Filter>Source Files\DX9</Filter>
+    </ClCompile>
+    <ClCompile Include="DX9IndexBuffer.cpp">
+      <Filter>Source Files\DX9</Filter>
+    </ClCompile>
+    <ClCompile Include="DX9VertexFormat.cpp">
+      <Filter>Source Files\DX9</Filter>
+    </ClCompile>
+    <ClCompile Include="Resource.cpp">
+      <Filter>Source Files\System</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderState.cpp">
+      <Filter>Source Files\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Shader.cpp">
+      <Filter>Source Files\System</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="TODO.txt" />
+  </ItemGroup>
+</Project>

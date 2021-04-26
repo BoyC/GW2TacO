@@ -1,0 +1,304 @@
+<TacOLanguageData language="English">
+  <token key="filtermarkers" value="Filter Displayed Tactical Markers"/>
+  <token key="togglepoidistance" value="Display POI Distance"/>
+  <token key="toggleherdicons" value="Screen Edge Herds Icons"/>
+  <token key="toggledrawwvwnames" value="Display WvW Objective names"/>
+  <token key="togglefadeoutbubble" value="Trail Fadeout Bubble Around Character"/>
+  <token key="toggletactical" value="Toggle Tactical Display"/>
+  <token key="togglerangecircles" value="Toggle Range Circles"/>
+  <token key="rangevisibility" value="Range Circle Visibility"/>
+  <token key="toggleranges" value="Toggle Range Displays"/>
+  <token key="toggleinfoline" value="Toggle Debug Text"/>
+  <token key="togglecompass" value="Toggle Tactical Compass"/>
+  <token key="toggleloctimers" value="Toggle Locational Timers"/>
+  <token key="togglehpgrid" value="Toggle HP Grids"/>
+  <token key="toggleupdatecheck" value="Check for updates on startup"/>
+  <token key="togglemousehighlight" value="Toggle Mouse Highlight"/>
+  <token key="togglemouseoutline" value="Toggle Mouse Highlight Outline"/>
+  <token key="mousecolor" value="Mouse Highlight Color"/>
+  <token key="red" value="Red"/>
+  <token key="lightred" value="Light Red"/>
+  <token key="black" value="Black"/>
+  <token key="gray" value="Gray"/>
+  <token key="blue" value="Blue"/>
+  <token key="lightblue" value="Light Blue"/>
+  <token key="green" value="Green"/>
+  <token key="lightgreen" value="Light Green"/>
+  <token key="cyan" value="Cyan"/>
+  <token key="lightcyan" value="Light Cyan"/>
+  <token key="magenta" value="Magenta"/>
+  <token key="lightmagenta" value="Light Magenta"/>
+  <token key="brown" value="Brown"/>
+  <token key="yellow" value="Yellow"/>
+  <token key="lightgray" value="Light Gray"/>
+  <token key="white" value="White"/>
+  <token key="openmaptimer" value="Open Map Timer Window"/>
+  <token key="closemaptimer" value="Close Map Timer Window"/>
+  <token key="compactmaptimer" value="Compact Map Timer"/>
+  <token key="configmaptimer" value="Configure Map Timer"/>
+  <token key="opentswindow" value="Open Teamspeak Window"/>
+  <token key="closetswindow" value="Close Teamspeak Window"/>
+  <token key="openmarkereditor" value="Open Marker Editor"/>
+  <token key="closemarkereditor" value="Close Marker Editor"/>
+  <token key="autohidemarkereditor" value="Auto Hide Marker Editor"/>
+  <token key="opennotepad" value="Open Notepad"/>
+  <token key="closenotepad" value="Close Notepad"/>
+  <token key="togglewindoweditmode" value="Window edit mode"/>
+  <token key="hideonload" value="Hide TacO on loading screens"/>
+  <token key="closewithgw2" value="Close when GW2 quits"/>
+  <token key="rebindkeys" value="Rebind Keys"/>
+  <token key="action_no_key_bound" value="[no key bound]"/>
+  <token key="no_action" value="No Action"/>
+  <token key="add_marker" value="Add New Marker"/>
+  <token key="remove_marker" value="Remove Marker"/>
+  <token key="action_key" value="Action Key"/>
+  <token key="edit_notepad" value="Edit notepad"/>
+  <token key="*toggle_trail_recording" value="Start/Stop Trail Recording"/>
+  <token key="*pause_trail_recording" value="Pause/Resume Trail Recording"/>
+  <token key="*remove_last_trail" value="Remove Last Trail Segment"/>
+  <token key="*resume_trail" value="Resume Trail By Creating New Section"/>
+  <token key="apikeys" value="API keys"/>
+  <token key="gw2apikey" value="Guild Wars 2 API Key"/>
+  <token key="ts3controlplugin" value="TeamSpeak 3 Control Plugin"/>
+  <token key="openraidprogress" value="Open Raid Progress Window"/>
+  <token key="closeraidprogress" value="Close Raid Progress Window"/>
+  <token key="opendungeonprogress" value="Open Dungeon Progress Window"/>
+  <token key="closedungeonprogress" value="Close Dungeon Progress Window"/>
+  <token key="abouttaco" value="Contact Information (About)"/>
+  <token key="getnewbuild" value="Get the new version from the DevBlog"/>
+  <token key="exittaco" value="Exit GW2 TacO"/>
+  <token key="waitingforapi" value="Waiting for the GW2 api..."/>
+  <token key="apierror1" value="GW2 API error"/>
+  <token key="apierror2" value="Your API key is bad or the API is bugged"/>
+  <token key="apierror3_progression" value="Your GW2 API key doesn't have"/>
+  <token key="apierror4_progression" value="access to the 'progression' permission"/>
+  <token key="apikeynotset1" value="You need to set a GW2 API key"/>
+  <token key="apikeynotset2" value="in the TacO menu."/>
+  <token key="ts3_clientquery_plugin" value="TS3 ClientQuery Plugin"/>
+  <token key="guild_wars_2" value="Guild Wars 2"/>
+  <token key="new_build_txt1" value="There have been"/>
+  <token key="new_build_txt2" value="new builds of GW2 TacO released since you last updated!"/>
+  <token key="press_to_bind" value="Press the key you want to change the binding to."/>
+  <token key="enter_api" value="Enter your"/>
+  <token key="below_and_press" value="API key below and press enter:"/>
+  <token key="ts3_help_1" value="You can find the API Key in TeamSpeak 3 under"/>
+  <token key="ts3_help_2" value="Tools -> Options -> Addons -> ClientQuery -> Settings"/>
+  <token key="gw2_api_help_1" value="You can create an API key at"/>
+  <token key="compassnorth" value="N"/>
+  <token key="compasseast" value="E"/>
+  <token key="compasssouth" value="S"/>
+  <token key="compasswest" value="W"/>
+  <token key="ts3authfail1" value="TS3 Authentication failed."/>
+  <token key="ts3authfail2" value="The TS3 API key provided is"/>
+  <token key="ts3authfail3" value="invalid. Please set a valid"/>
+  <token key="ts3authfail4" value="one in the TacO menu."/>
+  <token key="ts3nokeyset1" value="TS3 Authentication failed."/>
+  <token key="ts3nokeyset2" value="You need to set a TS3 API key"/>
+  <token key="ts3nokeyset3" value="in the TacO menu."/>
+  <token key="action" value="Action"/>
+  <token key="currently_bound" value="currently bound to key"/>
+  <token key="tacosettings" value="GW2 TacO settings"/>
+  <token key="language" value="Language"/>
+  <token key="multiclientwarning" value="GW2 TacO doesn't support multiboxing."/>
+  <token key="buylist" value="Buy orders:"/>
+  <token key="selllist" value="Sell listings:"/>
+  <token key="outbidbuys" value="Outbid buy orders:"/>
+  <token key="outbidsells" value="Undercut sell listings:"/>
+  <token key="opentptracker" value="Open Trading Post Tracker Window"/>
+  <token key="closetptracker" value="Close Trading Post Tracker Window"/>
+  <token key="tptracker_onlyoutbid" value="Only show outbid/undercut listings"/>
+  <token key="tptracker_showbuys" value="Show buy orders"/>
+  <token key="tptracker_showsells" value="Show sell listings"/>
+  <token key="tptracker_nextsellonly" value="Only show one listing per item type"/>
+  <token key="apierror3_tradingpost" value="Your GW2 API key doesn't have"/>
+  <token key="apierror4_tradingpost" value="access to the 'tradingpost' permission"/>
+  <token key="raidwindow_compact" value="Compact view"/>
+  <token key="gold" value="g"/>
+  <token key="silver" value="s"/>
+  <token key="copper" value="c"/>
+
+  <token key="raid_wing" value="W"/>
+  <token key="raid_event" value="E"/>
+  <token key="raid_boss" value="B"/>
+
+  <token key="showraid_forsaken_thicket" value="Forsaken Thicket"/>
+  <token key="showraid_bastion_of_the_penitent" value="Bastion of the Penitent"/>
+  <token key="showraid_hall_of_chains" value="Hall of Chains"/>
+  <token key="showraid_mythwright_gambit" value="Mythwright Gambit"/>
+  <token key="showraid_the_key_of_ahdashim" value="The Key of Ahdashim"/>
+
+  <token key="visibilitymenu" value="Toggle Visibility Behavior"/>
+  <token key="markervisibilitymenu" value="Markers"/>
+  <token key="ingamevisibility" value="Show In-game"/>
+  <token key="defaultvisibility" value="Default"/>
+  <token key="forceonvisibility" value="Force ON"/>
+  <token key="forceoffvisibility" value="Force OFF"/>
+  <token key="minimapvisibility" value="Show on MiniMap"/>
+  <token key="mapvisibility" value="Show on Map"/>
+  <token key="trailvisibilitymenu" value="Trails"/>
+  <token key="togglemetricsystem" value="Display Distances as Meters"/>
+  <token key="toggleforcedpiaware" value="Don't scale with DPI (requires restart)"/>
+
+  <token key="rangecirclesnotavailable" value="Range circles are disabled in PvP"/>
+  <token key="toggletacticalinfotext" value="Toggle Marker Information Text"/>
+  <token key="supporttaco" value="Support GW2 TacO Development"/>
+  <token key="tacticalsettings" value="Tactical Display Settings"/>
+  <token key="tacticalutilities" value="Marker Utilities"/>
+  <token key="removemymarkers" value="Remove My Markers From This Map"/>
+  <token key="reallyremovemarkers" value="DELETE MY MARKERS FROM THIS MAP"/>
+  <token key="reloadmarkers" value="Reload All Marker Data"/>
+  <token key="markeropacity" value="Global Marker Opacity"/>
+  <token key="ingameopacity" value="Ingame Markers"/>
+  <token key="mapopacity" value="Map Markers"/>
+  <token key="opacitysolid" value="Solid"/>
+  <token key="opacitytransparent" value="Transparent"/>
+  <token key="opacityfaded" value="Faded"/>
+  <token key="togglekeybinds" value="Keybinds Enabled"/>
+  <token key="escape_to_unbind" value="Press Escape to unbind the action"/>
+  <token key="currently_not_bound" value="currently not bound to a key"/>
+
+  <token key="toggle_tactical_layer" value="Toggle Tactical Layer"/>
+  <token key="toggle_range_circles" value="Toggle Range Circles"/>
+  <token key="toggle_tactical_compass" value="Toggle Tactical Compass"/>
+  <token key="toggle_locational_timers" value="Toggle Locational Timers"/>
+  <token key="toggle_hp_grids" value="Toggle HP Grid"/>
+  <token key="toggle_mouse_highlight" value="Toggle Mouse Highlight"/>
+  <token key="toggle_map_timer" value="Toggle Map Timer Window"/>
+  <token key="toggle_ts3_window" value="Toggle TS3 Window"/>
+  <token key="toggle_marker_editor" value="Toggle Marker Editor Window"/>
+  <token key="toggle_notepad" value="Toggle Notepad Window"/>
+  <token key="toggle_raid_progress" value="Toggle Raid Progress Window"/>
+  <token key="toggle_dungeon_progress" value="Toggle Dungeon Progress Window"/>
+  <token key="toggle_tp_tracker" value="Toggle TP Tracker Window"/>
+  <token key="toggle_window_edit_mode" value="Toggle Window Edit Mode"/>
+  <token key="enabletpnotificationicon" value="Toggle Trading Post Icon Highlight"/>
+
+  <token key="deletekey" value="Delete API Key"/>
+  <token key="addgw2apikey" value="Add New GW2 API Key"/>
+  <token key="couldntidentifyaccount1" value="Could not find any API key matching"/>
+  <token key="couldntidentifyaccount2" value="current account. Please add API key."/>
+  <token key="waitingforcharactername1" value="Waiting for character selection"/>
+
+  <token key="wurm_tunnel" value="Wurm Tunnel"/>
+  <token key="airport" value="Airport"/>
+  <token key="thunder_hollow_reactor" value="Thunder Hollow Reactor"/>
+  <token key="forge" value="Forge"/>
+  <token key="overgrown_fane_reactor" value="Overgrown Fane Reactor"/>
+  <token key="shrine" value="Shrine"/>
+  <token key="altar" value="Altar"/>
+  <token key="workshop" value="Workshop"/>
+  <token key="arid_fortress_reactor" value="Arid Fortress Reactor"/>
+  <token key="stonegaze_spire_reactor" value="Stonegaze Spire Reactor"/>
+  <token key="bell_tower" value="Bell Tower"/>
+  <token key="observatory" value="Observatory"/>
+  <token key="overgrown_fane" value="Overgrown Fane"/>
+  <token key="arid_fortress" value="Arid Fortress"/>
+  <token key="tytone_perch" value="Tytone Perch"/>
+  <token key="thunder_hollow" value="Thunder Hollow"/>
+  <token key="tytone_perch_reactor" value="Tytone Perch Reactor"/>
+  <token key="inferno_s_needle" value="Inferno's Needle"/>
+  <token key="stonegaze_spire" value="Stonegaze Spire"/>
+  <token key="inferno_s_needle_reactor" value="Inferno's Needle Reactor"/>
+  <token key="statuary" value="Statuary"/>
+  <token key="aldon_s_ledge" value="Aldon's Ledge"/>
+  <token key="overlook" value="Overlook"/>
+  <token key="langor_gulch" value="Langor Gulch"/>
+  <token key="lowlands" value="Lowlands"/>
+  <token key="mendon_s_gap" value="Mendon's Gap"/>
+  <token key="danelon_passage" value="Danelon Passage"/>
+  <token key="stonemist_castle" value="Stonemist Castle"/>
+  <token key="pangloss_rise" value="Pangloss Rise"/>
+  <token key="durios_gulch" value="Durios Gulch"/>
+  <token key="veloka_slope" value="Veloka Slope"/>
+  <token key="klovan_gully" value="Klovan Gully"/>
+  <token key="jerrifer_s_slough" value="Jerrifer's Slough"/>
+  <token key="speldan_clearcut" value="Speldan Clearcut"/>
+  <token key="valley" value="Valley"/>
+  <token key="wildcreek_run" value="Wildcreek Run"/>
+  <token key="quentin_lake" value="Quentin Lake"/>
+  <token key="bravost_escarpment" value="Bravost Escarpment"/>
+  <token key="ogrewatch_cut" value="Ogrewatch Cut"/>
+  <token key="golanta_clearing" value="Golanta Clearing"/>
+  <token key="umberglade_woods" value="Umberglade Woods"/>
+  <token key="rogue_s_quarry" value="Rogue's Quarry"/>
+  <token key="anzalias_pass" value="Anzalias Pass"/>
+  <token key="temple_of_lost_prayers" value="Temple of Lost Prayers"/>
+  <token key="temple_of_the_fallen" value="Temple of the Fallen"/>
+  <token key="redbriar" value="Redbriar"/>
+  <token key="bluebriar" value="Bluebriar"/>
+  <token key="askalion_hills" value="Askalion Hills"/>
+  <token key="shadaran_hills" value="Shadaran Hills"/>
+  <token key="ascension_bay" value="Ascension Bay"/>
+  <token key="dreadfall_bay" value="Dreadfall Bay"/>
+  <token key="orchard_overlook" value="Orchard Overlook"/>
+  <token key="cohen_s_overlook" value="Cohen's Overlook"/>
+  <token key="woodhaven" value="Woodhaven"/>
+  <token key="sunnyhill" value="Sunnyhill"/>
+  <token key="the_spiritholme" value="The Spiritholme"/>
+  <token key="the_titanpaw" value="The Titanpaw"/>
+  <token key="bauer_s_estate" value="Bauer's Estate"/>
+  <token key="gertzz_s_estate" value="Gertzz's Estate"/>
+  <token key="garrison" value="Garrison"/>
+  <token key="redvale_refuge" value="Redvale refuge"/>
+  <token key="bluevale_refuge" value="Bluevale refuge"/>
+  <token key="godslore" value="Godslore"/>
+  <token key="faithleap" value="Faithleap"/>
+  <token key="stargrove" value="Stargrove"/>
+  <token key="foghaven" value="Foghaven"/>
+  <token key="carver_s_ascent" value="Carver's Ascent"/>
+  <token key="patrick_s_ascent" value="patrick's Ascent"/>
+  <token key="champion_s_demesne" value="Champion's Demesne"/>
+  <token key="hero_s_lodge" value="Hero's Lodge"/>
+  <token key="greenlake" value="Greenlake"/>
+  <token key="redlake" value="Redlake"/>
+  <token key="greenwater_lowlands" value="Greenwater Lowlands"/>
+  <token key="redwater_lowlands" value="Redwater Lowlands"/>
+  <token key="battle_s_hollow" value="Battle's Hollow"/>
+  <token key="norfolk_s_hollow" value="Norfolk's Hollow"/>
+  <token key="dawn_s_eyrie" value="Dawn's Eyrie"/>
+  <token key="cragtop" value="Cragtop"/>
+  <token key="hamm_s_lab" value="Hamm's Lab"/>
+  <token key="zakk_s_lab" value="Zakk's Lab"/>
+  <token key="lesh_s_lab" value="Lesh's Lab"/>
+  <token key="bauer_farmstead" value="Bauer Farmstead"/>
+  <token key="gee_farmstead" value="Gee Farmstead"/>
+  <token key="barrett_farmstead" value="Barrett Farmstead"/>
+  <token key="mclain_s_encampment" value="Mclain's Encampment"/>
+  <token key="habib_s_encampment" value="Habib's Encampment"/>
+  <token key="patrick_s_encampment" value="Patrick's Encampment"/>
+  <token key="o_del_academy" value="O'del Academy"/>
+  <token key="kay_li_academy" value="Kay'li Academy"/>
+  <token key="y_lan_academy" value="Y'lan Academy"/>
+  <token key="eternal_necropolis" value="Eternal Necropolis"/>
+  <token key="undying_necropolis" value="Undying Necropolis"/>
+  <token key="deathless_necropolis" value="Deathless Necropolis"/>
+  <token key="crankshaft_depot" value="Crankshaft Depot"/>
+  <token key="flywheel_depot" value="Flywheel Depot"/>
+  <token key="sparkplug_depot" value="Sparkplug Depot"/>
+  <token key="blistering_undercroft" value="Blistering Undercroft"/>
+  <token key="torrid_undercroft" value="Torrid Undercroft"/>
+  <token key="scorching_undercroft" value="Scorching Undercroft"/>
+  <token key="higgins_s_ascent" value="Higgins's Ascent"/>
+  <token key="bearce_s_dwelling" value="Bearce's Dwelling"/>
+  <token key="roy_s_refuge" value="Roy's Refuge"/>
+  <token key="olivier_s_refuge" value="Olivier's Refuge"/>
+  <token key="norfolk_s_refuge" value="Norfolk's Refuge"/>
+  <token key="zak_s_overlook" value="Zak's Overlook"/>
+  <token key="parched_outpost" value="Parched Outpost"/>
+  <token key="barren_outpost" value="Barren Outpost"/>
+  <token key="withered_outpost" value="Withered Outpost"/>
+  <token key="stoic_rampart" value="Stoic Rampart"/>
+  <token key="hardened_rampart" value="Hardened Rampart"/>
+  <token key="impassive_rampart" value="Impassive Rampart"/>
+  <token key="osprey_s_palace" value="Osprey's Palace"/>
+  <token key="shrike_s_palace" value="Shrike's Palace"/>
+  <token key="harrier_s_palace" value="Harrier's Palace"/>
+  <token key="darra_s_maze" value="Darra's Maze"/>
+  <token key="boettiger_s_hideaway" value="Boettiger's Hideaway"/>
+  <token key="berdrow_s_hideaway" value="Berdrow's Hideaway"/>
+  <token key="hughe_s_hideaway" value="Hughe's Hideaway"/>
+  <token key="tilly_s_encampment" value="Tilly's Encampment"/>
+  <token key="dustwhisper_well" value="Dustwhisper Well"/>
+  <token key="lastgasp_well" value="Lastgasp Well"/>
+  <token key="smashedhope_well" value="Smashedhope Well"/>
+</TacOLanguageData>

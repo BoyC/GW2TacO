@@ -1,0 +1,50 @@
+<OverlayData>
+  <MarkerCategory name="Tactical.GuildMission.Bounty">
+    <MarkerCategory name="BigMayana" DisplayName="Big Mayana" iconFile="Data/Bounty_bw.png" color="ff80ff80"/>
+  </MarkerCategory>
+  <POIs>
+    <POI type="tactical.guildmission.bounty.bigmayana" MapID="53" xpos="-568.427" ypos="14.0047" zpos="818.403" GUID="K9dpioN2fUC3J4B/zp7Y2w=="/>
+  
+    <POI type="tactical.guildmission.bounty.bigmayana" MapID="53" xpos="-622.922" ypos="12.4454" zpos="844.414" GUID="cT82Q1JgW0mIV+WLbACRUw=="/>
+  
+    <POI type="tactical.guildmission.bounty.bigmayana" MapID="53" xpos="-45.6279" ypos="13.4975" zpos="246.436" GUID="ozAS67neI0CuKjAf7tMJAg=="/>
+  
+    <POI type="tactical.guildmission.bounty.bigmayana" MapID="53" xpos="168.806" ypos="16.9923" zpos="514.304" GUID="IxytZFp+n0mPBQTrN42+QA=="/>
+  
+    <POI type="tactical.guildmission.bounty.bigmayana" MapID="53" xpos="130.469" ypos="2.40457" zpos="571.921" GUID="oSiFMLlp2kSYsQQpTqQw+Q=="/>
+  
+    <POI type="tactical.guildmission.bounty.bigmayana" MapID="53" xpos="287.857" ypos="1.12048" zpos="547.704" GUID="VkbV+kGZ1kmx873YQl60pQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.bigmayana" MapID="53" xpos="312.622" ypos="2.2994" zpos="604.517" GUID="QV5ukX10eEm1p36xkUaRLQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.bigmayana" MapID="53" xpos="439.818" ypos="52.3068" zpos="504.204" GUID="kkcXBLPWKk27xy3O3e9Tng=="/>
+  
+    <POI type="tactical.guildmission.bounty.bigmayana" MapID="53" xpos="208.913" ypos="4.22802" zpos="336.421" GUID="w0Z8OOvfz0C84Rae/7afKA=="/>
+  
+    <POI type="tactical.guildmission.bounty.bigmayana" MapID="53" xpos="111.373" ypos="1.44959" zpos="218.593" GUID="LUziDjTtCky/Wv/TK6LYrg=="/>
+  
+    <POI type="tactical.guildmission.bounty.bigmayana" MapID="53" xpos="129.473" ypos="2.25574" zpos="211.577" GUID="ceJALiWtB0amrH9poebNMA=="/>
+  
+    <POI type="tactical.guildmission.bounty.bigmayana" MapID="53" xpos="151.634" ypos="5.63752" zpos="198.473" GUID="fAx336kZm06dw6S7JfHSng=="/>
+  
+    <POI type="tactical.guildmission.bounty.bigmayana" MapID="53" xpos="331.348" ypos="70.2295" zpos="90.7649" GUID="8GBWzcsfrkW9zBDDfAqPbQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.bigmayana" MapID="53" xpos="612.534" ypos="90.2153" zpos="226.159" GUID="vWdvPml2PUu2RmP0GBUkLg=="/>
+  
+    <POI type="tactical.guildmission.bounty.bigmayana" MapID="53" xpos="707.677" ypos="93.0707" zpos="219.102" GUID="Q2hWgAcvo02DUjbOz04yPw=="/>
+  
+    <POI type="tactical.guildmission.bounty.bigmayana" MapID="53" xpos="-122.815" ypos="0.501949" zpos="-68.5844" GUID="K7K3c8tik0uHo6bLvTvMnQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.bigmayana" MapID="53" xpos="-152.785" ypos="0.234851" zpos="-70.0668" GUID="YWRa5IAizEORQAsPVzlmVg=="/>
+  
+    <POI type="tactical.guildmission.bounty.bigmayana" MapID="53" xpos="-166.435" ypos="0.405309" zpos="-84.289" GUID="XotshNTB7UuAC9kSUX4V+g=="/>
+  
+    <POI type="tactical.guildmission.bounty.bigmayana" MapID="53" xpos="437.385" ypos="26.9706" zpos="-207.025" GUID="5ZKrd7cscUi8PF6R/IVBLg=="/>
+  
+    <POI type="tactical.guildmission.bounty.bigmayana" MapID="53" xpos="315.075" ypos="1.66132" zpos="-484.02" GUID="ZurZe4V9fkS8vFV4f/+Djg=="/>
+  
+    <POI type="tactical.guildmission.bounty.bigmayana" MapID="53" xpos="522.997" ypos="29.9169" zpos="-850.904" GUID="9Gr+kS4IMkWen8c+ce3+og=="/>
+  
+    <POI type="tactical.guildmission.bounty.bigmayana" MapID="53" xpos="-473.914" ypos="0.283469" zpos="-581.551" GUID="UhQlj7KDWk6qAjsrUJCxpg=="/>
+  </POIs>
+</OverlayData>

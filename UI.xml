@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<guidescriptor>
+  <gui id="gw2pois">
+    <GW2TacO id="tacoroot">
+      <GW2Dialog id="gw2dialog"/>
+      <GW2RangeDisplay id="ranges"/>
+      <GW2TrailDisplay id="trail"/>
+      <GW2TacticalDisplay id="tactical"/>
+      <GW2TacticalCompass id="compass"/>
+      <TimerDisplay id="locationaltimer"/>
+      <clickthroughbutton id="RedCircle" hidden="1"/>
+      <box id="MenuHoverBox" clickthrough="1" >
+        <clickthroughbutton id="TPButton"/>
+        <button id="MenuButton"/>
+      </box>
+      <MouseHighlight id="mousehighlight"/>
+      <HPGrid id="hpgrid"/>
+    </GW2TacO>
+  </gui>
+  <guitemplate id="markereditor" class="template">
+    <box id="markereditorbox" clickthrough="1" >
+      <label id="defaultmarkertype" text="Default Marker Type: undefined"/>
+      <button id="changedefaultmarkertype" text="Change Default Marker Type"/>
+      <label id="markertype" text=""/>
+      <button id="changemarkertype" text="Change Marker Type"/>
+      <label id="" text="Trail Editing"/>
+      <button id="starttrail" text="Start New Trail"/>
+      <button id="pausetrail" text="Pause Recording"/>
+      <button id="startnewsection" text="Resume New Section"/>
+      <button id="deletelastsegment" text="Delete Last Segment"/>
+      <button id="savetrail" text="Export Trail"/>
+      <button id="loadtrail" text="Import Trail"/>
+    </box>
+  </guitemplate>
+  <guitemplate id="notepad" class="template">
+    <box id="notepadbox" clickthrough="1">
+      <textbox id="notepad" text=""/>
+    </box>
+  </guitemplate>
+
+</guidescriptor>

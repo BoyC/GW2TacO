@@ -1,0 +1,30 @@
+<OverlayData>
+ 
+  <MarkerCategory name="Festivals">
+  	<MarkerCategory name="SAB">
+  		<MarkerCategory name="FluteDoor" iconFile="Data\Note.png" iconSize="0.5" alpha="0.7" heightOffset="0" fadeNear="2000" fadeFar="2200"/>
+  	</MarkerCategory>
+  </MarkerCategory>
+ 
+  <POIs>
+  
+    <POI MapID="934" type="Festivals.SAB.FluteDoor" xpos="-46.2253" ypos="45" zpos="124.734" GUID="BC8MJAEIsU2uSQgKtg3mDw=="/>
+	
+    <POI MapID="934" type="Festivals.SAB.FluteDoor" xpos="-8.74883" ypos="99.7984" zpos="120.687" GUID="IeFg+6oZb0GHcxYX4nBLrw=="/>
+	
+    <POI MapID="934" type="Festivals.SAB.FluteDoor" xpos="-111.251" ypos="260.579" zpos="365.478" GUID="1wCCK9oMnEyXYdD71jUngQ=="/>
+
+    <POI MapID="934" type="Festivals.SAB.FluteDoor" xpos="-369.325" ypos="347.652" zpos="273.062" GUID="QXUsMa4ZnEKUXbgkqAHH+A=="/>
+
+    <POI MapID="934" type="Festivals.SAB.FluteDoor" xpos="-328.547" ypos="357" zpos="202.43" GUID="yPNeByGM3EamkwL1VO1asg=="/>
+	
+	<POI MapID="934" type="Festivals.SAB.FluteDoor" xpos="-58.8717" ypos="99.4219" zpos="140.831" GUID="aYqnTWb6OUmnx/2NgaUpNg=="/>
+  
+    <POI MapID="934" type="Festivals.SAB.FluteDoor" xpos="620.841" ypos="191" zpos="-120.753" GUID="F3k47Hf+pUK+VE0RhsTR6w=="/>
+  
+    <POI MapID="934" type="Festivals.SAB.FluteDoor" xpos="-31.9255" ypos="228.9" zpos="307.066" GUID="PxtDl0ZEP0KYdokUZc4ZxA=="/>
+	
+	<POI MapID="934" type="Festivals.SAB.FluteDoor" xpos="-413.789" ypos="364.4" zpos="460.311" GUID="qJ1JMbn82EWv4QQOg2JgEQ=="/>
+    
+  </POIs>
+</OverlayData>

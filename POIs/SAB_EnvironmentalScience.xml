@@ -1,0 +1,49 @@
+<OverlayData>
+ 
+  <MarkerCategory name="Festivals">
+    <MarkerCategory name="SAB">
+    	<MarkerCategory name="EnvironmentalScience" iconFile="Data\SAB_achievement.png" behavior="2" iconSize="0.7" alpha="0.9" fadeNear="6000" fadeFar="7000" heightOffset="0"/> 
+    </MarkerCategory>
+  </MarkerCategory>
+ 
+  <POIs>
+    <POI MapID="895" type="Festivals.SAB.EnvironmentalScience" xpos="-261.87" ypos="56.594" zpos="487.197" GUID="CWSZW/p4EkSaAuFFi7hALQ=="/>
+    <POI MapID="895" type="Festivals.SAB.EnvironmentalScience" xpos="-301.124" ypos="57.9547" zpos="491.086" GUID="AVjQCc2cvUmOHlG+Cc5BLw=="/>	    <POI MapID="895" type="Festivals.SAB.EnvironmentalScience" xpos="-932.229" ypos="49.3942" zpos="450.084" GUID="j0rZQey0zU+RWJjpwTkXWw=="/>
+    <POI MapID="895" type="Festivals.SAB.EnvironmentalScience" xpos="-1095.53" ypos="49.7316" zpos="473.762" GUID="KDVyYTcTLE6GPM+Lq62UEQ=="/>
+    <POI MapID="895" type="Festivals.SAB.EnvironmentalScience" xpos="-230.739" ypos="54.2504" zpos="498.297" GUID="J1VJKzj1aUKIel150pKGhg=="/>
+    <POI MapID="895" type="Festivals.SAB.EnvironmentalScience" xpos="-213.468" ypos="54.1145" zpos="515.688" GUID="8YV1jFe/rU+VPBx750kztw=="/>
+    <POI MapID="895" type="Festivals.SAB.EnvironmentalScience" xpos="-755.37" ypos="47.1699" zpos="339.379" GUID="+Ij2aVedRk2X/E3y38xuzg=="/>
+    <POI MapID="895" type="Festivals.SAB.EnvironmentalScience" xpos="-756.826" ypos="45.3896" zpos="370.268" GUID="XR6d44voZkSVo215PGz9Cw=="/>
+    <POI MapID="895" type="Festivals.SAB.EnvironmentalScience" xpos="-728.611" ypos="54.405" zpos="405.447" GUID="XlirRFMuLkWqjkABl9sIzw=="/>
+    <POI MapID="895" type="Festivals.SAB.EnvironmentalScience" xpos="-767.878" ypos="45.2634" zpos="388.774" GUID="GDuDluDTEECb37ZTDL9iow=="/>
+    <POI MapID="895" type="Festivals.SAB.EnvironmentalScience" xpos="-774.831" ypos="45.1423" zpos="394.812" GUID="0QmClEw3FEmYGYsAE14BNA=="/>
+    <POI MapID="934" type="Festivals.SAB.EnvironmentalScience" xpos="-256.567" ypos="218.433" zpos="-246.465" GUID="yLS1SvorYUeI7uhueer8mg=="/>
+    <POI MapID="934" type="Festivals.SAB.EnvironmentalScience" xpos="-223.725" ypos="208.045" zpos="-218.866" GUID="OMEbEhL4OU+KSvqzCH3rkw=="/>
+    <POI MapID="934" type="Festivals.SAB.EnvironmentalScience" xpos="-232.523" ypos="208.203" zpos="-178.493" GUID="kKAXI6kHEUWpUg8m2fiLRQ=="/>
+    <POI MapID="934" type="Festivals.SAB.EnvironmentalScience" xpos="-263.106" ypos="209.915" zpos="-196.534" GUID="81J2SqsR+ke5Kwf8GO4KIg=="/>
+    <POI MapID="934" type="Festivals.SAB.EnvironmentalScience" xpos="-256.567" ypos="218.433" zpos="-246.465" GUID="yLS1SvorYUeI7uhueer8mg=="/>
+    <POI MapID="934" type="Festivals.SAB.EnvironmentalScience" xpos="-223.725" ypos="208.045" zpos="-218.866" GUID="OMEbEhL4OU+KSvqzCH3rkw=="/>
+    <POI MapID="934" type="Festivals.SAB.EnvironmentalScience" xpos="-232.523" ypos="208.203" zpos="-178.493" GUID="kKAXI6kHEUWpUg8m2fiLRQ=="/>
+    <POI MapID="934" type="Festivals.SAB.EnvironmentalScience" xpos="-263.106" ypos="209.915" zpos="-196.534" GUID="81J2SqsR+ke5Kwf8GO4KIg=="/>
+    <POI MapID="934" type="Festivals.SAB.EnvironmentalScience" xpos="472.405" ypos="305.546" zpos="-85.3617" GUID="Yj/ok/QckEqILFg4xvZpEQ=="/>
+    <POI MapID="934" type="Festivals.SAB.EnvironmentalScience" xpos="471.51" ypos="293.555" zpos="-77.3012" GUID="JzRftPz9bUeW7gCBICxwHA=="/>
+    <POI MapID="934" type="Festivals.SAB.EnvironmentalScience" xpos="480.186" ypos="296.176" zpos="-70.6214" GUID="sUs1VsSYxU6y7kxkA7PzrA=="/>
+    <POI MapID="934" type="Festivals.SAB.EnvironmentalScience" xpos="490.354" ypos="307.709" zpos="-81.1213" GUID="YwA2PUiu9EifOMCZETsVmg=="/>
+    <POI MapID="934" type="Festivals.SAB.EnvironmentalScience" xpos="486.394" ypos="311.186" zpos="-85.6636" GUID="DnJH7H6UkEaPLuKDWQEkuQ=="/>
+    <POI MapID="934" type="Festivals.SAB.EnvironmentalScience" xpos="486.404" ypos="311.186" zpos="-118.387" GUID="/TlVnUNht0CSpwElkG0pBA=="/>
+    <POI MapID="934" type="Festivals.SAB.EnvironmentalScience" xpos="470.025" ypos="315.076" zpos="-124.081" GUID="rD4ueM4ABEy5ECHlViLMPg=="/>
+    <POI MapID="934" type="Festivals.SAB.EnvironmentalScience" xpos="449.402" ypos="318.912" zpos="-122.168" GUID="XpByTzN9XEqfz9Mb4UAmqA=="/>
+    <POI MapID="934" type="Festivals.SAB.EnvironmentalScience" xpos="483.454" ypos="326.43" zpos="-87.7989" GUID="Es30bKWK/kyaWZca8KLUQw=="/>
+    <POI MapID="934" type="Festivals.SAB.EnvironmentalScience" xpos="493.072" ypos="314.048" zpos="-75.5385" GUID="2jNjq+BwI0at3LKhHf9zEQ=="/>
+    <POI MapID="934" type="Festivals.SAB.EnvironmentalScience" xpos="498.824" ypos="318.053" zpos="-63.6704" GUID="99eIC7FU+UCdWQ4g79AkCg=="/>
+    <POI MapID="934" type="Festivals.SAB.EnvironmentalScience" xpos="588.814" ypos="284.329" zpos="-51.9086" GUID="18qH4xiRok6KNdXO8usKSA=="/>
+    <POI MapID="934" type="Festivals.SAB.EnvironmentalScience" xpos="591.757" ypos="282.605" zpos="-104.678" GUID="vkqE+99p0ECJXman3U38mg=="/>
+    <POI MapID="934" type="Festivals.SAB.EnvironmentalScience" xpos="561.89" ypos="289.227" zpos="-111.355" GUID="eiNW4iX5wEGKZWP0Pw0+Dw=="/>
+    <POI MapID="934" type="Festivals.SAB.EnvironmentalScience" xpos="619.982" ypos="287.64" zpos="-151.586" GUID="b/Xel6S3gU67+PFbbe1qXQ=="/>
+    <POI MapID="934" type="Festivals.SAB.EnvironmentalScience" xpos="-95.8023" ypos="40.819" zpos="75.8893" GUID="1ARQ/Ga/YkG0nFNyG/39XA=="/>
+    <POI MapID="934" type="Festivals.SAB.EnvironmentalScience" xpos="-64.6598" ypos="40.779" zpos="76.857" GUID="z6iU8mZchk6iSM/qX3h37Q=="/>
+    <POI MapID="934" type="Festivals.SAB.EnvironmentalScience" xpos="-36.7709" ypos="40.9431" zpos="84.817" GUID="w7B/FGPu+kmv0wiP3dBT2g=="/>
+    <POI MapID="934" type="Festivals.SAB.EnvironmentalScience" xpos="-1.69595" ypos="42.7185" zpos="105.6" GUID="Q5JUGpyo00yEj2trZE/ahw=="/>	
+    
+  </POIs>
+</OverlayData>

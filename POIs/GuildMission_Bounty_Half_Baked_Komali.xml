@@ -1,0 +1,838 @@
+<OverlayData>
+  <MarkerCategory name="Tactical.GuildMission.Bounty">
+    <MarkerCategory name="HalfBakedKomali" DisplayName="Half Baked Komali"/>
+  </MarkerCategory>
+  <POIs>
+    <Route Name="Half Baked Komali" BackwardDirection="1">
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-1079.87" ypos="31.3174" zpos="-182.976" GUID="cZto5T73F0+55iAYeJJ7QA=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-1081.34" ypos="30.3412" zpos="-168.125" GUID="4PUu9vGp7kay1gu3FHP6Dg=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-1089.07" ypos="34.4529" zpos="-150.181" GUID="3dqN484zBU27nYEULZzZWg=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-1097.39" ypos="35.3037" zpos="-131.758" GUID="NtK8Ok3AUEmcNijorwdNrg=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-1098.42" ypos="33.9023" zpos="-105.838" GUID="531DY0yrp0+NHAo+coRaOA=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-1091.78" ypos="34.5368" zpos="-84.8178" GUID="gsDHnV+N9U2vVsYamvgZ1A=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-1084.93" ypos="33.6389" zpos="-63.8502" GUID="+ZMaz6TGmEmBOoTV2+eijA=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-1079.56" ypos="33.3661" zpos="-44.386" GUID="XfJf5bJwO02wAnSyNr3BSA=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-1073.08" ypos="32.3346" zpos="-24.1544" GUID="MAttK6C+Kk2qEfGe52Wp5g=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-1072.73" ypos="34.1012" zpos="-3.40847" GUID="maRpjgFwW0WneuV+XWOg4Q=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-1067.61" ypos="38.5544" zpos="16.0063" GUID="gZrd8gKuAkGo2KAcAi/B/Q=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-1065.96" ypos="42.6345" zpos="34.6664" GUID="V3Sfa4uF1ke/4kpsbWaTOQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-1062.97" ypos="45.3604" zpos="52.4556" GUID="Pa4QvBYgqUGR5aX/yYsQdw=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-1053.25" ypos="49.0703" zpos="74.9598" GUID="wSA3HwOTmkqJKZG+S3HUIw=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-1040.23" ypos="50.7534" zpos="94.3038" GUID="N+k9/t0zCUupFHO9/xSZ3Q=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-1034.18" ypos="47.4544" zpos="107.647" GUID="UWxYiT+TQkWlJB1OsPoQEg=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-1030.31" ypos="39.6947" zpos="125.705" GUID="bfMq/aY3KkCSQZCraqcQig=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-1030.27" ypos="37.2747" zpos="138.005" GUID="s9BYLq4s8k62Bn1eXeymUA=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-1030.39" ypos="35.3282" zpos="152.804" GUID="zhFPy9NBYUmyzk14PzlJDg=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-1030.3" ypos="34.3765" zpos="168.265" GUID="cK9Bu7WkBkqqlwhLQrjbRQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-1028.99" ypos="34.5326" zpos="186.088" GUID="Ew+bFcxVlE+I56KwBPKETg=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-1021.73" ypos="34.0622" zpos="198.268" GUID="YIdQfxoPOUam7dLxTD6s3Q=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-1012.64" ypos="29.3287" zpos="218.564" GUID="6nbbrGFFYkWtU1+E5jhjmA=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-1002.09" ypos="28.1063" zpos="229.269" GUID="MC+CC9QRt0uOrAQwcOU3KQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-988.378" ypos="22.3426" zpos="228.432" GUID="tpYc08X6GkCohSKm2L2FCA=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-974.268" ypos="17.7763" zpos="228.258" GUID="O/w8PkaGsEmEx6bI2eestA=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-968.457" ypos="15.5724" zpos="237.318" GUID="h0//LPupJUWO20GJZ09uOw=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-968.553" ypos="14.2811" zpos="250.344" GUID="5CF5zy7LOUuSDMv7Etijtw=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-978.016" ypos="14.7698" zpos="266.837" GUID="h5Knh3N51EC+yDYcekTIzQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-987.587" ypos="14.0496" zpos="286.815" GUID="fHjUpSLgfEe0zUXaOWqkYg=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-1009.37" ypos="15.2001" zpos="309.149" GUID="Pu7wB+UNikSQ/Vx/YU5yGA=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-1018.02" ypos="15.5858" zpos="320.408" GUID="WhtKugoeSU6hy4LCsFXXcw=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-1031.05" ypos="19.0806" zpos="334.924" GUID="a7SVy6nyJEG2knp3WmVBUA=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-1038.86" ypos="22.5673" zpos="348.21" GUID="LP/HlqWGlE2gBIUgN6xZNQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-1048.2" ypos="26.4471" zpos="365.196" GUID="4Yt2HS5j9U6Q9t6dgZpQpA=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-1056.9" ypos="29.3527" zpos="376.646" GUID="hSDvacoFRUC2lPo7and96g=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-1063.58" ypos="32.6917" zpos="390.526" GUID="b64kmSQb+E6/4WVo5DTEJA=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-1068.55" ypos="35.9448" zpos="405.397" GUID="MqgeWvTf/k+gy5DGj8h6+A=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-1073.2" ypos="36.277" zpos="421.951" GUID="4IBFItJpn0qVpycQU+2FRQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-1075.26" ypos="35.6499" zpos="442.506" GUID="UCaWmsG1A0Cax6yKMixa4A=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-1078.56" ypos="37.1572" zpos="458.91" GUID="Vzh5axJiEEGPM3uEdigL1g=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-1084.89" ypos="39.8957" zpos="475.87" GUID="F9AUhG5DrUGvIZZZ/AkIJQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-1084.55" ypos="40.2412" zpos="489.104" GUID="Ix0ARy/tXU+wZoU8E6eYxw=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-1085.16" ypos="38.5677" zpos="505.222" GUID="1LZKBOca30ete90cqgQYcg=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-1085.31" ypos="37.1169" zpos="524.502" GUID="Wy5FJBDff02W5FpvXjICtg=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-1083.81" ypos="36.7811" zpos="540.771" GUID="f+RHCmop20isMiYbnPEVMg=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-1078.44" ypos="37.4769" zpos="556.249" GUID="rMD0FTVnaEiC3JVGHWCDXA=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-1070.46" ypos="37.5856" zpos="570.948" GUID="vvSfVcQb20qsyAPddaMwBw=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-1062.59" ypos="37.4845" zpos="581.714" GUID="q9CukO4ZJUW6U/BKG994dA=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-1050.63" ypos="38.2343" zpos="593.504" GUID="0X/SuOKow0+PUlOJ6bbkuw=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-1035.75" ypos="42.539" zpos="606.363" GUID="zAQiMgRNB0+TL9OQ3ouRqg=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-1014.53" ypos="52.6514" zpos="616.466" GUID="zB1nBYuCOkavT+/f634EoQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-994.661" ypos="57.6809" zpos="620.328" GUID="RThbxaNMxEiu/nHz8nlXgw=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-974.873" ypos="59.1235" zpos="623.725" GUID="kYV5s5BZAk2697QwJAnvxw=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-954.676" ypos="60.4193" zpos="623.273" GUID="A/XRXLPKBk21Tu7xjDSw/A=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-938.494" ypos="62.8571" zpos="621.554" GUID="K/tr7n8GdUWLY4XL4MA9fg=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-924.174" ypos="64.9712" zpos="609.089" GUID="GMsU9Cjlt0y9fTk/RRPzYw=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-898.571" ypos="66.0447" zpos="605.611" GUID="k9jQxUION0mC8uYrONV0Gw=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-880.781" ypos="66.1488" zpos="597.299" GUID="e3nsUoZMjkePKygAd59lXw=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-866.788" ypos="65.758" zpos="588.402" GUID="S89OiCAC50SWk3UaSwN0EA=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-853.671" ypos="66.0449" zpos="577.615" GUID="th5YVGk4zUSCjZYGQsm/Qw=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-845.74" ypos="65.1113" zpos="562.415" GUID="Emm+pSb5w0Kz9Ob0BgwmCA=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-841.72" ypos="68.927" zpos="548.403" GUID="2fPmrddvCE2Dvm+2E311Ag=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-842.392" ypos="71.1597" zpos="532.838" GUID="bE66mVTjaE+bSk/0WH5dqw=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-846.11" ypos="72.5033" zpos="516.875" GUID="H6WE5Fq6KEys0O5qGNF1ig=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-852.219" ypos="75.013" zpos="501.188" GUID="/bAJV0xME0aciVkvECvYoA=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-855.115" ypos="77.8215" zpos="482.288" GUID="Lrui1aMXtUi1rN3PTUhHMg=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-855.6" ypos="77.0914" zpos="466.259" GUID="gG63YzxoTECgp88nJh0/Ew=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-855.91" ypos="73.3917" zpos="449.627" GUID="knu9VeVo6Eu4ptIffu2jmw=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-852.789" ypos="72.6076" zpos="432.275" GUID="1rQH5fhePkWn7BrgXu/TmA=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-848.764" ypos="70.5679" zpos="415.17" GUID="SUCJeJn6IU6dVXmQdRn7jA=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-844.607" ypos="67.0046" zpos="399.523" GUID="5d7tc/T1Z0umokbkzzj3VQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-837.093" ypos="62.4456" zpos="382.547" GUID="gmcGZxYzdEuleMnoM4y1Ag=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-828.627" ypos="58.7711" zpos="370.64" GUID="ztlwaTDxjU6toQKp1zZGUA=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-814.492" ypos="52.0702" zpos="353.25" GUID="KKLhUcqBK02kaTyRS8wV1Q=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-806.111" ypos="47.2661" zpos="339.127" GUID="qWWvHT0Mo0md8yyT3EdLxQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-798.41" ypos="42.757" zpos="314.708" GUID="fDldf97Z+Ei7F3ncRbHrqQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-789.437" ypos="40.5392" zpos="294.9" GUID="IXaqZtGaqEe46cQG3SmD/Q=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-777.449" ypos="42.4343" zpos="279.673" GUID="UYa4sKPfPUmvJd2sCoZx4g=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-766.085" ypos="40.9339" zpos="266.647" GUID="tT38SIzVCEaV8aHIKVy0rw=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-753.591" ypos="39.9638" zpos="255.122" GUID="xuCOTXCL1EedKLTj8nSB4Q=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-740.494" ypos="39.6838" zpos="243.813" GUID="Zxnzn8jrS0W7Uv+GRr0wew=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-723.857" ypos="39.4042" zpos="227.175" GUID="6ljWs8biVESO10PhcV05DQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-706.224" ypos="37.1838" zpos="216.604" GUID="5R2KllzI6EOJQMnBk+058g=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-692.343" ypos="34.8651" zpos="201.124" GUID="z4WPT0weM0i76oF/MjNMzA=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-683.359" ypos="32.2055" zpos="187.201" GUID="WSLVTpNMcUy3Sv9kpO3Bzw=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-670.444" ypos="28.965" zpos="167.775" GUID="IRPHOinY2EKS4ZMebqIXRA=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-661.039" ypos="27.0099" zpos="153.819" GUID="sD7butxRz0Gn/gcpFmMnSg=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-647.785" ypos="26.7594" zpos="134.657" GUID="jzNO6uRa+0iP+CTESLueCQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-633.487" ypos="23.8524" zpos="123.008" GUID="TyaeHXBRRE6/0tDcQDKI6Q=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-619.98" ypos="22.4223" zpos="114.606" GUID="5eI7lkeRP0iEiLuN/PjY5w=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-600.616" ypos="23.5541" zpos="112.763" GUID="ZQ6Yg5jsdESgXnXU9JvQng=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-583.292" ypos="25.1644" zpos="116.909" GUID="o6mPOm3IbEeY6cCXRGK3Rw=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-571.695" ypos="27.3838" zpos="133.949" GUID="v0qlcH515k6ytnROLFfEVg=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-561.263" ypos="25.5047" zpos="152.075" GUID="py0WxJXkrkuQtxRFKoCQsg=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-550.447" ypos="24.7266" zpos="164.788" GUID="Iqzh7xAUh0WJUDSgFeNf2A=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-541.832" ypos="24.5796" zpos="180.222" GUID="JFYIYg3P5Um2LmQ8AJ7ATQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-536.459" ypos="24.6744" zpos="201.117" GUID="X51zg7HVN0qjKVpMnxnoaA=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-520.547" ypos="22.7467" zpos="223.41" GUID="u9p2A0/mQEScmn7Ul3nxwA=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-514.728" ypos="23.1337" zpos="242.977" GUID="5mrbIlrmlU+Klvi5cFcbtw=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-510.401" ypos="24.2028" zpos="258.553" GUID="XNpRGxxMAUyQtrsBgFk4EA=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-506.015" ypos="23.1449" zpos="280.51" GUID="azlLwliF80mOwdo/uxmbfw=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-497.986" ypos="21.8692" zpos="303.092" GUID="X+6q5Un8CUSjUTL48RGtiQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-490.194" ypos="22.1664" zpos="319.319" GUID="47gvO8g+2E62m/SRq9yxow=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-486.314" ypos="22.2983" zpos="337.598" GUID="5X06wdx90EqdSPfndRNRuw=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-483.608" ypos="23.1745" zpos="353.301" GUID="p54+tOrfnEyXmG9LX6R46g=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-476.086" ypos="24.1392" zpos="367.793" GUID="K5OgHZgPd0GRBLVEi3L+4w=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-460.404" ypos="23.1013" zpos="379.411" GUID="VILwi02Hfk2Lt/qw1JZ+Iw=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-446.254" ypos="20.5609" zpos="387.813" GUID="3YnEDwvRRUCTfm7UNV4PhQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-437.885" ypos="18.4813" zpos="402.229" GUID="Q+GHscEQ6EKEksaOdir5eA=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-433.2" ypos="16.973" zpos="416.347" GUID="TMcmG1VW20W8gs14x+L5bQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-428.442" ypos="14.206" zpos="431.311" GUID="AkFSEg9ApE2MTLYZNsU9NQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-423.441" ypos="7.89068" zpos="447.744" GUID="oTvVhkMz7kiHFktKp6y0/Q=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-420.352" ypos="3.29764" zpos="463.791" GUID="NEklAak3X0eBPNloXzU/WQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-414.724" ypos="0.814191" zpos="478.419" GUID="WMSZAdOQCUalIVQFVmFxRA=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-406.496" ypos="1.9565" zpos="495.078" GUID="h++c0nDlLUa40RX0CmoMEA=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-397.563" ypos="2.68496" zpos="511.96" GUID="uP8JitIyqUiY4wcNM4s+pA=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-383.228" ypos="8.31891" zpos="527.382" GUID="iVbyv/yQP02VV5yJ4CQXkw=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-373.714" ypos="12.0554" zpos="541.947" GUID="uR7S7om8402QNV6y36EAGg=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-366.589" ypos="12.4958" zpos="555.818" GUID="uE4AtGWaHU+VaQbycF6xaA=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-361.558" ypos="13.9412" zpos="568.972" GUID="ALq+jZtVNkWRPlrTrJo6qQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-353.605" ypos="13.0046" zpos="582.078" GUID="Aci+BXQ1p0OjYsHTwj7o/Q=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-345.921" ypos="11.9868" zpos="590.7" GUID="0rJowPhv40OjBn5UGZeZiQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-339.345" ypos="11.8592" zpos="609.22" GUID="wH2qe6CijkOdK33qFvwPPQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-321.76" ypos="12.4571" zpos="621.659" GUID="9hDB64dobEyIPdFaMRISSQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-299.988" ypos="9.32648" zpos="637.27" GUID="o4xYYMvB7ECLvHaoVQ3N5Q=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-282.816" ypos="7.12987" zpos="650.301" GUID="PNvZO7M/0E+Lw+PmlyfW8w=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-263.697" ypos="6.606" zpos="662.79" GUID="C2y74GQAtkGXB506l6n/uA=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-244.347" ypos="7.42059" zpos="672.674" GUID="mDxmGDy96E+nK+kYGW65PA=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-229.287" ypos="5.34215" zpos="688.634" GUID="HTcCWVRmvEacfUZbmGGNXw=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-211.187" ypos="4.45215" zpos="691.146" GUID="vbWjSfKQlUCHSs2UauLhJA=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-196.079" ypos="5.45129" zpos="691.581" GUID="wPTcpOSOKkGLZ5xlKEC+ag=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-173.016" ypos="5.32518" zpos="692.824" GUID="b+i2CXGWwUqsuSgpt/fFgA=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-138.335" ypos="2.98669" zpos="692.924" GUID="R5SIVEpD506lKVXZH06NvA=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-116.452" ypos="3.75901" zpos="688.761" GUID="ssfcyWJttUCZZ5HyK/nUWA=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-105.128" ypos="7.73243" zpos="672.631" GUID="nfeZ0UCrvkqb7y+oW7+Spg=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-94.6045" ypos="10.7869" zpos="661.756" GUID="Pfnp3CJYo0yEIYbIq4gjwg=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-84.7796" ypos="13.9091" zpos="651.872" GUID="Q5mPN7gCCUqOAMkESJh6FA=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-73.3731" ypos="16.113" zpos="644.792" GUID="3KZX4dakEE2kGnrijSWI2g=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-58.5848" ypos="14.2533" zpos="641.022" GUID="UmodcW2L7kCwlNBrMh3vpA=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-42.0537" ypos="14.107" zpos="635.761" GUID="azr+mIfq7kmWwu48uQ7EJw=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-25.0179" ypos="14.4936" zpos="628.802" GUID="XNcIX3to00qVT85hGN8Bzg=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-9.9462" ypos="14.6387" zpos="622.133" GUID="fk0qhYLAU0KDt6u7T6PEWA=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-0.939405" ypos="14.409" zpos="606.241" GUID="OV6M7x87+06WdIKx9wXeiQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="13.0107" ypos="15.6261" zpos="617.872" GUID="QJwhlQV1V0+9f1+23zOzqg=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="22.1823" ypos="16.807" zpos="632.258" GUID="R8GTlIx/W0ihkx3bAwwv/A=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="34.4348" ypos="18.6029" zpos="643.709" GUID="9NkKbT8Ut0G4+GLE3gdHHg=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="45.2672" ypos="20.1724" zpos="657.188" GUID="DqAyqzOQEE6NIBL4m/s8eg=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="63.9259" ypos="23.6472" zpos="661.962" GUID="8OmC32U+gkqSjZDbQWsJcg=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="83.2478" ypos="27.8132" zpos="670.153" GUID="Mhd4Fp9wwkCtI9EToff/WQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="98.553" ypos="31.2695" zpos="678.432" GUID="3ou4dmebXkqtDl8IjckCBg=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="112.815" ypos="33.8496" zpos="677.647" GUID="0U7Tyh5J3UO0cDF155vYig=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="125.396" ypos="37.474" zpos="666.786" GUID="frDNi9V18EODAg6mKZg8dA=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="136.568" ypos="39.8419" zpos="651.927" GUID="Na8JunzBxkWFJ4wPMvUxqQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="146.666" ypos="39.9168" zpos="639.187" GUID="aiYbxlSwVkGFE7KObK6OsQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="162.585" ypos="42.0044" zpos="630.833" GUID="az703XLlJ0uq8BL2MSGvyw=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="179.707" ypos="43.7342" zpos="635.288" GUID="3B6iddvUtE2suYK6SztXwQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="195.886" ypos="46.8774" zpos="634.449" GUID="3366p+EpF0KzM929K7UBsw=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="212.541" ypos="50.1966" zpos="628.669" GUID="GMmRI7X/bEG92N75wWv64Q=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="227.606" ypos="51.8957" zpos="614.952" GUID="tpeqdb2vXEC6MA0wh+/Ovw=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="243.441" ypos="47.1082" zpos="599.779" GUID="USKHJYH+EUqMxvGt2gHZYQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="262.196" ypos="46.1535" zpos="584.75" GUID="b4ZEZmiuE0m3e0iTD3krpA=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="281.02" ypos="42.4026" zpos="582.67" GUID="EM5kxL5pW0O+wnW9dJf+YA=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="298.115" ypos="39.6754" zpos="579.868" GUID="XM/0ZZkgwkSyCQSyYbFGOw=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="314.739" ypos="39.4212" zpos="576.983" GUID="98ikRTctHE24JWzC7V3MCA=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="332.235" ypos="34.6785" zpos="568.316" GUID="8Dvyv5d4x0qvHzW5fUmB9A=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="340.777" ypos="31.9645" zpos="553.42" GUID="0DHdkhkb4EONqXwed7yABA=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="343.332" ypos="30.7307" zpos="537.499" GUID="epzc/TP4tUyTaHRuBlXOUg=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="344.733" ypos="27.6341" zpos="521.93" GUID="Xg5MEfatuEyoDKWwjew24A=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="341.77" ypos="26.066" zpos="505.904" GUID="8HyDOJ5q1UGprjA4DFFNQw=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="341.301" ypos="25.518" zpos="494.047" GUID="WDqQGRuqkEGlf/9nNC5MWA=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="336.678" ypos="23.994" zpos="478.624" GUID="+WoWgZkXnkqz0ul3g7hKFQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="331.207" ypos="23.5152" zpos="460.583" GUID="6WEiiAlh0E68zdnqDHu2Rg=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="325.245" ypos="22.7194" zpos="446.157" GUID="Q11iS4VBkUiIRJKifhjUuQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="318.982" ypos="22.526" zpos="428.257" GUID="wFsx6T1RykG2waX4eyAmUw=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="321.818" ypos="20.8511" zpos="414.085" GUID="/mYsYdvntUiWVB9vwnJR3Q=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="315.042" ypos="18.9506" zpos="398.167" GUID="b5GjnSDOGEK0rRphXc4Keg=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="314.038" ypos="18.862" zpos="379.448" GUID="r1TsrmMh30eYxsYkgVcwcA=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="311.099" ypos="16.5547" zpos="366.81" GUID="eYkhTmoBn0SwcIZyIIZv2Q=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="303.046" ypos="14.8399" zpos="351.43" GUID="GCNEyqFTMU2hOf3YovcEHg=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="296.85" ypos="12.0808" zpos="337.383" GUID="9OWNPgQpTkS46Qb1Uv/p/w=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="284.973" ypos="7.61664" zpos="322.128" GUID="OjgQTAUmfkOXXx2BvhkEXg=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="273.498" ypos="4.47785" zpos="311.903" GUID="aesP3irf+kKgjDoeEMF0Rw=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="260.518" ypos="0.468611" zpos="302.235" GUID="Poqzw/KsnUOtuZMXbHTpSw=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="245.547" ypos="1.02791" zpos="291.982" GUID="YhRwRNyeq0W/EwygVHG5+Q=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="231.24" ypos="5.96326" zpos="294.965" GUID="xTnqpEA/kUK7CbxazudKbA=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="218.214" ypos="12.1761" zpos="304.69" GUID="F9QZNLb6ZEK7vkodQ2WbKg=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="207.404" ypos="18.6515" zpos="318.407" GUID="FhdIQEpxxkOB3v76FPM5Aw=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="196.072" ypos="26.9058" zpos="334.778" GUID="63TTkyfwj0yadeDPqbxvcQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="179.578" ypos="32.9954" zpos="344.413" GUID="HET5dEfEfkSDXnlqH3VTsw=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="170.553" ypos="39.7165" zpos="354.871" GUID="3JkqjEiXBk+4JzKaDJiUHQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="157.278" ypos="44.1973" zpos="369.342" GUID="vDhSY2URLUmtmTYg5Ey6hQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="143.117" ypos="50.6414" zpos="379.776" GUID="PiPSnAJQo0e5Nd0QM9Ehbw=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="123.122" ypos="54.8964" zpos="381.402" GUID="pOljGJjHxUupDg/pj43rZg=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="107.704" ypos="57.3899" zpos="383.488" GUID="K9FohVUh5UuYvLwLCEWwTQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="95.0193" ypos="55.0062" zpos="391.022" GUID="0+ok1L19oECGaRCpZBvfVw=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="82.4252" ypos="48.2692" zpos="403.772" GUID="UE9M8LzZP0W3epB/BQ4Pgw=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="62.4327" ypos="42.6815" zpos="419.316" GUID="RWhJwjfOS0SihAurppDIaA=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="51.7801" ypos="37.1942" zpos="427.461" GUID="3m9YYbZLoUGpLaaYFCGuVQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="50.2533" ypos="32.5967" zpos="445.611" GUID="Y3TD/7PpGkqDKbm5xH41Fw=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="46.9359" ypos="27.8966" zpos="461.204" GUID="B+EnwwSIvEK/pEOEssR7JQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="44.7043" ypos="26.1646" zpos="477.586" GUID="aVcW38hTxUKw7nuNKRk0fQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="41.5097" ypos="21.2079" zpos="499.021" GUID="puxT4p6I5E+H2i2qPNPFNw=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="39.0876" ypos="18.7512" zpos="520.599" GUID="gm3r/3+9zUOGMUYCygxqBw=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="39.0028" ypos="18.7261" zpos="539.972" GUID="AdBHCL7iiUOFpgVbL0vX5Q=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="24.5908" ypos="18.407" zpos="550.52" GUID="16AICFGl20Wv6wONCVSJlQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="10.2914" ypos="15.309" zpos="549.635" GUID="YHQTSEL3AECeXJcN90PUnw=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="4.79416" ypos="7.70604" zpos="536.515" GUID="yQVK2eP+4kisHn3yLshUtA=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="0.285155" ypos="1.43699" zpos="514.222" GUID="5QwlwktNYkO7v1nfg3yZAA=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="5.6401" ypos="1.83793" zpos="495.139" GUID="Qa2+RpuouEK8S7ssK9PqLA=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="4.53123" ypos="0.676872" zpos="480.285" GUID="EgT/HkFG5Uio/594uKSbsg=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-9.4771" ypos="-0.278408" zpos="466.456" GUID="QNWoL1yxOkiFTLN4+jFOVw=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-24.05" ypos="0.94635" zpos="456.859" GUID="bOakWe/39ESYHzbJmjVtCw=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-32.4177" ypos="0.757537" zpos="443.684" GUID="Eq0A48J+S0ChepJ2/vg0Lg=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-40.395" ypos="2.59567" zpos="430.605" GUID="J4olDzpMO0OqgY0+Qblb1Q=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-52.7736" ypos="2.71235" zpos="417.909" GUID="UcKtlbEaKUarp4j60eHVfQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-69.115" ypos="3.99803" zpos="405.521" GUID="K5D3Bty6xUaFlrfWN77tjg=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-94.9528" ypos="2.74836" zpos="398.938" GUID="9zSScOpTvEaDO+kz81caCg=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-107.647" ypos="3.13314" zpos="410.03" GUID="SI+2lIJGMUuabplabel53w=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-129.68" ypos="7.34478" zpos="422.555" GUID="1ElYVeq3vUu1/MemYJF23g=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-148.2" ypos="12.8876" zpos="420.421" GUID="oJgQfc30f0KqfR/R9nz5AQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-167.255" ypos="15.5052" zpos="410.31" GUID="k0Cj2m9E3kWddWwsOHvXoQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-184.686" ypos="17.3991" zpos="401.387" GUID="gKVzOWWAY0yX57H8ozerDw=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-199.062" ypos="17.1021" zpos="394.134" GUID="AvJfOB04qEKRVGTrUjot8w=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-216.164" ypos="19.2206" zpos="384.221" GUID="yL0OSR/x60Kp6jBoMb6How=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-231.868" ypos="27.6201" zpos="368.872" GUID="TIKSEP9yJ06FVpxdZuqMUA=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-234.948" ypos="33.8701" zpos="353.767" GUID="BUhBfGD/yEWaHWdr+xUTWw=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-232.638" ypos="38.7341" zpos="342.228" GUID="KwLvE3ix9kuYCpkpYM508A=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-229.742" ypos="43.9595" zpos="328.757" GUID="JBLITygdWUiMifz13by5Ew=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-223.417" ypos="51.1185" zpos="316.737" GUID="bE8yRKP3e0OD+zGfbmDwvw=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-215.631" ypos="56.3277" zpos="304.46" GUID="nuF1RyrRAk6U2pZhtP8OFw=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-207.445" ypos="61.2981" zpos="292.861" GUID="MyFQljtWqkWhuEaBb27L3Q=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-192.036" ypos="61.1459" zpos="278.968" GUID="WAvb71Em2kSmL606eneRig=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-179.549" ypos="62.6143" zpos="266.221" GUID="LtE8MEE7eUi64ObyILoudA=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-170.88" ypos="62.4082" zpos="251.792" GUID="sRwymQ4Fl0yTnhMkzQD59w=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-162.397" ypos="65.1444" zpos="238.557" GUID="Aephx/TAXUKXbayj1tg/Kw=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-154.64" ypos="68.8976" zpos="221.812" GUID="zW9WSNxHwkm+JfA2nNjCpQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-145.952" ypos="71.1111" zpos="207.21" GUID="EsbmzZ6zKkGlqBUzHcQs2g=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-138.035" ypos="70.0179" zpos="187.282" GUID="Za15Bmt9QU6XdwFZ3jbvIw=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-129.55" ypos="67.209" zpos="170.257" GUID="bLdOCSDoykSDqwM603OCHQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-130.002" ypos="68.0989" zpos="151.051" GUID="KA/Pej+USkO6p1CjdBjOuw=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-138.092" ypos="68.572" zpos="138.131" GUID="86g7LEcMJUGd3XGbW+825A=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-138.551" ypos="68.3339" zpos="121.921" GUID="TKEbKfCDIEuQyOzR/pjwEg=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-143.297" ypos="68.9002" zpos="106.177" GUID="3XQrG5z1akeBLnqo8kCW4A=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-152.709" ypos="75.1467" zpos="87.4103" GUID="DGyzkPyHlk6TCYERXjhSQw=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-154.646" ypos="78.6896" zpos="71.8336" GUID="EzgSAhpqAEm7KLD9quv0CA=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-145.994" ypos="77.2444" zpos="59.9623" GUID="1R0vJcCZ+EuW8wYwZkKFWQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-128.113" ypos="75.547" zpos="60.8047" GUID="fDHFBcyhSkqGc0X3OpEUIw=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-112.66" ypos="72.6717" zpos="57.2558" GUID="8UjyyiAczka1LZz9RM/sCQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-104.17" ypos="71.9648" zpos="46.0371" GUID="JN5a0TVyfkS2V36NhM/wRQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-91.3161" ypos="75.6475" zpos="31.4686" GUID="0ZjwbGsJEU+23naSbm+nVw=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-80.8701" ypos="76.4501" zpos="19.4954" GUID="S867WoyNokO/jtE/kfRZsA=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-68.27" ypos="75.5365" zpos="4.72629" GUID="3yT0yW6DjUmdQUX8BL8zIg=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-63.2981" ypos="75.2413" zpos="-9.74598" GUID="VIl0d42pgEe1b7ilb1Q3TQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-59.7189" ypos="74.5359" zpos="-26.1568" GUID="r1+8S5MLG0y2KTs6OiQO0w=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-55.3889" ypos="69.3374" zpos="-41.2892" GUID="eF+zXsSs/ku4kX77vEj9UA=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-50.8905" ypos="67.2311" zpos="-60.384" GUID="Hc6lwRrkyUaTA/f/Sc2eyQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-51.1694" ypos="66.2079" zpos="-74.6033" GUID="AJnx0MR880WKXzB86+Nzxg=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-50.2131" ypos="63.9456" zpos="-93.5258" GUID="NbshHpmXZEWBIGIuIDeJPA=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-48.6919" ypos="62.027" zpos="-109.708" GUID="xkeT2500bUyASMV0IkHMDg=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-51.3568" ypos="59.5739" zpos="-124.433" GUID="tTtuYrzBekaV4nFCxo4j7A=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-53.41" ypos="53.7771" zpos="-139.366" GUID="ck8mBLD2C0ewJ3PdLhuniw=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-57.6042" ypos="51.2081" zpos="-154.438" GUID="KtOZ3hzEIkCZ6OLmrTRlBQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-60.4209" ypos="47.8946" zpos="-172.125" GUID="IEl5dsSA9U+KNSpCktS61w=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-63.5993" ypos="46.0421" zpos="-187.131" GUID="q1EF98eJwk6LVI++WT9vpg=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-68.8358" ypos="41.7306" zpos="-203.047" GUID="YlmbwWjPIkum5ATZLyzicQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-73.316" ypos="37.8521" zpos="-215.2" GUID="ylywYWIAY0iv0m7aqoycsg=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-74.3287" ypos="42.6465" zpos="-227.099" GUID="WJgZBEMEGUO82Vg7MxIt0w=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-75.8188" ypos="48.0875" zpos="-243.048" GUID="5plARjd+7U+5XNtoXPQZSw=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-75.0365" ypos="43.8588" zpos="-260.526" GUID="khc4INEFWkGqEwJJ0xBktA=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-74.7015" ypos="36.9038" zpos="-243.299" GUID="1DmdGd9xT0C+B+SB7gK7WQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-80.8694" ypos="36.1823" zpos="-253.484" GUID="LPgID1Ho+UKxmvpGl1zEBQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-86.5282" ypos="36.0121" zpos="-269.107" GUID="0beZTu3nX0S79yWYtlN7aQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-91.859" ypos="36.432" zpos="-279.301" GUID="WN4Ru/ovXUWSdBpClzpkvg=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-91.5222" ypos="35.9518" zpos="-298.198" GUID="4qIBL62ZLEWKwcWiFJh7kQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-91.0201" ypos="36.0492" zpos="-315.35" GUID="lLocNE9O6U+K68vOwDqcBQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-90.2992" ypos="35.1117" zpos="-328.856" GUID="x0DR5/QSN0ur2En+vpUVuw=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-88.1285" ypos="34.3737" zpos="-343.707" GUID="HgjDmDfaT0+0c10Npr+/vg=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-87.7966" ypos="34.7931" zpos="-357.244" GUID="9Z1AUIDnfUqsz/tQC5eTsw=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-92.9812" ypos="34.4234" zpos="-369.948" GUID="YRzqonIIv06PWmwcdV142Q=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-97.0162" ypos="34.13" zpos="-382.771" GUID="efPgk3BUIUOK3UvQ4I0ufg=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-104.416" ypos="30.4364" zpos="-400.741" GUID="JY6C+cg4RkaLRr5lNTrM2w=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-114.137" ypos="26.1638" zpos="-415.305" GUID="iBEgvnNhYkOjjv6sh2qIqg=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-128.759" ypos="20.6361" zpos="-430.458" GUID="vat6tBJqI0O2n1uOWOXD7g=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-145.849" ypos="17.5742" zpos="-442.948" GUID="pPJ5dVanGE6MgHWmLp54eA=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-161.77" ypos="17.0138" zpos="-442.21" GUID="OOCq956nDECNkv+MoBMmXQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-172.49" ypos="17.3259" zpos="-425.889" GUID="4QZTfYagvkOtWMNdMZsjKQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-184.616" ypos="16.4944" zpos="-412.405" GUID="xcumlO0MD0iVJEcssCiOkQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-191.302" ypos="17.1762" zpos="-397.193" GUID="vPkxVnDlQEGj9iGGTeJQTQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-199.27" ypos="14.1275" zpos="-383.234" GUID="5yu/TFl23Ue8lyOVUUAq6A=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-207.178" ypos="13.0187" zpos="-368.704" GUID="TVi3nRDfI0efK9Am5R19Rw=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-212.537" ypos="12.4064" zpos="-355.043" GUID="zjC99ZPa6kyJo/pW+2IFPA=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-220.623" ypos="10.9908" zpos="-338.43" GUID="BEjmjbNITUixueX8ZpgoMA=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-229.413" ypos="11.0299" zpos="-321.939" GUID="ignReJMPwkaMDDGsuM1zzg=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-237.898" ypos="9.84887" zpos="-306.648" GUID="SVQnWIT0EEGReM/o3IzCuQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-248" ypos="9.98589" zpos="-295.444" GUID="/egJGAfa/0ySYBFEEqzZsQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-266.232" ypos="9.57443" zpos="-285.156" GUID="PviZ4nHk0EivPKxL0M2O+g=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-282.226" ypos="9.81881" zpos="-275.712" GUID="TeKiFxRF0U60v/IDV3OdSQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-302.346" ypos="9.8195" zpos="-268.456" GUID="ZPYKZX8dC0OHMz6s0m+0Yg=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-333.493" ypos="9.24602" zpos="-261.502" GUID="1yC+EN04aEq7CS6lJM4xXQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-349.552" ypos="9.25514" zpos="-260.851" GUID="wOkZ3FwtYE2g2TVCwn3Y3Q=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-366.349" ypos="9.71492" zpos="-255.861" GUID="lnbzHjqIMEW3+RpzSqqZdw=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-376.629" ypos="9.11475" zpos="-246.481" GUID="aCXN+R0fIUCDvTSEC4EUGQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-388.821" ypos="14.5255" zpos="-234.134" GUID="s5pwE5xlrEKg5N+xZYZdrA=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-393.682" ypos="19.0087" zpos="-221.501" GUID="LH8g/FvvgEy3tmyUEnlt2Q=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-395.516" ypos="20.7599" zpos="-203.658" GUID="l8iR8e8rYk2VueonnW7jDQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-396.738" ypos="24.9791" zpos="-191.563" GUID="qBIli2tsJ0yKKMzfoaxItA=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-392.668" ypos="18.5839" zpos="-178.829" GUID="j0HSXWvdkE2gR0OUJQYZOA=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-383.711" ypos="14.5691" zpos="-170.637" GUID="vP70HeVfgUSZDPDBWj2cKQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-369.172" ypos="10.9941" zpos="-163.715" GUID="sEi9gt/EEE6mnamaA2mHUA=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-354.5" ypos="10.6598" zpos="-165.272" GUID="47PzE8q8ZEiA/GVnot/zog=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-340.918" ypos="11.3823" zpos="-169.264" GUID="F/nr7Z32QE2q+JFjxNcvrw=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-344.82" ypos="18.8465" zpos="-152.458" GUID="pUkfya0G70KgY9Cnx2fu/Q=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-365.824" ypos="24.6719" zpos="-143.179" GUID="XidYDKN2LEeGNn7yTQEjww=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-384.866" ypos="31.0426" zpos="-137.862" GUID="Mdo4KwXmMkGUparK6g7clQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-399.477" ypos="39.2832" zpos="-134.852" GUID="5wzL2V1o1ke1mpm4l+KPPw=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-412.133" ypos="45.1629" zpos="-131.673" GUID="ICM8215au0iYicu4JVeAPw=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-421.644" ypos="49.7588" zpos="-123.672" GUID="XJIDlTPOnUOJ/DlJN6GxVQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-425.501" ypos="52.4292" zpos="-105.055" GUID="5G4Uz4znC0qxIOZlcJIsFA=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-426.651" ypos="56.364" zpos="-91.0745" GUID="xTkr+Z/sOUiIleoHJ46NFw=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-430.447" ypos="61.7127" zpos="-75.6391" GUID="fwlsES34rEOUz56cpBaC4w=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-434.753" ypos="63.2723" zpos="-61.6624" GUID="7vB8Mq2pN0axIB45z0qefg=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-434.525" ypos="66.2166" zpos="-43.6338" GUID="ViBmzKzsTE2VOICcuUKGIQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-425.588" ypos="71.5023" zpos="-18.5088" GUID="or+lX9lr2EW5OJb8I93fCQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-423.472" ypos="72.9983" zpos="-4.63392" GUID="z07m15MoCEmivEqMqW+5JQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-431.474" ypos="71.9245" zpos="7.78293" GUID="QI9aPCrHAk62Zcuxpo6JJQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-449.654" ypos="72.2255" zpos="15.1429" GUID="PKTWKIiBNE6TdPoofQVjJw=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-462.227" ypos="72.7883" zpos="17.5836" GUID="MWBtDLoxQUWBBNhrT37/8g=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-481.926" ypos="71.8432" zpos="23.0378" GUID="F9dHjvBriE6l10qr5S8b9A=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-490.715" ypos="71.6749" zpos="39.3244" GUID="U5+A62kQV0G+gmq0A6jg5w=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-486.335" ypos="71.9299" zpos="54.6527" GUID="S12pw/zlKUOM0TOQFFQd8Q=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-481.905" ypos="71.3936" zpos="68.2536" GUID="iYQCBwTU0EyI3Y5+Vy8nxg=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-474.237" ypos="71.4571" zpos="86.6385" GUID="Ll17nC4bkUWcm9AvF6wntQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-474.872" ypos="70.6863" zpos="100.311" GUID="nqpnjteUF069hIoRWp90Qg=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-486.423" ypos="63.758" zpos="108.501" GUID="wncvMpErj0+GIlbQaUiITw=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-502.165" ypos="56.2067" zpos="113.042" GUID="57MXVpRBl0S3FN+aEisx2Q=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-519.837" ypos="49.9377" zpos="113.624" GUID="4qUhd+k8FkiT7r4esknrpw=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-535.286" ypos="44.373" zpos="113.412" GUID="sDqereJzJkSk9s9JiUU2kA=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-549.699" ypos="39.5611" zpos="112.897" GUID="m+NK2i32SkqEE8MlaxyLqA=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-565.302" ypos="29.7397" zpos="112.569" GUID="LMOGWkJCrkK5pljZJJp+8Q=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-578.023" ypos="25.5174" zpos="111.339" GUID="7+/QzcoIeEG8uly3JCJ+6A=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-591.923" ypos="25.5726" zpos="106.578" GUID="YC9hP2FewEejLKTMl8Mxbw=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-603.151" ypos="26.6361" zpos="95.7665" GUID="zQDoEExY7US5/tXlmbxnjA=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-610.888" ypos="28.2212" zpos="84.9804" GUID="3CAcFmz2VkKTv9JGOd+aqg=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-618.152" ypos="28.445" zpos="74.4811" GUID="+Mqlgli930SZ0zcloWh/Pg=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-627.173" ypos="25.3452" zpos="65.5515" GUID="+NaiFlQxOUW3565TTf1TDA=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-631.917" ypos="33.2951" zpos="49.7559" GUID="HbHjC1Ba30eoN1CbqPkGig=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-641.25" ypos="33.2421" zpos="39.3703" GUID="ipRCqH3LfEShLnDi8vVFYg=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-651.566" ypos="33.1448" zpos="27.0233" GUID="FlPL8chTyUKct7t7bTNf6w=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-661.775" ypos="31.8357" zpos="18.1219" GUID="3h6E4QMUGkelTqifctyJPw=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-673.234" ypos="30.2278" zpos="8.86561" GUID="GffzMgraYEGOUx59lh0e/w=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-690.608" ypos="23.1273" zpos="5.59396" GUID="nY19pLPjFk+X2HMeCWojEA=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-704.652" ypos="24.2062" zpos="2.57682" GUID="mW/UVTY2D0itUEXCl4vRNQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-720.028" ypos="22.3564" zpos="1.85589" GUID="WSsCJW8TOEqVn8uulRhHtw=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-733.271" ypos="22.6031" zpos="2.00799" GUID="6BfZoe8+LU2odzD0uCuHGg=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-746.719" ypos="23.5685" zpos="3.023" GUID="2/UuPpDBI0+OTka9h5jkrQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-759.685" ypos="24.933" zpos="0.926903" GUID="Ra6bzzfGTEifYKHUDJPrdw=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-772.729" ypos="27.4712" zpos="-4.1922" GUID="zE5sYhg7pEO/ewAOf3Q9ag=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-777.73" ypos="29.6593" zpos="-17.6795" GUID="GOrQ6GDsK0+iVklZrcZHUA=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-781.612" ypos="31.9088" zpos="-30.6241" GUID="UKZ55mrkSU2RsU7C+s50LA=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-779.798" ypos="35.7793" zpos="-43.3677" GUID="j8tG7JHLWU68hawisiWvog=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-776.445" ypos="37.9706" zpos="-56.6326" GUID="t0cfft5GV0aOxGsVnW0HUg=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-771.45" ypos="33.5577" zpos="-69.3933" GUID="ikaaVjnmPEahbzkOrz34fQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-766.371" ypos="28.1796" zpos="-82.3189" GUID="hJ/OmrX9QUaCMfUX/QYhlA=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-762.007" ypos="26.7282" zpos="-99.8768" GUID="NS8HcNpzeUycMYjVAzY+yQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-759.121" ypos="25.3023" zpos="-112.478" GUID="XnQTYNzlb0CUGjKxD7PECQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-764.39" ypos="25.4835" zpos="-124.409" GUID="NudHmEDxekmWTgdOywhMKw=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-771.199" ypos="24.8094" zpos="-138.177" GUID="NJ5P2Be4/0qT0L2X2AjnOA=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-777.407" ypos="24.3012" zpos="-150.772" GUID="vlqooV7bfk+6wzq5XE0psA=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-783.258" ypos="23.5788" zpos="-162.547" GUID="nJWzuE2QC0iP43tAoyBDyw=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-788.89" ypos="23.1822" zpos="-173.77" GUID="HK6Z6/4nOk6KmejLC65BfQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-794.505" ypos="23.3567" zpos="-185.914" GUID="yvMSu16uSE6biqr+2EeNuw=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-800.281" ypos="22.8949" zpos="-196.998" GUID="B6B0U1p0h0eegkEimJk8IQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-807.268" ypos="22.4462" zpos="-209.224" GUID="h9p24QnTO0SMng1eE/8XfQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-814.325" ypos="22.7273" zpos="-222.548" GUID="2EhzxeASGUu1Jm+7nP1g7w=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-820.767" ypos="22.171" zpos="-238.135" GUID="efeP3NtvPU6DVt/EVQopiw=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-826.423" ypos="22.7333" zpos="-251.721" GUID="Ae6kdJYB+kuRmlUbRV2pYw=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-833.051" ypos="22.5463" zpos="-265.194" GUID="qUqohewOtUuOlpxgCct9Bw=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-838.074" ypos="22.7807" zpos="-281.985" GUID="mm3PBRn+10K1S2wRfeOB0A=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-838.674" ypos="23.6331" zpos="-295.341" GUID="XZXXNc4oTEy64BRlj4oW1A=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-838.758" ypos="26.3037" zpos="-307.584" GUID="8XtqM9D8r0iaV1Jx+NenHA=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-838.778" ypos="27.4995" zpos="-322.654" GUID="0iAo6mhfzk+Bs/Jb3G+lYQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-832.594" ypos="28.2064" zpos="-336.857" GUID="qPAbbfwwUkenAdHbLk4vPw=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-827.6" ypos="30.2651" zpos="-348.874" GUID="/YJypHf19UGtEvBoOmtOhg=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-825.237" ypos="32.1007" zpos="-364.402" GUID="4anBjvZ8W0O2/Ar25mxLPg=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-823.805" ypos="30.8786" zpos="-377.428" GUID="raTjDrHZFkG4gHdqL/14/g=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-823.335" ypos="27.1415" zpos="-392.519" GUID="iNkI7EKWNk2+Co30F6546w=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-824.018" ypos="21.9818" zpos="-409.476" GUID="ndYQlGw100eTB9J5jfntUw=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-829.794" ypos="18.1449" zpos="-426.037" GUID="cjr0ybwUgEyX28U/ltmV8Q=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-846.686" ypos="13.4364" zpos="-434.104" GUID="rNkVF3xEdEuF6yrS/YuJOw=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-871.497" ypos="13.6184" zpos="-436.022" GUID="jf6Tof/jRkOkrKhDIBBa+Q=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-893.57" ypos="14.4935" zpos="-434.917" GUID="dBQc2zwKjU6R+J2zZNe03w=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-912.541" ypos="14.4935" zpos="-434.388" GUID="KjEWuU3qC0Of/PjwAQJIMg=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-927.455" ypos="14.7421" zpos="-431.694" GUID="HoDD5Bd1+kyzUnUxzthYjw=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-940.15" ypos="15.2546" zpos="-428.724" GUID="PZl9n6l45k+t3ZzBBIxomA=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-956.495" ypos="17.4545" zpos="-424.943" GUID="qAjNCN58+kWe80uvG7bkdg=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-971.807" ypos="21.1774" zpos="-425.363" GUID="bTBUZ+dUGUaQl1zatOWZnA=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-984.371" ypos="22.6675" zpos="-425.852" GUID="P02kVb1hMEuFVbkInB6J/w=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-1000.47" ypos="23.1603" zpos="-427.19" GUID="HlOzpxTSgUWo0eC7n9WZIw=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-1015.97" ypos="26.9041" zpos="-423.082" GUID="Sm1VxZ1bHUOCwvLxOItmCw=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-1025.21" ypos="29.3023" zpos="-418.63" GUID="F1g3wwhJwECyyYz9jkiChQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-1035.76" ypos="34.3647" zpos="-407.498" GUID="AB67tVE/90qHDi+7+Xn32g=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-1048.01" ypos="40.8433" zpos="-387.457" GUID="g6/LHC5x80yLJHVFJMI2hA=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-1053.76" ypos="39.9968" zpos="-364.978" GUID="OUtkaK+czkGG5HE2gZ5jCQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-1055.78" ypos="40.3918" zpos="-351.882" GUID="h4ThBoKriUaS0s9CwWSu6Q=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-1055.5" ypos="37.7768" zpos="-337.268" GUID="OFyokiPkl0usZzD9T+h/9Q=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-1055.4" ypos="33.3395" zpos="-321.96" GUID="g4FJDhZPF0K2a4i1f/HRZQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-1058.22" ypos="34.1802" zpos="-307.365" GUID="NEJAziaDIkafVgExwk/Xuw=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-1059.69" ypos="33.7915" zpos="-291.908" GUID="C0Y6FYB5JkOWRoBfdzs8Ew=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-1057.96" ypos="33.3098" zpos="-275.907" GUID="pdm/sdK7FEiyK8+fOR0FFg=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-1059.16" ypos="34.5524" zpos="-261.956" GUID="blayOTn5NkiDEVICmlMK7A=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-1063.03" ypos="35.3419" zpos="-247.078" GUID="OuGzSvGZhUS52G7ePXSICQ=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-1065.93" ypos="34.438" zpos="-230.695" GUID="7S6Rt2SQK0yagFMFNimMmw=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-1069.19" ypos="31.6386" zpos="-214.986" GUID="A+qy/Z0sfkeguRK5TeLylg=="/>
+  
+    <POI type="tactical.guildmission.bounty.halfbakedkomali" MapID="39" xpos="-1076.75" ypos="30.8761" zpos="-197.479" GUID="PSmyIS8lZUq8J7YUTMST3Q=="/>
+    </Route>
+  </POIs>
+</OverlayData>
