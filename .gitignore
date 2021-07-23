@@ -4,6 +4,8 @@ syntax: glob
 *.*old*
 *.vcxproj.user
 *.*backup*
+Debug_MultiByte
+Release_MultiByte
 */Release*/*
 */Debug*/*
 *Release*/*
@@ -49,3 +51,4 @@ out/UI.wbs
 out/UI.xml
 out/gw2Taco_internal.zip
 out/maptimer.xml
+TacOConfig.xml
