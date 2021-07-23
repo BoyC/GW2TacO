@@ -231,4 +231,8 @@
     <Event Name="Raven Shrines" Length="10" Color="8065b0e8"/>
     <Event Name="Shards and Construct" Length="10" Color="804199d8"/>
   </Map>
+  <Map Name="Dragonstorm" Length="120" Start="60" id="s5e5ds">
+    <Event Name="Dragonstorm" Length="20" Color="8079afff"/>
+    <Event Name="" Length="100" Color="00000000"/>
+  </Map>
 </GW2MapTimer>
