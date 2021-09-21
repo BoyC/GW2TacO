@@ -1252,7 +1252,7 @@ INT WINAPI WinMain( _In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
       if ( !HooksInitialized )
       {
         FORCEDDEBUGLOG( "hooks not initialized, doing that" );
-        //if ( !IsDebuggerPresent() )
+        if ( !IsDebuggerPresent() )
         {
 
           FORCEDDEBUGLOG( "creating thread" );

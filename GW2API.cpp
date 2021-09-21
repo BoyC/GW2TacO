@@ -98,6 +98,23 @@ namespace GW2
           worldId = (TS32)( json.get<Number>( "world" ) );
       }
 
+      if ( HasCaps( "characters" ) )
+      {
+        CString characters = QueryAPI( "/v2/characters" );
+        characters = CString::Format( "{\"characters\": %s }", characters.GetPointer() );
+        json.parse( characters.GetPointer() );
+        auto& values = json.get<Array>( "characters" ).values();
+        for ( auto v : values )
+        {
+          if ( v->is<String>() )
+            charNames += CString( v->get<String>().data() );
+        }
+      }
+      else
+      {
+        LOG_ERR( "[TacO] API error: API key '%s - %s (%s)' doesn't have the 'characters' permission - account identification through Mumble Link will not be possible.", accountName.GetPointer(), keyName.GetPointer(), apiKey.GetPointer() );
+      }
+
       initialized = true;
       beingInitialized = false;
     } );
@@ -130,7 +147,7 @@ namespace GW2
 
   APIKey* APIKeyManager::GetIdentifiedAPIKey()
   {
-    if (mumbleLink.IsValid() || !mumbleLink.charName.Length() || !keys.NumItems())
+    if (!mumbleLink.IsValid() || !mumbleLink.charName.Length() || !keys.NumItems())
       return nullptr;
 
     if (!initialized)

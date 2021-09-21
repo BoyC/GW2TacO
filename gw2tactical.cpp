@@ -634,7 +634,7 @@ void GW2TacticalDisplay::DrawPOI( CWBDrawAPI *API, const tm& ptm, const time_t& 
 
   if ( poi.typeData.behavior == POIBehavior::WvWObjective )
   {
-    alphaMultiplier = max( 0, min( 1, pow( CVector2( screenpos ).Length(), 2 ) + 0.3f ) );
+    alphaMultiplier = max( 0, min( 1, powf( CVector2( screenpos ).Length(), 2 ) + 0.3f ) );
   }
 
   screenpos = screenpos*0.5 + CVector4( 0.5, 0.5, 0.5, 0.0 );
