@@ -741,7 +741,7 @@ BOOL __stdcall gw2WindowCountFunc( HWND   hwnd, LPARAM lParam )
   {
     memset( name, 0, 400 );
     GetClassName( hwnd, name, 199 );
-    if ( !strcmp( name, "ArenaNet_Dx_Window_Class" ) )
+    if ( !strcmp( name, "ArenaNet_Dx_Window_Class" ) || !strcmp( name, "ArenaNet_Gr_Window_Class" ) )
     {
       gw2WindowCount++;
     }
@@ -756,7 +756,7 @@ BOOL __stdcall gw2WindowFromPIDFunction(HWND hWnd, LPARAM a2)
 
   memset(&ClassName, 0, 400);
   GetClassNameA(hWnd, ClassName, 199);
-  if (!strcmp(ClassName, "ArenaNet_Dx_Window_Class"))
+  if ( !strcmp( ClassName, "ArenaNet_Dx_Window_Class" ) || !strcmp( ClassName, "ArenaNet_Gr_Window_Class" ) )
   {
     dwProcessId = 0;
     GetWindowThreadProcessId(hWnd, &dwProcessId);
@@ -1137,6 +1137,9 @@ INT WINAPI WinMain( _In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 
         if (!gw2Window)
           gw2Window = FindWindow("ArenaNet_Dx_Window_Class", nullptr);
+
+        if ( !gw2Window )
+          gw2Window = FindWindow( "ArenaNet_Gr_Window_Class", nullptr );
       }
 
       if ( !frameThrottling || frameTriggered || lastRenderTime + 200 < currTime )

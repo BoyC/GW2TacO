@@ -4,8 +4,10 @@ syntax: glob
 *.*old*
 *.vcxproj.user
 *.*backup*
-*/Release*/*
-*/Debug*/*
+**/Release*/*
+**/Debug*/*
+**/Release_MultiByte*/*
+**/Debug_MultiByte*/*
 *Release*/*
 *Debug*/*
 *.*sdf
@@ -49,3 +51,4 @@ out/UI.wbs
 out/UI.xml
 out/gw2Taco_internal.zip
 out/maptimer.xml
+GW2TacO.VC.db
