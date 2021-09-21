@@ -1801,7 +1801,7 @@ void GW2TacO::OpenWindow( CString s )
     if (itm->IsHidden())
       openState = true;
 
-    itm->Hide(openState);
+    itm->Hide(!openState);
 
     //delete itm;
     SetWindowOpenState( s.GetPointer(), openState );
