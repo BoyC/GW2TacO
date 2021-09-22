@@ -60,6 +60,8 @@ CRect GetMinimapRectangle()
 
 void CMumbleLink::Update()
 {
+  bool justConnected = false;
+
   FORCEDDEBUGLOG( "updating mumblelink" );
   if ( !lm )
   {
@@ -79,6 +81,7 @@ void CMumbleLink::Update()
       hMapObject = NULL;
       return;
     }
+    justConnected = true;
   }
 
   if ( !lm )
@@ -167,6 +170,9 @@ void CMumbleLink::Update()
         ChangeUIScale( uiSize );
     }
   }
+
+  if ( justConnected )
+    ChangeUIScale( uiSize );
 
   id = ident.Find( "\"world_id\":" );
   if ( id >= 0 )
