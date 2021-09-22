@@ -1068,19 +1068,19 @@ TBOOL GW2TacO::MessageProc( CWBMessage &Message )
       SetConfigValue("OpacityIngame", 0);
       return true;
     case Menu_OpacityIngame_Transparent:
-      SetConfigValue("OpacityIngame", 2);
+      SetConfigValue("OpacityIngame", 1);
       return true;
     case Menu_OpacityIngame_Faded:
-      SetConfigValue("OpacityIngame", 1);
+      SetConfigValue("OpacityIngame", 2);
       return true;
     case Menu_OpacityMap_Solid:
       SetConfigValue("OpacityMap", 0);
       return true;
     case Menu_OpacityMap_Transparent:
-      SetConfigValue("OpacityMap", 2);
+      SetConfigValue("OpacityMap", 1);
       return true;
     case Menu_OpacityMap_Faded:
-      SetConfigValue("OpacityMap", 1);
+      SetConfigValue("OpacityMap", 2);
       return true;
     case Menu_DeleteMyMarkers:
     {
