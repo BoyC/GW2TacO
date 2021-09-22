@@ -126,7 +126,7 @@ public:
   TBOOL camUpChanged = false;
 
   CString mumblePath = L"MumbleLink";
-  TU32 pID;
+  TU32 lastGW2ProcessID = 0;
 };
 
 extern CMumbleLink mumbleLink;

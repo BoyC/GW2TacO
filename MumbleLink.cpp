@@ -201,8 +201,6 @@ void CMumbleLink::Update()
   textboxHasFocus   = (ctx->uiState & (0x01 << 5)) != 0;
   isInCombat        = (ctx->uiState & (0x01 << 6)) != 0;
 
-  pID = ctx->processId;
-
   float scale = GetUIScale();
 
   if ( !isMapOpen )
@@ -227,6 +225,8 @@ void CMumbleLink::Update()
     bigMap.mapCenterY = ctx->mapCenterY;
     bigMap.mapScale = ctx->mapScale;
   }
+
+  lastGW2ProcessID = ctx->processId;
 
   id = ident.Find( "\"name\":" );
   if ( id >= 0 )
@@ -330,7 +330,7 @@ CMumbleLink::~CMumbleLink()
 
 TBOOL CMumbleLink::IsValid()
 {
-  return lm != 0;
+  return lm != 0 && lastGW2ProcessID;
 }
 
 CMatrix4x4 CompassData::BuildTransformationMatrix( const CRect& miniRect, bool ignoreRotation )

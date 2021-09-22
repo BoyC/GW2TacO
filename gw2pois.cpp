@@ -1135,7 +1135,7 @@ INT WINAPI WinMain( _In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
         gw2WindowCount = 0;
         gw2Window = nullptr;
         gw2WindowFromPid = nullptr;
-        EnumWindows(gw2WindowFromPIDFunction, mumbleLink.pID );
+        EnumWindows(gw2WindowFromPIDFunction, mumbleLink.lastGW2ProcessID );
         gw2Window = gw2WindowFromPid;
 
         if (!gw2Window)
