@@ -36,7 +36,7 @@ TBOOL InitGUI( CWBApplication *App )
 
   App->LoadSkinFromFile( _T( "UI.wbs" ), localization->GetUsedGlyphs() );
   App->LoadXMLLayoutFromFile( _T( "UI.xml" ) );
-  //App->LoadCSSFromFile( UIFileNames[ GetConfigValue( "InterfaceSize" ) ] );
+  App->LoadCSSFromFile( UIFileNames[ GetConfigValue( "InterfaceSize" ) ] );
   App->RegisterUIFactoryCallback( "GW2TacticalDisplay", GW2TacticalDisplay::Factory );
   App->RegisterUIFactoryCallback( "GW2TrailDisplay", GW2TrailDisplay::Factory );
   App->RegisterUIFactoryCallback( "GW2MapTimer", GW2MapTimer::Factory );
