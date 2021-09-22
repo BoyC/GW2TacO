@@ -814,7 +814,7 @@ void GW2TacticalDisplay::DrawPOIMinimap( CWBDrawAPI *API, const CRect& miniRect,
   displayRect.y2 = topLeft.y + TS32( poiSize );
 
   CColor col = poi.typeData.color;
-  col.A() = TU8(col.A() * alpha * minimapOpacity);
+  col.A() = TU8( col.A() * alpha * minimapOpacity * poi.typeData.alpha );
 
 
   API->DrawAtlasElement( poi.icon, displayRect, false, false, true, true, col );
