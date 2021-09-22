@@ -1031,7 +1031,7 @@ void GW2TacticalDisplay::RemoveUserMarkersFromMap()
 
   for (TS32 x = 0; x < POIs.NumItems(); x++)
   {
-    if (POIs.GetByIndex(x).mapID == mumbleLink.mapID)
+    if ( POIs.GetByIndex( x ).mapID == mumbleLink.mapID && !POIs.GetByIndex( x ).External )
     {
       POIs.DeleteByIndex(x);
       x--;
