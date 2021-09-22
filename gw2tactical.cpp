@@ -522,12 +522,6 @@ void GW2TacticalDisplay::DrawPOI( CWBDrawAPI *API, const tm& ptm, const time_t& 
 
     TF32 dist = (poi.position - mumbleLink.charPosition).Length();
 
-    if (dist <= poi.typeData.infoRange)
-    {
-      if (poi.typeData.info >= 0)
-        infoText += GetStringFromMap(poi.typeData.info) + "\n";
-    }
-
     if ( !drawCountdown && ( poi.typeData.bits.autoTrigger || poi.typeData.bits.hasCountdown ) && ( dist <= poi.typeData.triggerRange ) )
     {
       //auto trigger
@@ -547,6 +541,15 @@ void GW2TacticalDisplay::DrawPOI( CWBDrawAPI *API, const tm& ptm, const time_t& 
       ActivationData[ POIActivationDataKey( poi.guid, data ) ] = d;
     }
   }
+
+  if ( poi.typeData.info >= 0 )
+  {
+    if ( ( poi.position - mumbleLink.charPosition ).Length() <= poi.typeData.infoRange )
+    {
+      infoText += GetStringFromMap( poi.typeData.info ) + "\n";
+    }
+  }
+
 
   if ( poi.routeMember && ( ( poi.position - mumbleLink.charPosition ).Length() <= poi.typeData.triggerRange ) )
   {
