@@ -349,7 +349,7 @@ CMatrix4x4 CompassData::BuildTransformationMatrix( const CRect& miniRect, bool i
   miniMapTrafo *= CMatrix4x4( CQuaternion( 0, 0, rotation ) );
   miniMapTrafo *= CMatrix4x4().Scaling( CVector3( 1, 1, 1 ) / 24.0f );
 
-  CVector2 offset = -( CVector2( mapCenterX, mapCenterY ) - CVector2( playerX, playerY ) ).Rotated( CVector2( 0, 0 ), rotation );
+  CVector2 offset = -( ( CVector2( mapCenterX, mapCenterY ) - CVector2( playerX, playerY ) ) * GetWindowTooSmallScale() ).Rotated( CVector2( 0, 0 ), rotation );
   miniMapTrafo *= CMatrix4x4().Translation( CVector3( offset.x, offset.y, 0.0 ) );
   miniMapTrafo *= CMatrix4x4().Scaling( CVector3( 1, 1, 1 ) / mapScale * GetUIScale() );
   miniMapTrafo *= CMatrix4x4().Translation( CVector3( float( miniRect.Center().x ), float( miniRect.Center().y ), 0.0 ) );
