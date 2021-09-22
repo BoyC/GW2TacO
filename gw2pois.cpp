@@ -827,9 +827,10 @@ INT WINAPI WinMain( _In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
   auto mumblePos = cmdLine.Find("-mumble");
   if (mumblePos >= 0)
   {
-      auto sub = cmdLine.Substring(mumblePos + 8);
+      auto sub = cmdLine.Substring(mumblePos);
       auto cmds = sub.ExplodeByWhiteSpace();
-      mumbleLink.mumblePath = cmds[1];
+      if ( cmds.NumItems() > 1 )
+        mumbleLink.mumblePath = cmds[ 1 ];
   }
 
   //SetProcessDpiAwareness( PROCESS_PER_MONITOR_DPI_AWARE );
@@ -1115,7 +1116,7 @@ INT WINAPI WinMain( _In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
       {
         if (!mumbleLink.IsValid() && GetTime() > 60000)
         {
-          LOG_ERR("[GW2TacO] Closing TacO because GW2 with mumble link %s was not found in under a minute");
+          LOG_ERR("[GW2TacO] Closing TacO because GW2 with mumble link '%s' was not found in under a minute", mumbleLink.mumblePath.GetPointer() );
           App->SetDone(true);
         }
       }
@@ -1138,11 +1139,13 @@ INT WINAPI WinMain( _In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
         EnumWindows(gw2WindowFromPIDFunction, mumbleLink.lastGW2ProcessID );
         gw2Window = gw2WindowFromPid;
 
+/*
         if (!gw2Window)
           gw2Window = FindWindow("ArenaNet_Dx_Window_Class", nullptr);
 
         if ( !gw2Window )
           gw2Window = FindWindow( "ArenaNet_Gr_Window_Class", nullptr );
+*/
       }
 
       if ( !frameThrottling || frameTriggered || lastRenderTime + 200 < currTime )
