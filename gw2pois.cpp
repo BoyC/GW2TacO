@@ -1148,6 +1148,12 @@ INT WINAPI WinMain( _In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 */
       }
 
+      if ( !mumbleLink.IsValid() || !gw2Window)
+      {
+        Sleep( 1000 );
+        continue;
+      }
+
       if ( !frameThrottling || frameTriggered || lastRenderTime + 200 < currTime )
       {
         if ( gw2Window )
