@@ -56,6 +56,12 @@ namespace GW2
     if ( beingInitialized )
       return;
 
+    keyName = "";
+    accountName = "";
+    charNames.FlushFast();
+    caps.Flush();
+    worldId = 0;
+
     valid = true;
     initialized = false;
     beingInitialized = true;

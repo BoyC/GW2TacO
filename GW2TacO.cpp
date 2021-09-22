@@ -176,8 +176,8 @@ enum MainMenuItems
   Menu_RaidToggles_End = 0x2000,
   Menu_GW2APIKey_Base = 0x3000,
   Menu_GW2APIKey_End = 0x4000,
-  Menu_DeleteGW2APIKey_Base = 0x3000,
-  Menu_DeleteGW2APIKey_End = 0x4000,
+  Menu_DeleteGW2APIKey_Base = 0x5000,
+  Menu_DeleteGW2APIKey_End = 0x6000,
 
   Menu_ToggleMapTimerMap = 0x30000,
 
@@ -1297,6 +1297,7 @@ TBOOL GW2TacO::MessageProc( CWBMessage &Message )
       case APIKeys::GW2APIKey:
       {
         GW2::apiKeyManager.keys[ApiKeyIndex]->SetKey(APIKeyInput->GetText());
+        GW2::apiKeyManager.keys[ ApiKeyIndex ]->FetchData();
         GW2::apiKeyManager.RebuildConfigValues();
       }
         break;
