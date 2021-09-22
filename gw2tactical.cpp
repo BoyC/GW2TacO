@@ -1427,6 +1427,7 @@ void ImportPOIS( CWBApplication *App )
 
   POIs.Flush();
   Routes.Flush();
+  trails.Flush();
 
   {
     CFileList list;
