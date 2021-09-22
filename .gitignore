@@ -118,3 +118,5 @@ POIs/resourcenode.wood.xml
 POIs/tw_ALL_IN_ONE.taco
 version.txt
 TacOConfig.xml
+*.dmp
+poidata.xml

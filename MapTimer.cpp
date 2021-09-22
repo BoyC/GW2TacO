@@ -25,7 +25,7 @@ void GW2MapTimer::OnDraw( CWBDrawAPI *API )
     if (key && key->valid && (GetTime() - lastFetchTime > 150000 || !lastFetchTime) && !beingFetched && !fetchThread.joinable())
     {
       beingFetched = true;
-      fetchThread = std::thread([&]()
+      fetchThread = std::thread([this, key]()
         {
           Object json;
 
