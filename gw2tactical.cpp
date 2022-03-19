@@ -2108,7 +2108,7 @@ bool POI::IsVisible( const tm& ptm, const time_t& currtime, bool achievementsFet
       if ( typeData.achievementBit == -1 )
         return !achievements[typeData.achievementId].done;
 
-      return !achievements[typeData.achievementId].done || achievements[typeData.achievementId].bits.Find(typeData.achievementBit) < 0;
+      return !achievements[typeData.achievementId].done && achievements[typeData.achievementId].bits.Find(typeData.achievementBit) < 0;
     }
   }
 
