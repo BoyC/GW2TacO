@@ -2104,14 +2104,11 @@ bool POI::IsVisible( const tm& ptm, const time_t& currtime, bool achievementsFet
     CLightweightCriticalSection cs( &dataWriteCritSec );
     if ( achievements.HasKey( typeData.achievementId ) )
     {
-      if (achievements[typeData.achievementId].done)
-        return true;
 
-      if ( ( typeData.achievementBit == -1 ) )
-        return false;
+      if ( typeData.achievementBit == -1 )
+        return !achievements[typeData.achievementId].done;
 
-      if ( achievements[ typeData.achievementId ].bits.Find( typeData.achievementBit ) >= 0 )
-        return false;
+      return !achievements[typeData.achievementId].done || achievements[typeData.achievementId].bits.Find(typeData.achievementBit) < 0;
     }
   }
 
