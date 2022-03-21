@@ -281,7 +281,8 @@ LONG WINAPI CrashOverride( struct _EXCEPTION_POINTERS* excpInfo )
   if ( IsDebuggerPresent() ) return EXCEPTION_CONTINUE_SEARCH;
 
 #ifndef _DEBUG
-  if ( bugSplat )
+  bool bs = !HasConfigValue( "SendCrashDump" ) || GetConfigValue( "SendCrashDump" );
+  if ( bugSplat && bs )
   {
     if ( ringbufferLog )
     {
@@ -290,6 +291,7 @@ LONG WINAPI CrashOverride( struct _EXCEPTION_POINTERS* excpInfo )
     }
     bugSplat->unhandledExceptionHandler( excpInfo );
     MessageBox( NULL, _T( "TacO has crashed :(\nCrash has been reported." ), _T( "Crash" ), MB_ICONERROR );
+    return EXCEPTION_EXECUTE_HANDLER;
   }
   else
 #endif
@@ -1024,6 +1026,9 @@ INT WINAPI WinMain( _In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 
   if ( !HasConfigValue( "EnableCrashMenu" ) )
     SetConfigValue( "EnableCrashMenu", 0 );
+
+  if ( !HasConfigValue( "SendCrashDump" ) )
+    SetConfigValue( "SendCrashDump", 1 );
 
   SetConfigValue( "LogTrails", 0 );
 
