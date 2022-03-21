@@ -197,8 +197,18 @@ void CLoggerOutput_RingBuffer::Process( LOGVERBOSITY v, TCHAR *String )
 void CLoggerOutput_RingBuffer::Dump( CString fname )
 {
   FILE* f = nullptr;
-  fopen_s(&f, fname.GetPointer(), "w+b");
+  fopen_s(&f, fname.GetPointer(), "w+t");
   for ( TS32 x = 0; x < Buffer.NumItems(); x++ )
     fprintf( f, "%s\n", Buffer[ x ].GetPointer() );
   fclose( f );
+}
+
+CString CLoggerOutput_RingBuffer::Dump()
+{
+  CString result;
+
+  for ( TS32 x = 0; x < Buffer.NumItems(); x++ )
+    result += CString::Format("%s\n", Buffer[x].GetPointer());
+
+  return result;
 }

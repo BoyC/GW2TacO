@@ -6,13 +6,20 @@
 	<compilerparams>GW2TacO.sln /rebuild Release</compilerparams>
 	<compiledexe>release\GW2TacO.exe</compiledexe>
 	<buildidformat>GW2TacO_%.3dr</buildidformat>
+	<versionformat>%.3d.%dr</versionformat>
 	<outputdir>Builds\</outputdir>
 	<archivemask>GW2TacO_%.3dr</archivemask>
 
 	<buildfile>
 		<sourcepath>release\</sourcepath>
 		<mask>GW2TacO.exe</mask>
-		<mask>GW2TacO.pdb</mask>
+	</buildfile>
+
+	<buildfile>
+		<sourcepath>.\</sourcepath>
+		<mask>BsSndRpt.exe</mask>
+		<mask>BugSplat.dll</mask>
+		<mask>BugSplatRc.dll</mask>
 	</buildfile>
 
 	<buildfile>
@@ -63,5 +70,41 @@
 		<mask>UI.xml</mask>
 		<mask>TacO_Language_*.xml</mask>
 	</buildfile>
+
+	<postbuildstep>
+		<command>SendPdbs</command>
+		<parameters>/credentials bugsplat_taco /b GW2TacO /a GW2TacO /d Release /v %s</parameters>
+		<message>Uploading PDBs to BugSplat</message>
+	</postbuildstep>
+
+	<postbuildstep>
+		<command>git</command>
+		<parameters>add ..</parameters>
+		<message>Adding TacO Changes</message>
+	</postbuildstep>
+
+	<postbuildstep>
+		<command>git</command>
+		<parameters>commit -m "GW2 TacO release %s"</parameters>
+		<message>Commiting TacO Changes</message>
+	</postbuildstep>
+
+	<postbuildstep>
+		<command>git</command>
+		<parameters>tag %s</parameters>
+		<message>Adding Tag to TacO</message>
+	</postbuildstep>
+
+	<postbuildstep>
+		<command>git</command>
+		<parameters>push</parameters>
+		<message>Pushing TacO Changes</message>
+	</postbuildstep>
+
+	<postbuildstep>
+		<command>gh</command>
+		<parameters>release create %s -t "GW2 TacO Release %s" -n "GW2 TacO release %s deployed by the automatic build system" ./%s</parameters>
+		<message>Creating Github Release</message>
+	</postbuildstep>
 
 </deployconfig>

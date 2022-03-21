@@ -6,6 +6,7 @@
 #include "OverlayConfig.h"
 #include <time.h>
 #include "Language.h"
+#include "ThirdParty/BugSplat/inc/BugSplat.h"
 
 using namespace jsonxx;
 
@@ -184,6 +185,7 @@ void LoadWvWObjectives()
 
   wvwPollThread = std::thread( []()
   {
+    SetPerThreadCRTExceptionBehavior();
     CDictionary<int, CVector3> wvwObjectiveCoords;
     CDictionary<int, CRect> wvwContinentRects;
 
@@ -373,6 +375,7 @@ void UpdateWvWStatus()
 
   wvwUpdatThread = std::thread( []()
   {
+    SetPerThreadCRTExceptionBehavior();
     GW2::APIKeyManager::Status status = GW2::apiKeyManager.GetStatus();
     if (status != GW2::APIKeyManager::Status::OK)
     {

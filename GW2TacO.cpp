@@ -18,6 +18,7 @@
 #include "TrailLogger.h"
 #include "Language.h"
 #include "BuildCount.h"
+#include "ThirdParty/BugSplat/inc/BugSplat.h"
 using namespace jsonxx;
 
 CString UIFileNames[] =
@@ -163,6 +164,7 @@ enum MainMenuItems
   Menu_DeleteMyMarkers,
   Menu_AddGW2ApiKey,
   Menu_TogglePOIInfoText,
+  Menu_Crash,
 
   Menu_OpacityIngame_Solid,
   Menu_OpacityIngame_Transparent,
@@ -589,6 +591,11 @@ TBOOL GW2TacO::MessageProc( CWBMessage &Message )
       ctx->AddSeparator();
       ctx->AddSeparator();
       ctx->AddItem( DICT( "exittaco" ), Menu_Exit );
+
+      ctx->AddSeparator();
+      if ( GetConfigValue( "EnableCrashMenu" ) )
+        ctx->AddItem( "CRASH", Menu_Crash );
+
       return true;
     }
     if ( b->GetID() == _T( "GoToWebsite" ) )
@@ -966,6 +973,13 @@ TBOOL GW2TacO::MessageProc( CWBMessage &Message )
     case Menu_TogglePOIInfoText:
       ToggleConfigValue("TacticalInfoTextVisible");
       return true;
+    case Menu_Crash:
+    {
+      for ( int x = 0; x < 0xbadc0de; x++ )
+        ( *(unsigned int*)x ) = 0xbaadf00d;
+      int z = 15 / ( (int)sin( 0 ) );
+      break;
+    }
     case Menu_MouseHighlightColor0:
     case Menu_MouseHighlightColor1:
     case Menu_MouseHighlightColor2:
@@ -1384,7 +1398,9 @@ void GW2TacO::OpenAboutWindow()
   l1->ApplyStyleDeclarations( "font-family:ProFont;text-align:center;vertical-align:top;" );
   l1 = new CWBLabel( w, w->GetClientRect() + CPoint( 0, 48 ), "Taco Icon from http://icons8.com" );
   l1->ApplyStyleDeclarations( "font-family:ProFont;text-align:center;vertical-align:top;" );
-  l1 = new CWBLabel( w, w->GetClientRect() + CPoint( 0, 64 ), "If you like TacO, send some Mystic Coins to BoyC.2653 :)" );
+  l1 = new CWBLabel( w, w->GetClientRect() + CPoint( 0, 64 ), "Crash tracking by www.bugsplat.com" );
+  l1->ApplyStyleDeclarations( "font-family:ProFont;text-align:center;vertical-align:top;" );
+  l1 = new CWBLabel( w, w->GetClientRect() + CPoint( 0, 80 ), "If you like TacO, send some Mystic Coins to BoyC.2653 :)" );
   l1->ApplyStyleDeclarations( "font-family:ProFont;text-align:center;vertical-align:top;" );
 
   auto TacoIcon = new CWBButton( w, CRect( -50, -40 + 16, 50, 72 + 16 ) + w->GetClientRect().Center() );
@@ -1963,6 +1979,7 @@ void GW2TacO::CheckItemPickup()
     pickupsBeingFetched = true;
     pickupFetcherThread = std::thread( [ this, key ]()
     {
+      SetPerThreadCRTExceptionBehavior();
       CString query = key->QueryAPI( "v2/commerce/delivery" );
 
       Object json;

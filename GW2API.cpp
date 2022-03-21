@@ -2,6 +2,7 @@
 #include "MumbleLink.h"
 #include "OverlayConfig.h"
 #include "Language.h"
+#include "ThirdParty/BugSplat/inc/BugSplat.h"
 
 #include "Bedrock/UtilLib/jsonxx.h"
 using namespace jsonxx;
@@ -68,6 +69,7 @@ namespace GW2
 
     fetcherThread = std::thread( [ this ]()
     {
+      SetPerThreadCRTExceptionBehavior();
       valid = true;
 
       CString keyData = QueryAPI( "/v2/tokeninfo" );

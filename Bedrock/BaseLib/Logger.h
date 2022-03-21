@@ -71,6 +71,7 @@ public:
   virtual ~CLoggerOutput_RingBuffer();
   virtual void Process( LOGVERBOSITY v, TCHAR *String );
   void Dump( CString fname );
+  CString Dump();
 };
 
 class CLogger

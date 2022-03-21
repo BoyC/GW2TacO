@@ -461,6 +461,9 @@ void CWBApplication::Display( CWBDrawAPI *API )
   SelectMouseCursor( CM_ARROW );
 
   DrawAPI->SetUIRenderState();
+
+  Device->WaitRetrace();
+
   Device->Clear( true, true, ClearColor );
   Device->BeginScene();
 

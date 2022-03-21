@@ -20,16 +20,24 @@
 #include "GW2API.h"
 #include "SpecialGUIItems.h"
 #include "Language.h"
+#include <locale>
+#include <codecvt>
+
+#include "ThirdParty/BugSplat/inc/BugSplat.h"
+#pragma comment(lib,"ThirdParty/BugSplat/lib/BugSplat.lib")
+
+MiniDmpSender* bugSplat = nullptr;
+CLoggerOutput_RingBuffer* ringbufferLog = nullptr;
 
 #pragma comment(lib,"Dwmapi.lib")
 
-CWBApplication *App = NULL;
+CWBApplication* App = NULL;
 HWND gw2Window;
 HWND gw2WindowFromPid = nullptr;
 
 bool disableHooks = false;
 
-TBOOL InitGUI( CWBApplication *App )
+TBOOL InitGUI( CWBApplication* App )
 {
   CreateUniFont( App, "UniFont" );
   CreateProFont( App, "ProFont" );
@@ -56,10 +64,10 @@ TBOOL InitGUI( CWBApplication *App )
   return true;
 }
 
-void OpenWindows( CWBApplication *App )
+void OpenWindows( CWBApplication* App )
 {
   auto root = App->GetRoot();
-  GW2TacO *taco = (GW2TacO*)root->FindChildByID( "tacoroot", "GW2TacO" );
+  GW2TacO* taco = (GW2TacO*)root->FindChildByID( "tacoroot", "GW2TacO" );
   if ( !taco )
     return;
 
@@ -94,7 +102,7 @@ LRESULT __stdcall MyKeyboardProc( int ccode, WPARAM wParam, LPARAM lParam )
 
   if ( ccode == HC_ACTION )
   {
-    KBDLLHOOKSTRUCT *pkbdllhook = (KBDLLHOOKSTRUCT *)lParam;
+    KBDLLHOOKSTRUCT* pkbdllhook = (KBDLLHOOKSTRUCT*)lParam;
     HKL dwhkl = 0;
     BYTE dbKbdState[ 256 ];
     TCHAR szCharBuf[ 32 ];
@@ -149,7 +157,7 @@ LRESULT __stdcall MyKeyboardProc( int ccode, WPARAM wParam, LPARAM lParam )
   if ( App && wnd == (HWND)App->GetHandle() )
     return CallNextHookEx( 0, ccode, wParam, lParam );
 
-  KBDLLHOOKSTRUCT *kbdat = (KBDLLHOOKSTRUCT*)lParam;
+  KBDLLHOOKSTRUCT* kbdat = (KBDLLHOOKSTRUCT*)lParam;
   PostMessage( (HWND)App->GetHandle(), wParam, kbdat->vkCode, 1 | ( kbdat->scanCode << 16 ) + ( kbdat->flags << 24 ) );
 
   return ( CallNextHookEx( 0, ccode, wParam, lParam ) );
@@ -175,7 +183,7 @@ LRESULT __stdcall KeyboardHook( int code, WPARAM wParam, LPARAM lParam )
   if ( App && wnd == (HWND)App->GetHandle() )
     return CallNextHookEx( 0, code, wParam, lParam );
 
-  KBDLLHOOKSTRUCT *kbdat = (KBDLLHOOKSTRUCT*)lParam;
+  KBDLLHOOKSTRUCT* kbdat = (KBDLLHOOKSTRUCT*)lParam;
   UINT mapped = MapVirtualKey( kbdat->vkCode, MAPVK_VK_TO_CHAR );
 
   //App->InjectMessage( wParam, kbdat->vkCode, 1 | ( kbdat->scanCode << 16 ) + ( kbdat->flags << 24 ) );
@@ -185,18 +193,18 @@ LRESULT __stdcall KeyboardHook( int code, WPARAM wParam, LPARAM lParam )
   //if ( !( mapped & ( 1 << 31 ) ) && !inFocus && wParam == WM_KEYDOWN )
   //  App->InjectMessage( WM_CHAR, mapped, 0 );
 
-  if (mapped & (1 << 31) && !inFocus)
-    return CallNextHookEx(0, 0, wParam, (LPARAM)lParam);
+  if ( mapped & ( 1 << 31 ) && !inFocus )
+    return CallNextHookEx( 0, 0, wParam, (LPARAM)lParam );
 
-  if (!inFocus)
+  if ( !inFocus )
   {
-    if (wParam == WM_KEYDOWN)
+    if ( wParam == WM_KEYDOWN )
     {
       //(*(void(__thiscall**)(_DWORD*, signed int, UINT, _DWORD))(*app + 68))(app, 258, mapped, 0);
-      App->InjectMessage(WM_CHAR, mapped, 0);
-      return CallNextHookEx(0, 0, WM_KEYDOWN, (LPARAM)lParam);
+      App->InjectMessage( WM_CHAR, mapped, 0 );
+      return CallNextHookEx( 0, 0, WM_KEYDOWN, (LPARAM)lParam );
     }
-    return CallNextHookEx(0, 0, wParam, (LPARAM)lParam);
+    return CallNextHookEx( 0, 0, wParam, (LPARAM)lParam );
   }
 
   PostMessage( (HWND)App->GetHandle(), wParam, kbdat->vkCode, 1 | ( kbdat->scanCode << 16 ) + ( kbdat->flags << 24 ) );
@@ -246,7 +254,7 @@ LRESULT __stdcall MouseHook( int code, WPARAM wParam, LPARAM lParam )
   if ( code < 0 || !lParam || ( wnd != gw2Window && App && wnd != (HWND)App->GetHandle() ) )
     return CallNextHookEx( 0, code, wParam, lParam );
 
-  MSLLHOOKSTRUCT *mousedat = (MSLLHOOKSTRUCT*)lParam;
+  MSLLHOOKSTRUCT* mousedat = (MSLLHOOKSTRUCT*)lParam;
 
   POINT ap = mousedat->pt;
   //SetCursorPos(ap.x, ap.y);
@@ -268,11 +276,27 @@ LRESULT __stdcall MouseHook( int code, WPARAM wParam, LPARAM lParam )
   return CallNextHookEx( 0, code, wParam, lParam );
 }
 
-LONG WINAPI CrashOverride( struct _EXCEPTION_POINTERS * excpInfo )
+LONG WINAPI CrashOverride( struct _EXCEPTION_POINTERS* excpInfo )
 {
   if ( IsDebuggerPresent() ) return EXCEPTION_CONTINUE_SEARCH;
-  LONG res = baseCrashTracker( excpInfo );// FullDumpCrashTracker( excpInfo );// baseCrashTracker( excpInfo );
-  return res;
+
+#ifndef _DEBUG
+  if ( bugSplat )
+  {
+    if ( ringbufferLog )
+    {
+      ringbufferLog->Dump( "CrashLog.log" );
+      bugSplat->sendAdditionalFile( L"CrashLog.log" );
+    }
+    bugSplat->unhandledExceptionHandler( excpInfo );
+    MessageBox( NULL, _T( "TacO has crashed :(\nCrash has been reported." ), _T( "Crash" ), MB_ICONERROR );
+  }
+  else
+#endif
+  {
+    LONG res = baseCrashTracker( excpInfo );// FullDumpCrashTracker( excpInfo );// baseCrashTracker( excpInfo );
+    return res;
+  }
 }
 
 #include <TlHelp32.h>
@@ -305,13 +329,13 @@ DWORD GetProcessIntegrityLevel( HANDLE hProcess )
                                     pTIL, dwLengthNeeded, &dwLengthNeeded ) )
           {
             dwIntegrityLevel = *GetSidSubAuthority( pTIL->Label.Sid,
-              (DWORD)(UCHAR)( *GetSidSubAuthorityCount( pTIL->Label.Sid ) - 1 ) );
+                                                    (DWORD)(UCHAR)( *GetSidSubAuthorityCount( pTIL->Label.Sid ) - 1 ) );
 
-            //if (dwIntegrityLevel == SECURITY_MANDATORY_LOW_RID)
-            //else if (dwIntegrityLevel >= SECURITY_MANDATORY_MEDIUM_RID &&
-            //		 dwIntegrityLevel < SECURITY_MANDATORY_HIGH_RID)
-            //else if (dwIntegrityLevel >= SECURITY_MANDATORY_HIGH_RID)
-            //else if (dwIntegrityLevel >= SECURITY_MANDATORY_SYSTEM_RID)
+                                                  //if (dwIntegrityLevel == SECURITY_MANDATORY_LOW_RID)
+                                                  //else if (dwIntegrityLevel >= SECURITY_MANDATORY_MEDIUM_RID &&
+                                                  //		 dwIntegrityLevel < SECURITY_MANDATORY_HIGH_RID)
+                                                  //else if (dwIntegrityLevel >= SECURITY_MANDATORY_HIGH_RID)
+                                                  //else if (dwIntegrityLevel >= SECURITY_MANDATORY_SYSTEM_RID)
           }
           LocalFree( pTIL );
         }
@@ -657,69 +681,69 @@ void FetchMarkerPackOnline( CString& ourl )
   DWORD downloadThreadID = 0;
 
   auto downloadThread = CreateThread( NULL, 0, []( LPVOID data )
-  {
-    CString url( (TS8*)data );
-    delete[] data;
+                                      {
+                                        CString url( (TS8*)data );
+                                        delete[] data;
 
-    CStreamWriterMemory mem;
-    if ( !DownloadFile( url, mem ) )
-    {
-      LOG_ERR( "[GW2TacO] Failed to download package %s", url.GetPointer() );
-      return (DWORD)0;
-    }
+                                        CStreamWriterMemory mem;
+                                        if ( !DownloadFile( url, mem ) )
+                                        {
+                                          LOG_ERR( "[GW2TacO] Failed to download package %s", url.GetPointer() );
+                                          return (DWORD)0;
+                                        }
 
-    mz_zip_archive zip;
-    memset( &zip, 0, sizeof( zip ) );
-    if ( !mz_zip_reader_init_mem( &zip, mem.GetData(), mem.GetLength(), 0 ) )
-    {
-      LOG_ERR( "[GW2TacO] Package %s doesn't seem to be a well formed zip file", url.GetPointer() );
-      return (DWORD)0;
-    }
+                                        mz_zip_archive zip;
+                                        memset( &zip, 0, sizeof( zip ) );
+                                        if ( !mz_zip_reader_init_mem( &zip, mem.GetData(), mem.GetLength(), 0 ) )
+                                        {
+                                          LOG_ERR( "[GW2TacO] Package %s doesn't seem to be a well formed zip file", url.GetPointer() );
+                                          return (DWORD)0;
+                                        }
 
-    mz_zip_reader_end( &zip );
+                                        mz_zip_reader_end( &zip );
 
-    TS32 cnt = 0;
-    for ( TU32 x = 0; x < url.Length(); x++ )
-      if ( url[ x ] == '\\' || url[ x ] == '/' )
-        cnt = x;
+                                        TS32 cnt = 0;
+                                        for ( TU32 x = 0; x < url.Length(); x++ )
+                                          if ( url[ x ] == '\\' || url[ x ] == '/' )
+                                            cnt = x;
 
-    CString fileName = url.Substring( cnt + 1 );
-    if ( !fileName.Length() )
-    {
-      LOG_ERR( "[GW2TacO] Package %s has a malformed name", url.GetPointer() );
-      return (DWORD)0;
-    }
+                                        CString fileName = url.Substring( cnt + 1 );
+                                        if ( !fileName.Length() )
+                                        {
+                                          LOG_ERR( "[GW2TacO] Package %s has a malformed name", url.GetPointer() );
+                                          return (DWORD)0;
+                                        }
 
-    if ( fileName.Find( ".zip" ) == fileName.Length() - 4 )
-      fileName = fileName.Substring( 0, fileName.Length() - 4 );
+                                        if ( fileName.Find( ".zip" ) == fileName.Length() - 4 )
+                                          fileName = fileName.Substring( 0, fileName.Length() - 4 );
 
-    if ( fileName.Find( ".taco" ) == fileName.Length() - 5 )
-      fileName = fileName.Substring( 0, fileName.Length() - 5 );
+                                        if ( fileName.Find( ".taco" ) == fileName.Length() - 5 )
+                                          fileName = fileName.Substring( 0, fileName.Length() - 5 );
 
-    for ( TU32 x = 0; x < fileName.Length(); x++ )
-      if ( !isalnum( fileName[ x ] ) )
-        fileName[ x ] = '_';
+                                        for ( TU32 x = 0; x < fileName.Length(); x++ )
+                                          if ( !isalnum( fileName[ x ] ) )
+                                            fileName[ x ] = '_';
 
-    fileName = CString( "POIs/" ) + fileName + ".taco";
+                                        fileName = CString( "POIs/" ) + fileName + ".taco";
 
-    CStreamWriterFile out;
-    if ( !out.Open( fileName.GetPointer() ) )
-    {
-      LOG_ERR( "[GW2TacO] Failed to open file for writing: %s", fileName.GetPointer() );
-      return (DWORD)0;
-    }
+                                        CStreamWriterFile out;
+                                        if ( !out.Open( fileName.GetPointer() ) )
+                                        {
+                                          LOG_ERR( "[GW2TacO] Failed to open file for writing: %s", fileName.GetPointer() );
+                                          return (DWORD)0;
+                                        }
 
-    if ( !out.Write( mem.GetData(), mem.GetLength() ) )
-    {
-      LOG_ERR( "[GW2TacO] Failed to write out data to file: %s", fileName.GetPointer() );
-      remove( fileName.GetPointer() );
-      return (DWORD)0;
-    }
+                                        if ( !out.Write( mem.GetData(), mem.GetLength() ) )
+                                        {
+                                          LOG_ERR( "[GW2TacO] Failed to write out data to file: %s", fileName.GetPointer() );
+                                          remove( fileName.GetPointer() );
+                                          return (DWORD)0;
+                                        }
 
-    loadList.Add( fileName );
+                                        loadList.Add( fileName );
 
-    return (DWORD)0;
-  }, urlPtr, 0, &downloadThreadID );
+                                        return (DWORD)0;
+                                      }, urlPtr, 0, &downloadThreadID );
 }
 
 void ImportMarkerPack( CWBApplication* App, const CString& zipFile );
@@ -749,18 +773,18 @@ BOOL __stdcall gw2WindowCountFunc( HWND   hwnd, LPARAM lParam )
   return true;
 }
 
-BOOL __stdcall gw2WindowFromPIDFunction(HWND hWnd, LPARAM a2)
+BOOL __stdcall gw2WindowFromPIDFunction( HWND hWnd, LPARAM a2 )
 {
   DWORD dwProcessId; // [esp+4h] [ebp-198h]
-  CHAR ClassName[400]; // [esp+8h] [ebp-194h]
+  CHAR ClassName[ 400 ]; // [esp+8h] [ebp-194h]
 
-  memset(&ClassName, 0, 400);
-  GetClassNameA(hWnd, ClassName, 199);
+  memset( &ClassName, 0, 400 );
+  GetClassNameA( hWnd, ClassName, 199 );
   if ( !strcmp( ClassName, "ArenaNet_Dx_Window_Class" ) || !strcmp( ClassName, "ArenaNet_Gr_Window_Class" ) )
   {
     dwProcessId = 0;
-    GetWindowThreadProcessId(hWnd, &dwProcessId);
-    if (a2 == dwProcessId)
+    GetWindowThreadProcessId( hWnd, &dwProcessId );
+    if ( a2 == dwProcessId )
       gw2WindowFromPid = hWnd;
   }
   return 1;
@@ -771,16 +795,28 @@ INT WINAPI WinMain( _In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
   ImmDisableIME( -1 );
   lastSlowEventTime = globalTimer.GetTime();
 
+  // init crash tracking
+
   extern CString TacOBuild;
   InitializeCrashTracker( CString( "GW2 TacO " ) + TacOBuild, CrashOverride );
   FORCEDDEBUGLOG( "Crash tracker initialized." );
 
-  Logger.AddOutput(new CLoggerOutput_File(_T("GW2TacO.log")));
-  Logger.SetVerbosity(LOG_DEBUG);
-  FORCEDDEBUGLOG("Logger set up.");
+  std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
+  std::wstring wide = converter.from_bytes( TacOBuild.GetPointer() );
 
-  Logger.Log(LOG_INFO, false, false, "");
-  Logger.Log(LOG_INFO, false, false, "----------------------------------------------");
+  bugSplat = new MiniDmpSender( L"GW2TacO", L"GW2TacO", wide.data(), NULL, MDSF_NONINTERACTIVE | MDSF_USEGUARDMEMORY | MDSF_LOGFILE | MDSF_PREVENTHIJACKING | MDSF_CUSTOMEXCEPTIONFILTER );
+  SetGlobalCRTExceptionBehavior();
+  SetPerThreadCRTExceptionBehavior();  // This call needed in each thread of your app
+  bugSplat->setGuardByteBufferSize( 20 * 1024 * 1024 );
+
+  Logger.AddOutput( new CLoggerOutput_File( _T( "GW2TacO.log" ) ) );
+  ringbufferLog = new CLoggerOutput_RingBuffer();
+  Logger.AddOutput( ringbufferLog );
+  Logger.SetVerbosity( LOG_DEBUG );
+  FORCEDDEBUGLOG( "Logger set up." );
+
+  Logger.Log( LOG_INFO, false, false, "" );
+  Logger.Log( LOG_INFO, false, false, "----------------------------------------------" );
   CString cmdLine( GetCommandLineA() );
   LOG_NFO( "[GW2TacO] CommandLine: %s", cmdLine.GetPointer() );
 
@@ -817,20 +853,20 @@ INT WINAPI WinMain( _In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 
     FetchMarkerPackOnline( cmdLine );
   }
-  
+
   if ( cmdLine.Find( "-forcenewinstance" ) < 0 )
   {
     if ( AppIsAllreadyRunning() )
       return 0;
   }
 
-  auto mumblePos = cmdLine.Find("-mumble");
-  if (mumblePos >= 0)
+  auto mumblePos = cmdLine.Find( "-mumble" );
+  if ( mumblePos >= 0 )
   {
-      auto sub = cmdLine.Substring(mumblePos);
-      auto cmds = sub.ExplodeByWhiteSpace();
-      if ( cmds.NumItems() > 1 )
-        mumbleLink.mumblePath = cmds[ 1 ];
+    auto sub = cmdLine.Substring( mumblePos );
+    auto cmds = sub.ExplodeByWhiteSpace();
+    if ( cmds.NumItems() > 1 )
+      mumbleLink.mumblePath = cmds[ 1 ];
   }
 
   //SetProcessDpiAwareness( PROCESS_PER_MONITOR_DPI_AWARE );
@@ -861,7 +897,7 @@ INT WINAPI WinMain( _In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 
   //Logger.AddOutput(new CLoggerOutput_StdOut());
 
-  typedef HRESULT( WINAPI *SetProcessDpiAwareness )( _In_ PROCESS_DPI_AWARENESS value );
+  typedef HRESULT( WINAPI* SetProcessDpiAwareness )( _In_ PROCESS_DPI_AWARENESS value );
   typedef BOOL( *SetProcessDPIAwareFunc )( );
 
   LoadConfig();
@@ -908,11 +944,11 @@ INT WINAPI WinMain( _In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
   LOG_NFO( "[GW2TacO] build ID: %s", ( CString( "GW2 TacO " ) + TacOBuild ).GetPointer() );
 
   bool hasDComp = 0;
-  HMODULE dComp = LoadLibraryA("dcomp.dll");
-  if (dComp)
+  HMODULE dComp = LoadLibraryA( "dcomp.dll" );
+  if ( dComp )
   {
-      hasDComp = 1;
-      FreeLibrary(dComp);
+    hasDComp = 1;
+    FreeLibrary( dComp );
   }
 
   App = new COverlayApp();
@@ -925,8 +961,8 @@ INT WINAPI WinMain( _In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
   CCoreWindowParameters p = CCoreWindowParameters( GetModuleHandle( NULL ), false, width, height, _T( "Guild Wars 2 Tactical Overlay" ), LoadIcon( hInstance, MAKEINTRESOURCE( IDI_ICON2 ) ) );
   p.OverrideWindowStyle = WS_POPUP;
   p.OverrideWindowStyleEx = WS_EX_COMPOSITED | WS_EX_LAYERED | WS_EX_TRANSPARENT | WS_EX_TOOLWINDOW;// | WS_EX_TOPMOST;// | WS_EX_TOOLWINDOW;
-  if (dComp)
-      p.OverrideWindowStyleEx = WS_EX_TOPMOST | WS_EX_TRANSPARENT | WS_EX_TOOLWINDOW | WS_EX_LAYERED | WS_EX_NOREDIRECTIONBITMAP;
+  if ( dComp )
+    p.OverrideWindowStyleEx = WS_EX_TOPMOST | WS_EX_TRANSPARENT | WS_EX_TOOLWINDOW | WS_EX_LAYERED | WS_EX_NOREDIRECTIONBITMAP;
 
   FORCEDDEBUGLOG( "About to initialize the app." );
   if ( !App->Initialize( p ) )
@@ -958,10 +994,10 @@ INT WINAPI WinMain( _In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 
 
   extern WBATLASHANDLE DefaultIconHandle;
-  if (DefaultIconHandle == -1)
+  if ( DefaultIconHandle == -1 )
   {
-      auto skinItem = App->GetSkin()->GetElementID(CString("defaulticon"));
-      DefaultIconHandle = App->GetSkin()->GetElement(skinItem)->GetHandle();
+    auto skinItem = App->GetSkin()->GetElementID( CString( "defaulticon" ) );
+    DefaultIconHandle = App->GetSkin()->GetElement( skinItem )->GetHandle();
   }
 
   ImportPOIActivationData();
@@ -983,8 +1019,11 @@ INT WINAPI WinMain( _In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
   if ( !HasConfigValue( "HideOnLoadingScreens" ) )
     SetConfigValue( "HideOnLoadingScreens", 1 );
 
-  if (!HasConfigValue("KeybindsEnabled"))
-    SetConfigValue("KeybindsEnabled", 1);
+  if ( !HasConfigValue( "KeybindsEnabled" ) )
+    SetConfigValue( "KeybindsEnabled", 1 );
+
+  if ( !HasConfigValue( "EnableCrashMenu" ) )
+    SetConfigValue( "EnableCrashMenu", 0 );
 
   SetConfigValue( "LogTrails", 0 );
 
@@ -997,31 +1036,31 @@ INT WINAPI WinMain( _In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
       NULL,                   // default security attributes
       0,                      // use default stack size  
       []( LPVOID data )
-    {
-      CString s = FetchHTTP( L"www.gw2taco.com", L"/2000/01/buildid.html" );
-      TS32 idpos = s.Find( "[buildid:" );
-      if ( idpos >= 0 )
       {
-        CString sub = s.Substring( idpos );
-        TS32 release = 0;
-        TS32 build = 0;
-        if ( sub.Scan( "[buildid:%d.%dr]", &release, &build ) == 2 )
+        CString s = FetchHTTP( L"www.gw2taco.com", L"/2000/01/buildid.html" );
+        TS32 idpos = s.Find( "[buildid:" );
+        if ( idpos >= 0 )
         {
-          extern TS32 TacORelease;
-          extern TS32 TacOBuildCount;
-          if ( release > TacORelease || build > TacOBuildCount )
+          CString sub = s.Substring( idpos );
+          TS32 release = 0;
+          TS32 build = 0;
+          if ( sub.Scan( "[buildid:%d.%dr]", &release, &build ) == 2 )
           {
-            NewTacOVersion = release;
-            IsTacOUptoDate = false;
+            extern TS32 TacORelease;
+            extern TS32 TacOBuildCount;
+            if ( release > TacORelease || build > TacOBuildCount )
+            {
+              NewTacOVersion = release;
+              IsTacOUptoDate = false;
+            }
           }
         }
-      }
 
-      return (DWORD)0;
-    },
+        return (DWORD)0;
+      },
       0,          // argument to thread function 
-      0,                      // use default creation flags 
-      &UpdateCheckThreadID );
+        0,                      // use default creation flags 
+        &UpdateCheckThreadID );
 
   }
 
@@ -1065,7 +1104,7 @@ INT WINAPI WinMain( _In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 
   FORCEDDEBUGLOG( "starting main loop" );
 
-  GW2TacO *taco = (GW2TacO*)App->GetRoot()->FindChildByID( "tacoroot", "GW2TacO" );
+  GW2TacO* taco = (GW2TacO*)App->GetRoot()->FindChildByID( "tacoroot", "GW2TacO" );
 
   if ( !taco )
     return 0;
@@ -1110,14 +1149,14 @@ INT WINAPI WinMain( _In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
     if ( !hideOnLoadingScreens )
       shortTick = true;
 
-    if (!FoundGW2Window)
+    if ( !FoundGW2Window )
     {
       //if (mumbleLink.mumblePath != "MumbleLink")
       {
-        if (!mumbleLink.IsValid() && GetTime() > 60000)
+        if ( !mumbleLink.IsValid() && GetTime() > 60000 )
         {
-          LOG_ERR("[GW2TacO] Closing TacO because GW2 with mumble link '%s' was not found in under a minute", mumbleLink.mumblePath.GetPointer() );
-          App->SetDone(true);
+          LOG_ERR( "[GW2TacO] Closing TacO because GW2 with mumble link '%s' was not found in under a minute", mumbleLink.mumblePath.GetPointer() );
+          App->SetDone( true );
         }
       }
     }
@@ -1136,7 +1175,7 @@ INT WINAPI WinMain( _In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
         gw2WindowCount = 0;
         gw2Window = nullptr;
         gw2WindowFromPid = nullptr;
-        EnumWindows(gw2WindowFromPIDFunction, mumbleLink.lastGW2ProcessID );
+        EnumWindows( gw2WindowFromPIDFunction, mumbleLink.lastGW2ProcessID );
         gw2Window = gw2WindowFromPid;
 
 /*
@@ -1148,7 +1187,7 @@ INT WINAPI WinMain( _In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 */
       }
 
-      if ( !mumbleLink.IsValid() || !gw2Window)
+      if ( !mumbleLink.IsValid() || !gw2Window )
       {
         Sleep( 1000 );
         continue;
@@ -1272,37 +1311,37 @@ INT WINAPI WinMain( _In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
             NULL,                   // default security attributes
             0,                      // use default stack size  
             []( LPVOID data )
-          {
-            auto keyboardHook = SetWindowsHookEx( WH_KEYBOARD_LL, KeyboardHook, NULL, 0 );
-            auto mouseHook = SetWindowsHookEx( WH_MOUSE_LL, MouseHook, NULL, 0 );
-            MSG msg;
-
-            if ( !keyboardHook || !mouseHook )
             {
-              FORCEDDEBUGLOG( "failed to set mouse or keyboard hook" );
-            }
-            keyboardHookActive = true;
-            mouseHookActive = true;
+              auto keyboardHook = SetWindowsHookEx( WH_KEYBOARD_LL, KeyboardHook, NULL, 0 );
+              auto mouseHook = SetWindowsHookEx( WH_MOUSE_LL, MouseHook, NULL, 0 );
+              MSG msg;
 
-            while ( GetMessage( &msg, 0, 0, 0 ) > 0 )
-            {
-              if ( msg.message == WM_QUIT )
-                break;
-              TranslateMessage( &msg );
-            }
-            DispatchMessage( &msg );
+              if ( !keyboardHook || !mouseHook )
+              {
+                FORCEDDEBUGLOG( "failed to set mouse or keyboard hook" );
+              }
+              keyboardHookActive = true;
+              mouseHookActive = true;
 
-            UnhookWindowsHookEx( keyboardHook );
-            UnhookWindowsHookEx( mouseHook );
+              while ( GetMessage( &msg, 0, 0, 0 ) > 0 )
+              {
+                if ( msg.message == WM_QUIT )
+                  break;
+                TranslateMessage( &msg );
+              }
+              DispatchMessage( &msg );
 
-            keyboardHookActive = false;
-            mouseHookActive = false;
+              UnhookWindowsHookEx( keyboardHook );
+              UnhookWindowsHookEx( mouseHook );
 
-            return (DWORD)0;
-          },
+              keyboardHookActive = false;
+              mouseHookActive = false;
+
+              return (DWORD)0;
+            },
             0,          // argument to thread function 
-            0,                      // use default creation flags 
-            &hookThreadID );
+              0,                      // use default creation flags 
+              &hookThreadID );
         }
         HooksInitialized = true;
       }
@@ -1357,6 +1396,9 @@ INT WINAPI WinMain( _In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 
   FORCEDDEBUGLOG( "app deleted, returning from main()" );
   SAFEDELETE( localization );
+
+  SAFEDELETE( ringbufferLog );
+  SAFEDELETE( bugSplat );
 
   return true;
 }

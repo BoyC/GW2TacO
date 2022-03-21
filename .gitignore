@@ -121,3 +121,5 @@ TacOConfig.xml
 *.dmp
 poidata.xml
 notepad.txt
+*.taco
+*.bck

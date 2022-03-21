@@ -3,6 +3,7 @@
 #include "OverlayConfig.h"
 #include "Bedrock/UtilLib/jsonxx.h"
 #include "Language.h"
+#include "ThirdParty/BugSplat/inc/BugSplat.h"
 
 CDictionary<CString, TS32> dungeonToAchievementMap;
 
@@ -21,6 +22,8 @@ void DungeonProgress::OnDraw( CWBDrawAPI *API )
     beingFetched = true;
     fetchThread = std::thread([this, key]()
       {
+        SetPerThreadCRTExceptionBehavior();
+
         if (!hasFullDungeonInfo)
         {
           Object json;

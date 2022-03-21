@@ -35,6 +35,9 @@ CCoreDX11Device::CCoreDX11Device()
 
 CCoreDX11Device::~CCoreDX11Device()
 {
+  if ( swapChainRetraceObject )
+    CloseHandle(swapChainRetraceObject);
+
   if ( OcclusionQuery ) OcclusionQuery->Release();
 
   if ( BackBufferView ) BackBufferView->Release();
@@ -187,12 +190,14 @@ TBOOL CCoreDX11Device::CreateClassicSwapChain( const TU32 hWnd, const TBOOL Full
   DXGI_SWAP_CHAIN_DESC scd;
   memset( &scd, 0, sizeof( DXGI_SWAP_CHAIN_DESC ) );
 
-  scd.BufferCount = 1;
+  scd.BufferCount = 2;
   scd.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
   scd.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
   scd.OutputWindow = (HWND)hWnd;
   scd.SampleDesc.Count = 1;
   scd.Windowed = !FullScreen;
+  scd.Flags = DXGI_SWAP_CHAIN_FLAG_FRAME_LATENCY_WAITABLE_OBJECT;
+  scd.SwapEffect = (DXGI_SWAP_EFFECT)4;// DXGI_SWAP_EFFECT_FLIP_DISCARD;
   //scd.BufferDesc.RefreshRate.Numerator=RefreshRate;
   //scd.BufferDesc.RefreshRate.Denominator=1;
 
@@ -239,6 +244,13 @@ TBOOL CCoreDX11Device::CreateClassicSwapChain( const TU32 hWnd, const TBOOL Full
   queryDesc.MiscFlags = 0;
 
   Device->CreateQuery( &queryDesc, &OcclusionQuery );
+
+  IDXGISwapChain2* swapChain2;
+  if ( SUCCEEDED(SwapChain->QueryInterface(__uuidof(IDXGISwapChain2), (void**)&swapChain2)) )
+  {
+    swapChainRetraceObject = swapChain2->GetFrameLatencyWaitableObject();
+    swapChain2->Release();
+  }
 
   return true;
 }
@@ -1203,6 +1215,12 @@ TBOOL CCoreDX11Device::EndOcclusionQuery()
   }
 
   return 0;
+}
+
+void CCoreDX11Device::WaitRetrace()
+{
+  if ( swapChainRetraceObject )
+    WaitForSingleObjectEx(swapChainRetraceObject, 1000, true);
 }
 
 ID3D11Texture2D* CCoreDX11Device::GetBackBuffer()

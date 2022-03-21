@@ -9,6 +9,7 @@
 #include "Language.h"
 #include "GW2API.h"
 #include "OverlayApplication.h"
+#include "ThirdParty/BugSplat/inc/BugSplat.h"
 
 #include "Bedrock/UtilLib/jsonxx.h"
 using namespace jsonxx;
@@ -387,6 +388,7 @@ void GW2TacticalDisplay::FetchAchievements()
     beingFetched = true;
     fetchThread = std::thread( [ this, key ]()
     {
+      SetPerThreadCRTExceptionBehavior();
       CString dungeonFrequenterStatus = CString( "{\"achievements\":" ) + key->QueryAPI( "v2/account/achievements" ) + "}";
       Object json;
       json.parse( dungeonFrequenterStatus.GetPointer() );
