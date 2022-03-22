@@ -196,6 +196,4 @@ public:
   virtual void BeginOcclusionQuery() = 0;
   virtual TBOOL EndOcclusionQuery() = 0;
 
-  virtual void WaitRetrace() = 0;
-
 };

@@ -462,7 +462,7 @@ void CWBApplication::Display( CWBDrawAPI *API )
 
   DrawAPI->SetUIRenderState();
 
-  Device->WaitRetrace();
+  //Device->WaitRetrace();
 
   Device->Clear( true, true, ClearColor );
   Device->BeginScene();
