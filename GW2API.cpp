@@ -111,16 +111,25 @@ namespace GW2
         CString characters = QueryAPI( "/v2/characters" );
         characters = CString::Format( "{\"characters\": %s }", characters.GetPointer() );
         json.parse( characters.GetPointer() );
-        auto& values = json.get<Array>( "characters" ).values();
-        for ( auto v : values )
+        if ( !json.has<Array>( "characters" ) )
         {
-          if ( v->is<String>() )
-            charNames += CString( v->get<String>().data() );
+          LOG_ERR( "[GW2TacO] Unexpected result from API characters endpoint: %s", characters.GetPointer() );
+          LOG_ERR( "[GW2TacO] CHARACTERS WON'T BE RECOGNIZED FOR API KEY NAMED %s", keyName.GetPointer() );
+        }
+        else
+        {
+          auto& charArray = json.get<Array>( "characters" );
+          auto& values = charArray.values();
+          for ( auto v : values )
+          {
+            if ( v->is<String>() )
+              charNames += CString( v->get<String>().data() );
+          }
         }
       }
       else
       {
-        LOG_ERR( "[TacO] API error: API key '%s - %s (%s)' doesn't have the 'characters' permission - account identification through Mumble Link will not be possible.", accountName.GetPointer(), keyName.GetPointer(), apiKey.GetPointer() );
+        LOG_ERR( "[GW2TacO] API error: API key '%s - %s (%s)' doesn't have the 'characters' permission - account identification through Mumble Link will not be possible.", accountName.GetPointer(), keyName.GetPointer(), apiKey.GetPointer() );
       }
 
       initialized = true;

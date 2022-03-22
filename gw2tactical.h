@@ -111,7 +111,7 @@ struct POI
   CVector3 position;
   TS32 mapID;
   TU8 wvwObjectiveID;
-  CString Type;
+  TS16 Type = -1; //type string id
 
   time_t lastUpdateTime = 0;
   TBOOL External = false;
@@ -243,7 +243,7 @@ public:
   CString GetFullTypeName();
 
   TBOOL IsDisplayed = true;
-  TBOOL IsVisible();
+  TBOOL IsVisible() const;
 
   virtual ~GW2TacticalCategory()
   {

@@ -18,7 +18,7 @@
 // memory profiler config
 
 #ifdef _DEBUG
-#define MEMORY_TRACKING
+//#define MEMORY_TRACKING
 #endif
 
 #ifdef ENABLE_STACKTRACKER_CLASS

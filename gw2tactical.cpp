@@ -452,8 +452,10 @@ void GW2TacticalDisplay::FetchAchievements()
 
 void GW2TacticalDisplay::InsertPOI( POI& poi )
 {
+/*
   if ( poi.mapID != mumbleLink.mapID )
     return;
+*/
 
   if ( poi.routeMember )
   {
@@ -909,9 +911,13 @@ void GW2TacticalDisplay::OnDraw( CWBDrawAPI *API )
 
   asp = drawrect.Width() / (TF32)drawrect.Height();
 
+  int mumbleMapID = mumbleLink.mapID;
+
   for ( int x = 0; x < POIs.NumItems(); x++ )
   {
-    auto &poi = POIs.GetByIndex( x );
+    auto& poi = POIs.GetByIndex( x );
+    if ( poi.mapID != mumbleMapID )
+      continue;
     InsertPOI( poi );
   }
 
@@ -920,7 +926,9 @@ void GW2TacticalDisplay::OnDraw( CWBDrawAPI *API )
   if ( wvwCanBeRendered )
     for ( int x = 0; x < wvwPOIs.NumItems(); x++ )
     {
-      auto &poi = wvwPOIs.GetByIndex( x );
+      auto& poi = wvwPOIs.GetByIndex( x );
+      if ( poi.mapID != mumbleMapID )
+        continue;
       InsertPOI( poi );
     }
 
@@ -1078,8 +1086,8 @@ void ExportPOI( CXMLNode *n, POI &p )
   t->SetAttributeFromFloat( "zpos", p.position.z );
   //if ( p.Name.Length() )
   //  t->SetAttribute( "text", p.Name.GetPointer() );
-  if ( p.Type.Length() )
-    t->SetAttribute( "type", p.Type.GetPointer() );
+  if ( p.Type != -1 )
+    t->SetAttribute( "type", GetStringFromMap( p.Type ).GetPointer() );
   t->SetAttribute( "GUID", CString::EncodeToBase64( ( TU8* )&( p.guid ), sizeof( GUID ) ).GetPointer() );
   p.typeData.Write( t );
 }
@@ -1253,7 +1261,7 @@ void ImportPOI( CWBApplication *App, CXMLNode &t, POI &p, const CString& zipFile
   if ( t.HasAttribute( "zpos" ) ) t.GetAttributeAsFloat( "zpos", &p.position.z );
   if ( t.HasAttribute( "icon" ) ) t.GetAttributeAsInteger( "icon", &p.icon );
   //if ( t.HasAttribute( "text" ) ) p.Name = t.GetAttributeAsString( "text" );
-  if ( t.HasAttribute( "type" ) ) p.Type = t.GetAttributeAsString( "type" );
+  if ( t.HasAttribute( "type" ) ) p.Type = AddStringToMap( t.GetAttributeAsString( "type" ) );
 
   if ( !t.HasAttribute( "GUID" ) )
     CoCreateGuid( &p.guid );
@@ -1262,7 +1270,7 @@ void ImportPOI( CWBApplication *App, CXMLNode &t, POI &p, const CString& zipFile
 
   p.zipFile = AddStringToMap( zipFile );
 
-  auto *td = GetCategory( p.Type );
+  auto *td = GetCategory( GetStringFromMap( p.Type ) );
   if ( td )
     p.SetCategory( App, td );
 
@@ -2022,17 +2030,18 @@ CString GW2TacticalCategory::GetFullTypeName()
   return s;
 }
 
-TBOOL GW2TacticalCategory::IsVisible()
+TBOOL GW2TacticalCategory::IsVisible() const
 {
-  if ( !Parent ) return true;
-  return Parent->IsVisible() && IsDisplayed;
+  if ( !Parent ) 
+    return IsDisplayed;
+  return IsDisplayed && Parent->IsVisible();
 }
 
 void POI::SetCategory( CWBApplication *App, GW2TacticalCategory *t )
 {
   category = t;
   typeData = t->data;
-  Type = t->GetFullTypeName();
+  Type = AddStringToMap( t->GetFullTypeName() );
   icon = 0;
   iconFile = typeData.iconFile;
   //icon = GetMapIcon( App, typeData.iconFile, zipFile );

@@ -196,8 +196,10 @@ TBOOL CCoreDX11Device::CreateClassicSwapChain( const TU32 hWnd, const TBOOL Full
   scd.OutputWindow = (HWND)hWnd;
   scd.SampleDesc.Count = 1;
   scd.Windowed = !FullScreen;
+/*
   scd.Flags = DXGI_SWAP_CHAIN_FLAG_FRAME_LATENCY_WAITABLE_OBJECT;
-  scd.SwapEffect = (DXGI_SWAP_EFFECT)4;// DXGI_SWAP_EFFECT_FLIP_DISCARD;
+  scd.SwapEffect = DXGI_SWAP_EFFECT_FLIP_DISCARD;
+*/
   //scd.BufferDesc.RefreshRate.Numerator=RefreshRate;
   //scd.BufferDesc.RefreshRate.Denominator=1;
 
@@ -244,13 +246,6 @@ TBOOL CCoreDX11Device::CreateClassicSwapChain( const TU32 hWnd, const TBOOL Full
   queryDesc.MiscFlags = 0;
 
   Device->CreateQuery( &queryDesc, &OcclusionQuery );
-
-  IDXGISwapChain2* swapChain2;
-  if ( SUCCEEDED(SwapChain->QueryInterface(__uuidof(IDXGISwapChain2), (void**)&swapChain2)) )
-  {
-    swapChainRetraceObject = swapChain2->GetFrameLatencyWaitableObject();
-    swapChain2->Release();
-  }
 
   return true;
 }
@@ -317,7 +312,9 @@ TBOOL CCoreDX11Device::CreateDirectCompositionSwapchain( const TU32 hWnd, const 
 #endif
 
   unsigned int backBufferCount = 2;
-  DXGI_SWAP_CHAIN_DESC1 swapChainDesc{ (UINT)XRes, (UINT)YRes, DXGI_FORMAT_R8G8B8A8_UNORM, false, {1, 0}, DXGI_USAGE_RENDER_TARGET_OUTPUT, backBufferCount, DXGI_SCALING_STRETCH, DXGI_SWAP_EFFECT_FLIP_SEQUENTIAL, DXGI_ALPHA_MODE_PREMULTIPLIED, 0 };
+  DXGI_SWAP_CHAIN_DESC1 swapChainDesc{ (UINT)XRes, (UINT)YRes, DXGI_FORMAT_R8G8B8A8_UNORM, false, {1, 0}, DXGI_USAGE_RENDER_TARGET_OUTPUT, backBufferCount, DXGI_SCALING_STRETCH, DXGI_SWAP_EFFECT_FLIP_DISCARD, DXGI_ALPHA_MODE_PREMULTIPLIED, 0 };
+  swapChainDesc.Flags = DXGI_SWAP_CHAIN_FLAG_FRAME_LATENCY_WAITABLE_OBJECT;
+
   res = dxgiFactory->CreateSwapChainForComposition( Device, &swapChainDesc, nullptr, &SwapChain );
   //res = dxgiFactory->CreateSwapChainForHwnd( Device, (HWND)hWnd, &swapChainDesc, nullptr, nullptr, &SwapChain );
 
@@ -423,6 +420,13 @@ TBOOL CCoreDX11Device::CreateDirectCompositionSwapchain( const TU32 hWnd, const 
   queryDesc.MiscFlags = 0;
 
   Device->CreateQuery( &queryDesc, &OcclusionQuery );
+
+  IDXGISwapChain2* swapChain2;
+  if ( SUCCEEDED( SwapChain->QueryInterface( __uuidof( IDXGISwapChain2 ), (void**)&swapChain2 ) ) )
+  {
+    swapChainRetraceObject = swapChain2->GetFrameLatencyWaitableObject();
+    swapChain2->Release();
+  }
 
   return true;
 }

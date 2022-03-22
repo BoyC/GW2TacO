@@ -633,25 +633,28 @@ TBOOL GW2TacO::MessageProc( CWBMessage &Message )
     if ( Message.Data >= Menu_MarkerFilter_Base && Message.Data < Menu_MarkerFilter_Base + CategoryList.NumItems() )
     {
       CWBContextMenu* ctxMenu = (CWBContextMenu*)App->FindItemByGuid( Message.Position[ 1 ] );
-      auto itm = ctxMenu->GetItem( Message.Data );
-
-      auto& dta = CategoryList[ Message.Data - Menu_MarkerFilter_Base ];
-
-      if ( !dta->IsOnlySeparator )
+      if ( ctxMenu ) // possible fix for a really weird crash reported through bugsplat
       {
-        CString txt = "[" + CString( dta->IsDisplayed ? "x" : " " ) + "] ";
-        if ( dta->displayName.Length() )
-          txt += dta->displayName;
-        else
-          txt += dta->name;
+        auto itm = ctxMenu->GetItem( Message.Data );
 
-        itm->SetText( txt );
-        itm->SetHighlight( dta->IsDisplayed );
+        auto& dta = CategoryList[ Message.Data - Menu_MarkerFilter_Base ];
+
+        if ( !dta->IsOnlySeparator )
+        {
+          CString txt = "[" + CString( dta->IsDisplayed ? "x" : " " ) + "] ";
+          if ( dta->displayName.Length() )
+            txt += dta->displayName;
+          else
+            txt += dta->name;
+
+          itm->SetText( txt );
+          itm->SetHighlight( dta->IsDisplayed );
+        }
+
+        //TBOOL displayed = !CategoryList[ Message.Data - Menu_MarkerFilter_Base ]->IsDisplayed;
+        //CategoryList[ Message.Data - Menu_MarkerFilter_Base ]->IsDisplayed = displayed;
+        //SetConfigValue( ( CString( "CategoryVisible_" ) + CategoryList[ Message.Data - Menu_MarkerFilter_Base ]->GetFullTypeName() ).GetPointer(), displayed );
       }
-
-      //TBOOL displayed = !CategoryList[ Message.Data - Menu_MarkerFilter_Base ]->IsDisplayed;
-      //CategoryList[ Message.Data - Menu_MarkerFilter_Base ]->IsDisplayed = displayed;
-      //SetConfigValue( ( CString( "CategoryVisible_" ) + CategoryList[ Message.Data - Menu_MarkerFilter_Base ]->GetFullTypeName() ).GetPointer(), displayed );
       break;
     }
     if ( Message.Data >= Menu_ToggleMapTimerMap )

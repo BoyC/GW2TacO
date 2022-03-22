@@ -42,9 +42,21 @@ TBOOL InitGUI( CWBApplication* App )
   CreateUniFont( App, "UniFont" );
   CreateProFont( App, "ProFont" );
 
-  App->LoadSkinFromFile( _T( "UI.wbs" ), localization->GetUsedGlyphs() );
-  App->LoadXMLLayoutFromFile( _T( "UI.xml" ) );
-  App->LoadCSSFromFile( UIFileNames[ GetConfigValue( "InterfaceSize" ) ] );
+  if ( !App->LoadSkinFromFile( _T( "UI.wbs" ), localization->GetUsedGlyphs() ) )
+  {
+    MessageBox( NULL, _T( "TacO can't find the UI.wbs ui skin file!\nPlease make sure you extracted all the files from the archive to a separate folder!" ), _T( "Missing File!" ), MB_ICONERROR );
+    return false;
+  }
+  if ( !App->LoadXMLLayoutFromFile( _T( "UI.xml" ) ) )
+  {
+    MessageBox( NULL, _T( "TacO can't find the UI.xml ui layout file!\nPlease make sure you extracted all the files from the archive to a separate folder!" ), _T( "Missing File!" ), MB_ICONERROR );
+    return false;
+  }
+  if ( !App->LoadCSSFromFile( UIFileNames[ GetConfigValue( "InterfaceSize" ) ] ) )
+  {
+    MessageBox( NULL, _T( "TacO can't find a required UI css style file!\nPlease make sure you extracted all the files from the archive to a separate folder!" ), _T( "Missing File!" ), MB_ICONERROR );
+    return false;
+  }
   App->RegisterUIFactoryCallback( "GW2TacticalDisplay", GW2TacticalDisplay::Factory );
   App->RegisterUIFactoryCallback( "GW2TrailDisplay", GW2TrailDisplay::Factory );
   App->RegisterUIFactoryCallback( "GW2MapTimer", GW2MapTimer::Factory );
@@ -991,7 +1003,11 @@ INT WINAPI WinMain( _In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 
   mumbleLink.Update();
 
-  InitGUI( App );
+  if ( !InitGUI( App ) )
+  {
+    LOG_ERR( "[GW2TacO] Missing file during init, exiting!" );
+    return -1;
+  }
   FORCEDDEBUGLOG( "gui initialized" );
 
 

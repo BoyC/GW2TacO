@@ -78,13 +78,20 @@ void GW2TrailDisplay::DrawProxy( CWBDrawAPI *API, bool miniMaprender )
       if ( !trail.typeData.bits.inGameVisible && showIngameTrails != 2 )
         continue;
 
-      auto& str = GetStringFromMap( trail.typeData.texture );
       CCoreTexture* texture = nullptr;
+      if ( !trail.texture )
+      {
+        auto& str = GetStringFromMap( trail.typeData.texture );
 
-      if ( str.Length() )
-        texture = GetTexture( str, trail.zipFile, trail.category ? GetStringFromMap(trail.category->zipFile) : "");
+        if ( str.Length() )
+          texture = GetTexture( str, trail.zipFile, trail.category ? GetStringFromMap( trail.category->zipFile ) : "" );
+        else
+          texture = trailTexture;
+
+        trail.texture = texture;
+      }
       else
-        texture = trailTexture;
+        texture = trail.texture;
 
       float width = GameToWorldCoords( 20 );
 
@@ -168,13 +175,19 @@ void GW2TrailDisplay::DrawProxy( CWBDrawAPI *API, bool miniMaprender )
         if ( trail.typeData.bits.scaleWithZoom )
           trailWidth /= mumbleLink.miniMap.mapScale;
 
-        auto& str = GetStringFromMap( trail.typeData.texture );
         CCoreTexture* texture = nullptr;
+        if ( !trail.texture )
+        {
+          auto& str = GetStringFromMap( trail.typeData.texture );
 
-        if ( str.Length() )
-          texture = GetTexture( str, trail.zipFile, trail.category ? GetStringFromMap(trail.category->zipFile) : "");
+          if ( str.Length() )
+            texture = GetTexture( str, trail.zipFile, trail.category ? GetStringFromMap( trail.category->zipFile ) : "" );
+          else
+            texture = trailTexture;
+          trail.texture = texture;
+        }
         else
-          texture = trailTexture;
+          texture = trail.texture;
 
         float alpha = 1.0f - max( 0.0f, min( 1.0f, ( mumbleLink.miniMap.mapScale - trail.typeData.miniMapFadeOutLevel ) / 2.0f ) );
 
@@ -205,13 +218,19 @@ void GW2TrailDisplay::DrawProxy( CWBDrawAPI *API, bool miniMaprender )
         if ( trail.typeData.bits.scaleWithZoom )
           trailWidth /= mumbleLink.miniMap.mapScale;
 
-        auto& str = GetStringFromMap( trail.typeData.texture );
         CCoreTexture* texture = nullptr;
+        if ( !trail.texture )
+        {
+          auto& str = GetStringFromMap( trail.typeData.texture );
 
-        if ( str.Length() )
-          texture = GetTexture( str, trail.zipFile, trail.category ? GetStringFromMap(trail.category->zipFile) : "");
+          if ( str.Length() )
+            texture = GetTexture( str, trail.zipFile, trail.category ? GetStringFromMap( trail.category->zipFile ) : "" );
+          else
+            texture = trailTexture;
+          trail.texture = texture;
+        }
         else
-          texture = trailTexture;
+          texture = trail.texture;
 
         float alpha = 1.0f - max( 0.0f, min( 1.0f, ( mumbleLink.bigMap.mapScale - trail.typeData.miniMapFadeOutLevel ) / 2.0f ) );
         trail.SetupAndDraw( constBuffer, texture, camera, perspective, one, false, 0, data, ( 1.0f - mapFade ) * alpha * minimapOpacity, 1.0f, GameToWorldCoords( 20 ) * 0.1f, trailWidth );

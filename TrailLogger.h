@@ -31,6 +31,7 @@ public:
   CCoreVertexBuffer* trailMesh = nullptr;
   CCoreDevice* dev = nullptr;
   CCoreIndexBuffer* idxBuf = nullptr;
+  CCoreTexture* texture = nullptr;
 
   TS32 map = 0;
 
