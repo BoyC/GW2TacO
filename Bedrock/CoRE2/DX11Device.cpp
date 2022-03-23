@@ -35,6 +35,9 @@ CCoreDX11Device::CCoreDX11Device()
 
 CCoreDX11Device::~CCoreDX11Device()
 {
+  if ( swapChainRetraceObject )
+    CloseHandle( swapChainRetraceObject );
+
   if ( OcclusionQuery ) OcclusionQuery->Release();
 
   if ( BackBufferView ) BackBufferView->Release();
@@ -306,6 +309,7 @@ TBOOL CCoreDX11Device::CreateDirectCompositionSwapchain( const TU32 hWnd, const 
 
   unsigned int backBufferCount = 2;
   DXGI_SWAP_CHAIN_DESC1 swapChainDesc{ (UINT)XRes, (UINT)YRes, DXGI_FORMAT_R8G8B8A8_UNORM, false, {1, 0}, DXGI_USAGE_RENDER_TARGET_OUTPUT, backBufferCount, DXGI_SCALING_STRETCH, DXGI_SWAP_EFFECT_FLIP_DISCARD, DXGI_ALPHA_MODE_PREMULTIPLIED, 0 };
+  swapChainDesc.Flags = DXGI_SWAP_CHAIN_FLAG_FRAME_LATENCY_WAITABLE_OBJECT;
   res = dxgiFactory->CreateSwapChainForComposition( Device, &swapChainDesc, nullptr, &SwapChain );
   //res = dxgiFactory->CreateSwapChainForHwnd( Device, (HWND)hWnd, &swapChainDesc, nullptr, nullptr, &SwapChain );
 
@@ -376,6 +380,13 @@ TBOOL CCoreDX11Device::CreateDirectCompositionSwapchain( const TU32 hWnd, const 
     return false;
   }
 
+
+  IDXGISwapChain2* swapChain2;
+  if ( SUCCEEDED( SwapChain->QueryInterface( __uuidof( IDXGISwapChain2 ), (void**)&swapChain2 ) ) )
+  {
+    swapChainRetraceObject = swapChain2->GetFrameLatencyWaitableObject();
+    swapChain2->Release();
+  }
 
   //res = dxgiFactory->MakeWindowAssociation( (HWND)hWnd, DXGI_MWA_NO_ALT_ENTER );
   //if ( res != S_OK )
@@ -1203,6 +1214,13 @@ TBOOL CCoreDX11Device::EndOcclusionQuery()
   }
 
   return 0;
+}
+
+
+void CCoreDX11Device::WaitRetrace()
+{
+  if ( swapChainRetraceObject )
+    WaitForSingleObjectEx( swapChainRetraceObject, 1000, true );
 }
 
 ID3D11Texture2D* CCoreDX11Device::GetBackBuffer()

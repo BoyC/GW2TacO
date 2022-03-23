@@ -689,9 +689,11 @@ void GW2TacticalDisplay::DrawPOI( CWBDrawAPI *API, const tm& ptm, const time_t& 
     if ( wvwObjectiveName.Length() )
     {
       p = f->GetTextPosition( wvwObjectiveName.GetPointer(), rect, WBTA_CENTERX, WBTA_TOP, WBTT_UPPERCASE, false ) - CPoint( 0, f->GetLineHeight() );
+/*
       for ( TS32 x = 0; x < 3; x++ )
         for ( TS32 y = 0; y < 3; y++ )
           f->Write( API, wvwObjectiveName, p + CPoint( x - 1, y - 1 ), CColor( 0, 0, 0, TU8( 255 * alphaMultiplier * globalOpacity * mapFade / 2.0f ) ), WBTT_UPPERCASE, false );
+*/
       f->Write( API, wvwObjectiveName, p, CColor( 255, 255, 0, TU8( 255 * alphaMultiplier * mapFade * globalOpacity) ), WBTT_UPPERCASE, false );
     }
   }
@@ -736,9 +738,11 @@ void GW2TacticalDisplay::DrawPOI( CWBDrawAPI *API, const tm& ptm, const time_t& 
       }
 
       p = f->GetTextPosition( txt.GetPointer(), rect, WBTA_CENTERX, WBTA_BOTTOM, WBTT_NONE, false ) + CPoint( 0, f->GetLineHeight() + offset );
+/*
       for ( TS32 x = 0; x < 3; x++ )
         for ( TS32 y = 0; y < 3; y++ )
           f->Write( API, txt, p + CPoint( x - 1, y - 1 ), CColor( 0, 0, 0, TU8( 255 * alphaMultiplier * globalOpacity * mapFade / 2.0f ) ), WBTT_NONE, false );
+*/
       f->Write( API, txt, p, CColor( 255, 255, 0, TU8( 255 * alphaMultiplier * mapFade * globalOpacity) ), WBTT_NONE, false );
     }
     else
@@ -771,9 +775,11 @@ void GW2TacticalDisplay::DrawPOI( CWBDrawAPI *API, const tm& ptm, const time_t& 
 
       p = f->GetTextPosition( txt.GetPointer(), rect, WBTA_CENTERX, WBTA_BOTTOM, WBTT_NONE, false ) + CPoint( 0, f->GetLineHeight() );
 
+/*
       for ( TS32 x = 0; x < 3; x++ )
         for ( TS32 y = 0; y < 3; y++ )
           f->Write( API, txt, p + CPoint( x - 1, y - 1 ), CColor( 0, 0, 0, TU8( 255 * Alpha * alphaMultiplier * globalOpacity * mapFade / 2.0f ) ), WBTT_NONE, false );
+*/
       f->Write( API, txt, p, CColor( 255, 255, 255, TU8( 255 * Alpha * alphaMultiplier * mapFade * globalOpacity) ), WBTT_NONE, false );
     }
   }

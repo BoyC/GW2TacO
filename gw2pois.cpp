@@ -39,6 +39,8 @@ bool disableHooks = false;
 
 TBOOL InitGUI( CWBApplication* App )
 {
+  CreateUniFontOutlined( App, "UniFontOutlined" ); // default font
+  CreateProFontOutlined( App, "ProFontOutlined" );
   CreateUniFont( App, "UniFont" );
   CreateProFont( App, "ProFont" );
 
@@ -1140,6 +1142,8 @@ INT WINAPI WinMain( _In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 
   TS32 hideOnLoadingScreens = GetConfigValue( "HideOnLoadingScreens" );
 
+  bool hadRetrace = false;
+
   while ( App->HandleMessages() )
   {
 #ifdef _DEBUG
@@ -1316,8 +1320,19 @@ INT WINAPI WinMain( _In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
         taco->TickScriptEngine();
         AutoSaveConfig();
         App->Display();
+        App->GetDevice()->WaitRetrace();
         frameTriggered = false;
         lastRenderTime = currTime;
+        hadRetrace = false;
+      }
+      else
+      {
+/*
+        if ( !hadRetrace )
+          App->GetDevice()->WaitRetrace(); // yield frame
+        hadRetrace = true;
+*/
+        //Sleep( 1 );
       }
       //DwmFlush();
 

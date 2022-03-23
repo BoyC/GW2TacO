@@ -23,6 +23,7 @@ class CCoreDX11Device : public CCoreDevice
 	ID3D11RasterizerState *CurrentRasterizerState;
 
   ID3D11Query *OcclusionQuery = nullptr;
+  HANDLE swapChainRetraceObject = 0;
 
 	virtual void ResetPrivateResources();
 	virtual TBOOL InitAPI(const TU32 hWnd, const TBOOL FullScreen, const TS32 XRes, const TS32 YRes, const TS32 AALevel = 0, const TS32 RefreshRate = 60);
@@ -139,7 +140,8 @@ public:
 
   virtual void BeginOcclusionQuery();
   virtual TBOOL EndOcclusionQuery();
-  
+  virtual void WaitRetrace();
+
   //////////////////////////////////////////////////////////////////////////
 	// dx11 specific functions
 

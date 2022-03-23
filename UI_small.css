@@ -147,7 +147,7 @@ window
 	height:150px;
 	left:5px;
 	top:5px;
-	font:UniFont;
+	font:UniFontOutlined;
 	text-transform:uppercase;
 }
 
@@ -182,7 +182,7 @@ OverlayWindow
 	background:skin(window_normal);
 	background-color:none;
 	text-transform:uppercase;
-	font-family:UniFont;
+	font-family:UniFontOutlined;
 }
 
 OverlayWindow:hover

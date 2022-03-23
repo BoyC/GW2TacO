@@ -1458,7 +1458,8 @@ void GW2TacO::OnDraw( CWBDrawAPI *API )
   }
   scaleCountDownHack--;
 
-  teamSpeakConnection.Tick();
+  if ( IsWindowOpen( "TS3Control" ) )
+    teamSpeakConnection.Tick();
   CheckItemPickup();
 
   //auto style = GetWindowLong((HWND)App->GetHandle(), GWL_EXSTYLE);
@@ -1551,7 +1552,7 @@ void GW2TacO::OnDraw( CWBDrawAPI *API )
 
   if ( GetConfigValue( "InfoLineVisible" ) )
   {
-    auto font = App->GetFont( "ProFont" );
+    auto font = App->GetFont( "ProFontOutlined" );
     if ( !font ) return;
 
     CString infoline = lastInfoLine;
@@ -1620,10 +1621,6 @@ void GW2TacO::OnDraw( CWBDrawAPI *API )
 
     CPoint startpos = font->GetTextPosition( infoline, GetClientRect(), WBTA_CENTERX, WBTA_TOP, WBTT_UPPERCASE );
 
-    for ( int x = 0; x < 3; x++ )
-      for ( int y = 0; y < 3; y++ )
-        font->Write( API, infoline, startpos + CPoint( x - 1, y - 1 ), 0xff000000, WBTT_UPPERCASE, true );
-
     font->Write( API, infoline, startpos, 0xffffffff, WBTT_UPPERCASE, true );
     ypos += font->GetLineHeight();
   }
@@ -1632,7 +1629,7 @@ void GW2TacO::OnDraw( CWBDrawAPI *API )
   extern int NewTacOVersion;
   if ( !IsTacOUptoDate )
   {
-    auto font = App->GetFont( "UniFont" );
+    auto font = App->GetFont( "UniFontOutlined" );
     if ( !font ) return;
 
     CString infoline = DICT( "new_build_txt1" ) + CString::Format( " %d ", NewTacOVersion - RELEASECOUNT ) + DICT( "new_build_txt2" );
@@ -1641,9 +1638,11 @@ void GW2TacO::OnDraw( CWBDrawAPI *API )
     if ( GetConfigValue( "InfoLineVisible" ) )
       startpos.y += font->GetLineHeight();
 
+/*
     for ( int x = 0; x < 3; x++ )
       for ( int y = 0; y < 3; y++ )
         font->Write( API, infoline, startpos + CPoint( x - 1, y - 1 ), 0xff000000, WBTT_UPPERCASE, true );
+*/
 
     font->Write( API, infoline, startpos, 0xffffffff, WBTT_UPPERCASE, true );
     ypos += font->GetLineHeight();
@@ -1656,9 +1655,11 @@ void GW2TacO::OnDraw( CWBDrawAPI *API )
 
     CPoint spos2 = font->GetTextPosition( build, GetClientRect(), WBTA_CENTERX, WBTA_TOP, WBTT_UPPERCASE );
 
+/*
     for ( int x = 0; x < 3; x++ )
       for ( int y = 0; y < 3; y++ )
         font->Write( API, build, CPoint( spos2.x + x - 1, startpos.y + y - 1 + font->GetLineHeight() ), 0xff000000, WBTT_UPPERCASE, true );
+*/
 
     font->Write( API, build, CPoint( spos2.x, startpos.y + font->GetLineHeight() ), 0xffffffff, WBTT_UPPERCASE, true );
     ypos += font->GetLineHeight();
@@ -1667,15 +1668,17 @@ void GW2TacO::OnDraw( CWBDrawAPI *API )
   extern int gw2WindowCount;
   if ( gw2WindowCount > 1 )
   {
-    auto font = App->GetFont( "UniFont" );
+    auto font = App->GetFont( "UniFontOutlined" );
     if ( !font ) return;
 
     CString infoline = DICT( "multiclientwarning" );
     CPoint spos2 = font->GetTextPosition( infoline, GetClientRect(), WBTA_CENTERX, WBTA_TOP, WBTT_UPPERCASE );
 
+/*
     for ( int x = 0; x < 3; x++ )
       for ( int y = 0; y < 3; y++ )
         font->Write( API, infoline, CPoint( spos2.x + x - 1, ypos + y - 1 ), 0xff000000, WBTT_UPPERCASE, true );
+*/
 
     font->Write( API, infoline, CPoint( spos2.x, ypos ), 0xffff4040, WBTT_UPPERCASE, true );
     ypos += font->GetLineHeight();
