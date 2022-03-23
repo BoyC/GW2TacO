@@ -2,6 +2,7 @@
 #include "Bedrock/WhiteBoard/whiteboard.h"
 #include "MumbleLink.h"
 #include "gw2tactical.h"
+//#include <unordered_map>
 
 void GlobalDoTrailLogging( TS32 mapID, CVector3 charPos );
 
@@ -108,3 +109,6 @@ public:
 
   void DrawProxy( CWBDrawAPI *API, bool miniMaprender );
 };
+
+extern std::unordered_map<int, CDictionaryEnumerable<GUID, GW2Trail*>> trailSet;
+CDictionaryEnumerable<GUID, GW2Trail*>& GetMapTrails();

@@ -106,7 +106,7 @@ public:
 
   CVector4 averagedCharPosition;
 
-  void Update();
+  bool Update();
   TBOOL IsValid();
 
   CRingBuffer<TS32> *FrameTimes;

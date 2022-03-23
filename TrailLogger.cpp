@@ -8,7 +8,12 @@ extern float globalOpacity;
 extern float minimapOpacity;
 
 
-CDictionaryEnumerable<GUID, GW2Trail*> trails;
+std::unordered_map<int, CDictionaryEnumerable<GUID, GW2Trail*>> trailSet;
+
+CDictionaryEnumerable<GUID, GW2Trail*>& GetMapTrails()
+{
+  return trailSet[ mumbleLink.mapID ];
+}
 
 extern CWBApplication *App;
 CStreamWriterFile* TrailLog = nullptr;
@@ -61,6 +66,8 @@ void GW2TrailDisplay::DrawProxy( CWBDrawAPI *API, bool miniMaprender )
 
   float one = 1;
   float data[ 8 ];
+
+  auto& trails = GetMapTrails();
 
   if (!miniMaprender && showIngameTrails>0)
   for ( int x = 0; x < 2; x++ )

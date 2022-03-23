@@ -1,6 +1,7 @@
 #pragma once
 #include "Bedrock/WhiteBoard/whiteboard.h"
 #include <objbase.h>
+#include <unordered_map>
 
 enum class POIBehavior : TS32
 {
@@ -180,10 +181,13 @@ struct POIRoute
 TU32 DictionaryHash( const GUID &i );
 TU32 DictionaryHash( const POIActivationDataKey &i );
 
-extern CDictionaryEnumerable<GUID, POI> POIs;
+extern std::unordered_map<int, CDictionaryEnumerable<GUID, POI>> POISet;
 extern CDictionaryEnumerable<POIActivationDataKey, POIActivationData> ActivationData;
 extern CArray<POIRoute> Routes;
 extern CDictionaryEnumerable<CString, POI> wvwPOIs;
+extern GW2TacticalCategory CategoryRoot;
+
+CDictionaryEnumerable<GUID, POI>& GetMapPOIs();
 
 class GW2TacticalDisplay : public CWBItem
 {
@@ -243,7 +247,12 @@ public:
   CString GetFullTypeName();
 
   TBOOL IsDisplayed = true;
+  TBOOL cachedVisibility = true;
   TBOOL IsVisible() const;
+  void CacheVisibility();
+
+  static bool visibilityCached;
+  void CalculateVisibilityCache();
 
   virtual ~GW2TacticalCategory()
   {

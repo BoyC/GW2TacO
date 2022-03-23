@@ -309,7 +309,7 @@ TBOOL CCoreDX11Device::CreateDirectCompositionSwapchain( const TU32 hWnd, const 
 
   unsigned int backBufferCount = 2;
   DXGI_SWAP_CHAIN_DESC1 swapChainDesc{ (UINT)XRes, (UINT)YRes, DXGI_FORMAT_R8G8B8A8_UNORM, false, {1, 0}, DXGI_USAGE_RENDER_TARGET_OUTPUT, backBufferCount, DXGI_SCALING_STRETCH, DXGI_SWAP_EFFECT_FLIP_DISCARD, DXGI_ALPHA_MODE_PREMULTIPLIED, 0 };
-  swapChainDesc.Flags = DXGI_SWAP_CHAIN_FLAG_FRAME_LATENCY_WAITABLE_OBJECT;
+  swapChainDesc.Flags = DXGI_SWAP_CHAIN_FLAG_FRAME_LATENCY_WAITABLE_OBJECT | DXGI_SWAP_CHAIN_FLAG_ALLOW_TEARING;
   res = dxgiFactory->CreateSwapChainForComposition( Device, &swapChainDesc, nullptr, &SwapChain );
   //res = dxgiFactory->CreateSwapChainForHwnd( Device, (HWND)hWnd, &swapChainDesc, nullptr, nullptr, &SwapChain );
 
@@ -518,6 +518,18 @@ void CCoreDX11Device::Resize( const TS32 xr, const TS32 yr )
 
   DeviceContext->OMSetRenderTargets( 1, &BackBufferView, DepthBufferView );
   SetViewport( CRect( 0, 0, xr, yr ) );
+
+  if ( swapChainRetraceObject )
+  {
+    CloseHandle( swapChainRetraceObject );
+
+    IDXGISwapChain2* swapChain2;
+    if ( SUCCEEDED( SwapChain->QueryInterface( __uuidof( IDXGISwapChain2 ), (void**)&swapChain2 ) ) )
+    {
+      swapChainRetraceObject = swapChain2->GetFrameLatencyWaitableObject();
+      swapChain2->Release();
+    }
+  }
 
 }
 

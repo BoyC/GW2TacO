@@ -2,6 +2,8 @@
 #include "OverlayConfig.h"
 #include "TrailLogger.h"
 
+#pragma comment(lib,"Synchronization.lib")
+
 CMumbleLink mumbleLink;
 bool frameTriggered = false;
 extern CWBApplication *App;
@@ -58,7 +60,7 @@ CRect GetMinimapRectangle()
   return pos;
 }
 
-void CMumbleLink::Update()
+bool CMumbleLink::Update()
 {
   bool justConnected = false;
 
@@ -70,7 +72,7 @@ void CMumbleLink::Update()
     if ( hMapObject == NULL )
     {
       FORCEDDEBUGLOG( "failed to create mumble link file" );
-      return;
+      return false;
     }
 
     lm = (LinkedMem *)MapViewOfFile( hMapObject, FILE_MAP_ALL_ACCESS, 0, 0, sizeof( LinkedMem ) );
@@ -79,20 +81,20 @@ void CMumbleLink::Update()
       FORCEDDEBUGLOG( "mumble link file closed" );
       CloseHandle( hMapObject );
       hMapObject = NULL;
-      return;
+      return false;
     }
     justConnected = true;
   }
 
   if ( !lm )
-    return;
+    return false;
 
   FORCEDDEBUGLOG( "getting mumblelink data" );
 
   if ( tick == lm->uiTick )
   {
-    memcpy( &lastData, lm, sizeof( LinkedMem ) );
-    return;
+    //memcpy( &lastData, lm, sizeof( LinkedMem ) );
+    return false;
   }
   else
   {
@@ -299,6 +301,8 @@ void CMumbleLink::Update()
 
   if ( !GetConfigValue( "SmoothCharacterPos" ) )
     averagedCharPosition = CVector4( charPosition.x, charPosition.y, charPosition.z, 1.0f );
+
+  return true;
 }
 
 TF32 CMumbleLink::GetFrameRate()

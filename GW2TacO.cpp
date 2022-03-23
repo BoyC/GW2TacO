@@ -787,6 +787,7 @@ TBOOL GW2TacO::MessageProc( CWBMessage &Message )
       TBOOL displayed = !CategoryList[ Message.Data - Menu_MarkerFilter_Base ]->IsDisplayed;
       CategoryList[ Message.Data - Menu_MarkerFilter_Base ]->IsDisplayed = displayed;
       SetConfigValue( ( CString( "CategoryVisible_" ) + CategoryList[ Message.Data - Menu_MarkerFilter_Base ]->GetFullTypeName() ).GetPointer(), displayed );
+      CategoryRoot.CalculateVisibilityCache();
       break;
     }
 
@@ -1442,8 +1443,13 @@ float GetWindowTooSmallScale()
   return 1.0f;
 }
 
+CVector3 camDirArray[ 4096 ]{};
+int camDirIdx = 0;
+
 void GW2TacO::OnDraw( CWBDrawAPI *API )
 {
+  //API->DrawRect( GetClientRect(), CColor( 0, 0, 0, 255 ) );
+
   mouseToolTip = "";
 
   if (!HasConfigValue("EnableTPNotificationIcon"))
@@ -1569,6 +1575,8 @@ void GW2TacO::OnDraw( CWBDrawAPI *API )
         CVector3 minvals;
         CVector3 maxvals;
         bool initialized = false;
+
+        auto& POIs = GetMapPOIs();
 
         for ( int x = 0; x < POIs.NumItems(); x++ )
         {
@@ -1773,6 +1781,20 @@ void GW2TacO::OnDraw( CWBDrawAPI *API )
 
     f->Write( API, line1, line1p - CPoint( 0, f->GetLineHeight() / 2 ) );
   }
+
+/*
+  memmove( camDirArray, camDirArray + 1, sizeof( camDirArray ) - sizeof( CVector3 ) );
+  camDirArray[ GetClientRect().Width() ] = mumbleLink.camDir.Normalized();
+
+  int yp = GetClientRect().Height() / 2;
+
+  for ( int x = 0; x < GetClientRect().Width(); x++ )
+  {
+    API->DrawLine( CPoint( x, yp - camDirArray[ x ].x * yp / 2 ), CPoint( x + 1, yp - camDirArray[ x + 1 ].x * yp / 2 ), CColor( 255, 0, 0, 255 ) );
+    API->DrawLine( CPoint( x, yp - camDirArray[ x ].y * yp / 2 ), CPoint( x + 1, yp - camDirArray[ x + 1 ].y * yp / 2 ), CColor( 0, 255, 0, 255 ) );
+    API->DrawLine( CPoint( x, yp - camDirArray[ x ].z * yp / 2 ), CPoint( x + 1, yp - camDirArray[ x + 1 ].z * yp / 2 ), CColor( 0, 0, 255, 255 ) );
+  }
+*/
 }
 
 void SetMouseToolTip(const CString& toolTip)

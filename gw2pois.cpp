@@ -1168,7 +1168,17 @@ INT WINAPI WinMain( _In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
     }
 
     FORCEDDEBUGLOG( "messages handled" );
-    mumbleLink.Update();
+
+    //WaitForSingleObject( mumbleFrameTrigger, 1000 );
+
+    for ( int x = 0; x < ( frameThrottling ? 32 : 1 ); x++ )
+    {
+      if ( mumbleLink.Update() )
+        break;
+      if ( frameThrottling )
+        Sleep( 1 );
+    }
+
     bool shortTick = ( GetTime() - mumbleLink.LastFrameTime ) < 333;
 
     if ( !hideOnLoadingScreens )
@@ -1218,7 +1228,7 @@ INT WINAPI WinMain( _In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
         continue;
       }
 
-      if ( !frameThrottling || frameTriggered || lastRenderTime + 200 < currTime )
+      //if ( !frameThrottling || frameTriggered || lastRenderTime + 200 < currTime )
       {
         if ( gw2Window )
         {
@@ -1319,20 +1329,15 @@ INT WINAPI WinMain( _In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 
         taco->TickScriptEngine();
         AutoSaveConfig();
-        App->Display();
-        App->GetDevice()->WaitRetrace();
+
+        {
+          //CLightweightCriticalSection cs( &renderCritSec );
+          App->Display();
+        }
+        //App->GetDevice()->WaitRetrace();
         frameTriggered = false;
         lastRenderTime = currTime;
         hadRetrace = false;
-      }
-      else
-      {
-/*
-        if ( !hadRetrace )
-          App->GetDevice()->WaitRetrace(); // yield frame
-        hadRetrace = true;
-*/
-        //Sleep( 1 );
       }
       //DwmFlush();
 
@@ -1420,9 +1425,13 @@ INT WINAPI WinMain( _In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
   if ( wvwUpdatThread.joinable() )
     wvwUpdatThread.join();
 
-  extern CDictionaryEnumerable<GUID, GW2Trail*> trails;
-  for ( int x = 0; x < trails.NumItems(); x++ )
-    delete trails.GetByIndex( x );
+  extern std::unordered_map<int, CDictionaryEnumerable<GUID, GW2Trail*>> trailSet;
+  
+  for ( auto& trails : trailSet )
+  {
+    for ( int x = 0; x < trails.second.NumItems(); x++ )
+      delete trails.second.GetByIndex( x );
+  }
 
   //extern CArray<CString> stringArray;
   //LOG_DBG( "string array count: %d", stringArray.NumItems() );

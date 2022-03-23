@@ -297,6 +297,8 @@ void LoadMarkerCategoryVisibilityInfo()
     if ( cat )
       cat->IsDisplayed = kdp->Data;
   }
+
+  CategoryRoot.CalculateVisibilityCache();
 }
 
 void AutoSaveConfig()

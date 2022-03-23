@@ -40,6 +40,9 @@ void GW2MarkerEditor::OnDraw( CWBDrawAPI *API )
   if ( !mumbleLink.IsValid() ) return;
 
   if ( mumbleLink.mapID == -1 ) return;
+
+  auto& POIs = GetMapPOIs();
+
   for ( TS32 x = 0; x < POIs.NumItems(); x++ )
   {
     auto &cpoi = POIs.GetByIndex( x );
@@ -174,6 +177,8 @@ TBOOL GW2MarkerEditor::MessageProc( CWBMessage &Message )
     {
       if ( !ChangeDefault )
       {
+        auto& POIs = GetMapPOIs();
+
         POIs[ CurrentPOI ].SetCategory( App, CategoryList[ Message.Data ] );
         ExportPOIS();
         CWBLabel *type = (CWBLabel*)FindChildByID( "markertype", "label" );
