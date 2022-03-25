@@ -284,7 +284,10 @@ TBOOL GW2TacO::MessageProc( CWBMessage &Message )
       if ( GetConfigValue( "TacticalLayerVisible" ) )
       {
         auto flt = ctx->AddItem( DICT( "filtermarkers" ), Menu_ToggleTacticalsOnEdge );
-        OpenTypeContextMenu( flt, CategoryList, true, Menu_MarkerFilter_Base );
+        {
+          CLightweightCriticalSection cs( &GW2TacticalDisplay::dataWriteCritSec );
+          OpenTypeContextMenu( flt, CategoryList, true, Menu_MarkerFilter_Base, false, GW2TacticalDisplay::achievements );
+        }
         auto options = ctx->AddItem(DICT("tacticalsettings"), 0);
 
         options->AddItem( DICT( "togglepoidistance" ) + ( GetConfigValue( "TacticalDrawDistance" ) ? " [x]" : " [ ]" ), Menu_ToggleDrawDistance );
@@ -612,6 +615,22 @@ TBOOL GW2TacO::MessageProc( CWBMessage &Message )
   break;
   case WBM_REBUILDCONTEXTITEM:
 
+    //LOG_ERR( "CONTEXT REBUILD" );
+
+    {
+      CWBContextMenu* ctxMenu = (CWBContextMenu*)App->FindItemByGuid( Message.Position[ 1 ] );
+      auto category = FindInCategoryTree( (GW2TacticalCategory*)Message.Data );
+      if ( category )
+      {
+        for ( int x = 0; x < category->children.NumItems(); x++ )
+          category->children[ x ]->hiddenFromContextMenu = false;
+
+        ctxMenu->FlushItems();
+        AddTypeContextMenu( ctxMenu, CategoryList, category, true, Menu_MarkerFilter_Base, false );
+        break;
+      }
+    }
+
     if ( Message.Data >= Menu_RaidToggles && Message.Data < Menu_RaidToggles_End )
     {
       TS32 raidToggle = Message.Data - Menu_RaidToggles;
@@ -723,6 +742,9 @@ TBOOL GW2TacO::MessageProc( CWBMessage &Message )
     break;
 
   case WBM_CONTEXTMESSAGE:
+
+    if ( FindInCategoryTree( (GW2TacticalCategory*)Message.Data ) )
+      break;
 
     if (Message.Data >= Menu_GW2APIKey_Base && Message.Data < Menu_GW2APIKey_End)
     {

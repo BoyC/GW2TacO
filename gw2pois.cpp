@@ -1442,7 +1442,8 @@ INT WINAPI WinMain( _In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
   FORCEDDEBUGLOG( "app deleted, returning from main()" );
   SAFEDELETE( localization );
 
-  SAFEDELETE( ringbufferLog );
+  //ringbufferLog->Dump( "DebugLog.log" );
+  //SAFEDELETE( ringbufferLog );
   SAFEDELETE( bugSplat );
 
   return true;

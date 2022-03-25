@@ -211,6 +211,11 @@ void CWBContextMenu::AddSeparator()
   Items.Last()->Separator = true;
 }
 
+void CWBContextMenu::FlushItems()
+{
+  Items.FreeArray();
+}
+
 TBOOL CWBContextMenu::MessageProc( CWBMessage &Message )
 {
   switch ( Message.GetMessage() )

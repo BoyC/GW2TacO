@@ -2,6 +2,7 @@
 #include "Bedrock/WhiteBoard/whiteboard.h"
 #include <objbase.h>
 #include <unordered_map>
+#include <set>
 
 enum class POIBehavior : TS32
 {
@@ -211,11 +212,11 @@ class GW2TacticalDisplay : public CWBItem
   bool achievementsFetched = false;
   TS32 lastFetchTime = 0;
   std::thread fetchThread;
-  LIGHTWEIGHT_CRITICALSECTION dataWriteCritSec;
-
-  CDictionary<TS32, Achievement> achievements;
 
 public:
+
+  static CDictionary<TS32, Achievement> achievements;
+  static LIGHTWEIGHT_CRITICALSECTION dataWriteCritSec;
 
   GW2TacticalDisplay( CWBItem *Parent, CRect Position );
   virtual ~GW2TacticalDisplay();
@@ -243,6 +244,7 @@ public:
   TBOOL IsOnlySeparator = false;
   GW2TacticalCategory *Parent = nullptr;
   CArray<GW2TacticalCategory*> children;
+  std::set<int> containedMapIds;
 
   CString GetFullTypeName();
 
@@ -253,6 +255,9 @@ public:
 
   static bool visibilityCached;
   void CalculateVisibilityCache();
+
+  bool hiddenFromContextMenu = false;
+  int markerCount = 0;
 
   virtual ~GW2TacticalCategory()
   {
@@ -268,8 +273,10 @@ void ExportPOIS();
 void ImportPOIActivationData();
 void ExportPOIActivationData();
 
-void OpenTypeContextMenu( CWBContextMenu *ctx, CArray<GW2TacticalCategory*> &CategoryList, TBOOL AddVisibilityMarkers = false, TS32 BaseID = 0, TBOOL closeOnClick = false );
-void OpenTypeContextMenu( CWBContextItem *ctx, CArray<GW2TacticalCategory*> &CategoryList, TBOOL AddVisibilityMarkers = false, TS32 BaseID = 0, TBOOL closeOnClick = false );
+void OpenTypeContextMenu( CWBContextMenu *ctx, CArray<GW2TacticalCategory*> &CategoryList, TBOOL AddVisibilityMarkers = false, TS32 BaseID = 0, TBOOL markerEditor = false, CDictionary<TS32, Achievement>& achievements = CDictionary<TS32, Achievement>() );
+void OpenTypeContextMenu( CWBContextItem *ctx, CArray<GW2TacticalCategory*> &CategoryList, TBOOL AddVisibilityMarkers = false, TS32 BaseID = 0, TBOOL markerEditor = false, CDictionary<TS32, Achievement>& achievements = CDictionary<TS32, Achievement>() );
+void AddTypeContextMenu( CWBContextMenu* ctx, CArray<GW2TacticalCategory*>& CategoryList, GW2TacticalCategory* Parent, TBOOL AddVisibilityMarkers, TS32 BaseID, TBOOL closeOnClick );
+GW2TacticalCategory* FindInCategoryTree( GW2TacticalCategory* cat );
 
 float WorldToGameCoords( float world );
 float GameToWorldCoords( float game );

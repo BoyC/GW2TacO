@@ -179,6 +179,9 @@
   <token key="couldntidentifyaccount2" value="current account. Please add API key."/>
   <token key="waitingforcharactername1" value="Waiting for character selection"/>
 
+  <token key="HiddenCategorySingular" value="%d Category Hidden"/>
+  <token key="HiddenCategoryPlural" value="%d Categories Hidden"/>
+
   <token key="wurm_tunnel" value="Wurm Tunnel"/>
   <token key="airport" value="Airport"/>
   <token key="thunder_hollow_reactor" value="Thunder Hollow Reactor"/>

@@ -1031,6 +1031,10 @@ void GW2TacticalDisplay::OnDraw( CWBDrawAPI *API )
 
 }
 
+CDictionary<TS32, Achievement> GW2TacticalDisplay::achievements;
+
+LIGHTWEIGHT_CRITICALSECTION GW2TacticalDisplay::dataWriteCritSec;
+
 GW2TacticalDisplay::GW2TacticalDisplay( CWBItem *Parent, CRect Position ) : CWBItem( Parent, Position )
 {
 
@@ -1038,7 +1042,8 @@ GW2TacticalDisplay::GW2TacticalDisplay( CWBItem *Parent, CRect Position ) : CWBI
 
 GW2TacticalDisplay::~GW2TacticalDisplay()
 {
-
+  if ( fetchThread.joinable() )
+    fetchThread.join();
 }
 
 CWBItem *GW2TacticalDisplay::Factory( CWBItem *Root, CXMLNode &node, CRect &Pos )
@@ -1297,6 +1302,15 @@ void ImportPOI( CWBApplication *App, CXMLNode &t, POI &p, const CString& zipFile
   auto *td = GetCategory( GetStringFromMap( p.Type ) );
   if ( td )
     p.SetCategory( App, td );
+
+  if ( td )
+    td->markerCount++;
+
+  while ( td )
+  {
+    td->containedMapIds.insert( p.mapID );
+    td = td->Parent;
+  }
 
   p.typeData.Read( t, true );
 
@@ -1957,88 +1971,214 @@ void MarkerTypeData::Write( CXMLNode *n )
     n->SetAttributeFromFloat("infoRange", infoRange);
 }
 
-void AddTypeContextMenu( CWBContextItem *ctx, CArray<GW2TacticalCategory*> &CategoryList, GW2TacticalCategory *Parent, TBOOL AddVisibilityMarkers, TS32 BaseID, TBOOL closeOnClick )
+bool SingleAchievementTarget( GW2TacticalCategory* cat, int& resultId )
+{
+  int id = -1;
+  for ( int x = 0; x < cat->children.NumItems(); id++ )
+  {
+    auto child = cat->children[ x ];
+    if ( id == -1 )
+      id = child->data.achievementId;
+
+    if ( id == 0 || child->data.achievementId != id )
+      return false;
+
+    bool result = SingleAchievementTarget( child, resultId );
+    if ( !result || resultId != id )
+      return false;
+  }
+
+  resultId = id;
+  return true;
+}
+
+void CalcCategoryHiddenFromContextMenu( GW2TacticalCategory* Parent, CDictionary<TS32, Achievement>& achievements )
 {
   for ( TS32 x = 0; x < Parent->children.NumItems(); x++ )
   {
-    auto dta = Parent->children[ x ];// CategoryMap.GetByIndex( x );
-    //if ( dta->Parent == Parent )
+    auto dta = Parent->children[ x ];
+    dta->hiddenFromContextMenu = dta->containedMapIds.find( mumbleLink.mapID ) == dta->containedMapIds.end();
+
+    if ( dta->data.achievementId && achievements.HasKey( dta->data.achievementId ) )
     {
-      CString txt;
-      if ( AddVisibilityMarkers )
-        txt += "[" + CString( dta->IsDisplayed ? "x" : " " ) + "] ";
-      if ( dta->displayName.Length() )
-        txt += dta->displayName;
-      else
-        txt += dta->name;
+      auto& achi = achievements[ dta->data.achievementId ];
 
-      if ( dta->IsOnlySeparator )
-      {
-        ctx->AddSeparator();
-        if ( dta->displayName.Length() )
-          txt = dta->displayName;
-        else
-          txt = dta->name;
-        ctx->AddItem( txt.GetPointer(), CategoryList.NumItems() + BaseID, false, closeOnClick );
-        CategoryList += dta;
-        ctx->AddSeparator();
-      }
-      else
-      {
-        auto n = ctx->AddItem( txt.GetPointer(), CategoryList.NumItems() + BaseID, AddVisibilityMarkers && dta->IsDisplayed, closeOnClick );
-        CategoryList += dta;
-        AddTypeContextMenu( n, CategoryList, dta, AddVisibilityMarkers, BaseID, closeOnClick );
-      }
+      dta->hiddenFromContextMenu |= achi.done;
+      if ( !dta->hiddenFromContextMenu && dta->data.achievementBit )
+        dta->hiddenFromContextMenu |= achi.bits.Find( dta->data.achievementBit ) >= 0;
     }
-  }
-}
 
-void AddTypeContextMenu( CWBContextMenu *ctx, CArray<GW2TacticalCategory*> &CategoryList, GW2TacticalCategory *Parent, TBOOL AddVisibilityMarkers, TS32 BaseID, TBOOL closeOnClick )
-{
-  for ( TS32 x = 0; x < CategoryMap.NumItems(); x++ )
+    CalcCategoryHiddenFromContextMenu( dta, achievements );
+  }
+
+  // restore needed headers
+  for ( TS32 x = 0; x < Parent->children.NumItems(); x++ )
   {
-    auto dta = CategoryMap.GetByIndex( x );
-    if ( dta->Parent == Parent )
-    {
-      CString txt;
-      if ( AddVisibilityMarkers )
-        txt += "[" + CString( dta->IsDisplayed ? "x" : " " ) + "] ";
-      if ( dta->displayName.Length() )
-        txt += dta->displayName;
-      else
-        txt += dta->name;
+    auto dta = Parent->children[ x ];
+    if ( !dta->IsOnlySeparator )
+      continue;
 
-      if ( dta->IsOnlySeparator )
+    for ( int y = x + 1; y < Parent->children.NumItems(); y++ )
+    {
+      auto dta2 = Parent->children[ y ];
+      if ( dta2->IsOnlySeparator )
+        break;
+
+      if ( !dta2->hiddenFromContextMenu )
       {
-        ctx->AddSeparator();
-        if ( dta->displayName.Length() )
-          txt = dta->displayName;
-        else
-          txt = dta->name;
-        ctx->AddItem( txt.GetPointer(), CategoryList.NumItems() + BaseID, false, closeOnClick );
-        CategoryList += dta;
-        ctx->AddSeparator();
-      }
-      else
-      {
-        auto n = ctx->AddItem( txt.GetPointer(), CategoryList.NumItems() + BaseID, AddVisibilityMarkers && dta->IsDisplayed, closeOnClick );
-        CategoryList += dta;
-        AddTypeContextMenu( n, CategoryList, dta, AddVisibilityMarkers, BaseID, closeOnClick );
+        dta->hiddenFromContextMenu = false;
+        break;
       }
     }
   }
+
+  bool allChildrenHidden = true;
+  for ( TS32 x = 0; x < Parent->children.NumItems(); x++ )
+    if ( !Parent->children[ x ]->hiddenFromContextMenu )
+    {
+      allChildrenHidden = false;
+      break;
+    }
+
+  if ( allChildrenHidden && !Parent->markerCount )
+    Parent->hiddenFromContextMenu = true;
 }
 
-void OpenTypeContextMenu( CWBContextItem *ctx, CArray<GW2TacticalCategory*> &CategoryList, TBOOL AddVisibilityMarkers, TS32 BaseID, TBOOL closeOnClick )
+void SetAllCategoriesToVisibleInContext( GW2TacticalCategory* Parent )
 {
-  CategoryList.Flush();
-  AddTypeContextMenu( ctx, CategoryList, &CategoryRoot, AddVisibilityMarkers, BaseID, closeOnClick );
+  Parent->hiddenFromContextMenu = false;
+  for ( int x = 0; x < Parent->children.NumItems(); x++ )
+    SetAllCategoriesToVisibleInContext( Parent->children[ x ] );
 }
 
-void OpenTypeContextMenu( CWBContextMenu *ctx, CArray<GW2TacticalCategory*> &CategoryList, TBOOL AddVisibilityMarkers, TS32 BaseID, TBOOL closeOnClick )
+GW2TacticalCategory* FindInCategoryTree( GW2TacticalCategory* ref, GW2TacticalCategory* cat )
+{
+  if ( ref == cat )
+    return ref;
+
+  for ( int x = 0; x < cat->children.NumItems(); x++ )
+  {
+    auto result = FindInCategoryTree( ref, cat->children[ x ] );
+    if ( result )
+      return result;
+  }
+
+  return nullptr;
+}
+
+GW2TacticalCategory* FindInCategoryTree( GW2TacticalCategory* cat )
+{
+  return FindInCategoryTree( cat, &CategoryRoot );
+}
+
+void AddTypeContextMenu( CWBContextItem *ctx, CArray<GW2TacticalCategory*> &CategoryList, GW2TacticalCategory *Parent, TBOOL AddVisibilityMarkers, TS32 BaseID, TBOOL closeOnClick )
+{
+  int hiddenCount = 0;
+
+  for ( TS32 x = 0; x < Parent->children.NumItems(); x++ )
+  {
+    auto dta = Parent->children[ x ];
+    if ( dta->hiddenFromContextMenu )
+    {
+      if ( !dta->IsOnlySeparator )
+        hiddenCount++;
+      continue;
+    }
+
+    CString txt;
+    if ( AddVisibilityMarkers )
+      txt += "[" + CString( dta->IsDisplayed ? "x" : " " ) + "] ";
+    if ( dta->displayName.Length() )
+      txt += dta->displayName;
+    else
+      txt += dta->name;
+
+    if ( dta->IsOnlySeparator )
+    {
+      ctx->AddSeparator();
+      if ( dta->displayName.Length() )
+        txt = dta->displayName;
+      else
+        txt = dta->name;
+      ctx->AddItem( txt.GetPointer(), CategoryList.NumItems() + BaseID, false, closeOnClick );
+      CategoryList += dta;
+      ctx->AddSeparator();
+    }
+    else
+    {
+      auto n = ctx->AddItem( txt.GetPointer(), CategoryList.NumItems() + BaseID, AddVisibilityMarkers && dta->IsDisplayed, closeOnClick );
+      CategoryList += dta;
+      AddTypeContextMenu( n, CategoryList, dta, AddVisibilityMarkers, BaseID, closeOnClick );
+    }
+  }
+
+  if ( hiddenCount )
+    ctx->AddItem( CString::Format( ( hiddenCount == 1 ? DICT( "HiddenCategorySingular" ) : DICT( "HiddenCategoryPlural" ) ).GetPointer(), hiddenCount ), (int)Parent, false, closeOnClick );
+}
+
+void AddTypeContextMenu( CWBContextMenu* ctx, CArray<GW2TacticalCategory*>& CategoryList, GW2TacticalCategory* Parent, TBOOL AddVisibilityMarkers, TS32 BaseID, TBOOL closeOnClick )
+{
+  int hiddenCount = 0;
+
+  for ( TS32 x = 0; x < Parent->children.NumItems(); x++ )
+  {
+    auto dta = Parent->children[ x ];
+    if ( dta->hiddenFromContextMenu )
+    {
+      if ( !dta->IsOnlySeparator )
+        hiddenCount++;
+      continue;
+    }
+
+    CString txt;
+    if ( AddVisibilityMarkers )
+      txt += "[" + CString( dta->IsDisplayed ? "x" : " " ) + "] ";
+    if ( dta->displayName.Length() )
+      txt += dta->displayName;
+    else
+      txt += dta->name;
+
+    if ( dta->IsOnlySeparator )
+    {
+      ctx->AddSeparator();
+      if ( dta->displayName.Length() )
+        txt = dta->displayName;
+      else
+        txt = dta->name;
+      ctx->AddItem( txt.GetPointer(), CategoryList.NumItems() + BaseID, false, closeOnClick );
+      CategoryList += dta;
+      ctx->AddSeparator();
+    }
+    else
+    {
+      auto n = ctx->AddItem( txt.GetPointer(), CategoryList.NumItems() + BaseID, AddVisibilityMarkers && dta->IsDisplayed, closeOnClick );
+      CategoryList += dta;
+      AddTypeContextMenu( n, CategoryList, dta, AddVisibilityMarkers, BaseID, closeOnClick );
+    }
+  }
+
+  if ( hiddenCount )
+    ctx->AddItem( CString::Format( ( hiddenCount == 1 ? DICT( "HiddenCategorySingular" ) : DICT( "HiddenCategoryPlural" ) ).GetPointer(), hiddenCount ), (int)Parent, false, closeOnClick );
+}
+
+void OpenTypeContextMenu( CWBContextItem *ctx, CArray<GW2TacticalCategory*> &CategoryList, TBOOL AddVisibilityMarkers, TS32 BaseID, TBOOL markerEditor, CDictionary<TS32, Achievement>& achievements )
 {
   CategoryList.Flush();
-  AddTypeContextMenu( ctx, CategoryList, &CategoryRoot, AddVisibilityMarkers, BaseID, closeOnClick );
+  if ( !markerEditor )
+    CalcCategoryHiddenFromContextMenu( &CategoryRoot, achievements );
+  else
+    SetAllCategoriesToVisibleInContext( &CategoryRoot );
+  AddTypeContextMenu( ctx, CategoryList, &CategoryRoot, AddVisibilityMarkers, BaseID, markerEditor );
+}
+
+void OpenTypeContextMenu( CWBContextMenu* ctx, CArray<GW2TacticalCategory*>& CategoryList, TBOOL AddVisibilityMarkers, TS32 BaseID, TBOOL markerEditor, CDictionary<TS32, Achievement>& achievements )
+{
+  CategoryList.Flush();
+  if ( !markerEditor )
+    CalcCategoryHiddenFromContextMenu( &CategoryRoot, achievements );
+  else
+    SetAllCategoriesToVisibleInContext( &CategoryRoot );
+  AddTypeContextMenu( ctx, CategoryList, &CategoryRoot, AddVisibilityMarkers, BaseID, markerEditor );
 }
 
 float WorldToGameCoords( float world )

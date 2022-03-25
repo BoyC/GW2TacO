@@ -66,6 +66,7 @@ public:
   virtual CWBContextItem *AddItem( const TCHAR *Text, TS32 ID, TBOOL Highlighted = false, TBOOL closesContext = true );
   virtual CWBContextItem *AddItem( const CString &Text, TS32 ID, TBOOL Highlighted = false, TBOOL closesContext = true );
   virtual void AddSeparator();
+  void FlushItems();
 
   virtual TBOOL ApplyStyle( CString & prop, CString & value, CStringArray &pseudo );
   virtual CWBContextItem *GetItem( TS32 ID );
