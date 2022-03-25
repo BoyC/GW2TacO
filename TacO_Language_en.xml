@@ -181,6 +181,7 @@
 
   <token key="HiddenCategorySingular" value="%d Category Hidden"/>
   <token key="HiddenCategoryPlural" value="%d Categories Hidden"/>
+  <token key="togglecrashoptout" value="Automatically Send Crash Dumps"/>
 
   <token key="wurm_tunnel" value="Wurm Tunnel"/>
   <token key="airport" value="Airport"/>

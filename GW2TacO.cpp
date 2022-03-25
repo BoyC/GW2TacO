@@ -165,6 +165,7 @@ enum MainMenuItems
   Menu_AddGW2ApiKey,
   Menu_TogglePOIInfoText,
   Menu_Crash,
+  Menu_OptOutFromCrashReports,
 
   Menu_OpacityIngame_Solid,
   Menu_OpacityIngame_Transparent,
@@ -515,8 +516,9 @@ TBOOL GW2TacO::MessageProc( CWBMessage &Message )
       settings->AddItem( DICT( "closewithgw2" ) + ( GetConfigValue( "CloseWithGW2" ) ? " [x]" : " [ ]" ), Menu_ToggleGW2ExitMode );
       settings->AddItem( DICT( "toggleinfoline" ) + ( GetConfigValue( "InfoLineVisible" ) ? " [x]" : " [ ]" ), Menu_ToggleInfoLine );
       settings->AddItem( DICT( "toggleforcedpiaware" ) + ( GetConfigValue( "ForceDPIAware" ) ? " [x]" : " [ ]" ), Menu_ToggleForceDPIAware );
-      settings->AddItem(DICT("enabletpnotificationicon") + (GetConfigValue("EnableTPNotificationIcon") ? " [x]" : " [ ]"), Menu_ToggleShowNotificationIcon);
-      
+      settings->AddItem( DICT( "enabletpnotificationicon" ) + ( GetConfigValue( "EnableTPNotificationIcon" ) ? " [x]" : " [ ]" ), Menu_ToggleShowNotificationIcon );
+      settings->AddItem( DICT( "togglecrashoptout" ) + ( GetConfigValue( "SendCrashDump" ) ? " [x]" : " [ ]" ), Menu_OptOutFromCrashReports );
+
       settings->AddSeparator();
       settings->AddItem(DICT("togglekeybinds") + (GetConfigValue("KeybindsEnabled") ? " [x]" : " [ ]"), Menu_KeyBindsEnabled);
       auto bind = settings->AddItem( DICT( "rebindkeys" ), 0 );
@@ -840,6 +842,9 @@ TBOOL GW2TacO::MessageProc( CWBMessage &Message )
       return true;
     case Menu_ToggleInfoLine:
       ToggleConfigValue( "InfoLineVisible" );
+      return true;
+    case Menu_OptOutFromCrashReports:
+      ToggleConfigValue( "SendCrashDump" );
       return true;
     case Menu_ToggleHighLight:
       ToggleConfigValue( "MouseHighlightVisible" );
