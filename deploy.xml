@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <deployconfig>
-	<compiler>C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\devenv.com</compiler>
+	<compiler>C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\devenv.com</compiler>
 	<buildcountheaderdir>.\</buildcountheaderdir>
 	<buildcountexe>buildcounter.exe</buildcountexe>
 	<compilerparams>GW2TacO.sln /rebuild Release</compilerparams>

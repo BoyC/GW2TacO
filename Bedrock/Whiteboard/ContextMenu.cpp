@@ -309,7 +309,11 @@ TBOOL CWBContextMenu::MessageProc( CWBMessage &Message )
 
 void CWBContextMenu::SpawnSubMenu( TS32 itemidx )
 {
-  if ( itemidx < 0 || itemidx >= Items.NumItems() ) return;
+  if ( itemidx < 0 || itemidx >= Items.NumItems() ) 
+    return;
+  if ( SubMenu && SubMenu->spawnedFromIdx == itemidx )
+    return;
+
   SAFEDELETE( SubMenu );
   //if (SubMenu) SubMenu->MarkForDeletion();
   if ( Items[ itemidx ]->Children.NumItems() <= 0 )
@@ -321,6 +325,7 @@ void CWBContextMenu::SpawnSubMenu( TS32 itemidx )
   CRect newpos = CRect( w.x2 - 1, p.y1, w.x2 + 10, p.y1 + 10 );
 
   SubMenu = new CWBContextMenu( GetParent(), newpos, Target );
+  SubMenu->spawnedFromIdx = itemidx;
   App->ApplyStyle( SubMenu );
   SubMenu->ParentMenu = this;
   App->SetCapture( GetContextRoot() ); //message control must stay with the root item

@@ -51,6 +51,8 @@ class CWBContextMenu : public CWBItem
 
   CWBCSSPropertyBatch SeparatorElements;
 
+  int spawnedFromIdx = -1;
+
 public:
 
   CWBContextMenu();

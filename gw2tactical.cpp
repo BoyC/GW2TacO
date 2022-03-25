@@ -1959,10 +1959,10 @@ void MarkerTypeData::Write( CXMLNode *n )
 
 void AddTypeContextMenu( CWBContextItem *ctx, CArray<GW2TacticalCategory*> &CategoryList, GW2TacticalCategory *Parent, TBOOL AddVisibilityMarkers, TS32 BaseID, TBOOL closeOnClick )
 {
-  for ( TS32 x = 0; x < CategoryMap.NumItems(); x++ )
+  for ( TS32 x = 0; x < Parent->children.NumItems(); x++ )
   {
-    auto dta = CategoryMap.GetByIndex( x );
-    if ( dta->Parent == Parent )
+    auto dta = Parent->children[ x ];// CategoryMap.GetByIndex( x );
+    //if ( dta->Parent == Parent )
     {
       CString txt;
       if ( AddVisibilityMarkers )
