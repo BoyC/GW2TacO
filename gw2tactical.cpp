@@ -550,6 +550,14 @@ void GW2TacticalDisplay::DrawPOI( CWBDrawAPI *API, const tm& ptm, const time_t& 
         data = mumbleLink.charIDHash^mumbleLink.mapInstance;
 
       ActivationData[ POIActivationDataKey( poi.guid, data ) ] = d;
+
+      if ( poi.typeData.copy )
+      {
+        triggeredPOI = &poi;
+        triggerTimer = globalTimer.GetTime();
+        if ( poi.typeData.copyMessage )
+          copyText = poi.typeData.copyMessage;
+      }
     }
   }
 
@@ -959,6 +967,10 @@ void GW2TacticalDisplay::OnDraw( CWBDrawAPI *API )
 
   CString infoText;
 
+  TS64 prevtriggerTimer = triggerTimer;
+  POI* prevtriggeredPOI = triggeredPOI;
+  TS32 prevcopyText = copyText;
+
   if ( showIngameMarkers > 0 )
     for ( int x = 0; x < mapPOIs.NumItems(); x++ )
     {
@@ -966,6 +978,9 @@ void GW2TacticalDisplay::OnDraw( CWBDrawAPI *API )
         continue;
       DrawPOI( API, ptm, currtime, *mapPOIs[ x ], drawDistance, infoText );
     }
+
+  if ( prevtriggeredPOI != triggeredPOI )
+    triggeredPOI = nullptr;
 
   // punch hole in minimap
 
@@ -1029,6 +1044,24 @@ void GW2TacticalDisplay::OnDraw( CWBDrawAPI *API )
     font->Write(API, infoText, CPoint(int((GetClientRect().Width() - width) / 2.0f), int(GetClientRect().Height() * 0.15f)));
   }
 
+  auto time = globalTimer.GetTime() - triggerTimer;
+  if ( time >= 0 && time < 3000 && copyText != -1 )
+  {
+    auto& string = GetStringFromMap( copyText );
+    auto timer = App->GetRoot()->FindChildByID( "locationaltimer" );
+    if ( timer )
+    {
+      auto f = timer->GetFont( GetState() );
+      float alpha = ( 1000 - max( 0, time - 2000 ) ) / 1000.0f;
+      TS32 ypos = Lerp( GetClientRect().y1, GetClientRect().y2, 0.25f );
+
+      CPoint pos = f->GetTextPosition( string, CRect( GetClientRect().x1, ypos, GetClientRect().x2, ypos ), WBTA_CENTERX, WBTA_CENTERY, WBTT_NONE, true );
+      ypos += f->GetLineHeight();
+      f->Write( API, string, pos );
+    }
+  }
+  if ( time > 3000 )
+    copyText = -1;
 }
 
 CDictionary<TS32, Achievement> GW2TacticalDisplay::achievements;
@@ -1334,9 +1367,23 @@ TBOOL ImportTrail( CWBApplication *App, CXMLNode &t, GW2Trail &p, const CString&
   if ( td )
     p.SetCategory( App, td );
 
+  if ( td )
+    td->markerCount++;
+
   p.typeData.Read( t, true );
 
-  return p.Import( GetStringFromMap( p.typeData.trailData ), zipFile );
+  auto result = p.Import( GetStringFromMap( p.typeData.trailData ), zipFile );
+
+  if ( result )
+  {
+    while ( td )
+    {
+      td->containedMapIds.insert( p.map );
+      td = td->Parent;
+    }
+  }
+
+  return result;
 }
 
 void ImportPOIDocument( CWBApplication *App, CXMLDocument& d, TBOOL External, const CString& zipFile )
@@ -1741,6 +1788,8 @@ void MarkerTypeData::Read( CXMLNode &n, TBOOL StoreSaveState )
   TBOOL _keepOnMapEdgeSaved = n.HasAttribute( "keepOnMapEdge" );
   TBOOL _infoSaved = n.HasAttribute("info");
   TBOOL _infoRangeSaved = n.HasAttribute("infoRange");
+  TBOOL _copySaved = n.HasAttribute( "copy" );
+  TBOOL _copyMessageSaved = n.HasAttribute( "copy-message" );
 
   if ( StoreSaveState )
   {
@@ -1775,6 +1824,8 @@ void MarkerTypeData::Read( CXMLNode &n, TBOOL StoreSaveState )
     bits.keepOnMapEdgeSaved = _keepOnMapEdgeSaved;
     bits.infoSaved = _infoSaved;
     bits.infoRangeSaved = _infoRangeSaved;
+    bits.copySaved = _copySaved;
+    bits.copyMessageSaved = _copyMessageSaved;
   }
 
   if ( _iconFileSaved )
@@ -1903,6 +1954,12 @@ void MarkerTypeData::Read( CXMLNode &n, TBOOL StoreSaveState )
     info = AddStringToMap(n.GetAttributeAsString("info"));
   if (_infoRangeSaved)
     n.GetAttributeAsFloat("infoRange", &infoRange);
+
+  if ( _copySaved )
+    copy = AddStringToMap( n.GetAttributeAsString( "copy" ) );
+
+  if ( _copyMessageSaved )
+    copyMessage = AddStringToMap( n.GetAttributeAsString( "copy-message" ) );
 }
 
 void MarkerTypeData::Write( CXMLNode *n )
@@ -1969,6 +2026,10 @@ void MarkerTypeData::Write( CXMLNode *n )
     n->SetAttribute("info", GetStringFromMap(info).GetPointer());
   if (bits.infoRangeSaved)
     n->SetAttributeFromFloat("infoRange", infoRange);
+  if ( bits.copySaved )
+    n->SetAttribute( "copy", GetStringFromMap( copy ).GetPointer() );
+  if ( bits.copyMessageSaved )
+    n->SetAttribute( "copy-message", GetStringFromMap( copyMessage ).GetPointer() );
 }
 
 bool SingleAchievementTarget( GW2TacticalCategory* cat, int& resultId )

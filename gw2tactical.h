@@ -60,6 +60,8 @@ struct MarkerTypeData
     TBOOL keepOnMapEdgeSaved : 1;
     TBOOL infoSaved : 1;
     TBOOL infoRangeSaved : 1;
+    TBOOL copySaved : 1;
+    TBOOL copyMessageSaved : 1;
   } bits;
 
   MarkerTypeData();
@@ -90,6 +92,8 @@ struct MarkerTypeData
   TS16 achievementId = -1;
   TS16 achievementBit = -1;
   TS16 info = -1;
+  TS16 copy = -1;
+  TS16 copyMessage = -1;
 
   void Read( CXMLNode &n, TBOOL StoreSaveState );
   void Write( CXMLNode *n );
@@ -213,6 +217,10 @@ class GW2TacticalDisplay : public CWBItem
   TS32 lastFetchTime = 0;
   std::thread fetchThread;
 
+  TS64 triggerTimer = 0;
+  POI* triggeredPOI = nullptr;
+  TS32 copyText = -1;
+
 public:
 
   static CDictionary<TS32, Achievement> achievements;
@@ -277,6 +285,7 @@ void OpenTypeContextMenu( CWBContextMenu *ctx, CArray<GW2TacticalCategory*> &Cat
 void OpenTypeContextMenu( CWBContextItem *ctx, CArray<GW2TacticalCategory*> &CategoryList, TBOOL AddVisibilityMarkers = false, TS32 BaseID = 0, TBOOL markerEditor = false, CDictionary<TS32, Achievement>& achievements = CDictionary<TS32, Achievement>() );
 void AddTypeContextMenu( CWBContextMenu* ctx, CArray<GW2TacticalCategory*>& CategoryList, GW2TacticalCategory* Parent, TBOOL AddVisibilityMarkers, TS32 BaseID, TBOOL closeOnClick );
 GW2TacticalCategory* FindInCategoryTree( GW2TacticalCategory* cat );
+void SetAllCategoriesToVisibleInContext( GW2TacticalCategory* Parent );
 
 float WorldToGameCoords( float world );
 float GameToWorldCoords( float game );

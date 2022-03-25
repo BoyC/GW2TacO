@@ -624,9 +624,7 @@ TBOOL GW2TacO::MessageProc( CWBMessage &Message )
       auto category = FindInCategoryTree( (GW2TacticalCategory*)Message.Data );
       if ( category )
       {
-        for ( int x = 0; x < category->children.NumItems(); x++ )
-          category->children[ x ]->hiddenFromContextMenu = false;
-
+        SetAllCategoriesToVisibleInContext( category );
         ctxMenu->FlushItems();
         AddTypeContextMenu( ctxMenu, CategoryList, category, true, Menu_MarkerFilter_Base, false );
         break;
