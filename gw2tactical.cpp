@@ -550,14 +550,17 @@ void GW2TacticalDisplay::DrawPOI( CWBDrawAPI *API, const tm& ptm, const time_t& 
         data = mumbleLink.charIDHash^mumbleLink.mapInstance;
 
       ActivationData[ POIActivationDataKey( poi.guid, data ) ] = d;
+    }
+  }
 
-      if ( poi.typeData.copy )
-      {
-        triggeredPOI = &poi;
-        triggerTimer = globalTimer.GetTime();
-        if ( poi.typeData.copyMessage )
-          copyText = poi.typeData.copyMessage;
-      }
+  if ( poi.typeData.copy != -1 && poi.typeData.bits.autoTrigger && triggeredPOI != &poi )
+  {
+    TF32 dist = ( poi.position - mumbleLink.charPosition ).Length();
+
+    if ( dist <= poi.typeData.triggerRange )
+    {
+      triggeredPOI = &poi;
+      triggerTimer = globalTimer.GetTime();
     }
   }
 
@@ -969,6 +972,7 @@ void GW2TacticalDisplay::OnDraw( CWBDrawAPI *API )
 
   TS64 prevtriggerTimer = triggerTimer;
   POI* prevtriggeredPOI = triggeredPOI;
+  triggeredPOI = nullptr;
   TS32 prevcopyText = copyText;
 
   if ( showIngameMarkers > 0 )
@@ -979,8 +983,50 @@ void GW2TacticalDisplay::OnDraw( CWBDrawAPI *API )
       DrawPOI( API, ptm, currtime, *mapPOIs[ x ], drawDistance, infoText );
     }
 
-  if ( prevtriggeredPOI != triggeredPOI )
-    triggeredPOI = nullptr;
+  if ( prevtriggeredPOI == triggeredPOI )
+  {
+    triggerTimer = prevtriggerTimer;
+    triggeredPOI = prevtriggeredPOI;
+  }
+  else
+  {
+    if ( triggeredPOI && triggeredPOI->typeData.copy != -1 )
+    {
+      if ( triggeredPOI->typeData.copyMessage != -1 )
+        copyText = triggeredPOI->typeData.copyMessage;
+      
+      // copy to clipboard here
+
+      if ( OpenClipboard( (HWND)App->GetHandle() ) )
+      {
+        EmptyClipboard();
+
+        CString out = GetStringFromMap( triggeredPOI->typeData.copy );
+
+        HGLOBAL clipbuffer = GlobalAlloc( GMEM_DDESHARE | GHND, ( out.Length() + 1 ) * sizeof( TCHAR ) );
+
+        if ( clipbuffer )
+        {
+          TCHAR* buffer = (TCHAR*)GlobalLock( clipbuffer );
+          if ( buffer )
+          {
+            memcpy( buffer, out.GetPointer(), sizeof( TCHAR ) * out.Length() );
+            buffer[ out.Length() ] = 0;
+          }
+
+          GlobalUnlock( clipbuffer );
+
+#ifndef  UNICODE
+          SetClipboardData( CF_TEXT, clipbuffer );
+#else
+          SetClipboardData( CF_UNICODETEXT, clipbuffer );
+#endif
+        }
+
+        CloseClipboard();
+      }
+    }
+  }
 
   // punch hole in minimap
 
@@ -1052,12 +1098,12 @@ void GW2TacticalDisplay::OnDraw( CWBDrawAPI *API )
     if ( timer )
     {
       auto f = timer->GetFont( GetState() );
-      float alpha = ( 1000 - max( 0, time - 2000 ) ) / 1000.0f;
+      float alpha = max( 0, ( 1000 - max( 0, time - 2000 ) ) / 1000.0f );
       TS32 ypos = Lerp( GetClientRect().y1, GetClientRect().y2, 0.25f );
 
       CPoint pos = f->GetTextPosition( string, CRect( GetClientRect().x1, ypos, GetClientRect().x2, ypos ), WBTA_CENTERX, WBTA_CENTERY, WBTT_NONE, true );
       ypos += f->GetLineHeight();
-      f->Write( API, string, pos );
+      f->Write( API, string, pos, CColor( 255, 255, 255, (unsigned char)( 255 * alpha ) ) );
     }
   }
   if ( time > 3000 )

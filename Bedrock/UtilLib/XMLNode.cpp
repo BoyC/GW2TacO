@@ -233,7 +233,7 @@ TBOOL CXMLNode::GetAttribute(TCHAR * szAttribute, TCHAR * szBuffer, TS32 nBuffer
   if ( !pNode )
     return false;
 
-  auto attr = pNode->first_attribute( szAttribute );
+  auto attr = pNode->first_attribute( szAttribute, strlen( szAttribute ), false );
   if ( !attr )
     return false;
 
@@ -247,7 +247,7 @@ CString CXMLNode::GetAttribute(TCHAR * szAttribute)
   if ( !pNode )
     return CString();
 
-  auto attr = pNode->first_attribute( szAttribute );
+  auto attr = pNode->first_attribute( szAttribute, strlen( szAttribute ), false );
   if ( !attr )
     return CString();
 
@@ -265,7 +265,7 @@ TBOOL CXMLNode::HasAttribute(TCHAR * szAttribute)
   if ( !pNode )
     return false;
 
-  auto attr = pNode->first_attribute( szAttribute );
+  auto attr = pNode->first_attribute( szAttribute, strlen( szAttribute ), false );
   return attr != nullptr;
 }
 
@@ -349,7 +349,7 @@ void CXMLNode::SetAttribute(TCHAR * szAttributeName, const TCHAR * szValue)
   CString* strNam = new CString( szAttributeName );
   stringStore += strNam;
 
-  auto attr = pNode->first_attribute( strNam->GetPointer() );
+  auto attr = pNode->first_attribute( strNam->GetPointer(), strNam->Length(), false );
 
   if ( !attr )
   {
