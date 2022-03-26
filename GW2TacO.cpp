@@ -255,10 +255,17 @@ CString GW2TacO::GetKeybindString(TacOKeyAction action)
   for (TS32 x = 0; x < KeyBindings.NumItems(); x++)
     if (KeyBindings.GetByIndex(x) == action)
     {
-      return CString::Format(" [%c]", KeyBindings.GetKDPair(x)->Key);
+      return CString::Format("[%c] ", KeyBindings.GetKDPair(x)->Key);
       break;
     }
   return "";
+}
+
+CString GetConfigActiveString( char* cfg, int active = -1 )
+{
+  if ( active == -1 )
+    return GetConfigValue( cfg ) ? "[x] " : "[ ] ";
+  return GetConfigValue( cfg ) == active ? "[x] " : "[ ] ";
 }
 
 TBOOL GW2TacO::MessageProc( CWBMessage &Message )
@@ -292,58 +299,59 @@ TBOOL GW2TacO::MessageProc( CWBMessage &Message )
         }
         auto options = ctx->AddItem(DICT("tacticalsettings"), 0);
 
-        options->AddItem( DICT( "togglepoidistance" ) + ( GetConfigValue( "TacticalDrawDistance" ) ? " [x]" : " [ ]" ), Menu_ToggleDrawDistance );
-        options->AddItem( DICT( "toggleherdicons" ) + ( GetConfigValue( "TacticalIconsOnEdge" ) ? " [x]" : " [ ]" ), Menu_ToggleTacticalsOnEdge );
-        options->AddItem( DICT( "toggledrawwvwnames" ) + ( GetConfigValue( "DrawWvWNames" ) ? " [x]" : " [ ]" ), Menu_DrawWvWNames );
-        options->AddItem( DICT( "togglefadeoutbubble" ) + ( GetConfigValue( "FadeoutBubble" ) ? " [x]" : " [ ]" ), Menu_ToggleFadeoutBubble );
-        options->AddItem(DICT("togglemetricsystem") + (GetConfigValue("UseMetricDisplay") ? " [x]" : " [ ]"), Menu_ToggleMetricSystem);
-        options->AddItem(DICT("toggletacticalinfotext") + (GetConfigValue("TacticalInfoTextVisible") ? " [x]" : " [ ]"), Menu_TogglePOIInfoText);
-        options->AddItem( DICT( "toggleclipboardaccess" ) + ( GetConfigValue( "CanWriteToClipboard" ) ? " [x]" : " [ ]" ), Menu_ToggleClipboardAccess );
+        options->AddItem( GetConfigActiveString( "TacticalDrawDistance" )    + DICT( "togglepoidistance" )     , Menu_ToggleDrawDistance );
+        options->AddItem( GetConfigActiveString( "TacticalIconsOnEdge" )     + DICT( "toggleherdicons" )       , Menu_ToggleTacticalsOnEdge );
+        options->AddItem( GetConfigActiveString( "DrawWvWNames" )            + DICT( "toggledrawwvwnames" )    , Menu_DrawWvWNames );
+        options->AddItem( GetConfigActiveString( "FadeoutBubble" )           + DICT( "togglefadeoutbubble" )   , Menu_ToggleFadeoutBubble );
+        options->AddItem( GetConfigActiveString( "UseMetricDisplay" )        + DICT( "togglemetricsystem" )    , Menu_ToggleMetricSystem );
+        options->AddItem( GetConfigActiveString( "TacticalInfoTextVisible" ) + DICT( "toggletacticalinfotext" ), Menu_TogglePOIInfoText );
+        options->AddItem( GetConfigActiveString( "CanWriteToClipboard" )     + DICT( "toggleclipboardaccess" ) , Menu_ToggleClipboardAccess );
 
         auto opacityMenu = options->AddItem(DICT("markeropacity"), 0);
         auto opacityInGame = opacityMenu->AddItem(DICT("ingameopacity"), 0);
-        opacityInGame->AddItem(DICT("opacitysolid") + (GetConfigValue("OpacityIngame") == 0 ? " [x]" : " [ ]"), Menu_OpacityIngame_Solid);
-        opacityInGame->AddItem(DICT("opacitytransparent") + (GetConfigValue("OpacityIngame") == 2 ? " [x]" : " [ ]"), Menu_OpacityIngame_Transparent);
-        opacityInGame->AddItem(DICT("opacityfaded") + (GetConfigValue("OpacityIngame") == 1 ? " [x]" : " [ ]"), Menu_OpacityIngame_Faded);
+        opacityInGame->AddItem( GetConfigActiveString( "OpacityIngame", 0 ) + DICT( "opacitysolid" )      , Menu_OpacityIngame_Solid );
+        opacityInGame->AddItem( GetConfigActiveString( "OpacityIngame", 2 ) + DICT( "opacitytransparent" ), Menu_OpacityIngame_Transparent );
+        opacityInGame->AddItem( GetConfigActiveString( "OpacityIngame", 1 ) + DICT( "opacityfaded" ),       Menu_OpacityIngame_Faded );
+
         auto opacityMiniMap = opacityMenu->AddItem(DICT("mapopacity"), 0);
-        opacityMiniMap->AddItem(DICT("opacitysolid") + (GetConfigValue("OpacityMap") == 0 ? " [x]" : " [ ]"), Menu_OpacityMap_Solid);
-        opacityMiniMap->AddItem(DICT("opacitytransparent") + (GetConfigValue("OpacityMap") == 2 ? " [x]" : " [ ]"), Menu_OpacityMap_Transparent);
-        opacityMiniMap->AddItem(DICT("opacityfaded") + (GetConfigValue("OpacityMap") == 1 ? " [x]" : " [ ]"), Menu_OpacityMap_Faded);
+        opacityMiniMap->AddItem( GetConfigActiveString( "OpacityMap", 0 ) + DICT( "opacitysolid" ),       Menu_OpacityMap_Solid);
+        opacityMiniMap->AddItem( GetConfigActiveString( "OpacityMap", 2 ) + DICT( "opacitytransparent" ), Menu_OpacityMap_Transparent);
+        opacityMiniMap->AddItem( GetConfigActiveString( "OpacityMap", 1 ) + DICT( "opacityfaded" ),       Menu_OpacityMap_Faded);
 
 
         auto visibilityMenu = options->AddItem( DICT( "visibilitymenu" ), 0 );
         auto markerSubMenu = visibilityMenu->AddItem( DICT( "markervisibilitymenu" ), 0 );
         auto markerInGameSubMenu = markerSubMenu->AddItem( DICT( "ingamevisibility" ), 0 );
-        markerInGameSubMenu->AddItem( DICT( "defaultvisibility" ) + ( GetConfigValue( "ShowInGameMarkers" ) == 1 ? " [x]" : " [ ]" ), Menu_MarkerVisibility_InGameMap_Default );
-        markerInGameSubMenu->AddItem( DICT( "forceonvisibility" ) + ( GetConfigValue( "ShowInGameMarkers" ) == 2 ? " [x]" : " [ ]" ), Menu_MarkerVisibility_InGameMap_Force );
-        markerInGameSubMenu->AddItem( DICT( "forceoffvisibility" ) + ( GetConfigValue( "ShowInGameMarkers" ) == 0 ? " [x]" : " [ ]" ), Menu_MarkerVisibility_InGameMap_Off );
+        markerInGameSubMenu->AddItem( GetConfigActiveString( "ShowInGameMarkers", 1 ) + DICT( "defaultvisibility" ) , Menu_MarkerVisibility_InGameMap_Default );
+        markerInGameSubMenu->AddItem( GetConfigActiveString( "ShowInGameMarkers", 2 ) + DICT( "forceonvisibility" ) , Menu_MarkerVisibility_InGameMap_Force );
+        markerInGameSubMenu->AddItem( GetConfigActiveString( "ShowInGameMarkers", 0 ) + DICT( "forceoffvisibility" ), Menu_MarkerVisibility_InGameMap_Off );
         auto markerMiniMapSubMenu = markerSubMenu->AddItem( DICT( "minimapvisibility" ), 0 );
-        markerMiniMapSubMenu->AddItem( DICT( "defaultvisibility" ) + ( GetConfigValue( "ShowMinimapMarkers" ) == 1 ? " [x]" : " [ ]" ), Menu_MarkerVisibility_MiniMap_Default );
-        markerMiniMapSubMenu->AddItem( DICT( "forceonvisibility" ) + ( GetConfigValue( "ShowMinimapMarkers" ) == 2 ? " [x]" : " [ ]" ), Menu_MarkerVisibility_MiniMap_Force );
-        markerMiniMapSubMenu->AddItem( DICT( "forceoffvisibility" ) + ( GetConfigValue( "ShowMinimapMarkers" ) == 0 ? " [x]" : " [ ]" ), Menu_MarkerVisibility_MiniMap_Off );
+        markerMiniMapSubMenu->AddItem( GetConfigActiveString( "ShowMinimapMarkers", 1 ) + DICT( "defaultvisibility" ) , Menu_MarkerVisibility_MiniMap_Default );
+        markerMiniMapSubMenu->AddItem( GetConfigActiveString( "ShowMinimapMarkers", 2 ) + DICT( "forceonvisibility" ) , Menu_MarkerVisibility_MiniMap_Force );
+        markerMiniMapSubMenu->AddItem( GetConfigActiveString( "ShowMinimapMarkers", 0 ) + DICT( "forceoffvisibility" ), Menu_MarkerVisibility_MiniMap_Off );
         auto markerMapSubMenu = markerSubMenu->AddItem( DICT( "mapvisibility" ), 0 );
-        markerMapSubMenu->AddItem( DICT( "defaultvisibility" ) + ( GetConfigValue( "ShowBigmapMarkers" ) == 1 ? " [x]" : " [ ]" ), Menu_MarkerVisibility_BigMap_Default );
-        markerMapSubMenu->AddItem( DICT( "forceonvisibility" ) + ( GetConfigValue( "ShowBigmapMarkers" ) == 2 ? " [x]" : " [ ]" ), Menu_MarkerVisibility_BigMap_Force );
-        markerMapSubMenu->AddItem( DICT( "forceoffvisibility" ) + ( GetConfigValue( "ShowBigmapMarkers" ) == 0 ? " [x]" : " [ ]" ), Menu_MarkerVisibility_BigMap_Off );
+        markerMapSubMenu->AddItem( GetConfigActiveString( "ShowBigmapMarkers", 1 ) + DICT( "defaultvisibility" ) , Menu_MarkerVisibility_BigMap_Default );
+        markerMapSubMenu->AddItem( GetConfigActiveString( "ShowBigmapMarkers", 2 ) + DICT( "forceonvisibility" ) , Menu_MarkerVisibility_BigMap_Force );
+        markerMapSubMenu->AddItem( GetConfigActiveString( "ShowBigmapMarkers", 0 ) + DICT( "forceoffvisibility" ), Menu_MarkerVisibility_BigMap_Off );
         auto trailSubMenu = visibilityMenu->AddItem( DICT( "trailvisibilitymenu" ), 0 );
         auto trailInGameSubMenu = trailSubMenu->AddItem( DICT( "ingamevisibility" ), 0 );
-        trailInGameSubMenu->AddItem( DICT( "defaultvisibility" ) + ( GetConfigValue( "ShowInGameTrails" ) == 1 ? " [x]" : " [ ]" ), Menu_TrailVisibility_InGameMap_Default );
-        trailInGameSubMenu->AddItem( DICT( "forceonvisibility" ) + ( GetConfigValue( "ShowInGameTrails" ) == 2 ? " [x]" : " [ ]" ), Menu_TrailVisibility_InGameMap_Force );
-        trailInGameSubMenu->AddItem( DICT( "forceoffvisibility" ) + ( GetConfigValue( "ShowInGameTrails" ) == 0 ? " [x]" : " [ ]" ), Menu_TrailVisibility_InGameMap_Off );
+        trailInGameSubMenu->AddItem( GetConfigActiveString( "ShowInGameTrails", 1 ) + DICT( "defaultvisibility" ) , Menu_TrailVisibility_InGameMap_Default );
+        trailInGameSubMenu->AddItem( GetConfigActiveString( "ShowInGameTrails", 2 ) + DICT( "forceonvisibility" ) , Menu_TrailVisibility_InGameMap_Force );
+        trailInGameSubMenu->AddItem( GetConfigActiveString( "ShowInGameTrails", 0 ) + DICT( "forceoffvisibility" ), Menu_TrailVisibility_InGameMap_Off );
         auto trailMiniMapSubMenu = trailSubMenu->AddItem( DICT( "minimapvisibility" ), 0 );
-        trailMiniMapSubMenu->AddItem( DICT( "defaultvisibility" ) + ( GetConfigValue( "ShowMinimapTrails" ) == 1 ? " [x]" : " [ ]" ), Menu_TrailVisibility_MiniMap_Default );
-        trailMiniMapSubMenu->AddItem( DICT( "forceonvisibility" ) + ( GetConfigValue( "ShowMinimapTrails" ) == 2 ? " [x]" : " [ ]" ), Menu_TrailVisibility_MiniMap_Force );
-        trailMiniMapSubMenu->AddItem( DICT( "forceoffvisibility" ) + ( GetConfigValue( "ShowMinimapTrails" ) == 0 ? " [x]" : " [ ]" ), Menu_TrailVisibility_MiniMap_Off );
+        trailMiniMapSubMenu->AddItem( GetConfigActiveString( "ShowMinimapTrails", 1 ) + DICT( "defaultvisibility" ) , Menu_TrailVisibility_MiniMap_Default );
+        trailMiniMapSubMenu->AddItem( GetConfigActiveString( "ShowMinimapTrails", 2 ) + DICT( "forceonvisibility" ) , Menu_TrailVisibility_MiniMap_Force );
+        trailMiniMapSubMenu->AddItem( GetConfigActiveString( "ShowMinimapTrails", 0 ) + DICT( "forceoffvisibility" ), Menu_TrailVisibility_MiniMap_Off );
         auto trailMapSubMenu = trailSubMenu->AddItem( DICT( "mapvisibility" ), 0 );
-        trailMapSubMenu->AddItem( DICT( "defaultvisibility" ) + ( GetConfigValue( "ShowBigmapTrails" ) == 1 ? " [x]" : " [ ]" ), Menu_TrailVisibility_BigMap_Default );
-        trailMapSubMenu->AddItem( DICT( "forceonvisibility" ) + ( GetConfigValue( "ShowBigmapTrails" ) == 2 ? " [x]" : " [ ]" ), Menu_TrailVisibility_BigMap_Force );
-        trailMapSubMenu->AddItem( DICT( "forceoffvisibility" ) + ( GetConfigValue( "ShowBigmapTrails" ) == 0 ? " [x]" : " [ ]" ), Menu_TrailVisibility_BigMap_Off );
+        trailMapSubMenu->AddItem( GetConfigActiveString( "ShowBigmapTrails", 1 ) + DICT( "defaultvisibility" ) , Menu_TrailVisibility_BigMap_Default );
+        trailMapSubMenu->AddItem( GetConfigActiveString( "ShowBigmapTrails", 2 ) + DICT( "forceonvisibility" ) , Menu_TrailVisibility_BigMap_Force );
+        trailMapSubMenu->AddItem( GetConfigActiveString( "ShowBigmapTrails", 0 ) + DICT( "forceoffvisibility" ), Menu_TrailVisibility_BigMap_Off );
 
         auto utils = ctx->AddItem(DICT("tacticalutilities"), 0);
         utils->AddItem(DICT("reloadmarkers"), Menu_ReloadMarkers);
         utils->AddItem(DICT("removemymarkers"), 0)->AddItem(DICT("reallyremovemarkers"), Menu_DeleteMyMarkers);
       }
-      ctx->AddItem( DICT( "toggletactical" ) + ( GetConfigValue( "TacticalLayerVisible" ) ? " [x]" : " [ ]" ) + GetKeybindString(TacOKeyAction::Toggle_tactical_layer), Menu_ToggleTactical );
+      ctx->AddItem( GetConfigActiveString( "TacticalLayerVisible" ) + GetKeybindString( TacOKeyAction::Toggle_tactical_layer ) + DICT( "toggletactical" ), Menu_ToggleTactical );
 
       ctx->AddSeparator();
 
@@ -353,7 +361,7 @@ TBOOL GW2TacO::MessageProc( CWBMessage &Message )
       }
       else
       {
-        ctx->AddItem(DICT("togglerangecircles") + (GetConfigValue("RangeCirclesVisible") ? " [x]" : " [ ]") + GetKeybindString(TacOKeyAction::Toggle_range_circles), Menu_ToggleRangeCircles);
+        ctx->AddItem( GetConfigActiveString( "RangeCirclesVisible" ) + GetKeybindString( TacOKeyAction::Toggle_range_circles ) + DICT( "togglerangecircles" ), Menu_ToggleRangeCircles );
         if (GetConfigValue("RangeCirclesVisible"))
         {
           auto trns = ctx->AddItem(DICT("rangevisibility"), 0);
@@ -361,31 +369,31 @@ TBOOL GW2TacO::MessageProc( CWBMessage &Message )
           trns->AddItem("60%", Menu_RangeCircleTransparency60);
           trns->AddItem("100%", Menu_RangeCircleTransparency100);
           auto ranges = ctx->AddItem(DICT("toggleranges"), 0);
-          ranges->AddItem(GetConfigValue("RangeCircle90") ? "90 [x]" : "90 [ ]", Menu_ToggleRangeCircle90, false, false);
-          ranges->AddItem(GetConfigValue("RangeCircle120") ? "120 [x]" : "120 [ ]", Menu_ToggleRangeCircle120, false, false);
-          ranges->AddItem(GetConfigValue("RangeCircle180") ? "180 [x]" : "180 [ ]", Menu_ToggleRangeCircle180, false, false);
-          ranges->AddItem(GetConfigValue("RangeCircle240") ? "240 [x]" : "240 [ ]", Menu_ToggleRangeCircle240, false, false);
-          ranges->AddItem(GetConfigValue("RangeCircle300") ? "300 [x]" : "300 [ ]", Menu_ToggleRangeCircle300, false, false);
-          ranges->AddItem(GetConfigValue("RangeCircle400") ? "400 [x]" : "400 [ ]", Menu_ToggleRangeCircle400, false, false);
-          ranges->AddItem(GetConfigValue("RangeCircle600") ? "600 [x]" : "600 [ ]", Menu_ToggleRangeCircle600, false, false);
-          ranges->AddItem(GetConfigValue("RangeCircle900") ? "900 [x]" : "900 [ ]", Menu_ToggleRangeCircle900, false, false);
-          ranges->AddItem(GetConfigValue("RangeCircle1200") ? "1200 [x]" : "1200 [ ]", Menu_ToggleRangeCircle1200, false, false);
-          ranges->AddItem(GetConfigValue("RangeCircle1500") ? "1500 [x]" : "1500 [ ]", Menu_ToggleRangeCircle1500, false, false);
-          ranges->AddItem(GetConfigValue("RangeCircle1600") ? "1600 [x]" : "1600 [ ]", Menu_ToggleRangeCircle1600, false, false);
+          ranges->AddItem( GetConfigActiveString( "RangeCircle90" ) + "90", Menu_ToggleRangeCircle90, false, false );
+          ranges->AddItem( GetConfigActiveString( "RangeCircle120" ) + "120", Menu_ToggleRangeCircle120, false, false );
+          ranges->AddItem( GetConfigActiveString( "RangeCircle180" ) + "180", Menu_ToggleRangeCircle180, false, false );
+          ranges->AddItem( GetConfigActiveString( "RangeCircle240" ) + "240", Menu_ToggleRangeCircle240, false, false );
+          ranges->AddItem( GetConfigActiveString( "RangeCircle300" ) + "300", Menu_ToggleRangeCircle300, false, false );
+          ranges->AddItem( GetConfigActiveString( "RangeCircle400" ) + "400", Menu_ToggleRangeCircle400, false, false );
+          ranges->AddItem( GetConfigActiveString( "RangeCircle600" ) + "600", Menu_ToggleRangeCircle600, false, false );
+          ranges->AddItem( GetConfigActiveString( "RangeCircle900" ) + "900", Menu_ToggleRangeCircle900, false, false );
+          ranges->AddItem( GetConfigActiveString( "RangeCircle1200" ) + "1200", Menu_ToggleRangeCircle1200, false, false );
+          ranges->AddItem( GetConfigActiveString( "RangeCircle1500" ) + "1500", Menu_ToggleRangeCircle1500, false, false );
+          ranges->AddItem( GetConfigActiveString( "RangeCircle1600" ) + "1600", Menu_ToggleRangeCircle1600, false, false );
         }
       }
 
       ctx->AddSeparator();
 
-      ctx->AddItem( DICT( "togglecompass" ) + ( GetConfigValue( "TacticalCompassVisible" ) ? " [x]" : " [ ]" ) + GetKeybindString(TacOKeyAction::Toggle_tactical_compass), Menu_ToggleTacticalCompass );
-      ctx->AddItem( DICT( "toggleloctimers" ) + ( GetConfigValue( "LocationalTimersVisible" ) ? " [x]" : " [ ]" ) + GetKeybindString(TacOKeyAction::Toggle_locational_timers), Menu_ToggleLocationalTimers );
-      ctx->AddItem( DICT( "togglehpgrid" ) + ( GetConfigValue( "HPGridVisible" ) ? " [x]" : " [ ]" ) + GetKeybindString(TacOKeyAction::Toggle_hp_grids), Menu_ToggleHPGrid );
+      ctx->AddItem( GetConfigActiveString( "TacticalCompassVisible" ) + GetKeybindString(TacOKeyAction::Toggle_tactical_compass) + DICT( "togglecompass" ), Menu_ToggleTacticalCompass );
+      ctx->AddItem( GetConfigActiveString( "LocationalTimersVisible" ) + GetKeybindString(TacOKeyAction::Toggle_locational_timers) + DICT( "toggleloctimers" ), Menu_ToggleLocationalTimers );
+      ctx->AddItem( GetConfigActiveString( "HPGridVisible" ) + GetKeybindString(TacOKeyAction::Toggle_hp_grids) + DICT( "togglehpgrid" ), Menu_ToggleHPGrid );
       //ctx->AddItem( GetConfigValue( "Vsync" ) ? "Toggle TacO Vsync [x]" : "Toggle TacO Vsync [ ]", Menu_ToggleVsync );
       ctx->AddSeparator();
-      ctx->AddItem( DICT( "togglemousehighlight" ) + ( GetConfigValue( "MouseHighlightVisible" ) ? " [x]" : " [ ]" ) + GetKeybindString(TacOKeyAction::Toggle_mouse_highlight), Menu_ToggleHighLight );
+      ctx->AddItem( GetConfigActiveString( "MouseHighlightVisible" ) + GetKeybindString( TacOKeyAction::Toggle_mouse_highlight ) + DICT( "togglemousehighlight" ), Menu_ToggleHighLight );
       if ( GetConfigValue( "MouseHighlightVisible" ) )
       {
-        ctx->AddItem( DICT( "togglemouseoutline" ) + ( GetConfigValue( "MouseHighlightOutline" ) ? " [x]" : " [ ]" ), Menu_ToggleMouseHighlightOutline );
+        ctx->AddItem( GetConfigActiveString( "MouseHighlightOutline" ) + DICT( "togglemouseoutline" ), Menu_ToggleMouseHighlightOutline );
         auto cols = ctx->AddItem( DICT( "mousecolor" ), 0 );
 
         extern CString CGAPaletteNames[];
@@ -408,7 +416,7 @@ TBOOL GW2TacO::MessageProc( CWBMessage &Message )
       ctx->AddItem( (IsWindowOpen( "MapTimer" ) ? DICT( "closemaptimer" ) : DICT( "openmaptimer" )) + GetKeybindString(TacOKeyAction::Toggle_map_timer), Menu_ToggleMapTimer );
       if ( IsWindowOpen( "MapTimer" ) )
       {
-        ctx->AddItem( DICT( "compactmaptimer" ) + ( GetConfigValue( "MapTimerCompact" ) ? " [x]" : " [ ]" ), Menu_ToggleCompactMapTimer );
+        ctx->AddItem( GetConfigActiveString( "MapTimerCompact" ) + DICT( "compactmaptimer" ), Menu_ToggleCompactMapTimer );
 
         GW2MapTimer *timer = (GW2MapTimer *)App->GetRoot()->FindChildByID( "MapTimer", "maptimer" );
 
@@ -424,7 +432,7 @@ TBOOL GW2TacO::MessageProc( CWBMessage &Message )
             if ( HasConfigValue( str.GetPointer() ) )
               open = GetConfigValue( str.GetPointer() );
 
-            itm->AddItem( open ? ( timer->maps[ x ].name + " [x]" ).GetPointer() : ( timer->maps[ x ].name + " [ ]" ).GetPointer(), Menu_ToggleMapTimerMap + x, open, false );
+            itm->AddItem( open ? ( "[x] " + timer->maps[ x ].name ).GetPointer() : ( "[ ] " + timer->maps[ x ].name ).GetPointer(), Menu_ToggleMapTimerMap + x, open, false );
           }
         }
 
@@ -434,7 +442,7 @@ TBOOL GW2TacO::MessageProc( CWBMessage &Message )
       auto markerEditor = ctx->AddItem( (IsWindowOpen( "MarkerEditor" ) ? DICT( "closemarkereditor" ) : DICT( "openmarkereditor" )) + GetKeybindString(TacOKeyAction::Toggle_marker_editor), Menu_ToggleMarkerEditor );
       if ( IsWindowOpen( "MarkerEditor" ) )
       {
-        markerEditor->AddItem( DICT( "autohidemarkereditor" ) + ( GetConfigValue( "AutoHideMarkerEditor" ) ? " [x]" : " [ ]" ), Menu_ToggleAutoHideMarkerEditor );
+        markerEditor->AddItem( GetConfigActiveString( "AutoHideMarkerEditor" ) + DICT( "autohidemarkereditor" ) , Menu_ToggleAutoHideMarkerEditor );
         markerEditor->AddSeparator();
         int cnt = 1;
         for ( TS32 x = 1; x < sizeof( ActionNames ) / sizeof( CString ); x++ )
@@ -443,7 +451,7 @@ TBOOL GW2TacO::MessageProc( CWBMessage &Message )
           for ( TS32 y = 0; y < KeyBindings.NumItems(); y++ )
             if ( (TS32)KeyBindings.GetByIndex( y ) == x )
             {
-              str = DICT( ActionNames[ x ] ) + CString::Format( " [%c]", KeyBindings.GetKDPair( y )->Key );
+              str = CString::Format( "[%c] ", KeyBindings.GetKDPair( y )->Key ) + DICT( ActionNames[ x ] );
               break;
             }
 
@@ -482,7 +490,7 @@ TBOOL GW2TacO::MessageProc( CWBMessage &Message )
 
       if ( IsWindowOpen( "RaidProgress" ) )
       {
-        raid->AddItem( DICT( "raidwindow_compact" ) + ( GetConfigValue( "CompactRaidWindow" ) ? " [x]" : " [ ]" ), Menu_ToggleCompactRaids );        
+        raid->AddItem( GetConfigActiveString( "CompactRaidWindow" ) + DICT( "raidwindow_compact" ) , Menu_ToggleCompactRaids );
         auto* rp = FindChildByID<RaidProgress>( "RaidProgressView" );
         if ( rp )
         {
@@ -500,29 +508,29 @@ TBOOL GW2TacO::MessageProc( CWBMessage &Message )
       auto tpTracker = ctx->AddItem( (IsWindowOpen( "TPTracker" ) ? DICT( "closetptracker" ) : DICT( "opentptracker" )) + GetKeybindString(TacOKeyAction::Toggle_tp_tracker), Menu_ToggleTPTracker );
       if ( IsWindowOpen( "TPTracker" ) )
       {
-        tpTracker->AddItem( DICT( "tptracker_onlyoutbid" ) + ( GetConfigValue( "TPTrackerOnlyShowOutbid" ) ? " [x]" : " [ ]" ), Menu_ToggleTPTracker_OnlyOutbid );
-        tpTracker->AddItem( DICT( "tptracker_showbuys" ) + ( GetConfigValue( "TPTrackerShowBuys" ) ? " [x]" : " [ ]" ), Menu_ToggleTPTracker_ShowBuys );
-        tpTracker->AddItem( DICT( "tptracker_showsells" ) + ( GetConfigValue( "TPTrackerShowSells" ) ? " [x]" : " [ ]" ), Menu_ToggleTPTracker_ShowSells );
-        tpTracker->AddItem( DICT( "tptracker_nextsellonly" ) + ( GetConfigValue( "TPTrackerNextSellOnly" ) ? " [x]" : " [ ]" ), Menu_ToggleTPTracker_OnlyNextFulfilled );
+        tpTracker->AddItem( GetConfigActiveString( "TPTrackerOnlyShowOutbid" ) + DICT( "tptracker_onlyoutbid" ), Menu_ToggleTPTracker_OnlyOutbid );
+        tpTracker->AddItem( GetConfigActiveString( "TPTrackerShowBuys" ) + DICT( "tptracker_showbuys" ), Menu_ToggleTPTracker_ShowBuys );
+        tpTracker->AddItem( GetConfigActiveString( "TPTrackerShowSells" ) + DICT( "tptracker_showsells" ), Menu_ToggleTPTracker_ShowSells );
+        tpTracker->AddItem( GetConfigActiveString( "TPTrackerNextSellOnly" ) + DICT( "tptracker_nextsellonly" ), Menu_ToggleTPTracker_OnlyNextFulfilled );
       }
       ctx->AddSeparator();
       extern TBOOL IsTacOUptoDate;
       
       auto settings = ctx->AddItem( DICT( "tacosettings" ), Menu_TacOSettings );
-      settings->AddItem(DICT("togglewindoweditmode") + (GetConfigValue("EditMode") ? " [x]" : " [ ]") + GetKeybindString(TacOKeyAction::Toggle_window_edit_mode), Menu_ToggleEditMode);
+      settings->AddItem( GetConfigActiveString( "EditMode" ) + GetKeybindString( TacOKeyAction::Toggle_window_edit_mode ) + DICT( "togglewindoweditmode" ), Menu_ToggleEditMode );
       settings->AddSeparator();
 
-      settings->AddItem( DICT( "toggleupdatecheck" ) + ( GetConfigValue( "CheckForUpdates" ) ? " [x]" : " [ ]" ), Menu_ToggleVersionCheck );
+      settings->AddItem( GetConfigActiveString( "CheckForUpdates" ) + DICT( "toggleupdatecheck" ), Menu_ToggleVersionCheck );
 
-      settings->AddItem( DICT( "hideonload" ) + ( GetConfigValue( "HideOnLoadingScreens" ) ? " [x]" : " [ ]" ), Menu_HideOnLoadingScreens );
-      settings->AddItem( DICT( "closewithgw2" ) + ( GetConfigValue( "CloseWithGW2" ) ? " [x]" : " [ ]" ), Menu_ToggleGW2ExitMode );
-      settings->AddItem( DICT( "toggleinfoline" ) + ( GetConfigValue( "InfoLineVisible" ) ? " [x]" : " [ ]" ), Menu_ToggleInfoLine );
-      settings->AddItem( DICT( "toggleforcedpiaware" ) + ( GetConfigValue( "ForceDPIAware" ) ? " [x]" : " [ ]" ), Menu_ToggleForceDPIAware );
-      settings->AddItem( DICT( "enabletpnotificationicon" ) + ( GetConfigValue( "EnableTPNotificationIcon" ) ? " [x]" : " [ ]" ), Menu_ToggleShowNotificationIcon );
-      settings->AddItem( DICT( "togglecrashoptout" ) + ( GetConfigValue( "SendCrashDump" ) ? " [x]" : " [ ]" ), Menu_OptOutFromCrashReports );
+      settings->AddItem( GetConfigActiveString( "HideOnLoadingScreens" ) + DICT( "hideonload" ), Menu_HideOnLoadingScreens );
+      settings->AddItem( GetConfigActiveString( "CloseWithGW2" ) + DICT( "closewithgw2" ), Menu_ToggleGW2ExitMode );
+      settings->AddItem( GetConfigActiveString( "InfoLineVisible" ) + DICT( "toggleinfoline" ), Menu_ToggleInfoLine );
+      settings->AddItem( GetConfigActiveString( "ForceDPIAware" ) + DICT( "toggleforcedpiaware" ), Menu_ToggleForceDPIAware );
+      settings->AddItem( GetConfigActiveString( "EnableTPNotificationIcon" ) + DICT( "enabletpnotificationicon" ), Menu_ToggleShowNotificationIcon );
+      settings->AddItem( GetConfigActiveString( "SendCrashDump" ) + DICT( "togglecrashoptout" ), Menu_OptOutFromCrashReports );
 
       settings->AddSeparator();
-      settings->AddItem(DICT("togglekeybinds") + (GetConfigValue("KeybindsEnabled") ? " [x]" : " [ ]"), Menu_KeyBindsEnabled);
+      settings->AddItem( GetConfigActiveString( "KeybindsEnabled" ) + DICT( "togglekeybinds" ), Menu_KeyBindsEnabled );
       auto bind = settings->AddItem( DICT( "rebindkeys" ), 0 );
       int cnt = 1;
       for ( TS32 x = 1; x < sizeof( ActionNames ) / sizeof( CString ); x++ )
