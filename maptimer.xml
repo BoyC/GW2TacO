@@ -231,4 +231,28 @@
     <Event Name="Raven Shrines" Length="10" Color="8065b0e8"/>
     <Event Name="Shards and Construct" Length="10" Color="804199d8"/>
   </Map>
+  <Map Name="Cantha Time" Length="120" Start="35" id="canthatime">
+    <Event Name=""  Length="5"  Color="8066696f"/>
+    <Event Name="Cantha Day"   Length="55" Color="80efe521"/>
+    <Event Name=""  Length="5"  Color="8066696f"/>
+    <Event Name="Cantha Night" Length="55" Color="80587792"/>
+  </Map>
+  <Map Name="Seitung Province" Length="120" Start="90" id="csp">
+    <Event Name="Aetherblade Assult" Length="30" Color="8042C8D7"/>
+    <Event Name="" Length="90" Color="008AEAF4"/>
+  </Map>
+  <Map Name="New Kaineng City" Length="120" Start="0" id="cnkc">
+    <Event Name="Kaineng Blackout" Length="40" Color="8042C8D7"/>
+    <Event Name="" Length="80" Color="008AEAF4"/>
+  </Map>
+  <Map Name="Echovald Wilds" Length="120" Start="30" id="ctew">
+    <Event Name="Gang War" Length="35" Color="8042C8D7"/>
+    <Event Name="" Length="35" Color="008AEAF4"/>
+    <Event Name="Research Facility" Length="20" Color="808AEAF4"/>
+    <Event Name="" Length="30" Color="008AEAF4"/>
+  </Map>
+  <Map Name="Dragon's End" Length="120" Start="0" id="cde">
+    <Event Name="Preparations" Length="60" Color="808AEAF4"/>
+    <Event Name="Battle for the Jade Sea" Length="60" Color="8042C8D7"/>
+  </Map>
 </GW2MapTimer>
