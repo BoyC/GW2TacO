@@ -166,6 +166,7 @@ enum MainMenuItems
   Menu_TogglePOIInfoText,
   Menu_Crash,
   Menu_OptOutFromCrashReports,
+  Menu_ToggleClipboardAccess,
 
   Menu_OpacityIngame_Solid,
   Menu_OpacityIngame_Transparent,
@@ -297,6 +298,7 @@ TBOOL GW2TacO::MessageProc( CWBMessage &Message )
         options->AddItem( DICT( "togglefadeoutbubble" ) + ( GetConfigValue( "FadeoutBubble" ) ? " [x]" : " [ ]" ), Menu_ToggleFadeoutBubble );
         options->AddItem(DICT("togglemetricsystem") + (GetConfigValue("UseMetricDisplay") ? " [x]" : " [ ]"), Menu_ToggleMetricSystem);
         options->AddItem(DICT("toggletacticalinfotext") + (GetConfigValue("TacticalInfoTextVisible") ? " [x]" : " [ ]"), Menu_TogglePOIInfoText);
+        options->AddItem( DICT( "toggleclipboardaccess" ) + ( GetConfigValue( "CanWriteToClipboard" ) ? " [x]" : " [ ]" ), Menu_ToggleClipboardAccess );
 
         auto opacityMenu = options->AddItem(DICT("markeropacity"), 0);
         auto opacityInGame = opacityMenu->AddItem(DICT("ingameopacity"), 0);
@@ -1002,6 +1004,9 @@ TBOOL GW2TacO::MessageProc( CWBMessage &Message )
     case Menu_TogglePOIInfoText:
       ToggleConfigValue("TacticalInfoTextVisible");
       return true;
+    case Menu_ToggleClipboardAccess:
+      ToggleConfigValue( "CanWriteToClipboard" );
+      return true;
     case Menu_Crash:
     {
       for ( int x = 0; x < 0xbadc0de; x++ )
@@ -1221,7 +1226,7 @@ TBOOL GW2TacO::MessageProc( CWBMessage &Message )
         return true;
       case TacOKeyAction::ActivatePOI:
       {
-        UpdatePOI();
+        UpdatePOI( App );
         return true;
       }
       case TacOKeyAction::EditNotepad:

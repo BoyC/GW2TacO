@@ -1048,6 +1048,9 @@ INT WINAPI WinMain( _In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
   if ( !HasConfigValue( "SendCrashDump" ) )
     SetConfigValue( "SendCrashDump", 1 );
 
+  if ( !HasConfigValue( "CanWriteToClipboard" ) )
+    SetConfigValue( "CanWriteToClipboard", 1 );  
+
   SetConfigValue( "LogTrails", 0 );
 
   //CString apidata = FetchHTTP( L"api.guildwars2.com", L"/v2/continents?ids=all" );

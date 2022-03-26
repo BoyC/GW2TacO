@@ -89,6 +89,47 @@ void FindClosestRouteMarkers( TBOOL force )
   }
 }
 
+void TriggerCopyPasteWithMessage( CWBApplication* App, int copy, int copyMessage )
+{
+  if ( !GetConfigValue( "CanWriteToClipboard" ) )
+    return;
+
+  GW2TacticalDisplay* tactical = (GW2TacticalDisplay*)App->GetRoot()->FindChildByID( _T( "tactical" ), _T( "gw2tactical" ) );
+  if ( tactical )
+    tactical->TriggerBigMessage( copyMessage );
+
+  // copy to clipboard here
+
+  if ( OpenClipboard( (HWND)App->GetHandle() ) )
+  {
+    EmptyClipboard();
+
+    CString out = GetStringFromMap( copy );
+
+    HGLOBAL clipbuffer = GlobalAlloc( GMEM_DDESHARE | GHND, ( out.Length() + 1 ) * sizeof( TCHAR ) );
+
+    if ( clipbuffer )
+    {
+      TCHAR* buffer = (TCHAR*)GlobalLock( clipbuffer );
+      if ( buffer )
+      {
+        memcpy( buffer, out.GetPointer(), sizeof( TCHAR ) * out.Length() );
+        buffer[ out.Length() ] = 0;
+      }
+
+      GlobalUnlock( clipbuffer );
+
+#ifndef  UNICODE
+      SetClipboardData( CF_TEXT, clipbuffer );
+#else
+      SetClipboardData( CF_UNICODETEXT, clipbuffer );
+#endif
+    }
+
+    CloseClipboard();
+  }
+}
+
 GW2TacticalCategory *GetCategory( CString s )
 {
   s.ToLower();
@@ -558,10 +599,7 @@ void GW2TacticalDisplay::DrawPOI( CWBDrawAPI *API, const tm& ptm, const time_t& 
     TF32 dist = ( poi.position - mumbleLink.charPosition ).Length();
 
     if ( dist <= poi.typeData.triggerRange )
-    {
       triggeredPOI = &poi;
-      triggerTimer = globalTimer.GetTime();
-    }
   }
 
   if ( poi.typeData.info >= 0 )
@@ -970,10 +1008,9 @@ void GW2TacticalDisplay::OnDraw( CWBDrawAPI *API )
 
   CString infoText;
 
-  TS64 prevtriggerTimer = triggerTimer;
   POI* prevtriggeredPOI = triggeredPOI;
   triggeredPOI = nullptr;
-  TS32 prevcopyText = copyText;
+  TS32 prevcopyText = bigMessage;
 
   if ( showIngameMarkers > 0 )
     for ( int x = 0; x < mapPOIs.NumItems(); x++ )
@@ -985,46 +1022,13 @@ void GW2TacticalDisplay::OnDraw( CWBDrawAPI *API )
 
   if ( prevtriggeredPOI == triggeredPOI )
   {
-    triggerTimer = prevtriggerTimer;
     triggeredPOI = prevtriggeredPOI;
   }
   else
   {
     if ( triggeredPOI && triggeredPOI->typeData.copy != -1 )
     {
-      if ( triggeredPOI->typeData.copyMessage != -1 )
-        copyText = triggeredPOI->typeData.copyMessage;
-      
-      // copy to clipboard here
-
-      if ( OpenClipboard( (HWND)App->GetHandle() ) )
-      {
-        EmptyClipboard();
-
-        CString out = GetStringFromMap( triggeredPOI->typeData.copy );
-
-        HGLOBAL clipbuffer = GlobalAlloc( GMEM_DDESHARE | GHND, ( out.Length() + 1 ) * sizeof( TCHAR ) );
-
-        if ( clipbuffer )
-        {
-          TCHAR* buffer = (TCHAR*)GlobalLock( clipbuffer );
-          if ( buffer )
-          {
-            memcpy( buffer, out.GetPointer(), sizeof( TCHAR ) * out.Length() );
-            buffer[ out.Length() ] = 0;
-          }
-
-          GlobalUnlock( clipbuffer );
-
-#ifndef  UNICODE
-          SetClipboardData( CF_TEXT, clipbuffer );
-#else
-          SetClipboardData( CF_UNICODETEXT, clipbuffer );
-#endif
-        }
-
-        CloseClipboard();
-      }
+      TriggerCopyPasteWithMessage( App, triggeredPOI->typeData.copy, triggeredPOI->typeData.copyMessage );
     }
   }
 
@@ -1090,24 +1094,27 @@ void GW2TacticalDisplay::OnDraw( CWBDrawAPI *API )
     font->Write(API, infoText, CPoint(int((GetClientRect().Width() - width) / 2.0f), int(GetClientRect().Height() * 0.15f)));
   }
 
-  auto time = globalTimer.GetTime() - triggerTimer;
-  if ( time >= 0 && time < 3000 && copyText != -1 )
+  if ( bigMessage != -1 )
   {
-    auto& string = GetStringFromMap( copyText );
-    auto timer = App->GetRoot()->FindChildByID( "locationaltimer" );
-    if ( timer )
+    auto time = globalTimer.GetTime() - bigMessageStart;
+    if ( time >= 0 && time < bigMessageLength && bigMessage != -1 )
     {
-      auto f = timer->GetFont( GetState() );
-      float alpha = max( 0, ( 1000 - max( 0, time - 2000 ) ) / 1000.0f );
-      TS32 ypos = Lerp( GetClientRect().y1, GetClientRect().y2, 0.25f );
+      auto& string = GetStringFromMap( bigMessage );
+      auto timer = App->GetRoot()->FindChildByID( "locationaltimer" );
+      if ( timer )
+      {
+        auto f = timer->GetFont( GetState() );
+        float alpha = max( 0, ( 1000 - max( 0, time - bigMessageLength + 1000 ) ) / 1000.0f );
+        TS32 ypos = Lerp( GetClientRect().y1, GetClientRect().y2, 0.25f );
 
-      CPoint pos = f->GetTextPosition( string, CRect( GetClientRect().x1, ypos, GetClientRect().x2, ypos ), WBTA_CENTERX, WBTA_CENTERY, WBTT_NONE, true );
-      ypos += f->GetLineHeight();
-      f->Write( API, string, pos, CColor( 255, 255, 255, (unsigned char)( 255 * alpha ) ) );
+        CPoint pos = f->GetTextPosition( string, CRect( GetClientRect().x1, ypos, GetClientRect().x2, ypos ), WBTA_CENTERX, WBTA_CENTERY, WBTT_NONE, true );
+        ypos += f->GetLineHeight();
+        f->Write( API, string, pos, CColor( 255, 255, 255, (unsigned char)( 255 * alpha ) ) );
+      }
     }
+    if ( time > bigMessageLength )
+      bigMessage = -1;
   }
-  if ( time > 3000 )
-    copyText = -1;
 }
 
 CDictionary<TS32, Achievement> GW2TacticalDisplay::achievements;
@@ -1152,6 +1159,12 @@ void GW2TacticalDisplay::RemoveUserMarkersFromMap()
   }
 
   ExportPOIS();
+}
+
+void GW2TacticalDisplay::TriggerBigMessage( TS32 messageString )
+{
+  bigMessageStart = globalTimer.GetTime();
+  bigMessage = messageString;
 }
 
 TBOOL FindSavedCategory( GW2TacticalCategory *t )
@@ -1737,7 +1750,7 @@ void DeletePOI()
   }
 }
 
-void UpdatePOI()
+void UpdatePOI( CWBApplication* App )
 {
   if ( !mumbleLink.IsValid() ) return;
 
@@ -1787,6 +1800,9 @@ void UpdatePOI()
         ExportPOIActivationData();
         found = true;
       }
+
+      if ( cpoi.typeData.copy != -1 )
+        TriggerCopyPasteWithMessage( App, cpoi.typeData.copy, cpoi.typeData.copyMessage );
     }
   }
   //ExportPOIS();

@@ -217,9 +217,10 @@ class GW2TacticalDisplay : public CWBItem
   TS32 lastFetchTime = 0;
   std::thread fetchThread;
 
-  TS64 triggerTimer = 0;
+  TS64 bigMessageStart = 0;
+  int bigMessageLength = 3000;
   POI* triggeredPOI = nullptr;
-  TS32 copyText = -1;
+  TS32 bigMessage = -1;
 
 public:
 
@@ -234,7 +235,7 @@ public:
 
   virtual TBOOL IsMouseTransparent( CPoint &ClientSpacePoint, WBMESSAGE MessageType );
   void RemoveUserMarkersFromMap();
-
+  void TriggerBigMessage( TS32 messageString );
 };
 
 class GW2TacticalCategory
@@ -275,7 +276,7 @@ public:
 
 void AddPOI( CWBApplication *App );
 void DeletePOI();
-void UpdatePOI();
+void UpdatePOI( CWBApplication* App );
 void ImportPOIS( CWBApplication *App );
 void ExportPOIS();
 void ImportPOIActivationData();
