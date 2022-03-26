@@ -221,7 +221,6 @@
     <Event Name="Oooze Pits" Length="34" Color="80f0380e"/>
     <Event Name="Metal Concert" Length="31" Color="80f55b38"/>
   </Map>
-
   <Map Name="Bjora Marches" Length="120" Start="0" id="s5e2bm">
     <Event Name="Icebrood Champions" Length="15" Color="8065b0e8"/>
     <Event Name="" Length="45" Color="00000000"/>
@@ -231,6 +230,12 @@
     <Event Name="Raven Shrines" Length="10" Color="8065b0e8"/>
     <Event Name="Shards and Construct" Length="10" Color="804199d8"/>
   </Map>
+
+  <Map Name="Dragonstorm" Length="120" Start="60" id="s5e5ds">
+    <Event Name="Dragonstorm" Length="20" Color="8079afff"/>
+    <Event Name="" Length="100" Color="00000000"/>
+  </Map>
+
   <Map Name="Cantha Time" Length="120" Start="35" id="canthatime">
     <Event Name=""  Length="5"  Color="8066696f"/>
     <Event Name="Cantha Day"   Length="55" Color="80efe521"/>
