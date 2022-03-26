@@ -96,7 +96,15 @@ TBOOL CXMLDocument::SaveToFile(TCHAR * sz)
 	CString s = SaveToString();
 
 	HANDLE h = CreateFile(sz, GENERIC_WRITE, NULL, NULL, CREATE_ALWAYS, NULL, NULL);
-	if (h == INVALID_HANDLE_VALUE) return false;
+	if (h == INVALID_HANDLE_VALUE) 
+    return false;
+
+  if ( !s.Length() )
+  {
+    CloseHandle( h );
+    return;
+  }
+
 	char * sz8 = new char[s.Length() * 3];
 	s.WriteAsMultiByte(sz8, s.Length() * 3);
 	DWORD b;
