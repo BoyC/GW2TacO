@@ -119,8 +119,10 @@ public:
 
   TS32 AddUnique( const ItemType &Item )
   {
-    auto idx = Find( Item );
-    if ( idx != -1 ) return idx;
+    for ( TS32 x = ItemCount-1; x >= 0; x-- )
+      if ( Array[ x ] == Item )
+        return x;
+
     Add( Item );
     return ItemCount - 1;
   }

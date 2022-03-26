@@ -37,6 +37,7 @@ class CStreamWriterMemory : public CStreamWriter
 
 public:
   CStreamWriterMemory();
+  CStreamWriterMemory( int baseSize );
   virtual ~CStreamWriterMemory();
 
   TU8 *GetData();

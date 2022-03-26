@@ -166,6 +166,13 @@ CStreamWriterMemory::CStreamWriterMemory() : CStreamWriter()
   DataLength = 0;
 }
 
+CStreamWriterMemory::CStreamWriterMemory( int baseSize )
+{
+  Data = new TU8[ baseSize ];
+  BufferSize = baseSize;
+  DataLength = 0;
+}
+
 CStreamWriterMemory::~CStreamWriterMemory()
 {
   SAFEDELETEA( Data );
