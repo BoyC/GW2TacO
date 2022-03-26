@@ -830,7 +830,7 @@ void GW2Trail::Build( CCoreDevice* d, TS32 mapID, float* points, int pointCount 
 
   TS32* idxData;
 
-  if ( idxBuf->Lock( (void**)&idxData ) )
+  if ( idxBuf && idxBuf->Lock( (void**)&idxData ) )
   {
     memcpy( idxData, indices, sizeof( TS32 ) * 6 * ( pointCount - 1 ) );
     //int cnt = 0;

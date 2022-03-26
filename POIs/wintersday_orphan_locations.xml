@@ -1,6 +1,6 @@
 <OverlayData>
   <MarkerCategory name="Repeatable"> 
-    <MarkerCategory name="WintersDayOrphan" iconFile="data/karma.png" behavior="2" defaulttoggle="0"/>
+    <MarkerCategory name="WintersDayOrphan" iconFile="data/karma.png" behavior="2"/>
   </MarkerCategory>
 
   <POIs>
