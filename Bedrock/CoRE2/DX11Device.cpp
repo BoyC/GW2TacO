@@ -316,9 +316,15 @@ TBOOL CCoreDX11Device::CreateDirectCompositionSwapchain( const TU32 hWnd, const 
   //res = dxgiFactory->CreateSwapChain( Device, (DXGI_SWAP_CHAIN_DESC*)&swapChainDesc, (IDXGISwapChain**)&SwapChain );
   if ( res != S_OK )
   {
-    _com_error error( res );
-    LOG( LOG_ERROR, _T( "[core] DirectX11 SwapChain creation failed (%s)" ), error.ErrorMessage() );
-    return false;
+    swapChainDesc.Flags = 0;
+    res = dxgiFactory->CreateSwapChainForComposition( Device, &swapChainDesc, nullptr, &SwapChain );
+
+    if ( res != S_OK )
+    {
+      _com_error error( res );
+      LOG( LOG_ERROR, _T( "[core] DirectX11 SwapChain creation failed (%s)" ), error.ErrorMessage() );
+      return false;
+    }
   }
 
   IDCompositionDevice* dcompDevice = nullptr;

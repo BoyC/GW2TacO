@@ -102,7 +102,7 @@ TBOOL CXMLDocument::SaveToFile(TCHAR * sz)
   if ( !s.Length() )
   {
     CloseHandle( h );
-    return;
+    return true;
   }
 
 	char * sz8 = new char[s.Length() * 3];
