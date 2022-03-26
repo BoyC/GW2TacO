@@ -63,5 +63,7 @@
     <POI MapID="1015" type="collectible.goldenlostbadges" xpos="-440.667" ypos="27.13" zpos="-123.067" GUID="z+OWDoi6MEa5Xg1oh4eq5w=="/>
   
     <POI MapID="1015" type="collectible.goldenlostbadges" xpos="410.315" ypos="300.78" zpos="166.161" GUID="Ofrs5YjVq0O7ljW1dLL2eQ=="/>
+
+    <POI MapID="1015" xpos="-501.24" ypos="331.169" zpos="-354.695" type="collectible.goldenlostbadges" GUID="qd0umpMmN0ejJfDjGc4lfA=="/>
   </POIs>
 </OverlayData>
