@@ -62,6 +62,9 @@ struct MarkerTypeData
     TBOOL infoRangeSaved : 1;
     TBOOL copySaved : 1;
     TBOOL copyMessageSaved : 1;
+    TBOOL defaultToggleSaved : 1;
+    TBOOL defaultToggle : 1;
+    TBOOL defaultToggleLoaded : 1;
   } bits;
 
   MarkerTypeData();
@@ -264,6 +267,7 @@ public:
 
   static bool visibilityCached;
   void CalculateVisibilityCache();
+  void SetDefaultToggleValues();
 
   bool hiddenFromContextMenu = false;
   int markerCount = 0;

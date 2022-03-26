@@ -1524,6 +1524,7 @@ void ImportPOIDocument( CWBApplication *App, CXMLDocument& d, TBOOL External, co
     }
   }
 
+  CategoryRoot.SetDefaultToggleValues();
   CategoryRoot.CalculateVisibilityCache();
 }
 
@@ -1852,6 +1853,7 @@ void MarkerTypeData::Read( CXMLNode &n, TBOOL StoreSaveState )
   TBOOL _infoRangeSaved = n.HasAttribute("infoRange");
   TBOOL _copySaved = n.HasAttribute( "copy" );
   TBOOL _copyMessageSaved = n.HasAttribute( "copy-message" );
+  TBOOL _defaultToggleSaved = n.HasAttribute( "defaulttoggle" );
 
   if ( StoreSaveState )
   {
@@ -1888,6 +1890,7 @@ void MarkerTypeData::Read( CXMLNode &n, TBOOL StoreSaveState )
     bits.infoRangeSaved = _infoRangeSaved;
     bits.copySaved = _copySaved;
     bits.copyMessageSaved = _copyMessageSaved;
+    bits.defaultToggleSaved = _defaultToggleSaved;
   }
 
   if ( _iconFileSaved )
@@ -1923,6 +1926,13 @@ void MarkerTypeData::Read( CXMLNode &n, TBOOL StoreSaveState )
     TS32 val;
     n.GetAttributeAsInteger( "autoTrigger", &val );
     bits.autoTrigger = val != 0;
+  }
+  if ( _defaultToggleSaved )
+  {
+    TS32 val;
+    n.GetAttributeAsInteger( "defaulttoggle", &val );
+    bits.defaultToggle = val != 0;
+    bits.defaultToggleLoaded = true;
   }
   if ( _hasCountdownSaved )
   {
@@ -2046,6 +2056,8 @@ void MarkerTypeData::Write( CXMLNode *n )
   //  n->SetAttributeFromInteger( "resetOffset", resetOffset );
   if ( bits.autoTriggerSaved )
     n->SetAttributeFromInteger( "autoTrigger", bits.autoTrigger );
+  if ( bits.defaultToggleSaved )
+    n->SetAttributeFromInteger( "defaulttoggle", bits.defaultToggle );
   if ( bits.hasCountdownSaved )
     n->SetAttributeFromInteger( "hasCountdown", bits.hasCountdown );
   if ( bits.triggerRangeSaved )
@@ -2358,6 +2370,20 @@ void GW2TacticalCategory::CalculateVisibilityCache()
   visibilityCached = false;
   CacheVisibility();
   visibilityCached = true;
+}
+
+void GW2TacticalCategory::SetDefaultToggleValues()
+{
+  if ( data.bits.defaultToggleLoaded )
+  {
+    CString catConfig = ( CString( "CategoryVisible_" ) + GetFullTypeName() );
+
+    if ( !HasConfigValue( catConfig.GetPointer() ) )
+      SetConfigValue( catConfig.GetPointer(), data.bits.defaultToggle );
+  }
+
+  for ( int x = 0; x < children.NumItems(); x++ )
+    children[ x ]->SetDefaultToggleValues();
 }
 
 void POI::SetCategory( CWBApplication *App, GW2TacticalCategory *t )
