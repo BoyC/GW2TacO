@@ -1,6 +1,7 @@
 #include "TrailLogger.h"
 #include "OverlayConfig.h"
 #include <commdlg.h>
+#include "GW2API.h"
 
 #define TRAILFILEVERSION 0
 
@@ -876,6 +877,22 @@ void GW2Trail::SetupAndDraw( CCoreConstantBuffer* constBuffer, CCoreTexture* tex
 
   if ( map != mumbleLink.mapID )
     return;
+
+  if ( category && category->data.festivalMask )
+  {
+    bool hasActiveFestival = false;
+    int cnt = 0;
+    for ( auto& festival : GW2::festivals )
+    {
+      if ( category->data.festivalMask & ( 1 << cnt ) && festival.active )
+        hasActiveFestival = true;
+      cnt++;
+    }
+
+    if ( !hasActiveFestival )
+      return;
+  }
+
 
   App->GetDevice()->SetTexture( CORESMP_PS0, texture );
 

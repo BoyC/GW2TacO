@@ -15,10 +15,10 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="gw2pois.cpp">
+    <ClCompile Include="GW2POIs.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="gw2tactical.cpp">
+    <ClCompile Include="GW2Tactical.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="MapTimer.cpp">
@@ -98,7 +98,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="gw2tactical.h">
+    <ClInclude Include="GW2Tactical.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="MapTimer.h">

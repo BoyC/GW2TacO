@@ -1053,6 +1053,47 @@ INT WINAPI WinMain( _In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 
   SetConfigValue( "LogTrails", 0 );
 
+/*
+  auto achievementList = FetchHTTPS( L"api.guildwars2.com", L"v2/achievements/categories" );
+  LOG_ERR( "Achievements Categories: %s", achievementList.GetPointer() );
+
+  CStringArray idArray = achievementList.Explode( "," );
+  if ( idArray.NumItems() )
+    idArray[ 0 ].DeleteRegion( 0, 1 );
+
+  WCHAR wpath[ 4096 ];
+  memset( wpath, 0, sizeof( wpath ) );
+
+  CString ids = "v2/achievements/categories?ids=";
+  int cnt = 0;
+  for ( int x = 0; x < idArray.NumItems(); x++ )
+  {
+    if ( cnt > 100 )
+    {
+      memset( wpath, 0, sizeof( wpath ) );
+      ids.WriteAsWideChar( wpath, 4096 );
+      auto achievementCategoryData = FetchHTTPS( L"api.guildwars2.com", wpath );
+      LOG_ERR( "Achievements Category Data: %s", achievementCategoryData.GetPointer() );
+      ids = "v2/achievements/categories?ids=";
+      cnt = 0;
+    }
+
+    int id = -1;
+    if ( idArray[ x ].Scan( "%d", &id ) != 1 )
+      continue;
+
+    ids += CString::Format( "%d", id ) + ( x == idArray.NumItems() - 1 ? "" : "," );
+
+    cnt++;
+  }
+
+
+  ids.WriteAsWideChar( wpath, 4096 );
+  auto achievementCategoryData = FetchHTTPS( L"api.guildwars2.com", wpath );
+  LOG_ERR( "Achievements Category Data: %s", achievementCategoryData.GetPointer() );
+*/
+
+
   //CString apidata = FetchHTTP( L"api.guildwars2.com", L"/v2/continents?ids=all" );
 
   if ( GetConfigValue( _T( "CheckForUpdates" ) ) )

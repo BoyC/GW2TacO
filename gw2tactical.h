@@ -67,6 +67,9 @@ struct MarkerTypeData
     TBOOL defaultToggleLoaded : 1;
   } bits;
 
+  unsigned char festivalSaveMask = 0;
+  unsigned char festivalMask = 0;
+
   MarkerTypeData();
 
   TF32 size = 1.0;

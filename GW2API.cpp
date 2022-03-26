@@ -36,6 +36,117 @@ CString FetchAPIData( char* path, const CString& apiKey )
   return FetchHTTPS( L"api.guildwars2.com", wpath );
 }
 
+GW2::FestivalData GW2::festivals[6] = { { "halloween"             , 79,  false }, // halloween daily
+                                        { "wintersday"            , 98,  false }, // wintersday daily
+                                        { "superadventurefestival", 162, false }, // sab daily
+                                        { "lunarnewyear"          , 201, false }, // daily lunar new year
+                                        { "festivalofthefourwinds", 213, false }, // festival of the four winds daily
+                                        { "dragonbash"            , 233, false }  // daily dragon bash
+};
+
+
+std::vector<GW2::Festival> festivalDailies;
+
+void InitFestivalDailies()
+{
+  for ( auto festival : GW2::festivals )
+  {
+    GW2::Festival fest;
+    fest.name = festival.name;
+
+    CString id = "v2/achievements/categories?id=" + CString::Format( "%d", festival.category );
+    WCHAR wpath[ 4096 ]{};
+    id.WriteAsWideChar( wpath, 4096 );
+    auto achievementCategoryData = FetchHTTPS( L"api.guildwars2.com", wpath );
+
+    Object json;
+    json.parse( achievementCategoryData.GetPointer() );
+    if ( json.has<Array>( "achievements" ) )
+    {
+      auto& values = json.get<Array>( "achievements" ).values();
+      for ( auto v : values )
+      {
+        if ( v->is<Number>() )
+          fest.dailyAchievements.emplace_back( (int)v->get<Number>() );
+      }
+    }
+
+    festivalDailies.emplace_back( fest );
+  }
+}
+
+void CheckFestivalActive()
+{
+  if ( !festivalDailies.size() )
+    InitFestivalDailies();
+
+  auto dailies = FetchHTTPS( L"api.guildwars2.com", L"v2/achievements/daily" );
+  std::set<int> dailyAchies;
+
+  Object json;
+  json.parse( dailies.GetPointer() );
+
+  if ( json.has<Array>( "pve" ) )
+  {
+    auto& values = json.get<Array>( "pve" ).values();
+    for ( auto v : values )
+    {
+      auto& obj = v->get<Object>();
+      if ( obj.has<Number>( "id" ) )
+        dailyAchies.insert( (int)obj.get<Number>( "id" ) );
+    }
+  }
+
+  if ( json.has<Array>( "pvp" ) )
+  {
+    auto& values = json.get<Array>( "pvp" ).values();
+    for ( auto v : values )
+    {
+      auto& obj = v->get<Object>();
+      if ( obj.has<Number>( "id" ) )
+        dailyAchies.insert( (int)obj.get<Number>( "id" ) );
+    }
+  }
+
+  if ( json.has<Array>( "wvw" ) )
+  {
+    auto& values = json.get<Array>( "wvw" ).values();
+    for ( auto v : values )
+    {
+      auto& obj = v->get<Object>();
+      if ( obj.has<Number>( "id" ) )
+        dailyAchies.insert( (int)obj.get<Number>( "id" ) );
+    }
+  }
+
+  if ( json.has<Array>( "special" ) )
+  {
+    auto& values = json.get<Array>( "special" ).values();
+    for ( auto v : values )
+    {
+      auto& obj = v->get<Object>();
+      if ( obj.has<Number>( "id" ) )
+        dailyAchies.insert( (int)obj.get<Number>( "id" ) );
+    }
+  }
+
+  int cnt = 0;
+
+  for ( auto& festival : festivalDailies )
+  {
+    GW2::festivals[ cnt ].active = false;
+    for ( auto& achi : festival.dailyAchievements )
+    {
+      if ( dailyAchies.find( achi ) != dailyAchies.end() )
+      {
+        GW2::festivals[ cnt ].active = true;
+        break;
+      }
+    }
+    cnt++;
+  }
+}
+
 namespace GW2
 {
 

@@ -437,6 +437,7 @@ void GW2TacticalDisplay::FetchAchievements()
     fetchThread = std::thread( [ this, key ]()
     {
       SetPerThreadCRTExceptionBehavior();
+      CheckFestivalActive();
       CString dungeonFrequenterStatus = CString( "{\"achievements\":" ) + key->QueryAPI( "v2/account/achievements" ) + "}";
       Object json;
       json.parse( dungeonFrequenterStatus.GetPointer() );
@@ -1854,6 +1855,22 @@ void MarkerTypeData::Read( CXMLNode &n, TBOOL StoreSaveState )
   TBOOL _copySaved = n.HasAttribute( "copy" );
   TBOOL _copyMessageSaved = n.HasAttribute( "copy-message" );
   TBOOL _defaultToggleSaved = n.HasAttribute( "defaulttoggle" );
+  TBOOL _festivalsSaved = n.HasAttribute( "festival" );
+
+  if ( _festivalsSaved )
+  {
+    CString festivalList = n.GetAttribute( "festival" );
+    festivalList.ToLower();
+    CStringArray festivalArray = festivalList.Explode( "," );
+    int start = 0;
+    int cnt = 0;
+    for ( auto& festival : GW2::festivals )
+    {
+      if ( festivalArray.Find( CString( festival.name ) ) >= 0 )
+        festivalMask |= 1 << cnt;
+      cnt++;
+    }
+  }
 
   if ( StoreSaveState )
   {
@@ -1891,6 +1908,7 @@ void MarkerTypeData::Read( CXMLNode &n, TBOOL StoreSaveState )
     bits.copySaved = _copySaved;
     bits.copyMessageSaved = _copyMessageSaved;
     bits.defaultToggleSaved = _defaultToggleSaved;
+    festivalSaveMask = festivalMask;
   }
 
   if ( _iconFileSaved )
@@ -2104,6 +2122,26 @@ void MarkerTypeData::Write( CXMLNode *n )
     n->SetAttribute( "copy", GetStringFromMap( copy ).GetPointer() );
   if ( bits.copyMessageSaved )
     n->SetAttribute( "copy-message", GetStringFromMap( copyMessage ).GetPointer() );
+  if ( festivalSaveMask )
+  {
+    CString output = "";
+
+    int cnt = 0;
+    for ( auto& festival : GW2::festivals )
+    {
+      int m = 1 << cnt;
+      if ( festivalSaveMask & m )
+      {
+        if ( output.Length() )
+          output += ",";
+        output += festival.name;
+      }
+      cnt++;
+    }
+
+    if ( output.Length() )
+      n->SetAttribute( "festival", output.GetPointer() );
+  }
 }
 
 bool SingleAchievementTarget( GW2TacticalCategory* cat, int& resultId )
@@ -2470,6 +2508,20 @@ bool POI::IsVisible( const tm& ptm, const time_t& currtime, bool achievementsFet
 
       return !achievements[typeData.achievementId].done && achievements[typeData.achievementId].bits.Find(typeData.achievementBit) < 0;
     }
+  }
+
+  if ( typeData.festivalMask )
+  {
+    bool hasActiveFestival = false;
+    int cnt = 0;
+    for ( auto& festival : GW2::festivals )
+    {
+      if ( typeData.festivalMask & ( 1 << cnt ) && festival.active )
+        hasActiveFestival = true;
+      cnt++;
+    }
+
+    return hasActiveFestival;
   }
 
   return true;
