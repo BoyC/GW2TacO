@@ -7,7 +7,166 @@
 #include "Bedrock/UtilLib/jsonxx.h"
 using namespace jsonxx;
 
-CString FetchHTTPS( LPCWSTR url, LPCWSTR path );
+#include <winhttp.h>
+#pragma comment(lib,"winhttp.lib")
+
+#include <Urlmon.h>   // URLOpenBlockingStreamW()
+#pragma comment( lib, "Urlmon.lib" )
+
+bool DownloadFile( const CString& url, CStreamWriterMemory& mem )
+{
+  LPSTREAM stream;
+
+  HRESULT hr = URLOpenBlockingStream( nullptr, ( CString( "https://" ) + url ).GetPointer(), &stream, 0, nullptr );
+  if ( FAILED( hr ) )
+    hr = URLOpenBlockingStream( nullptr, ( CString( "http://" ) + url ).GetPointer(), &stream, 0, nullptr );
+
+  if ( FAILED( hr ) )
+    return false;
+
+  char buffer[ 4096 ];
+  do
+  {
+    DWORD bytesRead = 0;
+    hr = stream->Read( buffer, sizeof( buffer ), &bytesRead );
+    mem.Write( buffer, bytesRead );
+  } while ( SUCCEEDED( hr ) && hr != S_FALSE );
+
+  stream->Release();
+
+  if ( FAILED( hr ) )
+    return false;
+
+  return true;
+}
+
+CString FetchHTTP( LPCWSTR url, LPCWSTR path )
+{
+  DWORD dwSize = 0;
+  DWORD dwDownloaded = 0;
+  LPSTR pszOutBuffer;
+
+  BOOL  bResults = FALSE;
+  HINTERNET  hSession = NULL, hConnect = NULL, hRequest = NULL;
+
+  hSession = WinHttpOpen( L"WinHTTP Example/1.0", WINHTTP_ACCESS_TYPE_DEFAULT_PROXY, WINHTTP_NO_PROXY_NAME, WINHTTP_NO_PROXY_BYPASS, 0 );
+
+  if ( hSession )
+    hConnect = WinHttpConnect( hSession, url, INTERNET_DEFAULT_HTTP_PORT, 0 );
+
+  if ( hConnect )
+    hRequest = WinHttpOpenRequest( hConnect, L"GET", path, NULL, WINHTTP_NO_REFERER, NULL, NULL );
+
+  if ( hRequest )
+    bResults = WinHttpSendRequest( hRequest, WINHTTP_NO_ADDITIONAL_HEADERS, 0, WINHTTP_NO_REQUEST_DATA, 0, 0, 0 );
+
+  if ( bResults )
+    bResults = WinHttpReceiveResponse( hRequest, NULL );
+
+  if ( !bResults )
+  {
+    if ( hRequest ) WinHttpCloseHandle( hRequest );
+    if ( hConnect ) WinHttpCloseHandle( hConnect );
+    if ( hSession ) WinHttpCloseHandle( hSession );
+    return "";
+  }
+
+  pszOutBuffer = nullptr;
+
+  CStreamWriterMemory data;
+
+  do
+  {
+    dwSize = 0;
+    if ( !WinHttpQueryDataAvailable( hRequest, &dwSize ) )
+    {
+      if ( hRequest ) WinHttpCloseHandle( hRequest );
+      if ( hConnect ) WinHttpCloseHandle( hConnect );
+      if ( hSession ) WinHttpCloseHandle( hSession );
+      return "";
+    }
+
+    pszOutBuffer = new char[ dwSize + 1 ];
+
+    if ( !WinHttpReadData( hRequest, (LPVOID)pszOutBuffer, dwSize, &dwDownloaded ) )
+    {
+      if ( hRequest ) WinHttpCloseHandle( hRequest );
+      if ( hConnect ) WinHttpCloseHandle( hConnect );
+      if ( hSession ) WinHttpCloseHandle( hSession );
+      return "";
+    }
+
+    data.Write( pszOutBuffer, dwSize );
+
+    SAFEDELETEA( pszOutBuffer );
+  } while ( dwSize > 0 );
+
+
+  if ( hRequest ) WinHttpCloseHandle( hRequest );
+  if ( hConnect ) WinHttpCloseHandle( hConnect );
+  if ( hSession ) WinHttpCloseHandle( hSession );
+
+  return CString( (TS8*)data.GetData(), data.GetLength() );
+}
+
+CString FetchHTTPS( LPCWSTR url, LPCWSTR path )
+{
+  CString s1 = CString( url );
+  CString s2 = CString( path );
+
+  LOG_NFO( "[GW2TacO] Fetching URL: %s/%s", s1.GetPointer(), s2.GetPointer() );
+
+  DWORD dwSize = 0;
+  DWORD dwDownloaded = 0;
+  LPSTR pszOutBuffer;
+
+  BOOL  bResults = FALSE;
+  HINTERNET  hSession = NULL, hConnect = NULL, hRequest = NULL;
+
+  hSession = WinHttpOpen( L"WinHTTPS Example/1.0", WINHTTP_ACCESS_TYPE_DEFAULT_PROXY, WINHTTP_NO_PROXY_NAME, WINHTTP_NO_PROXY_BYPASS, 0 );
+
+  if ( hSession )
+    hConnect = WinHttpConnect( hSession, url, INTERNET_DEFAULT_PORT, 0 );
+
+  if ( hConnect )
+    hRequest = WinHttpOpenRequest( hConnect, L"GET", path, NULL, WINHTTP_NO_REFERER, NULL, WINHTTP_FLAG_SECURE );
+
+  if ( hRequest )
+    bResults = WinHttpSendRequest( hRequest, WINHTTP_NO_ADDITIONAL_HEADERS, 0, WINHTTP_NO_REQUEST_DATA, 0, 0, 0 );
+
+  if ( bResults )
+    bResults = WinHttpReceiveResponse( hRequest, NULL );
+
+  if ( !bResults )
+    return "";
+
+  pszOutBuffer = nullptr;
+
+  CStreamWriterMemory data;
+
+  do
+  {
+    dwSize = 0;
+    if ( !WinHttpQueryDataAvailable( hRequest, &dwSize ) )
+      return "";
+
+    pszOutBuffer = new char[ dwSize + 1 ];
+
+    if ( !WinHttpReadData( hRequest, (LPVOID)pszOutBuffer, dwSize, &dwDownloaded ) )
+      return "";
+
+    data.Write( pszOutBuffer, dwSize );
+
+    SAFEDELETEA( pszOutBuffer );
+  } while ( dwSize > 0 );
+
+
+  if ( hRequest ) WinHttpCloseHandle( hRequest );
+  if ( hConnect ) WinHttpCloseHandle( hConnect );
+  if ( hSession ) WinHttpCloseHandle( hSession );
+
+  return CString( (TS8*)data.GetData(), data.GetLength() );
+}
 
 CString FetchAPIData( char* path, const CString& apiKey )
 {
@@ -36,7 +195,7 @@ CString FetchAPIData( char* path, const CString& apiKey )
   return FetchHTTPS( L"api.guildwars2.com", wpath );
 }
 
-GW2::FestivalData GW2::festivals[6] = { { "halloween"             , 79,  false }, // halloween daily
+GW2::FestivalData GW2::festivals[ 6 ] = { { "halloween"             , 79,  false }, // halloween daily
                                         { "wintersday"            , 98,  false }, // wintersday daily
                                         { "superadventurefestival", 162, false }, // sab daily
                                         { "lunarnewyear"          , 201, false }, // daily lunar new year
@@ -150,264 +309,264 @@ void CheckFestivalActive()
 namespace GW2
 {
 
-  APIKeyManager apiKeyManager;
+APIKeyManager apiKeyManager;
 
-  APIKey::APIKey( const CString& key )
-  {
-    apiKey = key;
-  }
+APIKey::APIKey( const CString& key )
+{
+  apiKey = key;
+}
 
-  APIKey::~APIKey()
-  {
-    if ( fetcherThread.joinable() )
-      fetcherThread.join();
-  }
+APIKey::~APIKey()
+{
+  if ( fetcherThread.joinable() )
+    fetcherThread.join();
+}
 
-  void APIKey::FetchData()
-  {
-    if ( beingInitialized )
-      return;
+void APIKey::FetchData()
+{
+  if ( beingInitialized )
+    return;
 
-    keyName = "";
-    accountName = "";
-    charNames.FlushFast();
-    caps.Flush();
-    worldId = 0;
+  keyName = "";
+  accountName = "";
+  charNames.FlushFast();
+  caps.Flush();
+  worldId = 0;
 
-    valid = true;
-    initialized = false;
-    beingInitialized = true;
+  valid = true;
+  initialized = false;
+  beingInitialized = true;
 
-    fetcherThread = std::thread( [ this ]()
-    {
-      SetPerThreadCRTExceptionBehavior();
-      valid = true;
+  fetcherThread = std::thread( [this]()
+                               {
+                                 SetPerThreadCRTExceptionBehavior();
+                                 valid = true;
 
-      CString keyData = QueryAPI( "/v2/tokeninfo" );
+                                 CString keyData = QueryAPI( "/v2/tokeninfo" );
 
-      Object json;
-      json.parse( keyData.GetPointer() );
+                                 Object json;
+                                 json.parse( keyData.GetPointer() );
 
-      if ( json.has<String>( "name" ) )
-        keyName = CString( json.get<String>( "name" ).data() );
-      else
-        valid = false;
+                                 if ( json.has<String>( "name" ) )
+                                   keyName = CString( json.get<String>( "name" ).data() );
+                                 else
+                                   valid = false;
 
-      if ( json.has<Array>( "permissions" ) )
-      {
-        auto& values = json.get<Array>( "permissions" ).values();
-        for ( auto v : values )
-        {
-          if ( v->is<String>() )
-            caps[ CString( v->get<String>().data() ) ] = true;
-        }
-      }
-      else
-        valid = false;
+                                 if ( json.has<Array>( "permissions" ) )
+                                 {
+                                   auto& values = json.get<Array>( "permissions" ).values();
+                                   for ( auto v : values )
+                                   {
+                                     if ( v->is<String>() )
+                                       caps[ CString( v->get<String>().data() ) ] = true;
+                                   }
+                                 }
+                                 else
+                                   valid = false;
 
-      if ( HasCaps( "account" ) )
-      {
-        CString accountData = QueryAPI( "/v2/account" );
-        json.parse( accountData.GetPointer() );
+                                 if ( HasCaps( "account" ) )
+                                 {
+                                   CString accountData = QueryAPI( "/v2/account" );
+                                   json.parse( accountData.GetPointer() );
 
-        if ( json.has<String>( "name" ) )
-          accountName = CString( json.get<String>( "name" ).data() );
+                                   if ( json.has<String>( "name" ) )
+                                     accountName = CString( json.get<String>( "name" ).data() );
 
-        if ( json.has<Number>( "world" ) )
-          worldId = (TS32)( json.get<Number>( "world" ) );
-      }
+                                   if ( json.has<Number>( "world" ) )
+                                     worldId = (TS32)( json.get<Number>( "world" ) );
+                                 }
 
-      if ( HasCaps( "characters" ) )
-      {
-        CString characters = QueryAPI( "/v2/characters" );
-        characters = CString::Format( "{\"characters\": %s }", characters.GetPointer() );
-        json.parse( characters.GetPointer() );
-        if ( !json.has<Array>( "characters" ) )
-        {
-          LOG_ERR( "[GW2TacO] Unexpected result from API characters endpoint: %s", characters.GetPointer() );
-          LOG_ERR( "[GW2TacO] CHARACTERS WON'T BE RECOGNIZED FOR API KEY NAMED %s", keyName.GetPointer() );
-        }
-        else
-        {
-          auto& charArray = json.get<Array>( "characters" );
-          auto& values = charArray.values();
-          for ( auto v : values )
-          {
-            if ( v->is<String>() )
-              charNames += CString( v->get<String>().data() );
-          }
-        }
-      }
-      else
-      {
-        LOG_ERR( "[GW2TacO] API error: API key '%s - %s (%s)' doesn't have the 'characters' permission - account identification through Mumble Link will not be possible.", accountName.GetPointer(), keyName.GetPointer(), apiKey.GetPointer() );
-      }
+                                 if ( HasCaps( "characters" ) )
+                                 {
+                                   CString characters = QueryAPI( "/v2/characters" );
+                                   characters = CString::Format( "{\"characters\": %s }", characters.GetPointer() );
+                                   json.parse( characters.GetPointer() );
+                                   if ( !json.has<Array>( "characters" ) )
+                                   {
+                                     LOG_ERR( "[GW2TacO] Unexpected result from API characters endpoint: %s", characters.GetPointer() );
+                                     LOG_ERR( "[GW2TacO] CHARACTERS WON'T BE RECOGNIZED FOR API KEY NAMED %s", keyName.GetPointer() );
+                                   }
+                                   else
+                                   {
+                                     auto& charArray = json.get<Array>( "characters" );
+                                     auto& values = charArray.values();
+                                     for ( auto v : values )
+                                     {
+                                       if ( v->is<String>() )
+                                         charNames += CString( v->get<String>().data() );
+                                     }
+                                   }
+                                 }
+                                 else
+                                 {
+                                   LOG_ERR( "[GW2TacO] API error: API key '%s - %s (%s)' doesn't have the 'characters' permission - account identification through Mumble Link will not be possible.", accountName.GetPointer(), keyName.GetPointer(), apiKey.GetPointer() );
+                                 }
 
-      initialized = true;
-      beingInitialized = false;
-    } );
-  }
+                                 initialized = true;
+                                 beingInitialized = false;
+                               } );
+}
 
-  TBOOL APIKey::HasCaps( const CString& cap )
-  {
-    if ( caps.HasKey( cap ) )
-      return caps[ cap ];
+TBOOL APIKey::HasCaps( const CString& cap )
+{
+  if ( caps.HasKey( cap ) )
+    return caps[ cap ];
 
-    return false;
-  }
+  return false;
+}
 
-  CString APIKey::QueryAPI( char* path )
-  {
-    LOG_NFO( "[GW2TacO] Querying the API: %s", path );
+CString APIKey::QueryAPI( char* path )
+{
+  LOG_NFO( "[GW2TacO] Querying the API: %s", path );
 
-    return FetchAPIData( path, apiKey );
-  }
+  return FetchAPIData( path, apiKey );
+}
 
-  void APIKey::SetKey( const CString& key )
-  {
-    if ( fetcherThread.joinable() )
-      fetcherThread.join();
-    apiKey = key;
-    caps.Flush();
-    initialized = false;
-    valid = true;
-  }
+void APIKey::SetKey( const CString& key )
+{
+  if ( fetcherThread.joinable() )
+    fetcherThread.join();
+  apiKey = key;
+  caps.Flush();
+  initialized = false;
+  valid = true;
+}
 
-  APIKey* APIKeyManager::GetIdentifiedAPIKey()
-  {
-    if (!mumbleLink.IsValid() || !mumbleLink.charName.Length() || !keys.NumItems())
-      return nullptr;
-
-    if (!initialized)
-      Initialize();
-
-    for (int x = 0; x < keys.NumItems(); x++)
-    {
-      APIKey* key = keys[x];
-      if (!key->initialized)
-        continue;
-
-      if (key->fetcherThread.joinable())
-        key->fetcherThread.join();
-
-      if (key->charNames.Find(mumbleLink.charName) >= 0)
-        return key;
-    }
-
+APIKey* APIKeyManager::GetIdentifiedAPIKey()
+{
+  if ( !mumbleLink.IsValid() || !mumbleLink.charName.Length() || !keys.NumItems() )
     return nullptr;
+
+  if ( !initialized )
+    Initialize();
+
+  for ( int x = 0; x < keys.NumItems(); x++ )
+  {
+    APIKey* key = keys[ x ];
+    if ( !key->initialized )
+      continue;
+
+    if ( key->fetcherThread.joinable() )
+      key->fetcherThread.join();
+
+    if ( key->charNames.Find( mumbleLink.charName ) >= 0 )
+      return key;
   }
 
-  APIKeyManager::Status APIKeyManager::GetStatus()
+  return nullptr;
+}
+
+APIKeyManager::Status APIKeyManager::GetStatus()
+{
+  if ( !initialized )
+    Initialize();
+
+  if ( !keys.NumItems() )
+    return Status::KeyNotSet;
+
+  APIKey* key = GetIdentifiedAPIKey();
+  if ( !key )
   {
-    if (!initialized)
-      Initialize();
-
-    if (!keys.NumItems())
-      return Status::KeyNotSet;
-
-    APIKey* key = GetIdentifiedAPIKey();
-    if (!key) 
+    for ( int x = 0; x < keys.NumItems(); x++ )
     {
-      for (int x = 0; x < keys.NumItems(); x++)
-      {
-        if (!keys[x]->initialized)
-          return Status::Loading;
-      }
-
-      if (!mumbleLink.charName.Length())
-        return Status::WaitingForMumbleCharacterName;
-
-      return Status::CouldNotIdentifyAccount;
+      if ( !keys[ x ]->initialized )
+        return Status::Loading;
     }
 
-    if (!key->initialized) 
-      return Status::Loading;
-      
-    return Status::OK;
+    if ( !mumbleLink.charName.Length() )
+      return Status::WaitingForMumbleCharacterName;
+
+    return Status::CouldNotIdentifyAccount;
   }
 
-  APIKeyManager::Status APIKeyManager::DisplayStatusText(CWBDrawAPI* API, CWBFont* font)
-  {
-    APIKeyManager::Status status = GetStatus();
+  if ( !key->initialized )
+    return Status::Loading;
 
-    switch (status) 
-    {
-    case Status::Loading:
-      font->Write(API, DICT("waitingforapi"), CPoint(0, 0));
-      break;
-    case Status::KeyNotSet:
-      font->Write(API, DICT("apikeynotset1"), CPoint(0, 0), CColor(0xff,0x40,0x40,0xff));
-      font->Write(API, DICT("apikeynotset2"), CPoint(0, font->GetLineHeight()), CColor(0xff, 0x40, 0x40, 0xff));
-      break;
-    case Status::CouldNotIdentifyAccount:
-      font->Write(API, DICT("couldntidentifyaccount1"), CPoint(0, 0), CColor(0xff, 0x40, 0x40, 0xff));
-      font->Write(API, DICT("couldntidentifyaccount2"), CPoint(0, font->GetLineHeight()), CColor(0xff, 0x40, 0x40, 0xff));
-      break;
-    case Status::WaitingForMumbleCharacterName:
-      font->Write(API, DICT("waitingforcharactername1"), CPoint(0, 0));
-      break;
-    case Status::AllKeysInvalid:
-      font->Write(API, DICT("apierror1"), CPoint(0, 0), CColor(0xff, 0x40, 0x40, 0xff));
-      font->Write(API, DICT("apierror2"), CPoint(0, font->GetLineHeight()), CColor(0xff, 0x40, 0x40, 0xff));
-      break;
-    }
-    return status;
+  return Status::OK;
+}
+
+APIKeyManager::Status APIKeyManager::DisplayStatusText( CWBDrawAPI* API, CWBFont* font )
+{
+  APIKeyManager::Status status = GetStatus();
+
+  switch ( status )
+  {
+  case Status::Loading:
+    font->Write( API, DICT( "waitingforapi" ), CPoint( 0, 0 ) );
+    break;
+  case Status::KeyNotSet:
+    font->Write( API, DICT( "apikeynotset1" ), CPoint( 0, 0 ), CColor( 0xff, 0x40, 0x40, 0xff ) );
+    font->Write( API, DICT( "apikeynotset2" ), CPoint( 0, font->GetLineHeight() ), CColor( 0xff, 0x40, 0x40, 0xff ) );
+    break;
+  case Status::CouldNotIdentifyAccount:
+    font->Write( API, DICT( "couldntidentifyaccount1" ), CPoint( 0, 0 ), CColor( 0xff, 0x40, 0x40, 0xff ) );
+    font->Write( API, DICT( "couldntidentifyaccount2" ), CPoint( 0, font->GetLineHeight() ), CColor( 0xff, 0x40, 0x40, 0xff ) );
+    break;
+  case Status::WaitingForMumbleCharacterName:
+    font->Write( API, DICT( "waitingforcharactername1" ), CPoint( 0, 0 ) );
+    break;
+  case Status::AllKeysInvalid:
+    font->Write( API, DICT( "apierror1" ), CPoint( 0, 0 ), CColor( 0xff, 0x40, 0x40, 0xff ) );
+    font->Write( API, DICT( "apierror2" ), CPoint( 0, font->GetLineHeight() ), CColor( 0xff, 0x40, 0x40, 0xff ) );
+    break;
+  }
+  return status;
+}
+
+void APIKeyManager::Initialize()
+{
+  if ( initialized )
+    return;
+
+  CString oldApiKey;
+
+  if ( Config::HasString( "GW2APIKey" ) )
+  {
+    APIKey* key = new APIKey( Config::GetString( "GW2APIKey" ) );
+    Config::RemoveValue( "GW2APIKey" );
+    keys += key;
   }
 
-  void APIKeyManager::Initialize()
+  int x = 0;
+  while ( true )
   {
-    if (initialized)
-      return;
-
-    CString oldApiKey;
-
-    if (HasConfigString("GW2APIKey"))
+    CString cfgName = CString::Format( "GW2APIKey%d", x++ );
+    if ( Config::HasString( cfgName.GetPointer() ) )
     {
-      APIKey* key = new APIKey(GetConfigString("GW2APIKey"));
-      RemoveConfigEntry("GW2APIKey");
+      APIKey* key = new APIKey( Config::GetString( cfgName.GetPointer() ) );
       keys += key;
     }
-
-    int x = 0;
-    while (true) 
-    {
-      CString cfgName = CString::Format("GW2APIKey%d", x++);
-      if (HasConfigString(cfgName.GetPointer()))
-      {
-        APIKey* key = new APIKey(GetConfigString(cfgName.GetPointer()));
-        keys += key;
-      }
-      else
-        break;
-    }
-
-    RebuildConfigValues();
-
-    for (int x = 0; x < keys.NumItems(); x++)
-      keys[x]->FetchData();
-
-    initialized = true;
+    else
+      break;
   }
 
-  void APIKeyManager::RebuildConfigValues()
+  RebuildConfigValues();
+
+  for ( int x = 0; x < keys.NumItems(); x++ )
+    keys[ x ]->FetchData();
+
+  initialized = true;
+}
+
+void APIKeyManager::RebuildConfigValues()
+{
+  int x = 0;
+  while ( true )
   {
-    int x = 0;
-    while (true)
-    {
-      CString cfgName = CString::Format("GW2APIKey%d", x++);
-      if (HasConfigString(cfgName.GetPointer()))
-        RemoveConfigEntry(cfgName.GetPointer());
-      else
-        break;
-    }
-
-    for (int x = 0; x < keys.NumItems(); x++)
-    {
-      CString cfgName = CString::Format("GW2APIKey%d", x);
-      SetConfigString(cfgName.GetPointer(), keys[x]->apiKey);
-    }
-    
-    SaveConfig();
+    CString cfgName = CString::Format( "GW2APIKey%d", x++ );
+    if ( Config::HasString( cfgName.GetPointer() ) )
+      Config::RemoveValue( cfgName.GetPointer() );
+    else
+      break;
   }
+
+  for ( int x = 0; x < keys.NumItems(); x++ )
+  {
+    CString cfgName = CString::Format( "GW2APIKey%d", x );
+    Config::SetString( cfgName.GetPointer(), keys[ x ]->apiKey );
+  }
+
+  Config::Save();
+}
 
 }

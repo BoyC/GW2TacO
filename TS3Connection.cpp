@@ -119,9 +119,9 @@ void TS3Connection::Tick()
 
 void TS3Connection::InitConnection()
 {
-  if ( HasConfigString( "TS3APIKey" ) )
+  if ( Config::HasString( "TS3APIKey" ) )
   {
-    CString apiKey = GetConfigString( "TS3APIKey" );
+    CString apiKey = Config::GetString( "TS3APIKey" );
     auto response = SendCommand( CString::Format( "auth apikey=" ) + apiKey ); // 3P9O-GWJ8-1TKI-OY1F-AX0T-BPQK
     if ( response.ErrorCode )
       authenticated = false;
@@ -184,7 +184,7 @@ void TS3Connection::InitConnection()
   SendCommand( CString::Format( "use %d", currentHandlerID ) );
 }
 
-TS3Connection::CommandResponse TS3Connection::SendCommand( CString &message )
+TS3Connection::CommandResponse TS3Connection::SendCommand( CString& message )
 {
   CommandResponse response;
 
@@ -228,7 +228,7 @@ TS3Connection::CommandResponse TS3Connection::SendCommand( CString &message )
   return response;
 }
 
-TS3Connection::CommandResponse TS3Connection::SendCommand( TCHAR *message )
+TS3Connection::CommandResponse TS3Connection::SendCommand( TCHAR* message )
 {
   return SendCommand( CString( message ) );
 }
@@ -244,7 +244,7 @@ int ClientTalkTimeSorter( const TS3Connection::TS3Client& a, const TS3Connection
   return (int)( b.lastTalkTime - a.lastTalkTime );
 }
 
-void TS3Connection::ProcessNotification( CString &s )
+void TS3Connection::ProcessNotification( CString& s )
 {
   CStringArray cmd = s.ExplodeByWhiteSpace();
 
@@ -468,7 +468,7 @@ CString TS3Connection::ReadLine()
   return lne;
 }
 
-void TS3Connection::ProcessChannelList( CString &channeldata, TS32 handler )
+void TS3Connection::ProcessChannelList( CString& channeldata, TS32 handler )
 {
   CStringArray channels = channeldata.Explode( "|" );
   for ( TS32 x = 0; x < channels.NumItems(); x++ )
@@ -507,7 +507,7 @@ void TS3Connection::ProcessChannelList( CString &channeldata, TS32 handler )
   }
 }
 
-void TS3Connection::ProcessClientList( CString &clientdata, TS32 handler )
+void TS3Connection::ProcessClientList( CString& clientdata, TS32 handler )
 {
   bool needsSort = false;
 

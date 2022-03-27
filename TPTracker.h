@@ -25,7 +25,7 @@ extern CDictionary<TS32, GW2ItemData> itemDataCache;
 class TPTracker : public CWBItem
 {
   //CPoint lastpos;
-  virtual void OnDraw( CWBDrawAPI *API );
+  virtual void OnDraw( CWBDrawAPI* API );
 
   bool beingFetched = false;
   TS32 lastFetchTime = 0;
@@ -44,13 +44,13 @@ class TPTracker : public CWBItem
 
 public:
 
-  TPTracker( CWBItem *Parent, CRect Position );
+  TPTracker( CWBItem* Parent, CRect Position );
   virtual ~TPTracker();
 
-  static CWBItem *Factory( CWBItem *Root, CXMLNode &node, CRect &Pos );
+  static CWBItem* Factory( CWBItem* Root, CXMLNode& node, CRect& Pos );
   WB_DECLARE_GUIITEM( _T( "tptracker" ), CWBItem );
 
-  virtual TBOOL IsMouseTransparent( CPoint &ClientSpacePoint, WBMESSAGE MessageType );
+  virtual TBOOL IsMouseTransparent( CPoint& ClientSpacePoint, WBMESSAGE MessageType );
 };
 
 

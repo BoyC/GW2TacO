@@ -37,7 +37,7 @@ public:
   virtual ~LocationalTimer();
 
   void Update();
-  void ImportData( CXMLNode &node );
+  void ImportData( CXMLNode& node );
 
 };
 
@@ -45,13 +45,13 @@ class TimerDisplay : public CWBItem
 {
 public:
 
-  virtual void OnDraw( CWBDrawAPI *API );
-  virtual TBOOL IsMouseTransparent( CPoint &ClientSpacePoint, WBMESSAGE MessageType );
+  virtual void OnDraw( CWBDrawAPI* API );
+  virtual TBOOL IsMouseTransparent( CPoint& ClientSpacePoint, WBMESSAGE MessageType );
 
-  TimerDisplay( CWBItem *Parent, CRect Position );
+  TimerDisplay( CWBItem* Parent, CRect Position );
   virtual ~TimerDisplay();
 
-  static CWBItem *Factory( CWBItem *Root, CXMLNode &node, CRect &Pos );
+  static CWBItem* Factory( CWBItem* Root, CXMLNode& node, CRect& Pos );
   WB_DECLARE_GUIITEM( _T( "TimerDisplay" ), CWBItem );
 };
 

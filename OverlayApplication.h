@@ -11,13 +11,13 @@ protected:
 
 public:
 
-  virtual TBOOL Initialize( const CCoreWindowParameters &WindowParams );
+  virtual TBOOL Initialize( const CCoreWindowParameters& WindowParams );
 
   COverlayApp();
   virtual ~COverlayApp();
 
   virtual void TakeScreenshot();
 
-  CCoreBlendState *holePunchBlendState = nullptr;
+  CCoreBlendState* holePunchBlendState = nullptr;
 
 };

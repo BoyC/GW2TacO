@@ -58,7 +58,7 @@ void LocationalTimer::Update()
   }
 }
 
-void LocationalTimer::ImportData( CXMLNode &node )
+void LocationalTimer::ImportData( CXMLNode& node )
 {
   if ( node.HasAttribute( "mapid" ) ) node.GetAttributeAsInteger( "mapid", &MapID );
   if ( node.HasAttribute( "length" ) ) node.GetAttributeAsInteger( "length", &TimerLength );
@@ -90,21 +90,19 @@ void LocationalTimer::ImportData( CXMLNode &node )
   }
 }
 
-void TimerDisplay::OnDraw( CWBDrawAPI *API )
+void TimerDisplay::OnDraw( CWBDrawAPI* API )
 {
-  if ( !HasConfigValue( "LocationalTimersVisible" ) )
-    SetConfigValue( "LocationalTimersVisible", 1 );
-  if ( !GetConfigValue( "LocationalTimersVisible" ) )
+  if ( !Config::GetValue( "LocationalTimersVisible" ) )
     return;
 
   TS32 tme = GetTime();
-  CWBFont *f = GetFont( GetState() );
+  CWBFont* f = GetFont( GetState() );
 
   TS32 ypos = Lerp( GetClientRect().y1, GetClientRect().y2, 0.25f );
 
   for ( TS32 x = 0; x < LocationalTimers.NumItems(); x++ )
   {
-    LocationalTimer &t = LocationalTimers[ x ];
+    LocationalTimer& t = LocationalTimers[ x ];
 
     t.Update();
     if ( !t.IsRunning )
@@ -114,7 +112,7 @@ void TimerDisplay::OnDraw( CWBDrawAPI *API )
 
     for ( TS32 y = 0; y < t.Events.NumItems(); y++ )
     {
-      auto &e = t.Events[ y ];
+      auto& e = t.Events[ y ];
       if ( !( timepos > e.Time - e.CountdownLength && timepos < e.Time + e.OnScreenLength ) )
         continue;
 
@@ -130,12 +128,12 @@ void TimerDisplay::OnDraw( CWBDrawAPI *API )
   }
 }
 
-TBOOL TimerDisplay::IsMouseTransparent( CPoint &ClientSpacePoint, WBMESSAGE MessageType )
+TBOOL TimerDisplay::IsMouseTransparent( CPoint& ClientSpacePoint, WBMESSAGE MessageType )
 {
   return true;
 }
 
-TimerDisplay::TimerDisplay( CWBItem *Parent, CRect Position ) : CWBItem( Parent, Position )
+TimerDisplay::TimerDisplay( CWBItem* Parent, CRect Position ) : CWBItem( Parent, Position )
 {
 
 }
@@ -145,7 +143,7 @@ TimerDisplay::~TimerDisplay()
 
 }
 
-CWBItem * TimerDisplay::Factory( CWBItem *Root, CXMLNode &node, CRect &Pos )
+CWBItem* TimerDisplay::Factory( CWBItem* Root, CXMLNode& node, CRect& Pos )
 {
   return new TimerDisplay( Root, Pos );
 }

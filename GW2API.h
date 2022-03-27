@@ -23,7 +23,7 @@ struct FestivalData
   bool active{};
 };
 
-extern FestivalData festivals[6];
+extern FestivalData festivals[ 6 ];
 
 extern std::vector<Festival> festivalDailies;
 
@@ -86,6 +86,8 @@ extern APIKeyManager apiKeyManager;
 }
 
 CString FetchAPIData( char* path, const CString& apiKey );
+CString FetchHTTP( LPCWSTR url, LPCWSTR path );
+CString FetchHTTPS( LPCWSTR url, LPCWSTR path );
+bool DownloadFile( const CString& url, CStreamWriterMemory& mem );
 
 void CheckFestivalActive();
-

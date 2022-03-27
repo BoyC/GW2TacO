@@ -3,24 +3,24 @@
 
 struct MumbleContext
 {
-    unsigned char serverAddress[28]; // contains sockaddr_in or sockaddr_in6
-    uint32_t mapId;
-    uint32_t mapType;
-    uint32_t shardId;
-    uint32_t instance;
-    uint32_t buildId;
-    // Additional data beyond the 48 bytes Mumble uses for identification
-    uint32_t uiState; // Bitmask: Bit 1 = IsMapOpen, Bit 2 = IsCompassTopRight, Bit 3 = DoesCompassHaveRotationEnabled, Bit 4 = Game has focus, Bit 5 = Is in Competitive game mode, Bit 6 = Textbox has focus, Bit 7 = Is in Combat
-    uint16_t compassWidth; // pixels
-    uint16_t compassHeight; // pixels
-    float compassRotation; // radians
-    float playerX; // continentCoords
-    float playerY; // continentCoords
-    float mapCenterX; // continentCoords
-    float mapCenterY; // continentCoords
-    float mapScale;
-    uint32_t processId;
-    uint8_t mountIndex;
+  unsigned char serverAddress[ 28 ]; // contains sockaddr_in or sockaddr_in6
+  uint32_t mapId;
+  uint32_t mapType;
+  uint32_t shardId;
+  uint32_t instance;
+  uint32_t buildId;
+  // Additional data beyond the 48 bytes Mumble uses for identification
+  uint32_t uiState; // Bitmask: Bit 1 = IsMapOpen, Bit 2 = IsCompassTopRight, Bit 3 = DoesCompassHaveRotationEnabled, Bit 4 = Game has focus, Bit 5 = Is in Competitive game mode, Bit 6 = Textbox has focus, Bit 7 = Is in Combat
+  uint16_t compassWidth; // pixels
+  uint16_t compassHeight; // pixels
+  float compassRotation; // radians
+  float playerX; // continentCoords
+  float playerY; // continentCoords
+  float mapCenterX; // continentCoords
+  float mapCenterY; // continentCoords
+  float mapScale;
+  uint32_t processId;
+  uint8_t mountIndex;
 };
 
 struct CompassData
@@ -66,7 +66,7 @@ struct LinkedMem
 
 class CMumbleLink
 {
-  LinkedMem *lm = NULL;
+  LinkedMem* lm = NULL;
   CVector4 camchardist[ AVGCAMCOUNTER ];
 
 public:
@@ -109,7 +109,7 @@ public:
   bool Update();
   TBOOL IsValid();
 
-  CRingBuffer<TS32> *FrameTimes;
+  CRingBuffer<TS32>* FrameTimes;
   TF32 GetFrameRate();
 
   TS32 LastFrameTime = 0;

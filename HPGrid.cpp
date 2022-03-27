@@ -2,12 +2,9 @@
 #include "OverlayConfig.h"
 #include "MumbleLink.h"
 
-void GW2HPGrid::OnDraw( CWBDrawAPI *API )
+void GW2HPGrid::OnDraw( CWBDrawAPI* API )
 {
-  if ( !HasConfigValue( "HPGridVisible" ) )
-    SetConfigValue( "HPGridVisible", 1 );
-
-  if ( !GetConfigValue( "HPGridVisible" ) )
+  if ( !Config::GetValue( "HPGridVisible" ) )
     return;
 
   CRect cl = GetClientRect();
@@ -22,14 +19,14 @@ void GW2HPGrid::OnDraw( CWBDrawAPI *API )
 
     for ( int y = 0; y < Grids[ x ].displayedPercentages.NumItems(); y++ )
     {
-      int pos = (int)( cl.Width()*Grids[ x ].displayedPercentages[ y ].percentage / 100.0f );
+      int pos = (int)( cl.Width() * Grids[ x ].displayedPercentages[ y ].percentage / 100.0f );
       CRect r = CRect( pos, cl.y1, pos + 1, cl.y2 );
       API->DrawRect( r, Grids[ x ].displayedPercentages[ y ].color );
     }
   }
 }
 
-GW2HPGrid::GW2HPGrid( CWBItem *Parent, CRect Position ) : CWBItem( Parent, Position )
+GW2HPGrid::GW2HPGrid( CWBItem* Parent, CRect Position ) : CWBItem( Parent, Position )
 {
   LoadGrids();
 }
@@ -39,12 +36,12 @@ GW2HPGrid::~GW2HPGrid()
 
 }
 
-CWBItem * GW2HPGrid::Factory( CWBItem *Root, CXMLNode &node, CRect &Pos )
+CWBItem* GW2HPGrid::Factory( CWBItem* Root, CXMLNode& node, CRect& Pos )
 {
   return new GW2HPGrid( Root, Pos );
 }
 
-TBOOL GW2HPGrid::IsMouseTransparent( CPoint &ClientSpacePoint, WBMESSAGE MessageType )
+TBOOL GW2HPGrid::IsMouseTransparent( CPoint& ClientSpacePoint, WBMESSAGE MessageType )
 {
   return true;
 }

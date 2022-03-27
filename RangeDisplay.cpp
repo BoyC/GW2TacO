@@ -2,14 +2,14 @@
 #include "MumbleLink.h"
 #include "OverlayConfig.h"
 
-void GW2RangeDisplay::DrawRangeCircle( CWBDrawAPI *API, float range, float alpha )
+void GW2RangeDisplay::DrawRangeCircle( CWBDrawAPI* API, float range, float alpha )
 {
-  if (!mumbleLink.IsValid()) return;
+  if ( !mumbleLink.IsValid() ) return;
 
-  if (mumbleLink.isPvp)
-        return;
-  if (mumbleLink.isMapOpen)
-      return;
+  if ( mumbleLink.isPvp )
+    return;
+  if ( mumbleLink.isMapOpen )
+    return;
 
   CRect drawrect = GetClientRect();
 
@@ -26,9 +26,9 @@ void GW2RangeDisplay::DrawRangeCircle( CWBDrawAPI *API, float range, float alpha
   CVector4 camSpaceChar = charpos;
   CVector4 camSpaceEye = charpos + CVector4( 0, 3, 0, 0 );
 
-  CVector4 screenSpaceChar = ( camSpaceChar*cam )*persp;
+  CVector4 screenSpaceChar = ( camSpaceChar * cam ) * persp;
   screenSpaceChar /= screenSpaceChar.w;
-  CVector4 screenSpaceEye = ( camSpaceEye*cam )*persp;
+  CVector4 screenSpaceEye = ( camSpaceEye * cam ) * persp;
   screenSpaceEye /= screenSpaceEye.w;
 
   //camSpaceChar = camSpaceChar*cam;
@@ -50,24 +50,24 @@ void GW2RangeDisplay::DrawRangeCircle( CWBDrawAPI *API, float range, float alpha
   {
     float a1 = 1.0f;
     float a2 = 1.0f;
-    float f1 = x / (TF32)resolution*PI * 2;
-    float f2 = ( x + 1 ) / (TF32)resolution*PI * 2;
-    CVector4 p1 = CVector4( rworld*sinf( f1 ), 0, rworld*cosf( f1 ), 0.0f );
-    CVector4 p2 = CVector4( rworld*sinf( f2 ), 0, rworld*cosf( f2 ), 0.0f );
+    float f1 = x / (TF32)resolution * PI * 2;
+    float f2 = ( x + 1 ) / (TF32)resolution * PI * 2;
+    CVector4 p1 = CVector4( rworld * sinf( f1 ), 0, rworld * cosf( f1 ), 0.0f );
+    CVector4 p2 = CVector4( rworld * sinf( f2 ), 0, rworld * cosf( f2 ), 0.0f );
 
     CVector3 toPoint = CVector3( p1 - campos );
 
     if ( !zoomedin )
     {
-      a1 = 1 - powf( max( 0, camDir*CVector2( p1.x, p1.z ).Normalized() ), 10.0f );
-      a2 = 1 - powf( max( 0, camDir*CVector2( p2.x, p2.z ).Normalized() ), 10.0f );
+      a1 = 1 - powf( max( 0, camDir * CVector2( p1.x, p1.z ).Normalized() ), 10.0f );
+      a2 = 1 - powf( max( 0, camDir * CVector2( p2.x, p2.z ).Normalized() ), 10.0f );
     }
 
     p1 = p1 + charpos;
     p2 = p2 + charpos;
 
-    p1 = p1*cam;
-    p2 = p2*cam;
+    p1 = p1 * cam;
+    p2 = p2 * cam;
 
     p1 /= p1.w;
     p2 /= p2.w;
@@ -78,105 +78,66 @@ void GW2RangeDisplay::DrawRangeCircle( CWBDrawAPI *API, float range, float alpha
     p1.z = max( 0.01f, p1.z );
     p2.z = max( 0.01f, p2.z );
 
-    p1 = p1*persp;
-    p2 = p2*persp;
+    p1 = p1 * persp;
+    p2 = p2 * persp;
     p1 /= p1.w;
     p2 /= p2.w;
 
     if ( a1 < 1 )
-      a1 = 1 - ( 1 - a1 )*( 1 - powf( ( p1.y - screenSpaceChar.y ) / ( screenSpaceEye.y - screenSpaceChar.y ), 10.0f ) );
+      a1 = 1 - ( 1 - a1 ) * ( 1 - powf( ( p1.y - screenSpaceChar.y ) / ( screenSpaceEye.y - screenSpaceChar.y ), 10.0f ) );
 
     if ( a2 < 1 )
-      a2 = 1 - ( 1 - a2 )*( 1 - powf( ( p2.y - screenSpaceChar.y ) / ( screenSpaceEye.y - screenSpaceChar.y ), 10.0f ) );
+      a2 = 1 - ( 1 - a2 ) * ( 1 - powf( ( p2.y - screenSpaceChar.y ) / ( screenSpaceEye.y - screenSpaceChar.y ), 10.0f ) );
 
-    p1 = p1*0.5 + CVector4( 0.5, 0.5, 0.5, 0.0 );
-    p2 = p2*0.5 + CVector4( 0.5, 0.5, 0.5, 0.0 );
+    p1 = p1 * 0.5 + CVector4( 0.5, 0.5, 0.5, 0.0 );
+    p2 = p2 * 0.5 + CVector4( 0.5, 0.5, 0.5, 0.0 );
 
-    CPoint pa = CPoint( (int)( p1.x*drawrect.Width() ), (int)( ( 1 - p1.y )*drawrect.Height() ) );
-    CPoint pb = CPoint( (int)( p2.x*drawrect.Width() ), (int)( ( 1 - p2.y )*drawrect.Height() ) );
+    CPoint pa = CPoint( (int)( p1.x * drawrect.Width() ), (int)( ( 1 - p1.y ) * drawrect.Height() ) );
+    CPoint pb = CPoint( (int)( p2.x * drawrect.Width() ), (int)( ( 1 - p2.y ) * drawrect.Height() ) );
 
-    a1 = max( 0, min( 1, a1 ) )*alpha * 255;
-    a2 = max( 0, min( 1, a2 ) )*alpha * 255;
+    a1 = max( 0, min( 1, a1 ) ) * alpha * 255;
+    a2 = max( 0, min( 1, a2 ) ) * alpha * 255;
 
     API->DrawLine( pa, pb, CColor( 228, 210, 157, (TU8)a1 ), CColor( 228, 210, 157, (TU8)a2 ) );
   }
 
 }
 
-void GW2RangeDisplay::OnDraw( CWBDrawAPI *API )
+void GW2RangeDisplay::OnDraw( CWBDrawAPI* API )
 {
   if ( !mumbleLink.IsValid() )
     return;
 
-  if ( !HasConfigValue( "RangeCirclesVisible" ) )
-    SetConfigValue( "RangeCirclesVisible", 0 );
-
-  if ( !HasConfigValue( "RangeCircleTransparency" ) )
-    SetConfigValue( "RangeCircleTransparency", 100 );
-
-  if ( !HasConfigValue( "RangeCircle90" ) )
-    SetConfigValue( "RangeCircle90", 0 );
-
-  if ( !HasConfigValue( "RangeCircle120" ) )
-    SetConfigValue( "RangeCircle120", 1 );
-
-  if ( !HasConfigValue( "RangeCircle180" ) )
-    SetConfigValue( "RangeCircle180", 0 );
-
-  if ( !HasConfigValue( "RangeCircle240" ) )
-    SetConfigValue( "RangeCircle240", 0 );
-
-  if ( !HasConfigValue( "RangeCircle300" ) )
-    SetConfigValue( "RangeCircle300", 1 );
-
-  if ( !HasConfigValue( "RangeCircle400" ) )
-    SetConfigValue( "RangeCircle400", 1 );
-
-  if ( !HasConfigValue( "RangeCircle600" ) )
-    SetConfigValue( "RangeCircle600", 1 );
-
-  if ( !HasConfigValue( "RangeCircle900" ) )
-    SetConfigValue( "RangeCircle900", 1 );
-
-  if ( !HasConfigValue( "RangeCircle1200" ) )
-    SetConfigValue( "RangeCircle1200", 1 );
-
-  if ( !HasConfigValue( "RangeCircle1500" ) )
-    SetConfigValue( "RangeCircle1500", 0 );
-
-  if ( !HasConfigValue( "RangeCircle1600" ) )
-    SetConfigValue( "RangeCircle1600", 0 );
-
-  if ( GetConfigValue( "RangeCirclesVisible" ) )
+  if ( Config::GetValue( "RangeCirclesVisible" ) )
   {
-    float circ = GetConfigValue( "RangeCircleTransparency" ) / 100.0f;
-    if ( GetConfigValue( "RangeCircle90" ) )
+    float circ = Config::GetValue( "RangeCircleTransparency" ) / 100.0f;
+    if ( Config::GetValue( "RangeCircle90" ) )
       DrawRangeCircle( API, 90, circ );
-    if ( GetConfigValue( "RangeCircle120" ) )
+    if ( Config::GetValue( "RangeCircle120" ) )
       DrawRangeCircle( API, 120, circ );
-    if ( GetConfigValue( "RangeCircle180" ) )
+    if ( Config::GetValue( "RangeCircle180" ) )
       DrawRangeCircle( API, 180, circ );
-    if ( GetConfigValue( "RangeCircle240" ) )
+    if ( Config::GetValue( "RangeCircle240" ) )
       DrawRangeCircle( API, 240, circ );
-    if ( GetConfigValue( "RangeCircle300" ) )
+    if ( Config::GetValue( "RangeCircle300" ) )
       DrawRangeCircle( API, 300, circ );
-    if ( GetConfigValue( "RangeCircle400" ) )
+    if ( Config::GetValue( "RangeCircle400" ) )
       DrawRangeCircle( API, 400, circ );
-    if ( GetConfigValue( "RangeCircle600" ) )
+    if ( Config::GetValue( "RangeCircle600" ) )
       DrawRangeCircle( API, 600, circ );
-    if ( GetConfigValue( "RangeCircle900" ) )
+    if ( Config::GetValue( "RangeCircle900" ) )
       DrawRangeCircle( API, 900, circ );
-    if ( GetConfigValue( "RangeCircle1200" ) )
+    if ( Config::GetValue( "RangeCircle1200" ) )
       DrawRangeCircle( API, 1200, circ );
-    if ( GetConfigValue( "RangeCircle1500" ) )
+    if ( Config::GetValue( "RangeCircle1500" ) )
       DrawRangeCircle( API, 1500, circ );
-    if ( GetConfigValue( "RangeCircle1600" ) )
+    if ( Config::GetValue( "RangeCircle1600" ) )
       DrawRangeCircle( API, 1600, circ );
   }
 
 }
 
-GW2RangeDisplay::GW2RangeDisplay( CWBItem *Parent, CRect Position ) : CWBItem( Parent, Position )
+GW2RangeDisplay::GW2RangeDisplay( CWBItem* Parent, CRect Position ) : CWBItem( Parent, Position )
 {
 
 }
@@ -185,12 +146,12 @@ GW2RangeDisplay::~GW2RangeDisplay()
 
 }
 
-CWBItem *GW2RangeDisplay::Factory( CWBItem *Root, CXMLNode &node, CRect &Pos )
+CWBItem* GW2RangeDisplay::Factory( CWBItem* Root, CXMLNode& node, CRect& Pos )
 {
   return new GW2RangeDisplay( Root, Pos );
 }
 
-TBOOL GW2RangeDisplay::IsMouseTransparent( CPoint &ClientSpacePoint, WBMESSAGE MessageType )
+TBOOL GW2RangeDisplay::IsMouseTransparent( CPoint& ClientSpacePoint, WBMESSAGE MessageType )
 {
   return true;
 }

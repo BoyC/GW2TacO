@@ -6,7 +6,7 @@
 
 CMumbleLink mumbleLink;
 bool frameTriggered = false;
-extern CWBApplication *App;
+extern CWBApplication* App;
 
 void ChangeUIScale( int size );
 
@@ -41,7 +41,7 @@ CRect GetMinimapRectangle()
   if ( mumbleLink.isMinimapTopRight )
   {
     pos.y1 = 1;
-    pos.y2 = int(h*scale+1);
+    pos.y2 = int( h * scale + 1 );
   }
   else
   {
@@ -53,8 +53,8 @@ CRect GetMinimapRectangle()
     if ( mumbleLink.uiSize == 3 )
       delta = 45;
 
-    pos.y1 = int(size.Height() - h * scale - delta * scale);
-    pos.y2 = int(size.Height() - delta * scale);
+    pos.y1 = int( size.Height() - h * scale - delta * scale );
+    pos.y2 = int( size.Height() - delta * scale );
   }
 
   return pos;
@@ -64,21 +64,16 @@ bool CMumbleLink::Update()
 {
   bool justConnected = false;
 
-  FORCEDDEBUGLOG( "updating mumblelink" );
   if ( !lm )
   {
     HANDLE hMapObject = CreateFileMappingA( INVALID_HANDLE_VALUE, NULL, PAGE_READWRITE, 0, sizeof( LinkedMem ), mumblePath.GetPointer() );
 
     if ( hMapObject == NULL )
-    {
-      FORCEDDEBUGLOG( "failed to create mumble link file" );
       return false;
-    }
 
-    lm = (LinkedMem *)MapViewOfFile( hMapObject, FILE_MAP_ALL_ACCESS, 0, 0, sizeof( LinkedMem ) );
+    lm = (LinkedMem*)MapViewOfFile( hMapObject, FILE_MAP_ALL_ACCESS, 0, 0, sizeof( LinkedMem ) );
     if ( lm == NULL )
     {
-      FORCEDDEBUGLOG( "mumble link file closed" );
       CloseHandle( hMapObject );
       hMapObject = NULL;
       return false;
@@ -89,11 +84,8 @@ bool CMumbleLink::Update()
   if ( !lm )
     return false;
 
-  FORCEDDEBUGLOG( "getting mumblelink data" );
-
   if ( tick == lm->uiTick )
   {
-    //memcpy( &lastData, lm, sizeof( LinkedMem ) );
     return false;
   }
   else
@@ -190,18 +182,18 @@ bool CMumbleLink::Update()
 
   mapType = ctx->mapType;
   mapInstance = ctx->shardId;
-  
+
   if ( isMapOpen != ( ctx->uiState & 0x01 ) )
     lastMapChangeTime = globalTimer.GetTime();
 
-  isMapOpen = (ctx->uiState & 0x01);
+  isMapOpen = ( ctx->uiState & 0x01 );
   isMinimapTopRight = ( ctx->uiState & ( 0x01 << 1 ) ) != 0;
   isMinimapRotating = ( ctx->uiState & ( 0x01 << 2 ) ) != 0;
 
-  gameHasFocus      = (ctx->uiState & (0x01 << 3)) != 0;
-  isPvp             = (ctx->uiState & (0x01 << 4)) != 0;
-  textboxHasFocus   = (ctx->uiState & (0x01 << 5)) != 0;
-  isInCombat        = (ctx->uiState & (0x01 << 6)) != 0;
+  gameHasFocus = ( ctx->uiState & ( 0x01 << 3 ) ) != 0;
+  isPvp = ( ctx->uiState & ( 0x01 << 4 ) ) != 0;
+  textboxHasFocus = ( ctx->uiState & ( 0x01 << 5 ) ) != 0;
+  isInCombat = ( ctx->uiState & ( 0x01 << 6 ) ) != 0;
 
   float scale = GetUIScale();
 
@@ -288,7 +280,7 @@ bool CMumbleLink::Update()
 
   for ( int x = 0; x < AVGCAMCOUNTER - 1; x++ )
     camchardist[ x ] = camchardist[ x + 1 ];
-  camchardist[ AVGCAMCOUNTER - 1 ] = charPosition*cam;
+  camchardist[ AVGCAMCOUNTER - 1 ] = charPosition * cam;
 
   CVector4 avgCamCharDist( 0, 0, 0, 0 );
 
@@ -296,10 +288,10 @@ bool CMumbleLink::Update()
     avgCamCharDist += camchardist[ x ];
 
   avgCamCharDist /= (float)( AVGCAMCOUNTER );
-  averagedCharPosition = avgCamCharDist*cami;
+  averagedCharPosition = avgCamCharDist * cami;
   averagedCharPosition /= averagedCharPosition.w;
 
-  if ( !GetConfigValue( "SmoothCharacterPos" ) )
+  if ( !Config::GetValue( "SmoothCharacterPos" ) )
     averagedCharPosition = CVector4( charPosition.x, charPosition.y, charPosition.z, 1.0f );
 
   return true;

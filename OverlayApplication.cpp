@@ -4,22 +4,16 @@ COverlayApp::COverlayApp()
 {
 }
 
-TBOOL COverlayApp::Initialize( const CCoreWindowParameters &WindowParams )
+TBOOL COverlayApp::Initialize( const CCoreWindowParameters& WindowParams )
 {
-  FORCEDDEBUGLOG( "COverlayApp::Initialize()" );
-
   if ( !CWBApplication::Initialize( WindowParams ) ) return false;
 
-  FORCEDDEBUGLOG( "CWBApplication::Initialize() returned with true." );
-
-  CCoreBlendState *GuiBlendState = Device->CreateBlendState();
+  CCoreBlendState* GuiBlendState = Device->CreateBlendState();
   if ( !GuiBlendState )
   {
     LOG( LOG_ERROR, _T( "[gui] Error creating UI Blend State" ) );
     return false;
   }
-
-  FORCEDDEBUGLOG( "GUI Blendstate instance created" );
 
   GuiBlendState->SetBlendEnable( 0, true );
   GuiBlendState->SetSrcBlend( 0, COREBLEND_SRCALPHA );
@@ -36,8 +30,6 @@ TBOOL COverlayApp::Initialize( const CCoreWindowParameters &WindowParams )
   holePunchBlendState->SetDestBlend( 0, COREBLEND_ZERO );
   holePunchBlendState->SetSrcBlendAlpha( 0, COREBLEND_ZERO );
   holePunchBlendState->SetDestBlendAlpha( 0, COREBLEND_ZERO );
-
-  FORCEDDEBUGLOG( "GUI Blendstate set, app init fully done" );
 
   //CCoreSamplerState *GuiSampler = Device->CreateSamplerState();
   //GuiSampler->SetFilter(COREFILTER_COMPARISON_MIN_MAG_MIP_POINT);

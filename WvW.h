@@ -19,3 +19,5 @@ public:
 
 void LoadWvWObjectives();
 void UpdateWvWStatus();
+
+void ShutDownWvWChecking();

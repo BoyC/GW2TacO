@@ -132,7 +132,6 @@ CCoreWindowHandlerWin::~CCoreWindowHandlerWin()
 
 TBOOL CCoreWindowHandlerWin::Initialize(const CCoreWindowParameters &wp)
 {
-  FORCEDDEBUGLOG( "CCoreWindowHandlerWin::Initialize" );
   XRes = wp.XRes;
 	YRes = wp.YRes;
 	InitParameters = wp;
@@ -145,8 +144,6 @@ TBOOL CCoreWindowHandlerWin::Initialize(const CCoreWindowParameters &wp)
 	wc.hIcon = wp.Icon;
 	wc.lpszClassName = _T("CoRE2");
 	RegisterClass(&wc);
-
-  FORCEDDEBUGLOG( "Class registered" );
 
 	RECT WindowRect;
 	WindowRect.left = 0;
@@ -173,18 +170,14 @@ TBOOL CCoreWindowHandlerWin::Initialize(const CCoreWindowParameters &wp)
 		if (wp.OverrideWindowStyle)
 			dwStyle = wp.OverrideWindowStyle;
 		AdjustWindowRect(&WindowRect, dwStyle, FALSE);
-    FORCEDDEBUGLOG( "Windowrect adjusted (non override)" );
     hWnd = CreateWindow( _T( "CoRE2" ), wp.WindowTitle, dwStyle, CW_USEDEFAULT, CW_USEDEFAULT, WindowRect.right - WindowRect.left, WindowRect.bottom - WindowRect.top, NULL, NULL, wp.hInstance, this );
 	}
 	else
 	{
 		dwStyle = wp.OverrideWindowStyle;
 		AdjustWindowRect(&WindowRect, dwStyle, FALSE);
-    FORCEDDEBUGLOG( "Windowrect adjusted (override)" );
     hWnd = CreateWindowEx( wp.OverrideWindowStyleEx, _T( "CoRE2" ), wp.WindowTitle, dwStyle, CW_USEDEFAULT, CW_USEDEFAULT, WindowRect.right - WindowRect.left, WindowRect.bottom - WindowRect.top, NULL, NULL, wp.hInstance, this );
 	}
-
-  FORCEDDEBUGLOG( "Window created" );
 
 	Device = wp.Device;
 
@@ -200,13 +193,9 @@ TBOOL CCoreWindowHandlerWin::Initialize(const CCoreWindowParameters &wp)
 		return false;
 	}
 
-  FORCEDDEBUGLOG( "device initialized!!!" );
-
 	ShowWindow(hWnd, Maximized ? SW_SHOWMAXIMIZED : SW_SHOWNORMAL);
 	SetForegroundWindow(hWnd);
 	SetFocus(hWnd);
-
-  FORCEDDEBUGLOG( "window set to foreground etc" );
 
 	MouseCursors += LoadCursor(NULL, IDC_ARROW);
 	MouseCursors += LoadCursor(NULL, IDC_CROSS);
@@ -216,8 +205,6 @@ TBOOL CCoreWindowHandlerWin::Initialize(const CCoreWindowParameters &wp)
 	MouseCursors += LoadCursor(NULL, IDC_SIZENWSE);
 	MouseCursors += LoadCursor(NULL, IDC_IBEAM);
 	MouseCursors += LoadCursor(NULL, IDC_WAIT);
-
-  FORCEDDEBUGLOG( "mouse cursors loaded" );
 
 	Maximized = wp.Maximized;
 	Minimized = false;
@@ -235,8 +222,6 @@ TBOOL CCoreWindowHandlerWin::Initialize(const CCoreWindowParameters &wp)
 		XRes = r2.right - r2.left;
 		YRes = r2.bottom - r2.top;
 	}
-
-  FORCEDDEBUGLOG( "windowhandler initialized" );
 
 	return true;
 }

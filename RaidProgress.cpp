@@ -21,145 +21,142 @@ void BeautifyString( CString& str )
     {
       if ( str[ x ] == 'O' && x < str.Length() - 1 && str[ x + 1 ] == 'f' )
         str[ x ] = 'o';
-      if ( str[ x ] == 'T' && x < str.Length() - 2 && str[ x + 1 ] == 'h'  && str[ x + 2 ] == 'e' )
+      if ( str[ x ] == 'T' && x < str.Length() - 2 && str[ x + 1 ] == 'h' && str[ x + 2 ] == 'e' )
         str[ x ] = 't';
     }
   }
 }
 
-void RaidProgress::OnDraw( CWBDrawAPI *API )
+void RaidProgress::OnDraw( CWBDrawAPI* API )
 {
-  if ( !HasConfigValue( "CompactRaidWindow" ) )
-    SetConfigValue( "CompactRaidWindow", 0 );
+  TBOOL compact = Config::GetValue( "CompactRaidWindow" );
 
-  TBOOL compact = GetConfigValue( "CompactRaidWindow" );
-
-  CWBFont *f = GetFont( GetState() );
+  CWBFont* f = GetFont( GetState() );
   TS32 size = f->GetLineHeight();
 
-  GW2::APIKeyManager::Status status = GW2::apiKeyManager.DisplayStatusText(API, f);
+  GW2::APIKeyManager::Status status = GW2::apiKeyManager.DisplayStatusText( API, f );
   GW2::APIKey* key = GW2::apiKeyManager.GetIdentifiedAPIKey();
 
   if ( key && key->valid && ( GetTime() - lastFetchTime > 150000 || !lastFetchTime ) && !beingFetched && !fetchThread.joinable() )
   {
     beingFetched = true;
-    fetchThread = std::thread( [ this, key ]()
-    {
-      SetPerThreadCRTExceptionBehavior();
-      if ( !hasFullRaidInfo )
-      {
-        Object json;
+    fetchThread = std::thread( [this, key]()
+                               {
+                                 SetPerThreadCRTExceptionBehavior();
+                                 if ( !hasFullRaidInfo )
+                                 {
+                                   Object json;
 
-        CString globalRaidInfo = CString( "{\"raids\":" ) + key->QueryAPI( "v2/raids" ) + "}";
-        json.parse( globalRaidInfo.GetPointer() );
+                                   CString globalRaidInfo = CString( "{\"raids\":" ) + key->QueryAPI( "v2/raids" ) + "}";
+                                   json.parse( globalRaidInfo.GetPointer() );
 
-        if ( json.has<Array>( "raids" ) )
-        {
-          auto raidData = json.get<Array>( "raids" ).values();
+                                   if ( json.has<Array>( "raids" ) )
+                                   {
+                                     auto raidData = json.get<Array>( "raids" ).values();
 
-          for ( unsigned int x = 0; x < raidData.size(); x++ )
-          {
-            if ( !raidData[ x ]->is<String>() )
-              continue;
+                                     for ( unsigned int x = 0; x < raidData.size(); x++ )
+                                     {
+                                       if ( !raidData[ x ]->is<String>() )
+                                         continue;
 
-            Raid r;
-            r.name = CString( raidData[ x ]->get<String>().data() );
-            if ( r.name.Length() )
-            {
-              r.shortName = CString::Format( "%c", toupper( r.name[ 0 ] ) );
+                                       Raid r;
+                                       r.name = CString( raidData[ x ]->get<String>().data() );
+                                       if ( r.name.Length() )
+                                       {
+                                         r.shortName = CString::Format( "%c", toupper( r.name[ 0 ] ) );
 
-              for ( unsigned int y = 0; y < r.name.Length() - 1; y++ )
-              {
-                if ( r.name[ y ] == '_' || r.name[ y ] == ' ' )
-                {
-                  if ( r.name[ y + 1 ] == 'o' && y < r.name.Length() - 2 && r.name[ y + 2 ] == 'f' )
-                    r.shortName += "o";
-                  else
-                    if ( r.name[ y + 1 ] == 't' && y < r.name.Length() - 3 && r.name[ y + 2 ] == 'h' && r.name[ y + 3 ] == 'e' )
-                      r.shortName += "t";
-                    else
-                      r.shortName += CString::Format( "%c", (char)toupper( r.name[ y + 1 ] ) );
-                }
-              }
-              r.shortName += ":";
-            }
+                                         for ( unsigned int y = 0; y < r.name.Length() - 1; y++ )
+                                         {
+                                           if ( r.name[ y ] == '_' || r.name[ y ] == ' ' )
+                                           {
+                                             if ( r.name[ y + 1 ] == 'o' && y < r.name.Length() - 2 && r.name[ y + 2 ] == 'f' )
+                                               r.shortName += "o";
+                                             else
+                                               if ( r.name[ y + 1 ] == 't' && y < r.name.Length() - 3 && r.name[ y + 2 ] == 'h' && r.name[ y + 3 ] == 'e' )
+                                                 r.shortName += "t";
+                                               else
+                                                 r.shortName += CString::Format( "%c", (char)toupper( r.name[ y + 1 ] ) );
+                                           }
+                                         }
+                                         r.shortName += ":";
+                                       }
 
-            r.configName = CString( "showraid_" ) + r.name;
-            for ( TU32 y = 0; y < r.configName.Length(); y++ )
-              if ( !isalnum( r.configName[ y ] ) )
-                r.configName[ y ] = '_';
-              else
-                r.configName[ y ] = tolower( r.configName[ y ] );
+                                       r.configName = CString( "showraid_" ) + r.name;
+                                       for ( TU32 y = 0; y < r.configName.Length(); y++ )
+                                         if ( !isalnum( r.configName[ y ] ) )
+                                           r.configName[ y ] = '_';
+                                         else
+                                           r.configName[ y ] = tolower( r.configName[ y ] );
 
-            CString raidInfo = key->QueryAPI( ( CString( "v2/raids/" ) + r.name ).GetPointer() );
-            Object raidJson;
-            raidJson.parse( raidInfo.GetPointer() );
+                                       CString raidInfo = key->QueryAPI( ( CString( "v2/raids/" ) + r.name ).GetPointer() );
+                                       Object raidJson;
+                                       raidJson.parse( raidInfo.GetPointer() );
 
-            if ( raidJson.has<Array>( "wings" ) )
-            {
-              auto wings = raidJson.get<Array>( "wings" ).values();
-              for ( unsigned y = 0; y < wings.size(); y++ )
-              {
-                auto wing = wings[ y ]->get<Object>();
-                Wing w;
-                if ( wing.has<String>( "id" ) )
-                  w.name = CString( wing.get<String>( "id" ).data() );
+                                       if ( raidJson.has<Array>( "wings" ) )
+                                       {
+                                         auto wings = raidJson.get<Array>( "wings" ).values();
+                                         for ( unsigned y = 0; y < wings.size(); y++ )
+                                         {
+                                           auto wing = wings[ y ]->get<Object>();
+                                           Wing w;
+                                           if ( wing.has<String>( "id" ) )
+                                             w.name = CString( wing.get<String>( "id" ).data() );
 
-                if ( wing.has<Array>( "events" ) )
-                {
-                  auto events = wing.get<Array>( "events" ).values();
-                  for ( unsigned int z = 0; z < events.size(); z++ )
-                  {
-                    auto _event = events[ z ]->get<Object>();
-                    RaidEvent e;
-                    if ( _event.has<String>( "id" ) )
-                      e.name = CString( _event.get<String>( "id" ).data() );
-                    if ( _event.has<String>( "type" ) )
-                      e.type = CString( _event.get<String>( "type" ).data() );
+                                           if ( wing.has<Array>( "events" ) )
+                                           {
+                                             auto events = wing.get<Array>( "events" ).values();
+                                             for ( unsigned int z = 0; z < events.size(); z++ )
+                                             {
+                                               auto _event = events[ z ]->get<Object>();
+                                               RaidEvent e;
+                                               if ( _event.has<String>( "id" ) )
+                                                 e.name = CString( _event.get<String>( "id" ).data() );
+                                               if ( _event.has<String>( "type" ) )
+                                                 e.type = CString( _event.get<String>( "type" ).data() );
 
-                    w.events += e;
-                  }
-                }
-                r.wings += w;
-              }
-            }
+                                               w.events += e;
+                                             }
+                                           }
+                                           r.wings += w;
+                                         }
+                                       }
 
-            BeautifyString( r.name );
-            raids += r;
-          }
-        }
+                                       BeautifyString( r.name );
+                                       raids += r;
+                                     }
+                                   }
 
-        hasFullRaidInfo = true;
-      }
+                                   hasFullRaidInfo = true;
+                                 }
 
-      CString lastRaidStatus = CString( "{\"raids\":" ) + key->QueryAPI( "v2/account/raids" ) + "}";
-      Object json;
-      json.parse( lastRaidStatus.GetPointer() );
+                                 CString lastRaidStatus = CString( "{\"raids\":" ) + key->QueryAPI( "v2/account/raids" ) + "}";
+                                 Object json;
+                                 json.parse( lastRaidStatus.GetPointer() );
 
-      if ( json.has<Array>( "raids" ) )
-      {
-        auto raidData = json.get<Array>( "raids" ).values();
+                                 if ( json.has<Array>( "raids" ) )
+                                 {
+                                   auto raidData = json.get<Array>( "raids" ).values();
 
-        for ( unsigned int x = 0; x < raidData.size(); x++ )
-        {
-          if ( !raidData[ x ]->is<String>() )
-            continue;
+                                   for ( unsigned int x = 0; x < raidData.size(); x++ )
+                                   {
+                                     if ( !raidData[ x ]->is<String>() )
+                                       continue;
 
-          CString eventName = CString( raidData[ x ]->get<String>().data() );
-          for ( TS32 a = 0; a < raids.NumItems(); a++ )
-            for ( TS32 b = 0; b < raids[ a ].wings.NumItems(); b++ )
-              for ( TS32 c = 0; c < raids[ a ].wings[ b ].events.NumItems(); c++ )
-              {
-                if ( raids[ a ].wings[ b ].events[ c ].name == eventName )
-                  raids[ a ].wings[ b ].events[ c ].finished = true;
-              }
-        }
+                                     CString eventName = CString( raidData[ x ]->get<String>().data() );
+                                     for ( TS32 a = 0; a < raids.NumItems(); a++ )
+                                       for ( TS32 b = 0; b < raids[ a ].wings.NumItems(); b++ )
+                                         for ( TS32 c = 0; c < raids[ a ].wings[ b ].events.NumItems(); c++ )
+                                         {
+                                           if ( raids[ a ].wings[ b ].events[ c ].name == eventName )
+                                             raids[ a ].wings[ b ].events[ c ].finished = true;
+                                         }
+                                   }
 
-      }
+                                 }
 
 
-      beingFetched = false;
-    } );
+                                 beingFetched = false;
+                               } );
   }
 
   if ( !beingFetched && fetchThread.joinable() )
@@ -184,7 +181,7 @@ void RaidProgress::OnDraw( CWBDrawAPI *API )
     {
       auto& r = raids[ x ];
 
-      if ( HasConfigValue( r.configName.GetPointer() ) && !GetConfigValue( r.configName.GetPointer() ) )
+      if ( Config::HasValue( r.configName.GetPointer() ) && !Config::GetValue( r.configName.GetPointer() ) )
         continue;
 
       if ( !compact )
@@ -244,9 +241,8 @@ void RaidProgress::OnDraw( CWBDrawAPI *API )
   DrawBorder( API );
 }
 
-RaidProgress::RaidProgress( CWBItem *Parent, CRect Position ) : CWBItem( Parent, Position )
-{
-}
+RaidProgress::RaidProgress( CWBItem* Parent, CRect Position ) : CWBItem( Parent, Position )
+{}
 
 RaidProgress::~RaidProgress()
 {
@@ -254,12 +250,12 @@ RaidProgress::~RaidProgress()
     fetchThread.join();
 }
 
-CWBItem * RaidProgress::Factory( CWBItem *Root, CXMLNode &node, CRect &Pos )
+CWBItem* RaidProgress::Factory( CWBItem* Root, CXMLNode& node, CRect& Pos )
 {
   return new RaidProgress( Root, Pos );
 }
 
-TBOOL RaidProgress::IsMouseTransparent( CPoint &ClientSpacePoint, WBMESSAGE MessageType )
+TBOOL RaidProgress::IsMouseTransparent( CPoint& ClientSpacePoint, WBMESSAGE MessageType )
 {
   return true;
 }

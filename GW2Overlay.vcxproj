@@ -320,10 +320,11 @@
     <ClCompile Include="BuildInfo.cpp" />
     <ClCompile Include="DungeonProgress.cpp" />
     <ClCompile Include="GW2API.cpp" />
-    <ClCompile Include="GW2POIs.cpp" />
     <ClCompile Include="GW2TacO.cpp" />
+    <ClCompile Include="GW2TacOMenu.cpp" />
     <ClCompile Include="GW2Tactical.cpp" />
     <ClCompile Include="HPGrid.cpp" />
+    <ClCompile Include="InputHooks.cpp" />
     <ClCompile Include="Language.cpp" />
     <ClCompile Include="LocationalTimer.cpp" />
     <ClCompile Include="MapTimer.cpp" />
@@ -350,9 +351,10 @@
     <ClInclude Include="BuildInfo.h" />
     <ClInclude Include="DungeonProgress.h" />
     <ClInclude Include="GW2API.h" />
-    <ClInclude Include="GW2TacO.h" />
+    <ClInclude Include="GW2TacOMenu.h" />
     <ClInclude Include="GW2Tactical.h" />
     <ClInclude Include="HPGrid.h" />
+    <ClInclude Include="InputHooks.h" />
     <ClInclude Include="Language.h" />
     <ClInclude Include="LocationalTimer.h" />
     <ClInclude Include="MapTimer.h" />

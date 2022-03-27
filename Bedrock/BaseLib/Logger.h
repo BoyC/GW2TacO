@@ -115,9 +115,3 @@ extern CLogger Logger;
 #define LOG_SETVERBOSITY(v) Logger.SetVerbosity(v)
 #define LOG_ADDOUTPUT(v) Logger.AddOutput(v)
 #define LOG_REMOVEOUTPUT(v) Logger.RemoveOutput(v)
-
-//#define FORCEDOPENDEBUGFILE()  do { HANDLE h=CreateFile("debug.log",GENERIC_READ | GENERIC_WRITE, FILE_SHARE_READ, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL); CloseHandle(h); } while (0)
-//#define FORCEDDEBUGLOG(v,...) do { HANDLE h=CreateFile("debug.log", FILE_APPEND_DATA , FILE_SHARE_READ, 0, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, 0); char str[1024]; for (int yyy=0; yyy<1024; yyy++) str[yyy]=0; sprintf_s(str,1023, v, __VA_ARGS__); int xxx=0; for (int zzz=0; zzz<1023; zzz++) if (str[zzz]!=0) xxx++; else break; str[xxx]='\n'; WriteFile(h, str, xxx+1, NULL, NULL); CloseHandle(h); } while (0)
-
-#define FORCEDOPENDEBUGFILE()  do { } while (0)
-#define FORCEDDEBUGLOG(v,...) do { } while (0)

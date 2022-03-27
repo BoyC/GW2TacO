@@ -1347,7 +1347,7 @@ unsigned char raw_profont_outlined_fnt[] =
   0,77,0,11,0,7,0,11,0,255,255,1,0,6,0,0,15,
 };
 
-int raw_profont_outlined_fnt_size=4651;
+int raw_profont_outlined_fnt_size = 4651;
 
 unsigned char raw_profont_outlined_png[] =
 {
@@ -1561,7 +1561,7 @@ unsigned char raw_profont_outlined_png[] =
   137,96,204,0,0,0,0,73,69,78,68,174,66,96,130,
 };
 
-int raw_profont_outlined_png_size=4315;
+int raw_profont_outlined_png_size = 4315;
 
 
 TBOOL LoadBMFontBinaryMonochrome( CWBFontDescription* fd, TU8* Binary, TS32 BinarySize, TU8* image, TS32 ImageSize )

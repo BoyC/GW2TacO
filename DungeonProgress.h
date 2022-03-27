@@ -22,7 +22,7 @@ public:
 class DungeonProgress : public CWBItem
 {
   CPoint lastpos;
-  virtual void OnDraw( CWBDrawAPI *API );
+  virtual void OnDraw( CWBDrawAPI* API );
 
   bool beingFetched = false;
   TS32 lastFetchTime = 0;
@@ -35,13 +35,13 @@ class DungeonProgress : public CWBItem
 
 public:
 
-  DungeonProgress( CWBItem *Parent, CRect Position );
+  DungeonProgress( CWBItem* Parent, CRect Position );
   virtual ~DungeonProgress();
 
-  static CWBItem *Factory( CWBItem *Root, CXMLNode &node, CRect &Pos );
+  static CWBItem* Factory( CWBItem* Root, CXMLNode& node, CRect& Pos );
   WB_DECLARE_GUIITEM( _T( "dungeonprogress" ), CWBItem );
 
-  virtual TBOOL IsMouseTransparent( CPoint &ClientSpacePoint, WBMESSAGE MessageType );
+  virtual TBOOL IsMouseTransparent( CPoint& ClientSpacePoint, WBMESSAGE MessageType );
 };
 
 

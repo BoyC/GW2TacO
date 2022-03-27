@@ -1,49 +1,111 @@
 #include "OverlayConfig.h"
 #include "Bedrock/UtilLib/XMLDocument.h"
 
-CDictionaryEnumerable<CString, TS32> ConfigNums;
-CDictionaryEnumerable<CString, CString> ConfigStrings;
+CDictionaryEnumerable<CString, TS32> Config::configValues;
+CDictionaryEnumerable<CString, CString> Config::configStrings;
+
+void Config::SetDefaultValue( TCHAR* cfg, TS32 val )
+{
+  if ( !HasValue( cfg ) )
+    SetValue( cfg, val );
+}
+
 bool configChanged = false;
 auto lastConfigChangeTime = globalTimer.GetTime();
 
-void LoadConfig()
+void Config::InitDefaults()
 {
-  FORCEDDEBUGLOG( "Loading config." );
+  SetDefaultValue( "FrameThrottling", 1 );
+  SetDefaultValue( "Vsync", 1 );
+  SetDefaultValue( "SmoothCharacterPos", 1 );
+  SetDefaultValue( "CheckForUpdates", 1 );
+  SetDefaultValue( "HideOnLoadingScreens", 1 );
+  SetDefaultValue( "KeybindsEnabled", 1 );
+  SetDefaultValue( "EnableCrashMenu", 0 );
+  SetDefaultValue( "SendCrashDump", 1 );
+  SetDefaultValue( "CanWriteToClipboard", 1 );
+  SetDefaultValue( "LogTrails", 0 );
+  SetDefaultValue( "CloseWithGW2", 1 );
+  SetDefaultValue( "InfoLineVisible", 0 );
+  SetDefaultValue( "EnableTPNotificationIcon", 1 );
+  SetDefaultValue( "TacticalIconsOnEdge", 1 );
+  SetDefaultValue( "TacticalLayerVisible", 1 );
+  SetDefaultValue( "DrawWvWNames", 1 );
+  SetDefaultValue( "TacticalDrawDistance", 0 );
+  SetDefaultValue( "UseMetricDisplay", 0 );
+  SetDefaultValue( "OpacityIngame", 0 );
+  SetDefaultValue( "OpacityMap", 0 );
+  SetDefaultValue( "TacticalInfoTextVisible", 1 );
+  SetDefaultValue( "HPGridVisible", 1 );
+  SetDefaultValue( "LocationalTimersVisible", 1 );
+  SetDefaultValue( "MapTimerVisible", 1 );
+  SetDefaultValue( "MapTimerCompact", 1 );
+  SetDefaultValue( "AutoHideMarkerEditor", 1 );
+  SetDefaultValue( "TacticalLayerVisible", 1 );
+  SetDefaultValue( "MouseHighlightVisible", 0 );
+  SetDefaultValue( "MouseHighlightColor", 0 );
+  SetDefaultValue( "MouseHighlightOutline", 0 );
+  SetDefaultValue( "CompactRaidWindow", 0 );
+  SetDefaultValue( "RangeCirclesVisible", 0 );
+  SetDefaultValue( "RangeCircleTransparency", 100 );
+  SetDefaultValue( "RangeCircle90", 0 );
+  SetDefaultValue( "RangeCircle120", 1 );
+  SetDefaultValue( "RangeCircle180", 0 );
+  SetDefaultValue( "RangeCircle240", 0 );
+  SetDefaultValue( "RangeCircle300", 1 );
+  SetDefaultValue( "RangeCircle400", 1 );
+  SetDefaultValue( "RangeCircle600", 1 );
+  SetDefaultValue( "RangeCircle900", 1 );
+  SetDefaultValue( "RangeCircle1200", 1 );
+  SetDefaultValue( "RangeCircle1500", 0 );
+  SetDefaultValue( "RangeCircle1600", 0 );
+  SetDefaultValue( "TacticalCompassVisible", 0 );
+  SetDefaultValue( "TPTrackerOnlyShowOutbid", 0 );
+  SetDefaultValue( "TPTrackerShowBuys", 1 );
+  SetDefaultValue( "TPTrackerShowSells", 1 );
+  SetDefaultValue( "TPTrackerNextSellOnly", 0 );
+  SetDefaultValue( "TrailLayerVisible", 1 );
+  SetDefaultValue( "FadeoutBubble", 1 );
+  SetDefaultValue( "TacticalLayerVisible", 1 );
+  SetDefaultValue( "ShowMinimapMarkers", 1 );
+  SetDefaultValue( "ShowBigmapMarkers", 1 );
+  SetDefaultValue( "ShowInGameMarkers", 1 );
+  SetDefaultValue( "ShowMinimapTrails", 1 );
+  SetDefaultValue( "ShowBigmapTrails", 1 );
+  SetDefaultValue( "ShowInGameTrails", 1 );
+}
+
+void Config::Load()
+{
   CXMLDocument d;
   if ( !d.LoadFromFile( "TacOConfig.xml" ) )
   {
-    FORCEDDEBUGLOG( "Config failed to load, setting defaults." );
-    SetConfigValue( "EditMode", 0 );
-    SetConfigValue( "InterfaceSize", 1 );
-    SetConfigValue( "CloseWithGW2", 1 );
+    SetValue( "EditMode", 0 );
+    SetValue( "InterfaceSize", 1 );
+    SetValue( "CloseWithGW2", 1 );
     SetWindowOpenState( "MapTimer", true );
     SetWindowPosition( "MapTimer", CRect( 6, 97, 491, 813 ) );
     return;
   }
-  ConfigNums.Flush();
-  ConfigStrings.Flush();
-  FORCEDDEBUGLOG( "Config flushed." );
+  configValues.Flush();
+  configStrings.Flush();
 
   if ( !d.GetDocumentNode().GetChildCount( "TacOConfig" ) ) return;
   CXMLNode root = d.GetDocumentNode().GetChild( "TacOConfig" );
 
-  FORCEDDEBUGLOG( "Config root found." );
-
   for ( TS32 x = 0; x < root.GetChildCount(); x++ )
   {
-    FORCEDDEBUGLOG( "Loading config value %d/%d.", x, root.GetChildCount() );
-
     auto item = root.GetChild( x );
     if ( item.HasAttribute( "Data" ) )
     {
       TS32 data = 0;
       item.GetAttributeAsInteger( "Data", &data );
-      ConfigNums[ item.GetNodeName() ] = data;
+      configValues[ item.GetNodeName() ] = data;
     }
 
     if ( item.HasAttribute( "String" ) )
     {
-      ConfigStrings[ item.GetNodeName() ] = item.GetAttributeAsString( "String" );
+      configStrings[ item.GetNodeName() ] = item.GetAttributeAsString( "String" );
     }
   }
 
@@ -63,131 +125,131 @@ int StringSorter( const CString& a, const CString& b )
   return 0;
 }
 
-void SaveConfig()
+void Config::Save()
 {
   CXMLDocument doc;
   CXMLNode& root = doc.GetDocumentNode();
   root = root.AddChild( "TacOConfig" );
-  ConfigNums.SortByKey( StringSorter );
-  ConfigStrings.SortByKey( StringSorter );
-  for ( TS32 x = 0; x < ConfigNums.NumItems(); x++ )
+  configValues.SortByKey( StringSorter );
+  configStrings.SortByKey( StringSorter );
+  for ( TS32 x = 0; x < configValues.NumItems(); x++ )
   {
-    auto kdp = ConfigNums.GetKDPairByIndex( x );
+    auto kdp = configValues.GetKDPairByIndex( x );
     root.AddChild( kdp->Key.GetPointer() ).SetAttributeFromInteger( "Data", kdp->Data );
   }
-  for ( TS32 x = 0; x < ConfigStrings.NumItems(); x++ )
+  for ( TS32 x = 0; x < configStrings.NumItems(); x++ )
   {
-    auto kdp = ConfigStrings.GetKDPairByIndex( x );
+    auto kdp = configStrings.GetKDPairByIndex( x );
     root.AddChild( kdp->Key.GetPointer() ).SetAttribute( "String", kdp->Data.GetPointer() );
   }
   doc.SaveToFile( "TacOConfig.xml" );
 }
 
-void ToggleConfigValue( CString &value )
+void Config::ToggleValue( CString& value )
 {
   configChanged = true;
   lastConfigChangeTime = globalTimer.GetTime();
-  if ( ConfigNums.HasKey( value ) )
+  if ( configValues.HasKey( value ) )
   {
-    TS32 v = ConfigNums[ value ];
-    ConfigNums[ value ] = !v;
+    TS32 v = configValues[ value ];
+    configValues[ value ] = !v;
   }
   else
-    ConfigNums[ value ] = 0;
+    configValues[ value ] = 0;
 }
 
-void ToggleConfigValue( TCHAR *value )
+void Config::ToggleValue( TCHAR* value )
 {
-  ToggleConfigValue( CString( value ) );
+  ToggleValue( CString( value ) );
 }
 
-TS32 GetConfigValue( TCHAR *value )
+TS32 Config::GetValue( TCHAR* value )
 {
-  if ( ConfigNums.HasKey( value ) )
-    return ConfigNums[ value ];
+  if ( configValues.HasKey( value ) )
+    return configValues[ value ];
   return 0;
 }
 
-void SetConfigValue( TCHAR *value, TS32 val )
+void Config::SetValue( TCHAR* value, TS32 val )
 {
   configChanged = true;
   lastConfigChangeTime = globalTimer.GetTime();
-  ConfigNums[ value ] = val;
+  configValues[ value ] = val;
 }
 
-TBOOL HasConfigValue( TCHAR *value )
+TBOOL Config::HasValue( TCHAR* value )
 {
-  return ConfigNums.HasKey( value );
+  return configValues.HasKey( value );
 }
 
-TBOOL HasConfigString( TCHAR *value )
+TBOOL Config::HasString( TCHAR* value )
 {
-  return ConfigStrings.HasKey( value );
+  return configStrings.HasKey( value );
 }
 
-void SetConfigString( TCHAR *value, const CString& val )
+void Config::SetString( TCHAR* value, const CString& val )
 {
   configChanged = true;
   lastConfigChangeTime = globalTimer.GetTime();
-  ConfigStrings[ value ] = val;
+  configStrings[ value ] = val;
 }
 
-CString GetConfigString( TCHAR *value )
+CString Config::GetString( TCHAR* value )
 {
-  if ( ConfigStrings.HasKey( value ) )
-    return ConfigStrings[ value ];
+  if ( configStrings.HasKey( value ) )
+    return configStrings[ value ];
   return "";
 }
 
-TBOOL IsWindowOpen( TCHAR *windowname )
+TBOOL Config::IsWindowOpen( TCHAR* windowname )
 {
   CString s( windowname );
-  return GetConfigValue( ( s + L"_open" ).GetPointer() );
+  return GetValue( ( s + L"_open" ).GetPointer() );
 }
 
-void SetWindowOpenState( TCHAR *windowname, TBOOL Open )
+void Config::SetWindowOpenState( TCHAR* windowname, TBOOL Open )
 {
   CString s( windowname );
-  SetConfigValue( ( s + L"_open" ).GetPointer(), (int)Open );
+  SetValue( ( s + L"_open" ).GetPointer(), (int)Open );
 }
 
-CRect GetWindowPosition( TCHAR *windowname )
+CRect Config::GetWindowPosition( TCHAR* windowname )
 {
   CRect r;
   CString s( windowname );
-  r.x1 = GetConfigValue( ( s + L"_x1" ).GetPointer() );
-  r.y1 = GetConfigValue( ( s + L"_y1" ).GetPointer() );
-  r.x2 = GetConfigValue( ( s + L"_x2" ).GetPointer() );
-  r.y2 = GetConfigValue( ( s + L"_y2" ).GetPointer() );
+  r.x1 = GetValue( ( s + L"_x1" ).GetPointer() );
+  r.y1 = GetValue( ( s + L"_y1" ).GetPointer() );
+  r.x2 = GetValue( ( s + L"_x2" ).GetPointer() );
+  r.y2 = GetValue( ( s + L"_y2" ).GetPointer() );
   return r;
 }
 
-void SetWindowPosition( TCHAR *windowname, CRect Pos )
+void Config::SetWindowPosition( TCHAR* windowname, CRect Pos )
 {
   CString s( windowname );
-  SetConfigValue( ( s + L"_x1" ).GetPointer(), Pos.x1 );
-  SetConfigValue( ( s + L"_y1" ).GetPointer(), Pos.y1 );
-  SetConfigValue( ( s + L"_x2" ).GetPointer(), Pos.x2 );
-  SetConfigValue( ( s + L"_y2" ).GetPointer(), Pos.y2 );
+  SetValue( ( s + L"_x1" ).GetPointer(), Pos.x1 );
+  SetValue( ( s + L"_y1" ).GetPointer(), Pos.y1 );
+  SetValue( ( s + L"_x2" ).GetPointer(), Pos.x2 );
+  SetValue( ( s + L"_y2" ).GetPointer(), Pos.y2 );
 }
 
-TBOOL HasWindowData( TCHAR *windowname )
+TBOOL Config::HasWindowData( TCHAR* windowname )
 {
   CString s( windowname );
-  return HasConfigValue( ( s + L"_open" ).GetPointer() ) &&
-    HasConfigValue( ( s + L"_x1" ).GetPointer() ) &&
-    HasConfigValue( ( s + L"_y1" ).GetPointer() ) &&
-    HasConfigValue( ( s + L"_x2" ).GetPointer() ) &&
-    HasConfigValue( ( s + L"_y2" ).GetPointer() );
+  return HasValue( ( s + L"_open" ).GetPointer() ) &&
+    HasValue( ( s + L"_x1" ).GetPointer() ) &&
+    HasValue( ( s + L"_y1" ).GetPointer() ) &&
+    HasValue( ( s + L"_x2" ).GetPointer() ) &&
+    HasValue( ( s + L"_y2" ).GetPointer() );
 }
 
-void GetKeyBindings( CDictionary<TS32, TacOKeyAction> &KeyBindings )
+void Config::GetKeyBindings( CDictionary<TS32, TacOKeyAction>& KeyBindings )
 {
   KeyBindings.Flush();
 
-  for ( TS32 x = 0; x < ConfigNums.NumItems(); x++ )
+  for ( TS32 x = 0; x < configValues.NumItems(); x++ )
   {
-    auto kdp = ConfigNums.GetKDPair( x );
+    auto kdp = configValues.GetKDPair( x );
     if ( kdp->Key.Find( "KeyboardKey_" ) != 0 )
       continue;
     TS32 key;
@@ -214,18 +276,18 @@ void GetKeyBindings( CDictionary<TS32, TacOKeyAction> &KeyBindings )
   }
 }
 
-void SetKeyBinding( TacOKeyAction action, TS32 key )
+void Config::SetKeyBinding( TacOKeyAction action, TS32 key )
 {
   configChanged = true;
   lastConfigChangeTime = globalTimer.GetTime();
-  ConfigNums[ CString::Format( "KeyboardKey_%d", key ) ] = (TS32)action;
+  configValues[ CString::Format( "KeyboardKey_%d", key ) ] = (TS32)action;
 }
 
-void DeleteKeyBinding( TS32 keyToDelete )
+void Config::DeleteKeyBinding( TS32 keyToDelete )
 {
-  for ( TS32 x = 0; x < ConfigNums.NumItems(); x++ )
+  for ( TS32 x = 0; x < configValues.NumItems(); x++ )
   {
-    auto kdp = ConfigNums.GetKDPair( x );
+    auto kdp = configValues.GetKDPair( x );
     if ( kdp->Key.Find( "KeyboardKey_" ) != 0 )
       continue;
     TS32 key;
@@ -234,19 +296,19 @@ void DeleteKeyBinding( TS32 keyToDelete )
 
     if ( key == keyToDelete )
     {
-      ConfigNums.Delete( kdp->Key );
+      configValues.Delete( kdp->Key );
       x--;
     }
   }
 }
 
-void GetScriptKeyBindings( CDictionary<TS32, CString> &ScriptKeyBindings )
+void Config::GetScriptKeyBindings( CDictionary<TS32, CString>& ScriptKeyBindings )
 {
   ScriptKeyBindings.Flush();
 
-  for ( TS32 x = 0; x < ConfigNums.NumItems(); x++ )
+  for ( TS32 x = 0; x < configValues.NumItems(); x++ )
   {
-    auto kdp = ConfigNums.GetKDPair( x );
+    auto kdp = configValues.GetKDPair( x );
     if ( kdp->Key.Find( "ScriptKey_" ) != 0 )
       continue;
     CString key = kdp->Key.Substring( 10 );
@@ -256,18 +318,18 @@ void GetScriptKeyBindings( CDictionary<TS32, CString> &ScriptKeyBindings )
   }
 }
 
-void SetScriptKeyBinding( const CString& scriptEvent, TS32 key )
+void Config::SetScriptKeyBinding( const CString& scriptEvent, TS32 key )
 {
   configChanged = true;
   lastConfigChangeTime = globalTimer.GetTime();
-  ConfigNums[ CString::Format( "ScriptKey_%s", scriptEvent.GetPointer() ) ] = (TS32)key;
+  configValues[ CString::Format( "ScriptKey_%s", scriptEvent.GetPointer() ) ] = (TS32)key;
 }
 
-void DeleteScriptKeyBinding( const CString& scriptEvent )
+void Config::DeleteScriptKeyBinding( const CString& scriptEvent )
 {
-  for ( TS32 x = 0; x < ConfigNums.NumItems(); x++ )
+  for ( TS32 x = 0; x < configValues.NumItems(); x++ )
   {
-    auto kdp = ConfigNums.GetKDPair( x );
+    auto kdp = configValues.GetKDPair( x );
     if ( kdp->Key.Find( "ScriptKey_" ) != 0 )
       continue;
     CString key = kdp->Key.Substring( 10 );
@@ -276,19 +338,19 @@ void DeleteScriptKeyBinding( const CString& scriptEvent )
 
     if ( key == scriptEvent )
     {
-      ConfigNums.DeleteByIndex( x );
+      configValues.DeleteByIndex( x );
       x--;
     }
   }
 }
 
-GW2TacticalCategory *GetCategory( CString s );
+GW2TacticalCategory* GetCategory( CString s );
 
-void LoadMarkerCategoryVisibilityInfo()
+void Config::LoadMarkerCategoryVisibilityInfo()
 {
-  for ( TS32 x = 0; x < ConfigNums.NumItems(); x++ )
+  for ( TS32 x = 0; x < configValues.NumItems(); x++ )
   {
-    auto kdp = ConfigNums.GetKDPair( x );
+    auto kdp = configValues.GetKDPair( x );
     if ( kdp->Key.Find( "CategoryVisible_" ) != 0 )
       continue;
 
@@ -301,7 +363,7 @@ void LoadMarkerCategoryVisibilityInfo()
   CategoryRoot.CalculateVisibilityCache();
 }
 
-void AutoSaveConfig()
+void Config::AutoSaveConfig()
 {
   if ( !configChanged )
     return;
@@ -309,12 +371,12 @@ void AutoSaveConfig()
   if ( globalTimer.GetTime() - lastConfigChangeTime > 10000 )
   {
     configChanged = false;
-    SaveConfig();
+    Save();
   }
 }
 
-void RemoveConfigEntry(TCHAR* name)
+void Config::RemoveValue( TCHAR* name )
 {
-  ConfigStrings.Delete(name);
-  ConfigNums.Delete(name);
+  configStrings.Delete( name );
+  configValues.Delete( name );
 }

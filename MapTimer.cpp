@@ -6,75 +6,69 @@
 
 using namespace jsonxx;
 
-void GW2MapTimer::OnDraw( CWBDrawAPI *API )
+void GW2MapTimer::OnDraw( CWBDrawAPI* API )
 {
-  if ( !HasConfigValue( "MapTimerVisible" ) )
-    SetConfigValue( "MapTimerVisible", 1 );
-
-  if (!HasConfigValue("MapTimerCompact"))
-    SetConfigValue("MapTimerCompact", 1);
-
-  if ( !GetConfigValue( "MapTimerVisible" ) )
+  if ( !Config::GetValue( "MapTimerVisible" ) )
     return;
 
   CString mouseToolTip;
 
-  if (GW2::apiKeyManager.GetStatus() == GW2::APIKeyManager::Status::OK)
+  if ( GW2::apiKeyManager.GetStatus() == GW2::APIKeyManager::Status::OK )
   {
     GW2::APIKey* key = GW2::apiKeyManager.GetIdentifiedAPIKey();
 
-    if (key && key->valid && (GetTime() - lastFetchTime > 150000 || !lastFetchTime) && !beingFetched && !fetchThread.joinable())
+    if ( key && key->valid && ( GetTime() - lastFetchTime > 150000 || !lastFetchTime ) && !beingFetched && !fetchThread.joinable() )
     {
       beingFetched = true;
-      fetchThread = std::thread([this, key]()
-        {
-          SetPerThreadCRTExceptionBehavior();
-          Object json;
+      fetchThread = std::thread( [this, key]()
+                                 {
+                                   SetPerThreadCRTExceptionBehavior();
+                                   Object json;
 
-          CString lastDungeonStatus = CString("{\"worldbosses\":") + key->QueryAPI("v2/account/worldbosses") + "}";
-          json.parse(lastDungeonStatus.GetPointer());
+                                   CString lastDungeonStatus = CString( "{\"worldbosses\":" ) + key->QueryAPI( "v2/account/worldbosses" ) + "}";
+                                   json.parse( lastDungeonStatus.GetPointer() );
 
-          if (json.has<Array>("worldbosses"))
-          {
-            auto dungeonData = json.get<Array>("worldbosses").values();
+                                   if ( json.has<Array>( "worldbosses" ) )
+                                   {
+                                     auto dungeonData = json.get<Array>( "worldbosses" ).values();
 
-            CLightweightCriticalSection cs(&critSec);
+                                     CLightweightCriticalSection cs( &critSec );
 
-            worldBosses.Flush();
+                                     worldBosses.Flush();
 
-            for (unsigned int x = 0; x < dungeonData.size(); x++)
-            {
-              if (!dungeonData[x]->is<String>())
-                continue;
+                                     for ( unsigned int x = 0; x < dungeonData.size(); x++ )
+                                     {
+                                       if ( !dungeonData[ x ]->is<String>() )
+                                         continue;
 
-              CString eventName = CString(dungeonData[x]->get<String>().data());
-              worldBosses += eventName;
-            }
-          }
+                                       CString eventName = CString( dungeonData[ x ]->get<String>().data() );
+                                       worldBosses += eventName;
+                                     }
+                                   }
 
-          lastDungeonStatus = CString("{\"mapchests\":") + key->QueryAPI("v2/account/mapchests") + "}";
-          json.parse(lastDungeonStatus.GetPointer());
+                                   lastDungeonStatus = CString( "{\"mapchests\":" ) + key->QueryAPI( "v2/account/mapchests" ) + "}";
+                                   json.parse( lastDungeonStatus.GetPointer() );
 
-          if (json.has<Array>("mapchests"))
-          {
-            auto dungeonData = json.get<Array>("mapchests").values();
+                                   if ( json.has<Array>( "mapchests" ) )
+                                   {
+                                     auto dungeonData = json.get<Array>( "mapchests" ).values();
 
-            CLightweightCriticalSection cs(&critSec);
+                                     CLightweightCriticalSection cs( &critSec );
 
-            mapchests.Flush();
+                                     mapchests.Flush();
 
-            for (unsigned int x = 0; x < dungeonData.size(); x++)
-            {
-              if (!dungeonData[x]->is<String>())
-                continue;
+                                     for ( unsigned int x = 0; x < dungeonData.size(); x++ )
+                                     {
+                                       if ( !dungeonData[ x ]->is<String>() )
+                                         continue;
 
-              CString eventName = CString(dungeonData[x]->get<String>().data());
-              mapchests += eventName;
-            }
-          }
+                                       CString eventName = CString( dungeonData[ x ]->get<String>().data() );
+                                       mapchests += eventName;
+                                     }
+                                   }
 
-          beingFetched = false;
-        });
+                                   beingFetched = false;
+                                 } );
     }
   }
 
@@ -84,7 +78,7 @@ void GW2MapTimer::OnDraw( CWBDrawAPI *API )
     fetchThread.join();
   }
 
-  TBOOL compact = GetConfigValue( "MapTimerCompact" );
+  TBOOL compact = Config::GetValue( "MapTimerCompact" );
 
   TS32 timeWindow = 120;
   TS32 mapheight = 40;
@@ -101,7 +95,7 @@ void GW2MapTimer::OnDraw( CWBDrawAPI *API )
   gmtime_s( &ptm, &rawtime );
 
   WBITEMSTATE i = GetState();
-  CWBFont *f = GetFont( i );
+  CWBFont* f = GetFont( i );
 
   barheight = f->GetLineHeight();
   mapheight = barheight + f->GetLineHeight();
@@ -175,7 +169,7 @@ void GW2MapTimer::OnDraw( CWBDrawAPI *API )
             text = CString::Format( "%s %d:%.2d", text.GetPointer(), timeleft / 60, timeleft % 60 );
         }
 
-        if (ClientToScreen(r).Contains(GetApplication()->GetMousePos()))
+        if ( ClientToScreen( r ).Contains( GetApplication()->GetMousePos() ) )
         {
           mouseToolTip = text;
         }
@@ -213,14 +207,14 @@ void GW2MapTimer::OnDraw( CWBDrawAPI *API )
     API->DrawRectBorder( highlightRects[ x ], 0xffffcc00 );
 
   API->DrawRect( CRect( cl.Width() / 2, 0, cl.Width() / 2 + 1, ypos ), 0x80ffffff );
-  SetMouseToolTip(mouseToolTip);
+  SetMouseToolTip( mouseToolTip );
 }
 
-void GW2MapTimer::SetLayout( CXMLNode & node )
+void GW2MapTimer::SetLayout( CXMLNode& node )
 {
   for ( int x = 0; x < node.GetChildCount( "Map" ); x++ )
   {
-    CXMLNode &mapNode = node.GetChild( "Map", x );
+    CXMLNode& mapNode = node.GetChild( "Map", x );
 
     Map map;
     if ( mapNode.HasAttribute( "Name" ) )
@@ -233,8 +227,8 @@ void GW2MapTimer::SetLayout( CXMLNode & node )
     {
       map.id = mapNode.GetAttributeAsString( "id" );
       CString str = CString( "maptimer_mapopen_" ) + map.id;
-      if ( HasConfigValue( str.GetPointer() ) )
-        map.display = GetConfigValue( str.GetPointer() );
+      if ( Config::HasValue( str.GetPointer() ) )
+        map.display = Config::GetValue( str.GetPointer() );
     }
 
     if ( mapNode.HasAttribute( "Length" ) )
@@ -247,7 +241,7 @@ void GW2MapTimer::SetLayout( CXMLNode & node )
 
     for ( int y = 0; y < mapNode.GetChildCount( "Event" ); y++ )
     {
-      CXMLNode &eventNode = mapNode.GetChild( "Event", y );
+      CXMLNode& eventNode = mapNode.GetChild( "Event", y );
       Event event;
       event.length = 0;
       event.start = start;
@@ -282,7 +276,7 @@ void GW2MapTimer::SetLayout( CXMLNode & node )
   }
 }
 
-GW2MapTimer::GW2MapTimer( CWBItem *Parent, CRect Position ) : CWBItem( Parent, Position )
+GW2MapTimer::GW2MapTimer( CWBItem* Parent, CRect Position ) : CWBItem( Parent, Position )
 {
   CXMLDocument d;
   if ( !d.LoadFromFile( "maptimer.xml" ) ) return;
@@ -300,13 +294,13 @@ GW2MapTimer::~GW2MapTimer()
     fetchThread.join();
 }
 
-CWBItem * GW2MapTimer::Factory( CWBItem *Root, CXMLNode &node, CRect &Pos )
+CWBItem* GW2MapTimer::Factory( CWBItem* Root, CXMLNode& node, CRect& Pos )
 {
   auto tmr = new GW2MapTimer( Root, Pos );
   return tmr;
 }
 
-TBOOL GW2MapTimer::IsMouseTransparent( CPoint &ClientSpacePoint, WBMESSAGE MessageType )
+TBOOL GW2MapTimer::IsMouseTransparent( CPoint& ClientSpacePoint, WBMESSAGE MessageType )
 {
   return true;
 }

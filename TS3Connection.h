@@ -14,9 +14,9 @@ class TS3Connection
 
   TS32 currentHandlerID = 1;
 
-  void ProcessNotification( CString &s );
-  void ProcessChannelList( CString &channeldata, TS32 handler );
-  void ProcessClientList( CString &clientdata, TS32 handler );
+  void ProcessNotification( CString& s );
+  void ProcessChannelList( CString& channeldata, TS32 handler );
+  void ProcessClientList( CString& clientdata, TS32 handler );
   CString ReadLine();
 
   TS32 LastPingTime = 0;
@@ -68,8 +68,8 @@ public:
   void Tick();
   void InitConnection();
 
-  CommandResponse SendCommand( CString &message );
-  CommandResponse SendCommand( TCHAR *message );
+  CommandResponse SendCommand( CString& message );
+  CommandResponse SendCommand( TCHAR* message );
 
   void ProcessNotifications();
 

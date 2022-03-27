@@ -87,8 +87,6 @@ TBOOL CCoreDX11Device::CreateBackBuffer( TS32 XRes, TS32 YRes )
 {
   if ( BackBufferView ) BackBufferView->Release();
 
-  FORCEDDEBUGLOG( "creating backbuffer" );
-
   HRESULT res = S_OK;
   ID3D11Texture2D* bb;
 
@@ -100,8 +98,6 @@ TBOOL CCoreDX11Device::CreateBackBuffer( TS32 XRes, TS32 YRes )
     return false;
   }
 
-  FORCEDDEBUGLOG( "getbuffer called" );
-
   res = Device->CreateRenderTargetView( bb, NULL, &BackBufferView );
   if ( res != S_OK )
   {
@@ -109,8 +105,6 @@ TBOOL CCoreDX11Device::CreateBackBuffer( TS32 XRes, TS32 YRes )
     LOG( LOG_ERROR, _T( "[core] DirectX11 Rendertarget View creation failed (%s)" ), err.ErrorMessage() );
     return false;
   }
-
-  FORCEDDEBUGLOG( "createrendertargetview called" );
 
   res = bb->Release();
   if ( res != S_OK )
@@ -120,8 +114,6 @@ TBOOL CCoreDX11Device::CreateBackBuffer( TS32 XRes, TS32 YRes )
     //return false;
   }
 
-  FORCEDDEBUGLOG( "previous buffer released" );
-
   return true;
 }
 
@@ -129,8 +121,6 @@ TBOOL CCoreDX11Device::CreateDepthBuffer( TS32 XRes, TS32 YRes )
 {
   if ( DepthBufferView ) DepthBufferView->Release();
   if ( DepthBuffer ) DepthBuffer->Release();
-
-  FORCEDDEBUGLOG( "creating depthbuffer" );
 
   HRESULT res = S_OK;
 
@@ -159,8 +149,6 @@ TBOOL CCoreDX11Device::CreateDepthBuffer( TS32 XRes, TS32 YRes )
     return false;
   }
 
-  FORCEDDEBUGLOG( "createtexture called" );
-
   ZeroMemory( &depthStencilViewDesc, sizeof( depthStencilViewDesc ) );
 
   depthStencilViewDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
@@ -175,8 +163,6 @@ TBOOL CCoreDX11Device::CreateDepthBuffer( TS32 XRes, TS32 YRes )
     return false;
   }
 
-  FORCEDDEBUGLOG( "createdepthstencilview called" );
-
   return true;
 }
 
@@ -184,7 +170,6 @@ TBOOL CCoreDX11Device::CreateClassicSwapChain( const TU32 hWnd, const TBOOL Full
 {
   LOG_NFO( "[core] Creating classic swap chain" );
 
-  FORCEDDEBUGLOG( "Initapi" );
   HRESULT res = S_OK;
 
   DXGI_SWAP_CHAIN_DESC scd;
@@ -207,7 +192,6 @@ TBOOL CCoreDX11Device::CreateClassicSwapChain( const TU32 hWnd, const TBOOL Full
     _com_error err( res );
     LOG( LOG_WARNING, _T( "[core] DirectX11 debug mode device creation failed. (%s) Trying without debug mode..." ), err.ErrorMessage() );
 #endif
-    FORCEDDEBUGLOG( "About to create d3d device" );
     res = D3D11CreateDeviceAndSwapChain( NULL, D3D_DRIVER_TYPE_HARDWARE, NULL, 0, NULL, NULL, D3D11_SDK_VERSION, &scd, (IDXGISwapChain**)&SwapChain, &Device, NULL, &DeviceContext );
     if ( res != S_OK )
     {
@@ -215,26 +199,17 @@ TBOOL CCoreDX11Device::CreateClassicSwapChain( const TU32 hWnd, const TBOOL Full
       LOG( LOG_ERROR, _T( "[core] DirectX11 Device creation failed (%s)" ), error.ErrorMessage() );
       return false;
     }
-    FORCEDDEBUGLOG( "D3D device created" );
 #ifdef ENABLE_CORE_DEBUG_MODE
   }
 #endif
 
   if ( !CreateBackBuffer( XRes, YRes ) ) return false;
-  FORCEDDEBUGLOG( "Backbuffer created" );
   if ( !CreateDepthBuffer( XRes, YRes ) ) return false;
-  FORCEDDEBUGLOG( "Depthbuffer created" );
   DeviceContext->OMSetRenderTargets( 1, &BackBufferView, DepthBufferView );
-
-  FORCEDDEBUGLOG( "rendertargets set" );
-
   SetViewport( CRect( 0, 0, XRes, YRes ) );
-  FORCEDDEBUGLOG( "viewports set" );
 
   if ( CreateDefaultRenderStates() )
     LOG( LOG_INFO, _T( "[core] DirectX11 Device initialization successful." ) );
-
-  FORCEDDEBUGLOG( "default renderstates created" );
 
   D3D11_QUERY_DESC queryDesc;
   memset( &queryDesc, 0, sizeof( queryDesc ) );
@@ -250,9 +225,7 @@ TBOOL CCoreDX11Device::CreateDirectCompositionSwapchain( const TU32 hWnd, const 
 {
   LOG_NFO( "[core] Creating DirectComposition swap chain" );
 
-  FORCEDDEBUGLOG( "Initapi" );
   HRESULT res = S_OK;
-
 
   IDXGIFactory2* dxgiFactory;
 #ifdef _DEBUG
@@ -293,7 +266,6 @@ TBOOL CCoreDX11Device::CreateDirectCompositionSwapchain( const TU32 hWnd, const 
     _com_error err( res );
     LOG( LOG_WARNING, _T( "[core] DirectX11 debug mode device creation failed. (%s) Trying without debug mode..." ), err.ErrorMessage() );
 #endif
-    FORCEDDEBUGLOG( "About to create d3d device" );
     res = D3D11CreateDevice( NULL, D3D_DRIVER_TYPE_HARDWARE, NULL, 0, NULL, NULL, D3D11_SDK_VERSION, &Device, NULL, &DeviceContext );
     //res = D3D11CreateDeviceAndSwapChain( NULL, D3D_DRIVER_TYPE_HARDWARE, NULL, 0, NULL, NULL, D3D11_SDK_VERSION, &scd, &SwapChain, &Device, NULL, &DeviceContext );
     if ( res != S_OK )
@@ -302,7 +274,6 @@ TBOOL CCoreDX11Device::CreateDirectCompositionSwapchain( const TU32 hWnd, const 
       LOG( LOG_ERROR, _T( "[core] DirectX11 Device creation failed (%s)" ), error.ErrorMessage() );
       return false;
     }
-    FORCEDDEBUGLOG( "D3D device created" );
 #ifdef ENABLE_CORE_DEBUG_MODE
   }
 #endif
@@ -402,25 +373,16 @@ TBOOL CCoreDX11Device::CreateDirectCompositionSwapchain( const TU32 hWnd, const 
   //  return false;
   //}
 
-
-
   dxgiFactory->Release();
 
   if ( !CreateBackBuffer( XRes, YRes ) ) return false;
-  FORCEDDEBUGLOG( "Backbuffer created" );
   if ( !CreateDepthBuffer( XRes, YRes ) ) return false;
-  FORCEDDEBUGLOG( "Depthbuffer created" );
   DeviceContext->OMSetRenderTargets( 1, &BackBufferView, DepthBufferView );
 
-  FORCEDDEBUGLOG( "rendertargets set" );
-
   SetViewport( CRect( 0, 0, XRes, YRes ) );
-  FORCEDDEBUGLOG( "viewports set" );
 
   if ( CreateDefaultRenderStates() )
     LOG( LOG_INFO, _T( "[core] DirectX11 Device initialization successful." ) );
-
-  FORCEDDEBUGLOG( "default renderstates created" );
 
   D3D11_QUERY_DESC queryDesc;
   memset( &queryDesc, 0, sizeof( queryDesc ) );
@@ -452,19 +414,13 @@ TBOOL CCoreDX11Device::InitAPI( const TU32 hWnd, const TBOOL FullScreen, const T
 
 TBOOL CCoreDX11Device::Initialize( CCoreWindowHandler* window, const TS32 AALevel )
 {
-  FORCEDDEBUGLOG( "Initializing DX11 device" );
   Window = window;
 
   if ( !InitAPI( Window->GetHandle(), Window->GetInitParameters().FullScreen, Window->GetXRes(), Window->GetYRes(), AALevel, 60 ) ) return false;
 
-  FORCEDDEBUGLOG( "InitAPI ran" );
-
   ShowWindow( (HWND)Window->GetHandle(), Window->GetInitParameters().Maximized ? SW_SHOWMAXIMIZED : SW_SHOWNORMAL );
-  FORCEDDEBUGLOG( "Showwindow ran" );
   SetForegroundWindow( (HWND)Window->GetHandle() );
-  FORCEDDEBUGLOG( "Setforegroundwindow ran" );
   SetFocus( (HWND)Window->GetHandle() );
-  FORCEDDEBUGLOG( "Setfocus ran" );
   return true;
 }
 

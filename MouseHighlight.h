@@ -18,16 +18,16 @@ class GW2MouseHighlight : public CWBItem
 {
 
   CPoint lastpos;
-  virtual void OnDraw( CWBDrawAPI *API );
+  virtual void OnDraw( CWBDrawAPI* API );
 
 public:
 
-  virtual TBOOL IsMouseTransparent( CPoint &ClientSpacePoint, WBMESSAGE MessageType );
+  virtual TBOOL IsMouseTransparent( CPoint& ClientSpacePoint, WBMESSAGE MessageType );
 
-  GW2MouseHighlight( CWBItem *Parent, CRect Position );
+  GW2MouseHighlight( CWBItem* Parent, CRect Position );
   virtual ~GW2MouseHighlight();
 
-  static CWBItem *Factory( CWBItem *Root, CXMLNode &node, CRect &Pos );
+  static CWBItem* Factory( CWBItem* Root, CXMLNode& node, CRect& Pos );
   WB_DECLARE_GUIITEM( _T( "mousehighlight" ), CWBItem );
 
 

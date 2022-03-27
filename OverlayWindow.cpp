@@ -1,34 +1,34 @@
 #include "OverlayWindow.h"
 #include "OverlayConfig.h"
 
-TBOOL OverlayWindow::IsMouseTransparent( CPoint &ClientSpacePoint, WBMESSAGE MessageType )
+TBOOL OverlayWindow::IsMouseTransparent( CPoint& ClientSpacePoint, WBMESSAGE MessageType )
 {
-  if ( GetConfigValue( "EditMode" ) ) return false;
+  if ( Config::GetValue( "EditMode" ) ) return false;
   return true;
 }
 
-OverlayWindow::OverlayWindow( CWBItem *Parent, CRect Position ) : CWBWindow( Parent, Position )
+OverlayWindow::OverlayWindow( CWBItem* Parent, CRect Position ) : CWBWindow( Parent, Position )
 {
 
 }
 
 OverlayWindow::~OverlayWindow()
 {
-  SetWindowPosition( GetID().GetPointer(), GetPosition() );
+  Config::SetWindowPosition( GetID().GetPointer(), GetPosition() );
 }
 
-CWBItem * OverlayWindow::Factory( CWBItem *Root, CXMLNode &node, CRect &Pos )
+CWBItem* OverlayWindow::Factory( CWBItem* Root, CXMLNode& node, CRect& Pos )
 {
   return new OverlayWindow( Root, Pos );
 }
 
-void OverlayWindow::OnDraw( CWBDrawAPI *API )
+void OverlayWindow::OnDraw( CWBDrawAPI* API )
 {
-  if ( !GetConfigValue( "EditMode" ) ) return;
+  if ( !Config::GetValue( "EditMode" ) ) return;
   CWBWindow::OnDraw( API );
 }
 
-TBOOL OverlayWindow::MessageProc( CWBMessage &Message )
+TBOOL OverlayWindow::MessageProc( CWBMessage& Message )
 {
   switch ( Message.GetMessage() )
   {
@@ -64,10 +64,10 @@ TBOOL OverlayWindow::MessageProc( CWBMessage &Message )
     }
     break;
   case WBM_REPOSITION:
-    SetWindowPosition( GetID().GetPointer(), GetPosition() );
+    Config::SetWindowPosition( GetID().GetPointer(), GetPosition() );
     break;
   case WBM_CLOSE:
-    SetWindowOpenState( GetID().GetPointer(), false );
+    Config::SetWindowOpenState( GetID().GetPointer(), false );
     break;
   }
 

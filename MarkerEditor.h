@@ -4,8 +4,8 @@
 
 class GW2MarkerEditor : public CWBItem
 {
-  virtual TBOOL MessageProc( CWBMessage &Message );
-  virtual void OnDraw( CWBDrawAPI *API );
+  virtual TBOOL MessageProc( CWBMessage& Message );
+  virtual void OnDraw( CWBDrawAPI* API );
   TBOOL Hidden = false;
   GUID CurrentPOI;
 
@@ -14,11 +14,11 @@ class GW2MarkerEditor : public CWBItem
 
 public:
 
-  virtual TBOOL IsMouseTransparent( CPoint &ClientSpacePoint, WBMESSAGE MessageType );
+  virtual TBOOL IsMouseTransparent( CPoint& ClientSpacePoint, WBMESSAGE MessageType );
 
-  GW2MarkerEditor( CWBItem *Parent, CRect Position );
+  GW2MarkerEditor( CWBItem* Parent, CRect Position );
   virtual ~GW2MarkerEditor();
 
-  static CWBItem *Factory( CWBItem *Root, CXMLNode &node, CRect &Pos );
+  static CWBItem* Factory( CWBItem* Root, CXMLNode& node, CRect& Pos );
   WB_DECLARE_GUIITEM( _T( "markereditor" ), CWBItem );
 };

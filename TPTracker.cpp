@@ -61,200 +61,188 @@ __inline CString ToGold( TS32 value )
   return result;
 }
 
-void TPTracker::OnDraw( CWBDrawAPI *API )
+void TPTracker::OnDraw( CWBDrawAPI* API )
 {
-  CWBFont *f = GetFont( GetState() );
+  CWBFont* f = GetFont( GetState() );
   TS32 size = f->GetLineHeight();
 
-  if ( !HasConfigValue( "TPTrackerOnlyShowOutbid" ) )
-    SetConfigValue( "TPTrackerOnlyShowOutbid", 0 );
+  TS32 onlyShowOutbid = Config::GetValue( "TPTrackerOnlyShowOutbid" );
+  TS32 nextSellOnly = Config::GetValue( "TPTrackerNextSellOnly" );
 
-  if ( !HasConfigValue( "TPTrackerShowBuys" ) )
-    SetConfigValue( "TPTrackerShowBuys", 1 );
-
-  if ( !HasConfigValue( "TPTrackerShowSells" ) )
-    SetConfigValue( "TPTrackerShowSells", 1 );
-
-  if ( !HasConfigValue( "TPTrackerNextSellOnly" ) )
-    SetConfigValue( "TPTrackerNextSellOnly", 0 );
-
-  TS32 onlyShowOutbid = GetConfigValue( "TPTrackerOnlyShowOutbid" );
-  TS32 nextSellOnly = GetConfigValue( "TPTrackerNextSellOnly" );
-
-  GW2::APIKeyManager::Status status = GW2::apiKeyManager.DisplayStatusText(API, f);
+  GW2::APIKeyManager::Status status = GW2::apiKeyManager.DisplayStatusText( API, f );
   GW2::APIKey* key = GW2::apiKeyManager.GetIdentifiedAPIKey();
 
   if ( key && key->valid && ( GetTime() - lastFetchTime > 150000 || !lastFetchTime ) && !beingFetched && !fetchThread.joinable() )
   {
     beingFetched = true;
-    fetchThread = std::thread( [ this, key ]()
-    {
-      SetPerThreadCRTExceptionBehavior();
-      CString qbuys = CString( "{\"buys\":" ) + key->QueryAPI( "v2/commerce/transactions/current/buys" );
-      CString qsells = CString( "{\"sells\":" ) + key->QueryAPI( "v2/commerce/transactions/current/sells" );
+    fetchThread = std::thread( [this, key]()
+                               {
+                                 SetPerThreadCRTExceptionBehavior();
+                                 CString qbuys = CString( "{\"buys\":" ) + key->QueryAPI( "v2/commerce/transactions/current/buys" );
+                                 CString qsells = CString( "{\"sells\":" ) + key->QueryAPI( "v2/commerce/transactions/current/sells" );
 
-      Object json;
-      Object json2;
-      json.parse( qbuys.GetPointer() );
-      json2.parse( qsells.GetPointer() );
+                                 Object json;
+                                 Object json2;
+                                 json.parse( qbuys.GetPointer() );
+                                 json2.parse( qsells.GetPointer() );
 
-      CArray<TransactionItem> incoming;
-      CArray<TransactionItem> outgoing;
+                                 CArray<TransactionItem> incoming;
+                                 CArray<TransactionItem> outgoing;
 
-      CArray<TS32> unknownItems;
-      CArray<TS32> priceCheckList;
+                                 CArray<TS32> unknownItems;
+                                 CArray<TS32> priceCheckList;
 
-      if ( json.has<Array>( "buys" ) )
-      {
-        auto buyData = json.get<Array>( "buys" ).values();
+                                 if ( json.has<Array>( "buys" ) )
+                                 {
+                                   auto buyData = json.get<Array>( "buys" ).values();
 
-        for ( unsigned int x = 0; x < buyData.size(); x++ )
-        {
-          if ( !buyData[ x ]->is<Object>() )
-            continue;
+                                   for ( unsigned int x = 0; x < buyData.size(); x++ )
+                                   {
+                                     if ( !buyData[ x ]->is<Object>() )
+                                       continue;
 
-          Object& item = buyData[ x ]->get<Object>();
+                                     Object& item = buyData[ x ]->get<Object>();
 
-          TransactionItem itemData;
-          if ( !TPTracker::ParseTransaction( item, itemData ) )
-            continue;
-          incoming += itemData;
+                                     TransactionItem itemData;
+                                     if ( !TPTracker::ParseTransaction( item, itemData ) )
+                                       continue;
+                                     incoming += itemData;
 
-          if ( !itemDataCache.HasKey( itemData.itemID ) )
-            unknownItems += itemData.itemID;
+                                     if ( !itemDataCache.HasKey( itemData.itemID ) )
+                                       unknownItems += itemData.itemID;
 
-          priceCheckList.AddUnique( itemData.itemID );
-        }
-      }
+                                     priceCheckList.AddUnique( itemData.itemID );
+                                   }
+                                 }
 
-      if ( json2.has<Array>( "sells" ) )
-      {
-        auto buyData = json2.get<Array>( "sells" ).values();
+                                 if ( json2.has<Array>( "sells" ) )
+                                 {
+                                   auto buyData = json2.get<Array>( "sells" ).values();
 
-        for ( unsigned int x = 0; x < buyData.size(); x++ )
-        {
-          if ( !buyData[ x ]->is<Object>() )
-            continue;
+                                   for ( unsigned int x = 0; x < buyData.size(); x++ )
+                                   {
+                                     if ( !buyData[ x ]->is<Object>() )
+                                       continue;
 
-          Object& item = buyData[ x ]->get<Object>();
+                                     Object& item = buyData[ x ]->get<Object>();
 
-          TransactionItem itemData;
-          if ( !TPTracker::ParseTransaction( item, itemData ) )
-            continue;
-          outgoing += itemData;
+                                     TransactionItem itemData;
+                                     if ( !TPTracker::ParseTransaction( item, itemData ) )
+                                       continue;
+                                     outgoing += itemData;
 
-          if ( !itemDataCache.HasKey( itemData.itemID ) )
-            unknownItems += itemData.itemID;
+                                     if ( !itemDataCache.HasKey( itemData.itemID ) )
+                                       unknownItems += itemData.itemID;
 
-          priceCheckList.AddUnique( itemData.itemID );
-        }
-      }
+                                     priceCheckList.AddUnique( itemData.itemID );
+                                   }
+                                 }
 
-      CString itemIds;
+                                 CString itemIds;
 
-      if ( unknownItems.NumItems() )
-      {
-        for ( int x = 0; x < unknownItems.NumItems(); x++ )
-          itemIds += CString::Format( "%d,", unknownItems[ x ] );
+                                 if ( unknownItems.NumItems() )
+                                 {
+                                   for ( int x = 0; x < unknownItems.NumItems(); x++ )
+                                     itemIds += CString::Format( "%d,", unknownItems[ x ] );
 
-        //https://api.guildwars2.com/v2/items?ids=28445,12452
-        CString items = CString( "{\"items\":" ) + key->QueryAPI( ( CString( "v2/items?ids=" ) + itemIds ).GetPointer() ) + "}";
+                                   //https://api.guildwars2.com/v2/items?ids=28445,12452
+                                   CString items = CString( "{\"items\":" ) + key->QueryAPI( ( CString( "v2/items?ids=" ) + itemIds ).GetPointer() ) + "}";
 
-        Object itemjson;
-        itemjson.parse( items.GetPointer() );
+                                   Object itemjson;
+                                   itemjson.parse( items.GetPointer() );
 
-        if ( itemjson.has<Array>( "items" ) )
-        {
-          auto items = itemjson.get<Array>( "items" ).values();
+                                   if ( itemjson.has<Array>( "items" ) )
+                                   {
+                                     auto items = itemjson.get<Array>( "items" ).values();
 
-          for ( unsigned int x = 0; x < items.size(); x++ )
-          {
-            if ( !items[ x ]->is<Object>() )
-              continue;
+                                     for ( unsigned int x = 0; x < items.size(); x++ )
+                                     {
+                                       if ( !items[ x ]->is<Object>() )
+                                         continue;
 
-            Object& item = items[ x ]->get<Object>();
+                                       Object& item = items[ x ]->get<Object>();
 
-            GW2ItemData itemData;
-            if ( !item.has<String>( "name" ) || !item.has<Number>( "id" ) )
-              continue;
-            itemData.name = CString( item.get<String>( "name" ).data() );
-            itemData.itemID = TS32( item.get<Number>( "id" ) );
-            if ( item.has<String>( "icon" ) )
-            {
-              CString iconFile = CString( item.get<String>( "icon" ).data() );
-              if ( iconFile.Find( "https://render.guildwars2.com/" ) == 0 )
-              {
-                WCHAR wpath[ 4096 ];
-                memset( wpath, 0, sizeof( wpath ) );
-                iconFile.Substring( 29 ).WriteAsWideChar( wpath, 4096 );
+                                       GW2ItemData itemData;
+                                       if ( !item.has<String>( "name" ) || !item.has<Number>( "id" ) )
+                                         continue;
+                                       itemData.name = CString( item.get<String>( "name" ).data() );
+                                       itemData.itemID = TS32( item.get<Number>( "id" ) );
+                                       if ( item.has<String>( "icon" ) )
+                                       {
+                                         CString iconFile = CString( item.get<String>( "icon" ).data() );
+                                         if ( iconFile.Find( "https://render.guildwars2.com/" ) == 0 )
+                                         {
+                                           WCHAR wpath[ 4096 ];
+                                           memset( wpath, 0, sizeof( wpath ) );
+                                           iconFile.Substring( 29 ).WriteAsWideChar( wpath, 4096 );
 
-                CString png = FetchHTTPS( L"render.guildwars2.com", wpath );
-                
-                TU8 *imageData = nullptr;
-                TS32 xres, yres;
-                if ( DecompressPNG( (TU8*)png.GetPointer(), png.Length(), imageData, xres, yres ) )
-                {
-                  ARGBtoABGR( imageData, xres, yres );
-                  CRect area = CRect( 0, 0, xres, yres );
-                  itemData.icon = GetApplication()->GetAtlas()->AddImage( imageData, xres, yres, area );
-                }
-              }
-            }
+                                           CString png = FetchHTTPS( L"render.guildwars2.com", wpath );
 
-            SetGW2ItemData( itemData );
-          }
-        }
-      }
+                                           TU8* imageData = nullptr;
+                                           TS32 xres, yres;
+                                           if ( DecompressPNG( (TU8*)png.GetPointer(), png.Length(), imageData, xres, yres ) )
+                                           {
+                                             ARGBtoABGR( imageData, xres, yres );
+                                             CRect area = CRect( 0, 0, xres, yres );
+                                             itemData.icon = GetApplication()->GetAtlas()->AddImage( imageData, xres, yres, area );
+                                           }
+                                         }
+                                       }
 
-      {
-        for ( int x = 0; x < priceCheckList.NumItems(); x++ )
-          itemIds += CString::Format( "%d,", priceCheckList[ x ] );
+                                       SetGW2ItemData( itemData );
+                                     }
+                                   }
+                                 }
 
-        //https://api.guildwars2.com/v2/commerce/prices?ids=19684,19709
-        CString items = CString( "{\"items\":" ) + key->QueryAPI( ( CString( "v2/commerce/prices?ids=" ) + itemIds ).GetPointer() ) + "}";
-        
-        Object itemjson;
-        itemjson.parse( items.GetPointer() );
+                                 {
+                                   for ( int x = 0; x < priceCheckList.NumItems(); x++ )
+                                     itemIds += CString::Format( "%d,", priceCheckList[ x ] );
 
-        if ( itemjson.has<Array>( "items" ) )
-        {
-          auto items = itemjson.get<Array>( "items" ).values();
+                                   //https://api.guildwars2.com/v2/commerce/prices?ids=19684,19709
+                                   CString items = CString( "{\"items\":" ) + key->QueryAPI( ( CString( "v2/commerce/prices?ids=" ) + itemIds ).GetPointer() ) + "}";
 
-          for ( unsigned int x = 0; x < items.size(); x++ )
-          {
-            if ( !items[ x ]->is<Object>() )
-              continue;
+                                   Object itemjson;
+                                   itemjson.parse( items.GetPointer() );
 
-            Object& item = items[ x ]->get<Object>();
+                                   if ( itemjson.has<Array>( "items" ) )
+                                   {
+                                     auto items = itemjson.get<Array>( "items" ).values();
 
-            if ( !item.has<Number>( "id" ) || !item.has<Object>( "buys" ) || !item.has<Object>( "sells" ) )
-              continue;
+                                     for ( unsigned int x = 0; x < items.size(); x++ )
+                                     {
+                                       if ( !items[ x ]->is<Object>() )
+                                         continue;
 
-            TS32 id = TS32( item.get<Number>( "id" ) );
-            if ( !HasGW2ItemData( id ) )
-              continue;
-            
-            Object buys = item.get<Object>( "buys" );
-            Object sells = item.get<Object>( "sells" );
-            if ( !buys.has<Number>( "unit_price" ) || !sells.has<Number>( "unit_price" ) )
-              continue;
+                                       Object& item = items[ x ]->get<Object>();
 
-            GW2ItemData itemData = GetGW2ItemData( id );
-            itemData.buyPrice = TS32( buys.get<Number>( "unit_price" ) );
-            itemData.sellPrice = TS32( sells.get<Number>( "unit_price" ) );
-            SetGW2ItemData( itemData );
-          }
-        }
-      }
+                                       if ( !item.has<Number>( "id" ) || !item.has<Object>( "buys" ) || !item.has<Object>( "sells" ) )
+                                         continue;
 
-      {
-        CLightweightCriticalSection cs( &itemCacheCritSec );
-        buys = incoming;
-        sells = outgoing;
-      }
+                                       TS32 id = TS32( item.get<Number>( "id" ) );
+                                       if ( !HasGW2ItemData( id ) )
+                                         continue;
 
-      beingFetched = false;
-    } );
+                                       Object buys = item.get<Object>( "buys" );
+                                       Object sells = item.get<Object>( "sells" );
+                                       if ( !buys.has<Number>( "unit_price" ) || !sells.has<Number>( "unit_price" ) )
+                                         continue;
+
+                                       GW2ItemData itemData = GetGW2ItemData( id );
+                                       itemData.buyPrice = TS32( buys.get<Number>( "unit_price" ) );
+                                       itemData.sellPrice = TS32( sells.get<Number>( "unit_price" ) );
+                                       SetGW2ItemData( itemData );
+                                     }
+                                   }
+                                 }
+
+                                 {
+                                   CLightweightCriticalSection cs( &itemCacheCritSec );
+                                   buys = incoming;
+                                   sells = outgoing;
+                                 }
+
+                                 beingFetched = false;
+                               } );
   }
 
   if ( !beingFetched && fetchThread.joinable() )
@@ -269,7 +257,7 @@ void TPTracker::OnDraw( CWBDrawAPI *API )
     TS32 posy = 0;
     TS32 lh = f->GetLineHeight();
 
-    if ( buys.NumItems() && GetConfigValue( "TPTrackerShowBuys" ) )
+    if ( buys.NumItems() && Config::GetValue( "TPTrackerShowBuys" ) )
     {
       CArray<TS32> showedAlready;
 
@@ -319,7 +307,7 @@ void TPTracker::OnDraw( CWBDrawAPI *API )
         posy -= lh + 4;
     }
 
-    if ( sells.NumItems() && GetConfigValue( "TPTrackerShowSells" ) )
+    if ( sells.NumItems() && Config::GetValue( "TPTrackerShowSells" ) )
     {
       CArray<TS32> showedAlready;
 
@@ -381,9 +369,8 @@ TBOOL TPTracker::ParseTransaction( Object& object, TransactionItem& output )
   return true;
 }
 
-TPTracker::TPTracker( CWBItem *Parent, CRect Position ) : CWBItem( Parent, Position )
-{
-}
+TPTracker::TPTracker( CWBItem* Parent, CRect Position ) : CWBItem( Parent, Position )
+{}
 
 TPTracker::~TPTracker()
 {
@@ -391,12 +378,12 @@ TPTracker::~TPTracker()
     fetchThread.join();
 }
 
-CWBItem * TPTracker::Factory( CWBItem *Root, CXMLNode &node, CRect &Pos )
+CWBItem* TPTracker::Factory( CWBItem* Root, CXMLNode& node, CRect& Pos )
 {
   return new TPTracker( Root, Pos );
 }
 
-TBOOL TPTracker::IsMouseTransparent( CPoint &ClientSpacePoint, WBMESSAGE MessageType )
+TBOOL TPTracker::IsMouseTransparent( CPoint& ClientSpacePoint, WBMESSAGE MessageType )
 {
   return true;
 }

@@ -16,7 +16,7 @@ CDictionaryEnumerable<GUID, GW2Trail*>& GetMapTrails()
   return trailSet[ mumbleLink.mapID ];
 }
 
-extern CWBApplication *App;
+extern CWBApplication* App;
 CStreamWriterFile* TrailLog = nullptr;
 
 TS32 lastMap = -1;
@@ -33,9 +33,9 @@ void GlobalDoTrailLogging( TS32 mapID, CVector3 charPos )
     trails->DoTrailLogging( mapID, charPos );
 }
 
-void GW2TrailDisplay::DrawProxy( CWBDrawAPI *API, bool miniMaprender )
+void GW2TrailDisplay::DrawProxy( CWBDrawAPI* API, bool miniMaprender )
 {
-  TS32 fadeoutBubble = GetConfigValue( "FadeoutBubble" );
+  TS32 fadeoutBubble = Config::GetValue( "FadeoutBubble" );
 
   drawrect = GetClientRect();
 
@@ -53,103 +53,95 @@ void GW2TrailDisplay::DrawProxy( CWBDrawAPI *API, bool miniMaprender )
   trailSampler->Apply( CORESMP_PS0 );
   trailDepthStencil->Apply();
 
-  if ( !HasConfigValue( "ShowMinimapTrails" ) )
-    SetConfigValue( "ShowMinimapTrails", 1 );
-  int showMinimapTrails = GetConfigValue( "ShowMinimapTrails" );
-
-  if ( !HasConfigValue( "ShowBigmapTrails" ) )
-    SetConfigValue( "ShowBigmapTrails", 1 );
-  int showBigmapTrails = GetConfigValue( "ShowBigmapTrails" );
-
-  if ( !HasConfigValue( "ShowInGameTrails" ) )
-    SetConfigValue( "ShowInGameTrails", 1 );
-  int showIngameTrails = GetConfigValue( "ShowInGameTrails" );
+  int showMinimapTrails = Config::GetValue( "ShowMinimapTrails" );
+  int showBigmapTrails = Config::GetValue( "ShowBigmapTrails" );
+  int showIngameTrails = Config::GetValue( "ShowInGameTrails" );
 
   float one = 1;
   float data[ 8 ];
 
   auto& trails = GetMapTrails();
 
-  if (!miniMaprender && showIngameTrails>0)
-  for ( int x = 0; x < 2; x++ )
-  {
-    if ( x == 0 )
-      trailRasterizer2->Apply();
-    else
-      trailRasterizer1->Apply();
-
-    CLightweightCriticalSection cs( &critsec );
-
-    for ( TS32 y = 0; y < trails.NumItems(); y++ )
+  if ( !miniMaprender && showIngameTrails > 0 )
+    for ( int x = 0; x < 2; x++ )
     {
-      auto& trail = *trails.GetByIndex( y );
-      if ( !trail.typeData.bits.inGameVisible && showIngameTrails != 2 )
-        continue;
-
-      CCoreTexture* texture = nullptr;
-      if ( !trail.texture )
-      {
-        auto& str = GetStringFromMap( trail.typeData.texture );
-
-        if ( str.Length() )
-          texture = GetTexture( str, trail.zipFile, trail.category ? GetStringFromMap( trail.category->zipFile ) : "" );
-        else
-          texture = trailTexture;
-
-        trail.texture = texture;
-      }
+      if ( x == 0 )
+        trailRasterizer2->Apply();
       else
-        texture = trail.texture;
+        trailRasterizer1->Apply();
 
-      float width = GameToWorldCoords( 20 );
+      CLightweightCriticalSection cs( &critsec );
 
-      trail.SetupAndDraw( constBuffer, texture, cam, persp, one, x == 0, fadeoutBubble, data, GetMapFade() * globalOpacity, width, width, 1.0f );
+      for ( TS32 y = 0; y < trails.NumItems(); y++ )
+      {
+        auto& trail = *trails.GetByIndex( y );
+        if ( !trail.typeData.bits.inGameVisible && showIngameTrails != 2 )
+          continue;
+
+        CCoreTexture* texture = nullptr;
+        if ( !trail.texture )
+        {
+          auto& str = GetStringFromMap( trail.typeData.texture );
+
+          if ( str.Length() )
+            texture = GetTexture( str, trail.zipFile, trail.category ? GetStringFromMap( trail.category->zipFile ) : "" );
+          else
+            texture = trailTexture;
+
+          trail.texture = texture;
+        }
+        else
+          texture = trail.texture;
+
+        float width = GameToWorldCoords( 20 );
+
+        trail.SetupAndDraw( constBuffer, texture, cam, persp, one, x == 0, fadeoutBubble, data, GetMapFade() * globalOpacity, width, width, 1.0f );
+      }
+
+      if ( editedTrail )
+        if ( editedTrail->map == mumbleLink.mapID )
+        {
+          data[ 0 ] = GetTime() / 1000.0f;
+
+          App->GetDevice()->SetTexture( CORESMP_PS0, trailTexture );
+
+          constBuffer->Reset();
+          constBuffer->AddData( cam, 16 * 4 );
+          constBuffer->AddData( persp, 16 * 4 );
+          constBuffer->AddData( &mumbleLink.charPosition, 12 );
+          constBuffer->AddData( &one, 4 );
+          constBuffer->AddData( data, 16 );
+          //color
+
+          data[ 0 ] = 0.2f;
+          data[ 1 ] = 0.7f;
+          data[ 2 ] = 1.0f;
+          data[ 3 ] = 0.8f;
+
+          if ( x == 0 )
+          {
+            data[ 0 ] *= 0.5f;
+            data[ 1 ] *= 0.5f;
+            data[ 2 ] *= 0.5f;
+          }
+
+          constBuffer->AddData( data, 16 );
+          data[ 0 ] = 1000;
+          data[ 1 ] = 1200;
+          data[ 2 ] = float( fadeoutBubble );
+          data[ 3 ] = GameToWorldCoords( 20 );
+          data[ 4 ] = GameToWorldCoords( 20 );
+          data[ 5 ] = 1.0f;
+          constBuffer->AddData( data, 32 );
+
+          constBuffer->Upload();
+          App->GetDevice()->SetShaderConstants( 0, 1, &constBuffer );
+
+          editedTrail->Draw();
+        }
     }
 
-    if ( editedTrail )
-      if ( editedTrail->map == mumbleLink.mapID )
-      {
-        data[ 0 ] = GetTime() / 1000.0f;
-
-        App->GetDevice()->SetTexture( CORESMP_PS0, trailTexture );
-
-        constBuffer->Reset();
-        constBuffer->AddData( cam, 16 * 4 );
-        constBuffer->AddData( persp, 16 * 4 );
-        constBuffer->AddData( &mumbleLink.charPosition, 12 );
-        constBuffer->AddData( &one, 4 );
-        constBuffer->AddData( data, 16 );
-        //color
-
-        data[ 0 ] = 0.2f;
-        data[ 1 ] = 0.7f;
-        data[ 2 ] = 1.0f;
-        data[ 3 ] = 0.8f;
-
-        if ( x == 0 )
-        {
-          data[ 0 ] *= 0.5f;
-          data[ 1 ] *= 0.5f;
-          data[ 2 ] *= 0.5f;
-        }
-
-        constBuffer->AddData( data, 16 );
-        data[ 0 ] = 1000;
-        data[ 1 ] = 1200;
-        data[ 2 ] = float( fadeoutBubble );
-        data[ 3 ] = GameToWorldCoords( 20 );
-        data[ 4 ] = GameToWorldCoords( 20 );
-        data[ 5 ] = 1.0f;
-        constBuffer->AddData( data, 32 );
-
-        constBuffer->Upload();
-        App->GetDevice()->SetShaderConstants( 0, 1, &constBuffer );
-
-        editedTrail->Draw();
-      }
-  }
-
-  // draw minimap
+    // draw minimap
   if ( miniMaprender )
   {
     trailRasterizer3->Apply();
@@ -179,7 +171,7 @@ void GW2TrailDisplay::DrawProxy( CWBDrawAPI *API, bool miniMaprender )
         if ( !trail.typeData.bits.miniMapVisible && showMinimapTrails != 2 )
           continue;
 
-        float trailWidth = trail.typeData.miniMapSize*0.5f;
+        float trailWidth = trail.typeData.miniMapSize * 0.5f;
         if ( trail.typeData.bits.scaleWithZoom )
           trailWidth /= mumbleLink.miniMap.mapScale;
 
@@ -222,7 +214,7 @@ void GW2TrailDisplay::DrawProxy( CWBDrawAPI *API, bool miniMaprender )
         if ( !trail.typeData.bits.bigMapVisible && showBigmapTrails != 2 )
           continue;
 
-        float trailWidth = trail.typeData.miniMapSize*0.5f;
+        float trailWidth = trail.typeData.miniMapSize * 0.5f;
         if ( trail.typeData.bits.scaleWithZoom )
           trailWidth /= mumbleLink.miniMap.mapScale;
 
@@ -251,21 +243,12 @@ void GW2TrailDisplay::DrawProxy( CWBDrawAPI *API, bool miniMaprender )
   API->SetUIRenderState();
 }
 
-void GW2TrailDisplay::OnDraw( CWBDrawAPI *API )
+void GW2TrailDisplay::OnDraw( CWBDrawAPI* API )
 {
-  if ( !HasConfigValue( "TrailLayerVisible" ) )
-    SetConfigValue( "TrailLayerVisible", 1 );
-
-  if ( !GetConfigValue( "TrailLayerVisible" ) )
+  if ( !Config::GetValue( "TrailLayerVisible" ) )
     return;
 
-  if ( !HasConfigValue( "FadeoutBubble" ) )
-    SetConfigValue( "FadeoutBubble", 1 );
-
-  if ( !HasConfigValue( "TacticalLayerVisible" ) )
-    SetConfigValue( "TacticalLayerVisible", 1 );
-
-  if ( !GetConfigValue( "TacticalLayerVisible" ) )
+  if ( !Config::GetValue( "TacticalLayerVisible" ) )
     return;
 
   if ( !mumbleLink.IsValid() )
@@ -273,9 +256,9 @@ void GW2TrailDisplay::OnDraw( CWBDrawAPI *API )
 
   DrawProxy( API, false );
 
-  if ( GetConfigValue( "LogTrails" ) )
+  if ( Config::GetValue( "LogTrails" ) )
   {
-    CWBFont *f = GetFont( GetState() );
+    CWBFont* f = GetFont( GetState() );
     TS32 ypos = Lerp( GetClientRect().y1, GetClientRect().y2, 0.25f );
 
     CString s = "TacO is logging your trail.";
@@ -338,41 +321,41 @@ CCoreTexture2D* GW2TrailDisplay::GetTexture( const CString& fname, const CString
     return trailTexture;
   }
 
-  if (zipFile.Length() || categoryZip.Length())
+  if ( zipFile.Length() || categoryZip.Length() )
   {
     // we didn't find an entry from within the zip file, try to load it
 
-    for (int x = 0; x < 2; x++)
+    for ( int x = 0; x < 2; x++ )
     {
-      if (!zipFile.Length() && x == 0)
+      if ( !zipFile.Length() && x == 0 )
         continue;
 
-      if (!categoryZip.Length() && x == 1)
+      if ( !categoryZip.Length() && x == 1 )
         continue;
 
-      mz_zip_archive* zip = x == 0 ? OpenZipFile(zipFile) : OpenZipFile(categoryZip);
+      mz_zip_archive* zip = x == 0 ? OpenZipFile( zipFile ) : OpenZipFile( categoryZip );
 
-      if (zip)
+      if ( zip )
       {
-        int idx = mz_zip_reader_locate_file(zip, fname.GetPointer(), nullptr, 0);
-        if (idx >= 0 && !mz_zip_reader_is_file_a_directory(zip, idx))
+        int idx = mz_zip_reader_locate_file( zip, fname.GetPointer(), nullptr, 0 );
+        if ( idx >= 0 && !mz_zip_reader_is_file_a_directory( zip, idx ) )
         {
           mz_zip_archive_file_stat stat;
-          if (mz_zip_reader_file_stat(zip, idx, &stat) && stat.m_uncomp_size > 0)
+          if ( mz_zip_reader_file_stat( zip, idx, &stat ) && stat.m_uncomp_size > 0 )
           {
-            TU8* data = new TU8[(TS32)stat.m_uncomp_size];
+            TU8* data = new TU8[ (TS32)stat.m_uncomp_size ];
 
-            if (mz_zip_reader_extract_to_mem(zip, idx, data, (TS32)stat.m_uncomp_size, 0))
+            if ( mz_zip_reader_extract_to_mem( zip, idx, data, (TS32)stat.m_uncomp_size, 0 ) )
             {
-              CCoreTexture2D* tex = App->GetDevice()->CreateTexture2D(data, (TS32)stat.m_uncomp_size);
-              if (tex)
+              CCoreTexture2D* tex = App->GetDevice()->CreateTexture2D( data, (TS32)stat.m_uncomp_size );
+              if ( tex )
               {
-                textureCache[s] = tex;
+                textureCache[ s ] = tex;
                 delete[] data;
                 return tex;
               }
               else
-                LOG_ERR("[GW2TacO] Failed to decompress image %s from archive %s", fname.GetPointer(), x == 0 ? zipFile.GetPointer() : categoryZip.GetPointer());
+                LOG_ERR( "[GW2TacO] Failed to decompress image %s from archive %s", fname.GetPointer(), x == 0 ? zipFile.GetPointer() : categoryZip.GetPointer() );
             }
             delete[] data;
           }
@@ -390,18 +373,18 @@ CCoreTexture2D* GW2TrailDisplay::GetTexture( const CString& fname, const CString
   if ( !f.Open( s.GetPointer() ) && !f.Open( ( CString( "POIs\\" ) + s ).GetPointer() ) )
   {
     textureCache[ s ] = nullptr;
-    LOG_ERR("[GW2TacO] Failed to open image %s", s.GetPointer());
+    LOG_ERR( "[GW2TacO] Failed to open image %s", s.GetPointer() );
     return trailTexture;
   }
 
-  auto texture = App->GetDevice()->CreateTexture2D(f.GetData(), TS32(f.GetLength()));
-  textureCache[s] = texture;
-  if (!texture)
-    LOG_ERR("[GW2TacO] Failed to decompress image %s", s.GetPointer());
+  auto texture = App->GetDevice()->CreateTexture2D( f.GetData(), TS32( f.GetLength() ) );
+  textureCache[ s ] = texture;
+  if ( !texture )
+    LOG_ERR( "[GW2TacO] Failed to decompress image %s", s.GetPointer() );
   return textureCache[ s ];
 }
 
-GW2TrailDisplay::GW2TrailDisplay( CWBItem *Parent, CRect Position ) : CWBItem( Parent, Position )
+GW2TrailDisplay::GW2TrailDisplay( CWBItem* Parent, CRect Position ) : CWBItem( Parent, Position )
 {
   constBuffer = App->GetDevice()->CreateConstantBuffer();
 
@@ -409,12 +392,12 @@ GW2TrailDisplay::GW2TrailDisplay( CWBItem *Parent, CRect Position ) : CWBItem( P
   if ( tex.Open( "Data\\trail.png" ) )
   {
     trailTexture = App->GetDevice()->CreateTexture2D( tex.GetData(), TS32( tex.GetLength() ) );
-    if (!trailTexture)
-      LOG_ERR("[GW2TacO] Failed to decompress trail texture image!");
+    if ( !trailTexture )
+      LOG_ERR( "[GW2TacO] Failed to decompress trail texture image!" );
   }
   else
     LOG_ERR( "[GW2TacO] Failed to open trail texture!" );
-  
+
   App->GetDevice()->SetShaderConstants( 0, 1, &constBuffer );
   trailSampler = App->GetDevice()->CreateSamplerState();
   trailSampler->SetAddressU( CORETEXADDRESS_WRAP );
@@ -485,10 +468,10 @@ GW2TrailDisplay::GW2TrailDisplay( CWBItem *Parent, CRect Position ) : CWBItem( P
     COREVXATTR_STOP,
   };
 
-  COREVERTEXATTRIBUTE *vx = TrailVertexFormat;
+  COREVERTEXATTRIBUTE* vx = TrailVertexFormat;
   CArray<COREVERTEXATTRIBUTE> Att;
   while ( *vx != COREVXATTR_STOP ) Att += *vx++;
-    
+
   vertexFormat = App->GetDevice()->CreateVertexFormat( Att, vxShader );
   if ( !vertexFormat )
   {
@@ -517,12 +500,12 @@ GW2TrailDisplay::~GW2TrailDisplay()
   SAFEDELETE( trailDepthStencil );
 }
 
-CWBItem *GW2TrailDisplay::Factory( CWBItem *Root, CXMLNode &node, CRect &Pos )
+CWBItem* GW2TrailDisplay::Factory( CWBItem* Root, CXMLNode& node, CRect& Pos )
 {
   return new GW2TrailDisplay( Root, Pos );
 }
 
-TBOOL GW2TrailDisplay::IsMouseTransparent( CPoint &ClientSpacePoint, WBMESSAGE MessageType )
+TBOOL GW2TrailDisplay::IsMouseTransparent( CPoint& ClientSpacePoint, WBMESSAGE MessageType )
 {
   return true;
 }
@@ -570,7 +553,6 @@ void GW2TrailDisplay::DeleteTrailSegment()
 }
 
 extern bool disableHooks;
-
 
 void GW2TrailDisplay::ExportTrail()
 {
@@ -711,7 +693,7 @@ TBOOL GW2Trail::SaveToFile( const CString& fname )
   TrailLog.WriteDWord( TRAILFILEVERSION );
 
   TrailLog.WriteDWord( map );
-  TrailLog.Write( positions.GetPointer( 0 ), sizeof( CVector3 )*positions.NumItems() );
+  TrailLog.Write( positions.GetPointer( 0 ), sizeof( CVector3 ) * positions.NumItems() );
 
   return true;
 }
@@ -734,7 +716,7 @@ void GW2Trail::Build( CCoreDevice* d, TS32 mapID, float* points, int pointCount 
     return;
 
   GW2TrailVertex* vertices = new GW2TrailVertex[ pointCount * 2 ];
-  memset( vertices, 0, sizeof( GW2TrailVertex )*pointCount * 2 );
+  memset( vertices, 0, sizeof( GW2TrailVertex ) * pointCount * 2 );
   int vertexCount = 0;
   TS32* indices = new TS32[ ( pointCount - 1 ) * 6 ];
 
@@ -937,7 +919,7 @@ void GW2Trail::SetupAndDraw( CCoreConstantBuffer* constBuffer, CCoreTexture* tex
   Draw();
 }
 
-void GW2Trail::SetCategory( CWBApplication *App, GW2TacticalCategory *t )
+void GW2Trail::SetCategory( CWBApplication* App, GW2TacticalCategory* t )
 {
   category = t;
   typeData = t->data;

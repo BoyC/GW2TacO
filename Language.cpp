@@ -1,7 +1,9 @@
 #include "Language.h"
 #include "OverlayConfig.h"
 
-Localization* localization = nullptr;
+int Localization::activeLanguageIdx = 0;
+CArray< Language > Localization::languages;
+CArray<int> Localization::usedGlyphs;
 
 void Localization::ImportFile( const CString& s )
 {
@@ -17,7 +19,7 @@ void Localization::ImportLanguage( CXMLDocument& d )
 
   CString language;
 
-  if ( root.HasAttribute( "language" ) ) 
+  if ( root.HasAttribute( "language" ) )
     language = root.GetAttributeAsString( "language" );
   else
   {
@@ -42,7 +44,7 @@ void Localization::ImportLanguage( CXMLDocument& d )
     langIdx = languages.NumItems();
     languages += lang;
   }
-  
+
   auto& lang = languages[ langIdx ].dict;
 
   int tokenCount = root.GetChildCount( "token" );
@@ -55,7 +57,7 @@ void Localization::ImportLanguage( CXMLDocument& d )
 
     CString key = token.GetAttributeAsString( "key" );
     key.ToLower();
-    CString value = token.GetAttributeAsString( "value" );     
+    CString value = token.GetAttributeAsString( "value" );
 
     lang[ key ] = value;
 
@@ -63,12 +65,6 @@ void Localization::ImportLanguage( CXMLDocument& d )
   }
 
   ProcessStringForUsedGlyphs( language );
-}
-
-Localization::Localization()
-{
-  for ( int x = 0; x <= 0x460; x++ )
-    usedGlyphs.AddUnique( x );
 }
 
 void Localization::SetActiveLanguage( const CString& language )
@@ -81,7 +77,7 @@ void Localization::SetActiveLanguage( const CString& language )
     if ( languages[ x ].name == lang )
     {
       activeLanguageIdx = x;
-      SetConfigString( "language", lang );
+      Config::SetString( "language", lang );
       LOG_NFO( "[GW2TacO] Setting TacO language to %s", language.GetPointer() );
       return;
     }
@@ -105,6 +101,10 @@ CStringArray Localization::GetLanguages()
 
 void Localization::Import()
 {
+  // pre-init for skin stuff
+  for ( int x = 0; x <= 0x460; x++ )
+    usedGlyphs.AddUnique( x );
+
   ImportFile( "TacO_Language_en.xml" );
 
   CFileList list;
@@ -115,9 +115,9 @@ void Localization::Import()
       ImportFile( list.Files[ x ].Path + list.Files[ x ].FileName );
     }
 
-  if ( HasConfigString( "language" ) )
+  if ( Config::HasString( "language" ) )
   {
-    SetActiveLanguage( GetConfigString( "language" ) );
+    SetActiveLanguage( Config::GetString( "language" ) );
   }
 }
 
@@ -169,9 +169,9 @@ CArray<int>& Localization::GetUsedGlyphs()
 
 void Localization::ProcessStringForUsedGlyphs( CString& string )
 {
-  string.DecodeUtf8( [ & ]( TU32 Char )->TBOOL
-  {
-    usedGlyphs.AddUnique( Char );
-    return true;
-  } );
+  string.DecodeUtf8( [&]( TU32 Char )->TBOOL
+                     {
+                       usedGlyphs.AddUnique( Char );
+                       return true;
+                     } );
 }

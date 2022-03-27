@@ -47,8 +47,8 @@ public:
   TBOOL External = false;
   CString zipFile;
 
-  GW2TacticalCategory *category = nullptr;
-  void SetCategory( CWBApplication *App, GW2TacticalCategory *t );
+  GW2TacticalCategory* category = nullptr;
+  void SetCategory( CWBApplication* App, GW2TacticalCategory* t );
 
   TBOOL Import( CStreamReaderMemory& file, TBOOL keepPoints = false );
   TBOOL Import( CString& fileName, const CString& zipFile, TBOOL keepPoints = false );
@@ -61,10 +61,10 @@ class GW2TrailDisplay : public CWBItem
   CMatrix4x4 persp;
   CRect drawrect;
 
-  virtual void OnDraw( CWBDrawAPI *API );
-  void DrawMinimap( CWBDrawAPI *API );
+  virtual void OnDraw( CWBDrawAPI* API );
+  void DrawMinimap( CWBDrawAPI* API );
 
-  CCoreVertexFormat *vertexFormat = nullptr;
+  CCoreVertexFormat* vertexFormat = nullptr;
 
   CCoreVertexShader* vxShader = nullptr;
   CCorePixelShader* pxShader = nullptr;
@@ -84,19 +84,19 @@ class GW2TrailDisplay : public CWBItem
 
   LIGHTWEIGHT_CRITICALSECTION critsec;
 
-  CCoreTexture2D* GetTexture( const CString& fname, const CString& zipFile, const CString& categoryZip);
+  CCoreTexture2D* GetTexture( const CString& fname, const CString& zipFile, const CString& categoryZip );
 
   CDictionary<CString, CCoreTexture2D*> textureCache;
 
 public:
 
-  GW2TrailDisplay( CWBItem *Parent, CRect Position );
+  GW2TrailDisplay( CWBItem* Parent, CRect Position );
   virtual ~GW2TrailDisplay();
 
-  static CWBItem *Factory( CWBItem *Root, CXMLNode &node, CRect &Pos );
+  static CWBItem* Factory( CWBItem* Root, CXMLNode& node, CRect& Pos );
   WB_DECLARE_GUIITEM( _T( "gw2Trails" ), CWBItem );
 
-  virtual TBOOL IsMouseTransparent( CPoint &ClientSpacePoint, WBMESSAGE MessageType );
+  virtual TBOOL IsMouseTransparent( CPoint& ClientSpacePoint, WBMESSAGE MessageType );
 
   void DoTrailLogging( TS32 mapID, CVector3 charPos );
 
@@ -107,7 +107,7 @@ public:
   void ExportTrail();
   void ImportTrail();
 
-  void DrawProxy( CWBDrawAPI *API, bool miniMaprender );
+  void DrawProxy( CWBDrawAPI* API, bool miniMaprender );
 };
 
 extern std::unordered_map<int, CDictionaryEnumerable<GUID, GW2Trail*>> trailSet;

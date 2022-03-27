@@ -4,12 +4,12 @@
 #include "OverlayConfig.h"
 #include "TrailLogger.h"
 
-TBOOL GW2MarkerEditor::IsMouseTransparent( CPoint &ClientSpacePoint, WBMESSAGE MessageType )
+TBOOL GW2MarkerEditor::IsMouseTransparent( CPoint& ClientSpacePoint, WBMESSAGE MessageType )
 {
   return true;
 }
 
-GW2MarkerEditor::GW2MarkerEditor( CWBItem *Parent, CRect Position ) : CWBItem( Parent, Position )
+GW2MarkerEditor::GW2MarkerEditor( CWBItem* Parent, CRect Position ) : CWBItem( Parent, Position )
 {
   App->GenerateGUITemplate( this, "gw2pois", "markereditor" );
 }
@@ -19,22 +19,16 @@ GW2MarkerEditor::~GW2MarkerEditor()
 
 }
 
-CWBItem * GW2MarkerEditor::Factory( CWBItem *Root, CXMLNode &node, CRect &Pos )
+CWBItem* GW2MarkerEditor::Factory( CWBItem* Root, CXMLNode& node, CRect& Pos )
 {
   return new GW2MarkerEditor( Root, Pos );
 }
 
-void GW2MarkerEditor::OnDraw( CWBDrawAPI *API )
+void GW2MarkerEditor::OnDraw( CWBDrawAPI* API )
 {
-  if ( !HasConfigValue( "AutoHideMarkerEditor" ) )
-    SetConfigValue( "AutoHideMarkerEditor", 1 );
+  TBOOL autoHide = Config::GetValue( "AutoHideMarkerEditor" );
 
-  TBOOL autoHide = GetConfigValue( "AutoHideMarkerEditor" );
-
-  if ( !HasConfigValue( "TacticalLayerVisible" ) )
-    SetConfigValue( "TacticalLayerVisible", 1 );
-
-  if ( !GetConfigValue( "TacticalLayerVisible" ) )
+  if ( !Config::GetValue( "TacticalLayerVisible" ) )
     return;
 
   if ( !mumbleLink.IsValid() ) return;
@@ -45,7 +39,7 @@ void GW2MarkerEditor::OnDraw( CWBDrawAPI *API )
 
   for ( TS32 x = 0; x < POIs.NumItems(); x++ )
   {
-    auto &cpoi = POIs.GetByIndex( x );
+    auto& cpoi = POIs.GetByIndex( x );
 
     if ( cpoi.mapID != mumbleLink.mapID ) continue;
     if ( cpoi.External ) continue;
@@ -63,7 +57,7 @@ void GW2MarkerEditor::OnDraw( CWBDrawAPI *API )
 
       if ( CurrentPOI != cpoi.guid )
       {
-        CWBLabel *type = (CWBLabel*)FindChildByID( "markertype", "label" );
+        CWBLabel* type = (CWBLabel*)FindChildByID( "markertype", "label" );
         if ( type )
         {
           CString typeName;
@@ -99,7 +93,7 @@ void GW2MarkerEditor::OnDraw( CWBDrawAPI *API )
   }
 }
 
-TBOOL GW2MarkerEditor::MessageProc( CWBMessage &Message )
+TBOOL GW2MarkerEditor::MessageProc( CWBMessage& Message )
 {
   switch ( Message.GetMessage() )
   {
@@ -108,7 +102,7 @@ TBOOL GW2MarkerEditor::MessageProc( CWBMessage &Message )
     if ( Hidden )
       break;
 
-    CWBButton *b = (CWBButton*)App->FindItemByGuid( Message.GetTarget(), _T( "button" ) );
+    CWBButton* b = (CWBButton*)App->FindItemByGuid( Message.GetTarget(), _T( "button" ) );
     if ( !b )
       break;
     if ( b->GetID() == _T( "changemarkertype" ) )
@@ -181,7 +175,7 @@ TBOOL GW2MarkerEditor::MessageProc( CWBMessage &Message )
 
         POIs[ CurrentPOI ].SetCategory( App, CategoryList[ Message.Data ] );
         ExportPOIS();
-        CWBLabel *type = (CWBLabel*)FindChildByID( "markertype", "label" );
+        CWBLabel* type = (CWBLabel*)FindChildByID( "markertype", "label" );
         if ( type )
           type->SetText( "Marker Type: " + CategoryList[ Message.Data ]->GetFullTypeName() );
       }
@@ -189,7 +183,7 @@ TBOOL GW2MarkerEditor::MessageProc( CWBMessage &Message )
       {
         extern CString DefaultMarkerCategory;
         DefaultMarkerCategory = CategoryList[ Message.Data ]->GetFullTypeName();
-        CWBLabel *type = (CWBLabel*)FindChildByID( "defaultmarkertype", "label" );
+        CWBLabel* type = (CWBLabel*)FindChildByID( "defaultmarkertype", "label" );
         if ( type )
           type->SetText( "Default Marker Type: " + CategoryList[ Message.Data ]->GetFullTypeName() );
       }

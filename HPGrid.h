@@ -6,7 +6,7 @@ class GW2HPGrid : public CWBItem
 {
 
   CPoint lastpos;
-  virtual void OnDraw( CWBDrawAPI *API );
+  virtual void OnDraw( CWBDrawAPI* API );
 
   struct GridLine
   {
@@ -25,14 +25,14 @@ class GW2HPGrid : public CWBItem
 
 public:
 
-  virtual TBOOL IsMouseTransparent( CPoint &ClientSpacePoint, WBMESSAGE MessageType );
+  virtual TBOOL IsMouseTransparent( CPoint& ClientSpacePoint, WBMESSAGE MessageType );
 
   virtual void LoadGrids();
 
-  GW2HPGrid( CWBItem *Parent, CRect Position );
+  GW2HPGrid( CWBItem* Parent, CRect Position );
   virtual ~GW2HPGrid();
 
-  static CWBItem *Factory( CWBItem *Root, CXMLNode &node, CRect &Pos );
+  static CWBItem* Factory( CWBItem* Root, CXMLNode& node, CRect& Pos );
   WB_DECLARE_GUIITEM( _T( "hpgrid" ), CWBItem );
 };
 

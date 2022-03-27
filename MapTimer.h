@@ -25,8 +25,8 @@ class GW2MapTimer : public CWBItem
   };
 
   CPoint lastpos;
-  virtual void OnDraw( CWBDrawAPI *API );
-  void SetLayout( CXMLNode &node );
+  virtual void OnDraw( CWBDrawAPI* API );
+  void SetLayout( CXMLNode& node );
 
   bool beingFetched = false;
   TS32 lastFetchTime = 0;
@@ -44,13 +44,13 @@ public:
 
   CArray<Map> maps;
 
-  GW2MapTimer( CWBItem *Parent, CRect Position );
+  GW2MapTimer( CWBItem* Parent, CRect Position );
   virtual ~GW2MapTimer();
 
-  static CWBItem *Factory( CWBItem *Root, CXMLNode &node, CRect &Pos );
+  static CWBItem* Factory( CWBItem* Root, CXMLNode& node, CRect& Pos );
   WB_DECLARE_GUIITEM( _T( "maptimer" ), CWBItem );
 
-  virtual TBOOL IsMouseTransparent( CPoint &ClientSpacePoint, WBMESSAGE MessageType );
+  virtual TBOOL IsMouseTransparent( CPoint& ClientSpacePoint, WBMESSAGE MessageType );
 };
 
 

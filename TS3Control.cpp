@@ -4,14 +4,14 @@
 #include "Language.h"
 
 
-void TS3Control::OnDraw( CWBDrawAPI *API )
+void TS3Control::OnDraw( CWBDrawAPI* API )
 {
-  CWBFont *f = GetFont( GetState() );
+  CWBFont* f = GetFont( GetState() );
   TS32 size = f->GetLineHeight();
 
   if ( !teamSpeakConnection.authenticated )
   {
-    if ( HasConfigString( "TS3APIKey" ) )
+    if ( Config::HasString( "TS3APIKey" ) )
     {
       f->Write( API, DICT( "ts3authfail1" ), CPoint( 0, 0 ), 0xffffffff );
       f->Write( API, DICT( "ts3authfail2" ), CPoint( 0, size ), 0xffffffff );
@@ -42,7 +42,7 @@ void TS3Control::OnDraw( CWBDrawAPI *API )
     TS32 ypos = 0;
     for ( TS32 x = 0; x < teamSpeakConnection.handlers.NumItems(); x++ )
     {
-      TS3Connection::TS3Schandler &handler = teamSpeakConnection.handlers[ x ];
+      TS3Connection::TS3Schandler& handler = teamSpeakConnection.handlers[ x ];
       if ( handler.Connected && handler.Clients.HasKey( handler.myclientid ) )
       {
         CPoint p = f->GetTextPosition( handler.name, GetClientRect() - CRect( 0, ypos, 0, 0 ), LeftAlign ? WBTA_LEFT : WBTA_RIGHT, WBTA_TOP, WBTT_NONE, true );
@@ -57,7 +57,7 @@ void TS3Control::OnDraw( CWBDrawAPI *API )
           TS32 participants = 0;
           for ( TS32 y = 0; y < handler.Clients.NumItems(); y++ )
           {
-            TS3Connection::TS3Client &cl = handler.Clients[ y ];
+            TS3Connection::TS3Client& cl = handler.Clients[ y ];
             if ( cl.channelid == mychannelid )
               participants++;
           }
@@ -74,7 +74,7 @@ void TS3Control::OnDraw( CWBDrawAPI *API )
           if ( ( ypos + f->GetLineHeight() ) > displayrect.y2 )
             break;
 
-          TS3Connection::TS3Client &cl = handler.Clients.GetByIndex( y );
+          TS3Connection::TS3Client& cl = handler.Clients.GetByIndex( y );
           if ( cl.channelid == mychannelid )
           {
             WBSKINELEMENTID id = playeroff;
@@ -106,21 +106,20 @@ void TS3Control::OnDraw( CWBDrawAPI *API )
   DrawBorder( API );
 }
 
-TS3Control::TS3Control( CWBItem *Parent, CRect Position ) : CWBItem( Parent, Position )
-{
-}
+TS3Control::TS3Control( CWBItem* Parent, CRect Position ) : CWBItem( Parent, Position )
+{}
 
 TS3Control::~TS3Control()
 {
 
 }
 
-CWBItem * TS3Control::Factory( CWBItem *Root, CXMLNode &node, CRect &Pos )
+CWBItem* TS3Control::Factory( CWBItem* Root, CXMLNode& node, CRect& Pos )
 {
   return new TS3Control( Root, Pos );
 }
 
-TBOOL TS3Control::IsMouseTransparent( CPoint &ClientSpacePoint, WBMESSAGE MessageType )
+TBOOL TS3Control::IsMouseTransparent( CPoint& ClientSpacePoint, WBMESSAGE MessageType )
 {
   return true;
 }

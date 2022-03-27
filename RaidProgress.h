@@ -29,7 +29,7 @@ public:
 class RaidProgress : public CWBItem
 {
   CPoint lastpos;
-  virtual void OnDraw( CWBDrawAPI *API );
+  virtual void OnDraw( CWBDrawAPI* API );
 
   bool beingFetched = false;
   TS32 lastFetchTime = 0;
@@ -42,13 +42,13 @@ class RaidProgress : public CWBItem
 
 public:
 
-  RaidProgress( CWBItem *Parent, CRect Position );
+  RaidProgress( CWBItem* Parent, CRect Position );
   virtual ~RaidProgress();
 
-  static CWBItem *Factory( CWBItem *Root, CXMLNode &node, CRect &Pos );
+  static CWBItem* Factory( CWBItem* Root, CXMLNode& node, CRect& Pos );
   WB_DECLARE_GUIITEM( _T( "raidprogress" ), CWBItem );
 
-  virtual TBOOL IsMouseTransparent( CPoint &ClientSpacePoint, WBMESSAGE MessageType );
+  virtual TBOOL IsMouseTransparent( CPoint& ClientSpacePoint, WBMESSAGE MessageType );
   CArray<Raid>& GetRaids();
 };
 

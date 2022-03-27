@@ -20,7 +20,7 @@ enum class POIBehavior : TS32
 
 struct MarkerTypeData
 {
-  struct 
+  struct
   {
     TBOOL needsExportToUserData : 1;
     TBOOL iconFileSaved : 1;
@@ -101,8 +101,8 @@ struct MarkerTypeData
   TS16 copy = -1;
   TS16 copyMessage = -1;
 
-  void Read( CXMLNode &n, TBOOL StoreSaveState );
-  void Write( CXMLNode *n );
+  void Read( CXMLNode& n, TBOOL StoreSaveState );
+  void Write( CXMLNode* n );
 };
 
 class GW2TacticalCategory;
@@ -134,10 +134,10 @@ struct POI
 
   GUID guid;
 
-  GW2TacticalCategory *category = nullptr;
-  void SetCategory( CWBApplication *App, GW2TacticalCategory *t );
+  GW2TacticalCategory* category = nullptr;
+  void SetCategory( CWBApplication* App, GW2TacticalCategory* t );
 
-  bool IsVisible( const tm& ptm, const time_t& currtime, bool achievementsFetched, CDictionary<TS32, Achievement> &achievements, LIGHTWEIGHT_CRITICALSECTION &dataWriteCritSec );
+  bool IsVisible( const tm& ptm, const time_t& currtime, bool achievementsFetched, CDictionary<TS32, Achievement>& achievements, LIGHTWEIGHT_CRITICALSECTION& dataWriteCritSec );
 };
 
 struct POIActivationDataKey
@@ -189,8 +189,8 @@ struct POIRoute
   TS32 activeItem = -1;
 };
 
-TU32 DictionaryHash( const GUID &i );
-TU32 DictionaryHash( const POIActivationDataKey &i );
+TU32 DictionaryHash( const GUID& i );
+TU32 DictionaryHash( const POIActivationDataKey& i );
 
 extern std::unordered_map<int, CDictionaryEnumerable<GUID, POI>> POISet;
 extern CDictionaryEnumerable<POIActivationDataKey, POIActivationData> ActivationData;
@@ -210,9 +210,9 @@ class GW2TacticalDisplay : public CWBItem
 
   void FetchAchievements();
   void InsertPOI( POI& poi );
-  void DrawPOI( CWBDrawAPI *API, const tm& ptm, const time_t& currtime, POI& poi, bool drawDistance, CString& infoText );
-  void DrawPOIMinimap( CWBDrawAPI *API, const CRect& miniRect, CVector2& pos, const tm& ptm, const time_t& currtime, POI& poi, float alpha, float zoomLevel );
-  virtual void OnDraw( CWBDrawAPI *API );
+  void DrawPOI( CWBDrawAPI* API, const tm& ptm, const time_t& currtime, POI& poi, bool drawDistance, CString& infoText );
+  void DrawPOIMinimap( CWBDrawAPI* API, const CRect& miniRect, CVector2& pos, const tm& ptm, const time_t& currtime, POI& poi, float alpha, float zoomLevel );
+  virtual void OnDraw( CWBDrawAPI* API );
   CVector3 ProjectTacticalPos( CVector3 pos, TF32 fov, TF32 asp );
   CArray<POI*> mapPOIs;
   CArray<POI*> minimapPOIs;
@@ -233,13 +233,13 @@ public:
   static CDictionary<TS32, Achievement> achievements;
   static LIGHTWEIGHT_CRITICALSECTION dataWriteCritSec;
 
-  GW2TacticalDisplay( CWBItem *Parent, CRect Position );
+  GW2TacticalDisplay( CWBItem* Parent, CRect Position );
   virtual ~GW2TacticalDisplay();
 
-  static CWBItem *Factory( CWBItem *Root, CXMLNode &node, CRect &Pos );
+  static CWBItem* Factory( CWBItem* Root, CXMLNode& node, CRect& Pos );
   WB_DECLARE_GUIITEM( _T( "gw2tactical" ), CWBItem );
 
-  virtual TBOOL IsMouseTransparent( CPoint &ClientSpacePoint, WBMESSAGE MessageType );
+  virtual TBOOL IsMouseTransparent( CPoint& ClientSpacePoint, WBMESSAGE MessageType );
   void RemoveUserMarkersFromMap();
   void TriggerBigMessage( TS32 messageString );
 };
@@ -257,7 +257,7 @@ public:
   MarkerTypeData data;
   TBOOL KeepSaveState = false;
   TBOOL IsOnlySeparator = false;
-  GW2TacticalCategory *Parent = nullptr;
+  GW2TacticalCategory* Parent = nullptr;
   CArray<GW2TacticalCategory*> children;
   std::set<int> containedMapIds;
 
@@ -281,16 +281,16 @@ public:
   }
 };
 
-void AddPOI( CWBApplication *App );
+void AddPOI( CWBApplication* App );
 void DeletePOI();
 void UpdatePOI( CWBApplication* App );
-void ImportPOIS( CWBApplication *App );
+void ImportPOIS( CWBApplication* App );
 void ExportPOIS();
 void ImportPOIActivationData();
 void ExportPOIActivationData();
 
-void OpenTypeContextMenu( CWBContextMenu *ctx, CArray<GW2TacticalCategory*> &CategoryList, TBOOL AddVisibilityMarkers = false, TS32 BaseID = 0, TBOOL markerEditor = false, CDictionary<TS32, Achievement>& achievements = CDictionary<TS32, Achievement>() );
-void OpenTypeContextMenu( CWBContextItem *ctx, CArray<GW2TacticalCategory*> &CategoryList, TBOOL AddVisibilityMarkers = false, TS32 BaseID = 0, TBOOL markerEditor = false, CDictionary<TS32, Achievement>& achievements = CDictionary<TS32, Achievement>() );
+void OpenTypeContextMenu( CWBContextMenu* ctx, CArray<GW2TacticalCategory*>& CategoryList, TBOOL AddVisibilityMarkers = false, TS32 BaseID = 0, TBOOL markerEditor = false, CDictionary<TS32, Achievement>& achievements = CDictionary<TS32, Achievement>() );
+void OpenTypeContextMenu( CWBContextItem* ctx, CArray<GW2TacticalCategory*>& CategoryList, TBOOL AddVisibilityMarkers = false, TS32 BaseID = 0, TBOOL markerEditor = false, CDictionary<TS32, Achievement>& achievements = CDictionary<TS32, Achievement>() );
 void AddTypeContextMenu( CWBContextMenu* ctx, CArray<GW2TacticalCategory*>& CategoryList, GW2TacticalCategory* Parent, TBOOL AddVisibilityMarkers, TS32 BaseID, TBOOL closeOnClick );
 GW2TacticalCategory* FindInCategoryTree( GW2TacticalCategory* cat );
 void SetAllCategoriesToVisibleInContext( GW2TacticalCategory* Parent );

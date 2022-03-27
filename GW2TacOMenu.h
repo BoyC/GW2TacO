@@ -55,7 +55,7 @@ class GW2TacO : public CWBItem
   TS32 ApiKeyIndex = 0;
 
   void OpenAboutWindow();
-  void BuildChannelTree( TS3Connection::TS3Schandler &h, CWBContextItem *parentitm, TS32 ParentID );
+  void BuildChannelTree( TS3Connection::TS3Schandler& h, CWBContextItem* parentitm, TS32 ParentID );
 
   CDictionary<TS32, TacOKeyAction> KeyBindings;
   CDictionary<TS32, CString> ScriptKeyBindings;
@@ -84,27 +84,27 @@ class GW2TacO : public CWBItem
   float lastScaleValue = 1.0f;
 
   void StoreIconSizes();
-  void AdjustMenuForWindowTooSmallScale(float scale);
+  void AdjustMenuForWindowTooSmallScale( float scale );
 
   CString mouseToolTip;
-  CString GetKeybindString(TacOKeyAction action);
+  CString GetKeybindString( TacOKeyAction action );
 
 public:
-  virtual void OnDraw( CWBDrawAPI *API );
-  virtual void OnPostDraw(CWBDrawAPI* API);
-  virtual TBOOL IsMouseTransparent( CPoint &ClientSpacePoint, WBMESSAGE MessageType );
+  virtual void OnDraw( CWBDrawAPI* API );
+  virtual void OnPostDraw( CWBDrawAPI* API );
+  virtual TBOOL IsMouseTransparent( CPoint& ClientSpacePoint, WBMESSAGE MessageType );
 
-  GW2TacO( CWBItem *Parent, CRect Position );
+  GW2TacO( CWBItem* Parent, CRect Position );
   virtual ~GW2TacO();
 
-  static CWBItem *Factory( CWBItem *Root, CXMLNode &node, CRect &Pos );
+  static CWBItem* Factory( CWBItem* Root, CXMLNode& node, CRect& Pos );
   WB_DECLARE_GUIITEM( _T( "GW2TacO" ), CWBItem );
   void OpenWindow( CString s );
 
-  virtual TBOOL MessageProc( CWBMessage &Message ); //return true if this item handled the message
+  virtual TBOOL MessageProc( CWBMessage& Message ); //return true if this item handled the message
 
   void SetInfoLine( const CString& string );
-  void SetMouseToolTip(const CString& toolTip);
+  void SetMouseToolTip( const CString& toolTip );
 
   void InitScriptEngines();
   void TickScriptEngine();
@@ -114,4 +114,4 @@ public:
 
 extern CString UIFileNames[];
 
-void SetMouseToolTip(const CString& toolTip);
+void SetMouseToolTip( const CString& toolTip );

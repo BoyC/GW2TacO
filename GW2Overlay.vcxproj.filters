@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="GW2POIs.cpp">
+    <ClCompile Include="GW2TacO.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="GW2Tactical.cpp">
@@ -39,7 +39,7 @@
     <ClCompile Include="OverlayConfig.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GW2TacO.cpp">
+    <ClCompile Include="GW2TacOMenu.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="OverlayWindow.cpp">
@@ -96,6 +96,9 @@
     <ClCompile Include="TPTracker.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="InputHooks.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GW2Tactical.h">
@@ -119,7 +122,7 @@
     <ClInclude Include="OverlayConfig.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GW2TacO.h">
+    <ClInclude Include="GW2TacOMenu.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="OverlayWindow.h">
@@ -180,7 +183,10 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="TPTracker.h">
-      <Filter>Source Files</Filter>
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="InputHooks.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

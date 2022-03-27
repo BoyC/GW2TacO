@@ -9,155 +9,155 @@ CDictionary<CString, TS32> dungeonToAchievementMap;
 
 using namespace jsonxx;
 
-void DungeonProgress::OnDraw( CWBDrawAPI *API )
+void DungeonProgress::OnDraw( CWBDrawAPI* API )
 {
-  CWBFont *f = GetFont( GetState() );
+  CWBFont* f = GetFont( GetState() );
   TS32 size = f->GetLineHeight();
 
-  GW2::APIKeyManager::Status status = GW2::apiKeyManager.DisplayStatusText(API, f);
+  GW2::APIKeyManager::Status status = GW2::apiKeyManager.DisplayStatusText( API, f );
   GW2::APIKey* key = GW2::apiKeyManager.GetIdentifiedAPIKey();
 
-  if (key && key->valid && (GetTime() - lastFetchTime > 150000 || !lastFetchTime) && !beingFetched && !fetchThread.joinable())
+  if ( key && key->valid && ( GetTime() - lastFetchTime > 150000 || !lastFetchTime ) && !beingFetched && !fetchThread.joinable() )
   {
     beingFetched = true;
-    fetchThread = std::thread([this, key]()
-      {
-        SetPerThreadCRTExceptionBehavior();
+    fetchThread = std::thread( [this, key]()
+                               {
+                                 SetPerThreadCRTExceptionBehavior();
 
-        if (!hasFullDungeonInfo)
-        {
-          Object json;
+                                 if ( !hasFullDungeonInfo )
+                                 {
+                                   Object json;
 
-          CString globalRaidInfo = CString("{\"dungeons\":") + key->QueryAPI("v2/dungeons") + "}";
-          json.parse(globalRaidInfo.GetPointer());
+                                   CString globalRaidInfo = CString( "{\"dungeons\":" ) + key->QueryAPI( "v2/dungeons" ) + "}";
+                                   json.parse( globalRaidInfo.GetPointer() );
 
-          if (json.has<Array>("dungeons"))
-          {
-            auto dungeonData = json.get<Array>("dungeons").values();
+                                   if ( json.has<Array>( "dungeons" ) )
+                                   {
+                                     auto dungeonData = json.get<Array>( "dungeons" ).values();
 
-            for (unsigned int x = 0; x < dungeonData.size(); x++)
-            {
-              if (!dungeonData[x]->is<String>())
-                continue;
+                                     for ( unsigned int x = 0; x < dungeonData.size(); x++ )
+                                     {
+                                       if ( !dungeonData[ x ]->is<String>() )
+                                         continue;
 
-              Dungeon d;
-              d.name = CString(dungeonData[x]->get<String>().data());
+                                       Dungeon d;
+                                       d.name = CString( dungeonData[ x ]->get<String>().data() );
 
-              CString raidInfo = key->QueryAPI((CString("v2/dungeons/") + d.name).GetPointer());
-              Object dungeonJson;
-              dungeonJson.parse(raidInfo.GetPointer());
+                                       CString raidInfo = key->QueryAPI( ( CString( "v2/dungeons/" ) + d.name ).GetPointer() );
+                                       Object dungeonJson;
+                                       dungeonJson.parse( raidInfo.GetPointer() );
 
-              if (dungeonJson.has<Array>("paths"))
-              {
-                auto wings = dungeonJson.get<Array>("paths").values();
-                for (unsigned y = 0; y < wings.size(); y++)
-                {
-                  auto dungeonPath = wings[y]->get<Object>();
-                  DungeonPath p;
-                  if (dungeonPath.has<String>("id"))
-                    p.name = CString(dungeonPath.get<String>("id").data());
+                                       if ( dungeonJson.has<Array>( "paths" ) )
+                                       {
+                                         auto wings = dungeonJson.get<Array>( "paths" ).values();
+                                         for ( unsigned y = 0; y < wings.size(); y++ )
+                                         {
+                                           auto dungeonPath = wings[ y ]->get<Object>();
+                                           DungeonPath p;
+                                           if ( dungeonPath.has<String>( "id" ) )
+                                             p.name = CString( dungeonPath.get<String>( "id" ).data() );
 
-                  if (dungeonPath.has<String>("type"))
-                    p.type = CString(dungeonPath.get<String>("type").data());
+                                           if ( dungeonPath.has<String>( "type" ) )
+                                             p.type = CString( dungeonPath.get<String>( "type" ).data() );
 
-                  d.paths += p;
-                }
-              }
+                                           d.paths += p;
+                                         }
+                                       }
 
-              if (d.name.Length())
-              {
-                d.shortName = CString::Format("%c", toupper(d.name[0]));
+                                       if ( d.name.Length() )
+                                       {
+                                         d.shortName = CString::Format( "%c", toupper( d.name[ 0 ] ) );
 
-                for (unsigned int y = 0; y < d.name.Length() - 1; y++)
-                {
-                  if (d.name[y] == '_')
-                  {
-                    if (d.name[y + 1] == 'o' && y < d.name.Length() - 2 && d.name[y + 2] == 'f')
-                      d.shortName += "o";
-                    else
-                      if (d.name[y + 1] == 't' && y < d.name.Length() - 3 && d.name[y + 2] == 'h' && d.name[y + 3] == 'e')
-                        d.shortName += "t";
-                      else
-                        if (d.name[y + 1] == 'a' && y < d.name.Length() - 4 && d.name[y + 2] == 'r' && d.name[y + 3] == 'a' && d.name[y + 4] == 'h')
-                          d.shortName = "Arah";
-                        else
-                          d.shortName += CString::Format("%c", (char)toupper(d.name[y + 1]));
-                  }
-                }
-              }
+                                         for ( unsigned int y = 0; y < d.name.Length() - 1; y++ )
+                                         {
+                                           if ( d.name[ y ] == '_' )
+                                           {
+                                             if ( d.name[ y + 1 ] == 'o' && y < d.name.Length() - 2 && d.name[ y + 2 ] == 'f' )
+                                               d.shortName += "o";
+                                             else
+                                               if ( d.name[ y + 1 ] == 't' && y < d.name.Length() - 3 && d.name[ y + 2 ] == 'h' && d.name[ y + 3 ] == 'e' )
+                                                 d.shortName += "t";
+                                               else
+                                                 if ( d.name[ y + 1 ] == 'a' && y < d.name.Length() - 4 && d.name[ y + 2 ] == 'r' && d.name[ y + 3 ] == 'a' && d.name[ y + 4 ] == 'h' )
+                                                   d.shortName = "Arah";
+                                                 else
+                                                   d.shortName += CString::Format( "%c", (char)toupper( d.name[ y + 1 ] ) );
+                                           }
+                                         }
+                                       }
 
-              dungeons += d;
-            }
-          }
+                                       dungeons += d;
+                                     }
+                                   }
 
-          hasFullDungeonInfo = true;
-        }
+                                   hasFullDungeonInfo = true;
+                                 }
 
-        CString lastDungeonStatus = CString("{\"dungeons\":") + key->QueryAPI("v2/account/dungeons") + "}";
-        CString dungeonFrequenterStatus = CString("{\"dungeons\":") + key->QueryAPI("v2/account/achievements?ids=2963") + "}";
-        Object json;
-        Object json2;
-        json.parse(lastDungeonStatus.GetPointer());
-        json2.parse(dungeonFrequenterStatus.GetPointer());
+                                 CString lastDungeonStatus = CString( "{\"dungeons\":" ) + key->QueryAPI( "v2/account/dungeons" ) + "}";
+                                 CString dungeonFrequenterStatus = CString( "{\"dungeons\":" ) + key->QueryAPI( "v2/account/achievements?ids=2963" ) + "}";
+                                 Object json;
+                                 Object json2;
+                                 json.parse( lastDungeonStatus.GetPointer() );
+                                 json2.parse( dungeonFrequenterStatus.GetPointer() );
 
-        if (json.has<Array>("dungeons"))
-        {
-          auto dungeonData = json.get<Array>("dungeons").values();
+                                 if ( json.has<Array>( "dungeons" ) )
+                                 {
+                                   auto dungeonData = json.get<Array>( "dungeons" ).values();
 
-          for (unsigned int x = 0; x < dungeonData.size(); x++)
-          {
-            if (!dungeonData[x]->is<String>())
-              continue;
+                                   for ( unsigned int x = 0; x < dungeonData.size(); x++ )
+                                   {
+                                     if ( !dungeonData[ x ]->is<String>() )
+                                       continue;
 
-            CString eventName = CString(dungeonData[x]->get<String>().data());
-            for (TS32 a = 0; a < dungeons.NumItems(); a++)
-              for (TS32 b = 0; b < dungeons[a].paths.NumItems(); b++)
-              {
-                if (dungeons[a].paths[b].name == eventName)
-                  dungeons[a].paths[b].finished = true;
-              }
-          }
-        }
+                                     CString eventName = CString( dungeonData[ x ]->get<String>().data() );
+                                     for ( TS32 a = 0; a < dungeons.NumItems(); a++ )
+                                       for ( TS32 b = 0; b < dungeons[ a ].paths.NumItems(); b++ )
+                                       {
+                                         if ( dungeons[ a ].paths[ b ].name == eventName )
+                                           dungeons[ a ].paths[ b ].finished = true;
+                                       }
+                                   }
+                                 }
 
-        if (json2.has<Array>("dungeons"))
-        {
-          auto dungeonData = json2.get<Array>("dungeons").values();
+                                 if ( json2.has<Array>( "dungeons" ) )
+                                 {
+                                   auto dungeonData = json2.get<Array>( "dungeons" ).values();
 
-          for (TS32 a = 0; a < dungeons.NumItems(); a++)
-            for (TS32 b = 0; b < dungeons[a].paths.NumItems(); b++)
-              dungeons[a].paths[b].frequenter = false;
+                                   for ( TS32 a = 0; a < dungeons.NumItems(); a++ )
+                                     for ( TS32 b = 0; b < dungeons[ a ].paths.NumItems(); b++ )
+                                       dungeons[ a ].paths[ b ].frequenter = false;
 
-          if (dungeonData.size() >= 1 && dungeonData[0]->is<Object>())
-          {
-            Object obj = dungeonData[0]->get<Object>();
-            if (obj.has<Array>("bits"))
-            {
-              auto bits = obj.get<Array>("bits").values();
-              if (bits.size() > 0)
-              {
-                for (unsigned int x = 0; x < bits.size(); x++)
-                {
-                  if (bits[x]->is<Number>())
-                  {
-                    TS32 frequentedID = (TS32)(bits[x]->get<Number>());
-                    for (TS32 a = 0; a < dungeons.NumItems(); a++)
-                      for (TS32 b = 0; b < dungeons[a].paths.NumItems(); b++)
-                      {
-                        if (dungeonToAchievementMap.HasKey(dungeons[a].paths[b].name))
-                        {
-                          if (dungeonToAchievementMap[dungeons[a].paths[b].name] == frequentedID)
-                            dungeons[a].paths[b].frequenter = true;
-                        }
-                      }
-                  }
-                }
-              }
-            }
-          }
-        }
+                                   if ( dungeonData.size() >= 1 && dungeonData[ 0 ]->is<Object>() )
+                                   {
+                                     Object obj = dungeonData[ 0 ]->get<Object>();
+                                     if ( obj.has<Array>( "bits" ) )
+                                     {
+                                       auto bits = obj.get<Array>( "bits" ).values();
+                                       if ( bits.size() > 0 )
+                                       {
+                                         for ( unsigned int x = 0; x < bits.size(); x++ )
+                                         {
+                                           if ( bits[ x ]->is<Number>() )
+                                           {
+                                             TS32 frequentedID = (TS32)( bits[ x ]->get<Number>() );
+                                             for ( TS32 a = 0; a < dungeons.NumItems(); a++ )
+                                               for ( TS32 b = 0; b < dungeons[ a ].paths.NumItems(); b++ )
+                                               {
+                                                 if ( dungeonToAchievementMap.HasKey( dungeons[ a ].paths[ b ].name ) )
+                                                 {
+                                                   if ( dungeonToAchievementMap[ dungeons[ a ].paths[ b ].name ] == frequentedID )
+                                                     dungeons[ a ].paths[ b ].frequenter = true;
+                                                 }
+                                               }
+                                           }
+                                         }
+                                       }
+                                     }
+                                   }
+                                 }
 
-        beingFetched = false;
-      });
+                                 beingFetched = false;
+                               } );
   }
 
   if ( !beingFetched && fetchThread.joinable() )
@@ -224,7 +224,7 @@ void DungeonProgress::OnDraw( CWBDrawAPI *API )
   DrawBorder( API );
 }
 
-DungeonProgress::DungeonProgress( CWBItem *Parent, CRect Position ) : CWBItem( Parent, Position )
+DungeonProgress::DungeonProgress( CWBItem* Parent, CRect Position ) : CWBItem( Parent, Position )
 {
   dungeonToAchievementMap[ "ac_story" ] = 4;
   dungeonToAchievementMap[ "hodgins" ] = 5;
@@ -266,12 +266,12 @@ DungeonProgress::~DungeonProgress()
     fetchThread.join();
 }
 
-CWBItem * DungeonProgress::Factory( CWBItem *Root, CXMLNode &node, CRect &Pos )
+CWBItem* DungeonProgress::Factory( CWBItem* Root, CXMLNode& node, CRect& Pos )
 {
   return new DungeonProgress( Root, Pos );
 }
 
-TBOOL DungeonProgress::IsMouseTransparent( CPoint &ClientSpacePoint, WBMESSAGE MessageType )
+TBOOL DungeonProgress::IsMouseTransparent( CPoint& ClientSpacePoint, WBMESSAGE MessageType )
 {
   return true;
 }

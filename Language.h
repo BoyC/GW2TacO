@@ -11,29 +11,26 @@ public:
 
 class Localization
 {
-  int activeLanguageIdx = 0;
-  CArray< Language > languages;
+  static int activeLanguageIdx;
+  static CArray< Language > languages;
 
-  void ImportFile( const CString& file );
-  void ImportLanguage( CXMLDocument& d );
+  static void ImportFile( const CString& file );
+  static void ImportLanguage( CXMLDocument& d );
 
-  CArray<int> usedGlyphs;
+  static CArray<int> usedGlyphs;
 
 public:
 
-  Localization();
+  static void SetActiveLanguage( const CString& language );
+  static CStringArray GetLanguages();
 
-  void SetActiveLanguage( const CString& language );
-  CStringArray GetLanguages();
+  static void Import();
+  static CString Localize( const char* token, const CString& fallback = CString( "" ) );
+  static CString Localize( const CString& token, const CString& fallback = CString( "" ) );
 
-  void Import();
-  CString Localize( const char* token, const CString& fallback = CString( "" ) );
-  CString Localize( const CString& token, const CString& fallback = CString( "" ) );
-
-  int GetActiveLanguageIndex();
-  CArray<int>& GetUsedGlyphs();
-  void ProcessStringForUsedGlyphs( CString& string );
+  static int GetActiveLanguageIndex();
+  static CArray<int>& GetUsedGlyphs();
+  static void ProcessStringForUsedGlyphs( CString& string );
 };
 
-extern Localization* localization;
-#define DICT( token, ... ) localization->Localize( token, __VA_ARGS__ )
+#define DICT( token, ... ) Localization::Localize( token, __VA_ARGS__ )

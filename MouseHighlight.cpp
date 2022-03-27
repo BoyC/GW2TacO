@@ -25,18 +25,9 @@ CString CGAPaletteNames[] =
   "lightgray", "white"
 };
 
-void GW2MouseHighlight::OnDraw( CWBDrawAPI *API )
+void GW2MouseHighlight::OnDraw( CWBDrawAPI* API )
 {
-  if ( !HasConfigValue( "MouseHighlightVisible" ) )
-    SetConfigValue( "MouseHighlightVisible", 0 );
-
-  if ( !HasConfigValue( "MouseHighlightColor" ) )
-    SetConfigValue( "MouseHighlightColor", 0 );
-
-  if ( !HasConfigValue( "MouseHighlightOutline" ) )
-    SetConfigValue( "MouseHighlightOutline", 0 );
-
-  if ( !GetConfigValue( "MouseHighlightVisible" ) )
+  if ( !Config::GetValue( "MouseHighlightVisible" ) )
     return;
 
   POINT pos;
@@ -63,9 +54,9 @@ void GW2MouseHighlight::OnDraw( CWBDrawAPI *API )
 
   CRect cl = GetClientRect();
 
-  int Color = GetConfigValue( "MouseHighlightColor" );
+  int Color = Config::GetValue( "MouseHighlightColor" );
 
-  if ( GetConfigValue( "MouseHighlightOutline" ) )
+  if ( Config::GetValue( "MouseHighlightOutline" ) )
   {
     API->DrawRect( CRect( cp.x - 1, cl.y1, cp.x + 2, cl.y2 ), 0xff000000 );
     API->DrawRect( CRect( cl.x1, cp.y - 1, cl.x2, cp.y + 2 ), 0xff000000 );
@@ -79,7 +70,7 @@ void GW2MouseHighlight::OnDraw( CWBDrawAPI *API )
   //API->DrawRect(CRect(p + CPoint(-5, -5), p + CPoint(5, 5)), 0xffff0000);
 }
 
-GW2MouseHighlight::GW2MouseHighlight( CWBItem *Parent, CRect Position ) : CWBItem( Parent, Position )
+GW2MouseHighlight::GW2MouseHighlight( CWBItem* Parent, CRect Position ) : CWBItem( Parent, Position )
 {
 
 }
@@ -89,12 +80,12 @@ GW2MouseHighlight::~GW2MouseHighlight()
 
 }
 
-CWBItem * GW2MouseHighlight::Factory( CWBItem *Root, CXMLNode &node, CRect &Pos )
+CWBItem* GW2MouseHighlight::Factory( CWBItem* Root, CXMLNode& node, CRect& Pos )
 {
   return new GW2MouseHighlight( Root, Pos );
 }
 
-TBOOL GW2MouseHighlight::IsMouseTransparent( CPoint &ClientSpacePoint, WBMESSAGE MessageType )
+TBOOL GW2MouseHighlight::IsMouseTransparent( CPoint& ClientSpacePoint, WBMESSAGE MessageType )
 {
   return true;
 }
