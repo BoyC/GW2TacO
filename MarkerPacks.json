@@ -1,0 +1,33 @@
+{
+  "markerpacks": 
+  [
+    {
+      "name": "Tekkit's Marker Pack",
+      "id": "Tekkit",
+      "filename": "tw_ALL_IN_ONE.taco",
+      "versionurl": "http://tekkitsworkshop.net/index.php/gw2-taco/download",
+      "versionsearchstring": "--- ALL-IN-ONE --- ",
+      "versionterminator": "<",
+      "downloadurl": "http://tekkitsworkshop.net/index.php/gw2-taco/download/send/2-taco-marker-packs/32-all-in-one",
+      "enabledbydefault": true
+    },
+    {
+      "name": "Teh's Train Trails",
+      "id": "Tehs",
+      "filename": "TehsTrails.taco",
+      "versionurl": "https://github.com/xrandox/TehsTrails/releases/latest",
+      "versionsearchstring": "releases/tag/",
+      "versionterminator": "\"",
+      "downloadurl": "https://github.com/xrandox/TehsTrails/raw/main/TehsTrails/TehsTrails.taco",
+      "enabledbydefault": false
+    },
+    {
+      "name": "[fast]",
+      "id": "fast",
+      "filename": "602fd903dad6efast_TacO_pack_001.taco",
+      "forcedversion" : "001",
+      "downloadurl": "https://fast.farming-community.eu/cockpit/storage/uploads/2021/02/19/602fd903dad6efast_TacO_pack_001.taco",
+      "enabledbydefault": false
+    }
+  ]
+}

@@ -88,6 +88,7 @@ extern APIKeyManager apiKeyManager;
 CString FetchAPIData( char* path, const CString& apiKey );
 CString FetchHTTP( LPCWSTR url, LPCWSTR path );
 CString FetchHTTPS( LPCWSTR url, LPCWSTR path );
+CString FetchWeb( const CString& url );
 bool DownloadFile( const CString& url, CStreamWriterMemory& mem );
 
 void CheckFestivalActive();

@@ -8,8 +8,6 @@ class Config
   static CDictionaryEnumerable<CString, TS32> configValues;
   static CDictionaryEnumerable<CString, CString> configStrings;
 
-  static void SetDefaultValue( TCHAR* cfg, TS32 val );
-
 public:
 
   static void InitDefaults();
@@ -43,4 +41,6 @@ public:
 
   static void AutoSaveConfig();
   static void RemoveValue( TCHAR* value );
+
+  static void SetDefaultValue( TCHAR* cfg, TS32 val );
 };

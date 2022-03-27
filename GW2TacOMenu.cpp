@@ -168,6 +168,7 @@ enum MainMenuItems
   Menu_Crash,
   Menu_OptOutFromCrashReports,
   Menu_ToggleClipboardAccess,
+  Menu_ToggleAutomaticMarkerUpdates,
 
   Menu_OpacityIngame_Solid,
   Menu_OpacityIngame_Transparent,
@@ -189,6 +190,8 @@ enum MainMenuItems
   Menu_RebindKey_Base = 0x31337,
 
   Menu_Language_Base = 0x40000,
+
+  Menu_MarkerPacks_Base = 0x40100,
 
   Menu_MarkerFilter_Base = 0x65535,
 };
@@ -351,6 +354,19 @@ TBOOL GW2TacO::MessageProc( CWBMessage& Message )
         auto utils = ctx->AddItem( DICT( "tacticalutilities" ), 0 );
         utils->AddItem( DICT( "reloadmarkers" ), Menu_ReloadMarkers );
         utils->AddItem( DICT( "removemymarkers" ), 0 )->AddItem( DICT( "reallyremovemarkers" ), Menu_DeleteMyMarkers );
+
+        auto onlineMarkers = ctx->AddItem( DICT( "onlinemarkers" ), 0 );
+        onlineMarkers->AddItem( GetConfigActiveString( "FetchMarkerPacks" ) + DICT( "downloadmarkers" ), Menu_ToggleAutomaticMarkerUpdates );
+        onlineMarkers->AddSeparator();
+
+        {
+          CLightweightCriticalSection cs( &dlTextCritSec );
+          for ( int x = 0; x < markerPacks.NumItems(); x++ )
+          {
+            CString enabled = "MarkerPack_" + markerPacks[ x ].id + "_autoupdate";
+            onlineMarkers->AddItem( ( Config::GetValue( enabled.GetPointer() ) ? "[x] " : "[ ] " ) + markerPacks[ x ].name, Menu_MarkerPacks_Base + x );
+          }
+        }
       }
       ctx->AddItem( GetConfigActiveString( "TacticalLayerVisible" ) + GetKeybindString( TacOKeyAction::Toggle_tactical_layer ) + DICT( "toggletactical" ), Menu_ToggleTactical );
 
@@ -811,6 +827,16 @@ TBOOL GW2TacO::MessageProc( CWBMessage& Message )
       if ( Message.Data >= Menu_Language_Base && Message.Data < Menu_Language_Base + languages.NumItems() )
       {
         Localization::SetActiveLanguage( languages[ Message.Data - Menu_Language_Base ] );
+        break;
+      }
+    }
+
+    {
+      if ( Message.Data >= Menu_MarkerPacks_Base && Message.Data < Menu_MarkerPacks_Base + markerPacks.NumItems() )
+      {
+        CString id = markerPacks[ Message.Data - Menu_MarkerPacks_Base ].id;
+        CString cfgValue = "MarkerPack_" + id + "_autoupdate";
+        Config::ToggleValue( cfgValue.GetPointer() );
         break;
       }
     }
@@ -1644,6 +1670,22 @@ void GW2TacO::OnDraw( CWBDrawAPI* API )
 
   extern TBOOL isTacOUptoDate;
   extern int newTacOVersion;
+
+  CString currDownload = GetCurrentDownload();
+  if ( currDownload.Length() )
+  {
+    auto font = App->GetFont( "UniFontOutlined" );
+    if ( !font ) return;
+
+    CString dlText = DICT( "downloadingmarkerpack" ) + " " + currDownload;
+
+    CPoint startpos = font->GetTextPosition( dlText, GetClientRect(), WBTA_CENTERX, WBTA_TOP, WBTT_UPPERCASE );
+    startpos.y += ypos;
+
+    font->Write( API, dlText, startpos, 0xffffffff, WBTT_UPPERCASE, true );
+    ypos += font->GetLineHeight();
+  }
+
   if ( !isTacOUptoDate )
   {
     auto font = App->GetFont( "UniFontOutlined" );
@@ -1652,8 +1694,7 @@ void GW2TacO::OnDraw( CWBDrawAPI* API )
     CString infoline = DICT( "new_build_txt1" ) + CString::Format( " %d ", newTacOVersion - RELEASECOUNT ) + DICT( "new_build_txt2" );
 
     CPoint startpos = font->GetTextPosition( infoline, GetClientRect(), WBTA_CENTERX, WBTA_TOP, WBTT_UPPERCASE );
-    if ( Config::GetValue( "InfoLineVisible" ) )
-      startpos.y += font->GetLineHeight();
+    startpos.y += ypos;
 
     font->Write( API, infoline, startpos, 0xffffffff, WBTT_UPPERCASE, true );
     ypos += font->GetLineHeight();

@@ -73,6 +73,7 @@ void Config::InitDefaults()
   SetDefaultValue( "ShowMinimapTrails", 1 );
   SetDefaultValue( "ShowBigmapTrails", 1 );
   SetDefaultValue( "ShowInGameTrails", 1 );
+  SetDefaultValue( "FetchMarkerPacks", 1 );
 }
 
 void Config::Load()

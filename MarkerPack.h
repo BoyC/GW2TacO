@@ -5,6 +5,32 @@
 #define MINIZ_HEADER_FILE_ONLY
 #include "Bedrock/UtilLib/miniz.c"
 
+class MarkerPack
+{
+public:
+  CString name;
+  CString id;
+  CString versionURL;
+  CString fileName;
+  CString versionSearchString;
+  CString versionTerminator;
+  CString downloadURL;
+
+  CString versionString;
+
+  bool versionCheckDone = false;
+  bool defaultEnabled = false;;
+  bool outdated = false;
+  bool versionCheckOk = false;
+  bool beingDownloaded = false;
+  bool downloadFinished = false;
+  bool failed = false;
+
+  bool CheckVersion();
+  bool NeedsUpdate();
+  bool UpdateFromWeb();
+};
+
 TBOOL FindSavedCategory( GW2TacticalCategory* t );
 void ExportSavedCategories( CXMLNode* n, GW2TacticalCategory* t );
 void ExportPOI( CXMLNode* n, POI& p );
@@ -24,3 +50,11 @@ void ImportPOIActivationData();
 void ExportPOIActivationData();
 void FlushZipDict();
 mz_zip_archive* OpenZipFile( const CString& zipFile );
+void UpdateMarkerPackList();
+void WaitForMarkerPackUpdate();
+
+extern CArrayThreadSafe< CString >markerPackQueue;
+extern LIGHTWEIGHT_CRITICALSECTION dlTextCritSec;
+
+CString GetCurrentDownload();
+extern CArrayThreadSafe<MarkerPack> markerPacks;

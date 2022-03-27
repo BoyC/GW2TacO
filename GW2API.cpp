@@ -168,6 +168,34 @@ CString FetchHTTPS( LPCWSTR url, LPCWSTR path )
   return CString( (TS8*)data.GetData(), data.GetLength() );
 }
 
+CString FetchWeb( const CString& url )
+{
+  bool https = url.Find( "https://" ) == 0;
+  bool http = url.Find( "http://" ) == 0;
+  if ( !https && !http )
+    return "";
+
+  int start = url.Find( "://" ) + 3;
+  CString domain = url.Substring( start );
+
+  int domainEnd = domain.Find( "/" );
+  if ( domainEnd < 0 )
+    return "";
+
+  CString address = domain.Substring( domainEnd + 1 );
+  domain = domain.Substring( 0, domainEnd );
+
+  WCHAR wdomain[ 4096 ]{};
+  WCHAR waddr[ 4096 ]{};
+  address.WriteAsWideChar( waddr, 4096 );
+  domain.WriteAsWideChar( wdomain, 4096 );
+
+  if ( https )
+    return FetchHTTPS( wdomain, waddr );
+
+  return FetchHTTP( wdomain, waddr );
+}
+
 CString FetchAPIData( char* path, const CString& apiKey )
 {
   WCHAR wpath[ 4096 ];

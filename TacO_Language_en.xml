@@ -184,6 +184,10 @@
   <token key="togglecrashoptout" value="Automatically Send Crash Dumps"/>
   <token key="toggleclipboardaccess" value="Enable writing to Clipboard"/>
 
+  <token key="downloadingmarkerpack" value="Downloading new version of marker pack:"/>
+  <token key="onlinemarkers" value="Online Marker Packs"/>
+  <token key="downloadmarkers" value="Update Marker Packs Automatically"/>
+
   <token key="wurm_tunnel" value="Wurm Tunnel"/>
   <token key="airport" value="Airport"/>
   <token key="thunder_hollow_reactor" value="Thunder Hollow Reactor"/>

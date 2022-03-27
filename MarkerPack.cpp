@@ -1,7 +1,25 @@
 #include "MarkerPack.h"
 #include "Language.h"
 #include "OverlayConfig.h"
+#include "GW2API.h"
+#include "Bedrock/UtilLib/jsonxx.h"
+using namespace jsonxx;
+
 CDictionary<CString, mz_zip_archive*> zipDict;
+CArrayThreadSafe< CString > markerPackQueue;
+CString currentDownload;
+CArrayThreadSafe<MarkerPack> markerPacks;
+bool markerPacksBeingFetched = false;
+std::thread markerPackFetcherThread;
+extern CWBApplication* App;
+
+LIGHTWEIGHT_CRITICALSECTION dlTextCritSec;
+
+CString GetCurrentDownload()
+{
+  CLightweightCriticalSection cs( &dlTextCritSec );
+  return currentDownload;
+}
 
 void FlushZipDict()
 {
@@ -460,21 +478,21 @@ void ImportPOIS( CWBApplication* App )
 
   {
     CFileList list;
-    list.ExpandSearch( "*.xml", "POIs", false );
+    list.ExpandSearch( "*.xml", "POIs", true );
     for ( TS32 x = 0; x < list.Files.NumItems(); x++ )
       ImportPOIFile( App, list.Files[ x ].Path + list.Files[ x ].FileName, true );
   }
 
   {
     CFileList list;
-    list.ExpandSearch( "*.zip", "POIs", false );
+    list.ExpandSearch( "*.zip", "POIs", true );
     for ( TS32 x = 0; x < list.Files.NumItems(); x++ )
       ImportMarkerPack( App, list.Files[ x ].Path + list.Files[ x ].FileName );
   }
 
   {
     CFileList list;
-    list.ExpandSearch( "*.taco", "POIs", false );
+    list.ExpandSearch( "*.taco", "POIs", true );
     for ( TS32 x = 0; x < list.Files.NumItems(); x++ )
       ImportMarkerPack( App, list.Files[ x ].Path + list.Files[ x ].FileName );
   }
@@ -563,3 +581,255 @@ void ExportPOIActivationData()
   d.SaveToFile( "activationdata.xml" );
 }
 
+void FetchMarkerPacks()
+{
+  if ( !markerPacks.NumItems() )
+  {
+    CString result = FetchHTTPS( L"raw.githubusercontent.com", L"BoyC/GW2TacO/main/MarkerPacks.json" );
+    if ( !result.Length() )
+      return;
+
+/*
+    CStreamReaderMemory packDesc;
+    packDesc.Open( "MarkerPacks.json" );
+    CString result( (TCHAR*)packDesc.GetData(), (TU32)packDesc.GetLength() );
+*/
+
+    Object json;
+    json.parse( result.GetPointer() );
+
+    if ( json.has<Array>( "markerpacks" ) )
+    {
+      auto& values = json.get<Array>( "markerpacks" ).values();
+      for ( auto v : values )
+      {
+        auto& data = v->get<Object>();
+        bool incomplete = false;
+        MarkerPack pack;
+
+        if ( data.has<String>( "name" ) )
+          pack.name = data.get<String>( "name" ).data();
+        else
+          incomplete = true;
+
+        if ( data.has<String>( "id" ) )
+          pack.id = data.get<String>( "id" ).data();
+        else
+          incomplete = true;
+
+        if ( data.has<String>( "filename" ) )
+          pack.fileName = data.get<String>( "filename" ).data();
+        else
+          incomplete = true;
+
+        if ( data.has<String>( "forcedversion" ) )
+        {
+          pack.versionString = data.get<String>( "forcedversion" ).data();
+          pack.versionCheckDone = true;
+          pack.versionCheckOk = true;
+          if ( !exists( ( "POIs/Online/" + pack.fileName ).GetPointer() ) )
+            pack.outdated = true;
+        }
+        else
+        {
+          if ( data.has<String>( "versionurl" ) )
+            pack.versionURL = data.get<String>( "versionurl" ).data();
+          else
+            incomplete = true;
+
+          if ( data.has<String>( "versionsearchstring" ) )
+            pack.versionSearchString = data.get<String>( "versionsearchstring" ).data();
+          else
+            incomplete = true;
+
+          if ( data.has<String>( "versionterminator" ) )
+            pack.versionTerminator = data.get<String>( "versionterminator" ).data();
+          else
+            incomplete = true;
+        }
+
+        if ( data.has<String>( "downloadurl" ) )
+          pack.downloadURL = data.get<String>( "downloadurl" ).data();
+        else
+          incomplete = true;
+        if ( data.has<Boolean>( "enabledbydefault" ) )
+          pack.defaultEnabled = data.get<Boolean>( "enabledbydefault" );
+        else
+          incomplete = true;
+
+        if ( !incomplete )
+        {
+          CLightweightCriticalSection cs( &dlTextCritSec );
+          markerPacks.Add( pack );
+          CString versionUpdateValue = "MarkerPack_" + pack.id + "_autoupdate";
+          Config::SetDefaultValue( versionUpdateValue.GetPointer(), pack.defaultEnabled );
+
+        }
+      }
+    }
+
+    for ( int x = 0; x < markerPacks.NumItems(); x++ )
+      markerPacks[ x ].CheckVersion();
+  }
+
+  for ( int x = 0; x < markerPacks.NumItems(); x++ )
+  {
+    if ( !markerPacks[ x ].NeedsUpdate() )
+      continue;
+
+    markerPacks[ x ].UpdateFromWeb();
+  }
+}
+
+bool MarkerPack::CheckVersion()
+{
+  CString versionUpdateValue = "MarkerPack_" + id + "_autoupdate";
+  if ( Config::GetValue( versionUpdateValue.GetPointer() ) == 0 )
+    return false;
+
+  versionCheckDone = true;
+  versionCheckOk = false;
+
+  CString data = FetchWeb( versionURL );
+  if ( !data.Length() )
+  {
+    LOG_ERR( "[GW2TacO] Package %s version page download fail", id.GetPointer() );
+    return false;
+  }
+
+  int versionStart = data.Find( versionSearchString );
+  if ( versionStart < 0 )
+  {
+    LOG_ERR( "[GW2TacO] Package %s version string not found", id.GetPointer() );
+    return false;
+  }
+  versionStart += versionSearchString.Length();
+
+  int versionEnd = data.Find( versionTerminator, versionStart );
+  if ( versionEnd < 0 )
+  {
+    LOG_ERR( "[GW2TacO] Package %s version string end not found", id.GetPointer() );
+    return false;
+  }
+
+  CString currentVersion = data.Substring( versionStart, versionEnd - versionStart );
+  CString versionConfigValue = "MarkerPack_" + id + "_version";
+
+  bool upToDate = false;
+
+  if ( Config::HasString( versionConfigValue.GetPointer() ) )
+    if ( Config::GetString( versionConfigValue.GetPointer() ) == currentVersion )
+      upToDate = true;
+
+  if ( !exists( ( "POIs/Online/" + fileName ).GetPointer() ) )
+    upToDate = false;
+
+  outdated = !upToDate;
+  downloadURL = CString::Format( downloadURL.GetPointer(), currentVersion.GetPointer() );
+  versionString = currentVersion;
+
+  versionCheckOk = true;
+  return true;
+}
+
+bool MarkerPack::NeedsUpdate()
+{
+  if ( !versionCheckDone )
+    CheckVersion();
+
+  if ( !versionCheckOk || !outdated )
+    return false;
+  CString versionUpdateValue = "MarkerPack_" + id + "_autoupdate";
+  if ( Config::GetValue( versionUpdateValue.GetPointer() ) == 0 )
+    return false;
+
+  return true;
+}
+
+bool MarkerPack::UpdateFromWeb()
+{
+  {
+    CLightweightCriticalSection cs( &dlTextCritSec );
+    currentDownload = id;
+  }
+
+  beingDownloaded = true;
+  CString markerPack = FetchWeb( downloadURL );
+  if ( !markerPack.Length() )
+    return false;
+
+  mz_zip_archive zip;
+  memset( &zip, 0, sizeof( zip ) );
+  if ( !mz_zip_reader_init_mem( &zip, markerPack.GetPointer(), markerPack.Length(), 0 ) )
+  {
+    LOG_ERR( "[GW2TacO] Package %s doesn't seem to be a well formed zip file", downloadURL.GetPointer() );
+    beingDownloaded = false;
+    failed = true;
+    {
+      CLightweightCriticalSection cs( &dlTextCritSec );
+      currentDownload = "";
+    }
+    return false;
+  }
+  mz_zip_reader_end( &zip );
+
+  CreateDirectory( "POIs", 0 );
+  CreateDirectory( "POIs/Online", 0 );
+
+  FlushZipDict();
+
+  CString fn = "POIs/Online/" + fileName;
+  FILE* f = nullptr;
+  fopen_s( &f, fn.GetPointer(), "wb" );
+  if ( !f )
+  {
+    LOG_ERR( "[GW2TacO] Package %s cannot be saved", downloadURL.GetPointer() );
+    beingDownloaded = false;
+    {
+      CLightweightCriticalSection cs( &dlTextCritSec );
+      currentDownload = "";
+    }
+    failed = true;
+    return false;
+  }
+
+  fwrite( markerPack.GetPointer(), 1, markerPack.Length(), f );
+  fclose( f );
+
+  CString versionConfigValue = "MarkerPack_" + id + "_version\0";
+  Config::SetString( versionConfigValue.GetPointer(), versionString );
+
+  markerPackQueue.Add( fn );
+  beingDownloaded = false;
+  downloadFinished = true;
+  {
+    CLightweightCriticalSection cs( &dlTextCritSec );
+    currentDownload = "";
+  }
+  outdated = false;
+  return true;
+}
+
+void UpdateMarkerPackList()
+{
+  markerPackFetcherThread = std::thread( []()
+                                         {
+                                           while ( !App->IsDone() )
+                                           {
+                                             if ( Config::GetValue( "FetchMarkerPacks" ) )
+                                             {
+                                               markerPacksBeingFetched = true;
+                                               FetchMarkerPacks();
+                                               markerPacksBeingFetched = false;
+                                             }
+                                             Sleep( 1000 );
+                                           }
+                                         } );
+}
+
+void WaitForMarkerPackUpdate()
+{
+  App->SetDone( true );
+  if ( markerPackFetcherThread.joinable() )
+    markerPackFetcherThread.join();
+}

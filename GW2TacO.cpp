@@ -46,7 +46,6 @@ HWND gw2WindowFromPid = nullptr;
 TBOOL isTacOUptoDate = true;
 int newTacOVersion = RELEASECOUNT;
 int gw2WindowCount = 0;
-CArrayThreadSafe< CString > markerPackQueue;
 
 TBOOL InitGUI( CWBApplication* App )
 {
@@ -704,8 +703,8 @@ INT WINAPI WinMain( _In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
   InitCrashTracking();
   InitLogging();
 
-  Config::InitDefaults();
   Config::Load();
+  Config::InitDefaults();
 
   if ( !ProcessCommandLine() )
     return 0;
@@ -714,6 +713,8 @@ INT WINAPI WinMain( _In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 
   if ( !InitOverlayApp( hInstance ) )
     return 0;
+
+  UpdateMarkerPackList();
 
   HWND tacoHWND = (HWND)App->GetHandle();
   ShowWindow( tacoHWND, nCmdShow );
@@ -853,6 +854,8 @@ INT WINAPI WinMain( _In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
     for ( int x = 0; x < trails.second.NumItems(); x++ )
       delete trails.second.GetByIndex( x );
   }
+
+  WaitForMarkerPackUpdate();
 
   //cleanup
   SAFEDELETE( App );
