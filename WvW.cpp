@@ -392,7 +392,7 @@ void UpdateWvWStatus()
   if ( !wvwMapIDs.HasKey( mumbleLink.mapID ) )
     return;
 
-  int currTime = GetTime();
+  int currTime = globalTimer.GetTime();
   if ( currTime - lastWvWUpdateTime < 5000 )
     return;
 
@@ -407,27 +407,27 @@ void UpdateWvWStatus()
                                   GW2::APIKeyManager::Status status = GW2::apiKeyManager.GetStatus();
                                   if ( status != GW2::APIKeyManager::Status::OK )
                                   {
-                                    lastWvWUpdateTime = GetTime();
+                                    lastWvWUpdateTime = globalTimer.GetTime();
                                     wvwUpdating = false;
                                     return;
                                   }
                                   GW2::APIKey* key = GW2::apiKeyManager.GetIdentifiedAPIKey();
                                   if ( !key )
                                   {
-                                    lastWvWUpdateTime = GetTime();
+                                    lastWvWUpdateTime = globalTimer.GetTime();
                                     wvwUpdating = false;
                                     return;
                                   }
 
                                   if ( !key->valid )
                                   {
-                                    lastWvWUpdateTime = GetTime();
+                                    lastWvWUpdateTime = globalTimer.GetTime();
                                     wvwUpdating = false;
                                     return;
                                   }
                                   if ( !key->HasCaps( "account" ) )
                                   {
-                                    lastWvWUpdateTime = GetTime();
+                                    lastWvWUpdateTime = globalTimer.GetTime();
                                     wvwUpdating = false;
                                     return;
                                   }
@@ -499,7 +499,7 @@ void UpdateWvWStatus()
                                     }
                                   }
 
-                                  lastWvWUpdateTime = GetTime();
+                                  lastWvWUpdateTime = globalTimer.GetTime();
                                   wvwUpdating = false;
                                 } );
 }

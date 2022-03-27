@@ -6,7 +6,7 @@ bool ShiftState = false;
 bool HooksInitialized = false;
 DWORD hookThreadID = 0;
 bool disableHooks = false;
-extern HWND gw2Window;
+extern HWND gameWindow;
 extern CWBApplication* App;
 TBOOL keyboardHookActive = false;
 TBOOL mouseHookActive = false;
@@ -67,7 +67,7 @@ LRESULT __stdcall MyKeyboardProc( int ccode, WPARAM wParam, LPARAM lParam )
     return CallNextHookEx( 0, ccode, wParam, lParam );
 
   auto wnd = GetForegroundWindow();
-  if ( ccode != HC_ACTION || !lParam || ( wnd != gw2Window && App && wnd != (HWND)App->GetHandle() ) )
+  if ( ccode != HC_ACTION || !lParam || ( wnd != gameWindow && App && wnd != (HWND)App->GetHandle() ) )
     return CallNextHookEx( 0, ccode, wParam, lParam );
 
   if ( App && wnd == (HWND)App->GetHandle() )
@@ -93,7 +93,7 @@ LRESULT __stdcall KeyboardHook( int code, WPARAM wParam, LPARAM lParam )
     return CallNextHookEx( 0, code, wParam, lParam );
 
   auto wnd = GetForegroundWindow();
-  if ( code != HC_ACTION || !lParam || ( wnd != gw2Window && App && wnd != (HWND)App->GetHandle() ) )
+  if ( code != HC_ACTION || !lParam || ( wnd != gameWindow && App && wnd != (HWND)App->GetHandle() ) )
     return CallNextHookEx( 0, code, wParam, lParam );
 
   if ( App && wnd == (HWND)App->GetHandle() )
@@ -167,7 +167,7 @@ LRESULT __stdcall MouseHook( int code, WPARAM wParam, LPARAM lParam )
     return CallNextHookEx( 0, code, wParam, lParam );
 
   auto wnd = GetForegroundWindow();
-  if ( code < 0 || !lParam || ( wnd != gw2Window && App && wnd != (HWND)App->GetHandle() ) )
+  if ( code < 0 || !lParam || ( wnd != gameWindow && App && wnd != (HWND)App->GetHandle() ) )
     return CallNextHookEx( 0, code, wParam, lParam );
 
   MSLLHOOKSTRUCT* mousedat = (MSLLHOOKSTRUCT*)lParam;
@@ -197,37 +197,36 @@ void InitInputHooks()
   if ( HooksInitialized )
     return;
 
-  if ( !IsDebuggerPresent() )
-  {
+  if ( IsDebuggerPresent() )
+    return;
 
-    auto hookThread = CreateThread( NULL, 0,
-                                    []( LPVOID data )
+  auto hookThread = CreateThread( NULL, 0,
+                                  []( LPVOID data )
+                                  {
+                                    auto keyboardHook = SetWindowsHookEx( WH_KEYBOARD_LL, KeyboardHook, NULL, 0 );
+                                    auto mouseHook = SetWindowsHookEx( WH_MOUSE_LL, MouseHook, NULL, 0 );
+                                    MSG msg;
+
+                                    keyboardHookActive = true;
+                                    mouseHookActive = true;
+
+                                    while ( GetMessage( &msg, 0, 0, 0 ) > 0 )
                                     {
-                                      auto keyboardHook = SetWindowsHookEx( WH_KEYBOARD_LL, KeyboardHook, NULL, 0 );
-                                      auto mouseHook = SetWindowsHookEx( WH_MOUSE_LL, MouseHook, NULL, 0 );
-                                      MSG msg;
+                                      if ( msg.message == WM_QUIT )
+                                        break;
+                                      TranslateMessage( &msg );
+                                    }
+                                    DispatchMessage( &msg );
 
-                                      keyboardHookActive = true;
-                                      mouseHookActive = true;
+                                    UnhookWindowsHookEx( keyboardHook );
+                                    UnhookWindowsHookEx( mouseHook );
 
-                                      while ( GetMessage( &msg, 0, 0, 0 ) > 0 )
-                                      {
-                                        if ( msg.message == WM_QUIT )
-                                          break;
-                                        TranslateMessage( &msg );
-                                      }
-                                      DispatchMessage( &msg );
+                                    keyboardHookActive = false;
+                                    mouseHookActive = false;
 
-                                      UnhookWindowsHookEx( keyboardHook );
-                                      UnhookWindowsHookEx( mouseHook );
-
-                                      keyboardHookActive = false;
-                                      mouseHookActive = false;
-
-                                      return (DWORD)0;
-                                    },
-                                    0, 0, &hookThreadID );
-  }
+                                    return (DWORD)0;
+                                  },
+                                  0, 0, &hookThreadID );
   HooksInitialized = true;
 }
 

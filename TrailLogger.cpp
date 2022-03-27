@@ -101,7 +101,7 @@ void GW2TrailDisplay::DrawProxy( CWBDrawAPI* API, bool miniMaprender )
       if ( editedTrail )
         if ( editedTrail->map == mumbleLink.mapID )
         {
-          data[ 0 ] = GetTime() / 1000.0f;
+          data[ 0 ] = globalTimer.GetTime() / 1000.0f;
 
           App->GetDevice()->SetTexture( CORESMP_PS0, trailTexture );
 
@@ -878,7 +878,7 @@ void GW2Trail::SetupAndDraw( CCoreConstantBuffer* constBuffer, CCoreTexture* tex
 
   App->GetDevice()->SetTexture( CORESMP_PS0, texture );
 
-  data[ 0 ] = GetTime() / 1000.0f;
+  data[ 0 ] = globalTimer.GetTime() / 1000.0f;
 
   data[ 0 ] *= typeData.animSpeed;
 

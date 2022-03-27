@@ -4,13 +4,13 @@
 
 class GW2MarkerEditor : public CWBItem
 {
-  virtual TBOOL MessageProc( CWBMessage& Message );
+  virtual TBOOL MessageProc( CWBMessage& message );
   virtual void OnDraw( CWBDrawAPI* API );
-  TBOOL Hidden = false;
-  GUID CurrentPOI;
+  TBOOL hidden = false;
+  GUID currentPOI;
 
-  CArray<GW2TacticalCategory*> CategoryList;
-  TBOOL ChangeDefault = false;
+  CArray<GW2TacticalCategory*> categoryList;
+  TBOOL changeDefault = false;
 
 public:
 

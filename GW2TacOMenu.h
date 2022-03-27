@@ -107,7 +107,7 @@ public:
   void SetMouseToolTip( const CString& toolTip );
 
   void InitScriptEngines();
-  void TickScriptEngine();
+  void TickScriptEngines();
   void TriggerScriptEngineAction( GUID& guid );
   void TriggerScriptEngineKeyEvent( const CString& eventID );
 };

@@ -357,7 +357,7 @@ void Config::LoadMarkerCategoryVisibilityInfo()
     CString str = kdp->Key.Substring( 16 );
     auto cat = GetCategory( str );
     if ( cat )
-      cat->IsDisplayed = kdp->Data;
+      cat->isDisplayed = kdp->Data;
   }
 
   CategoryRoot.CalculateVisibilityCache();

@@ -514,7 +514,7 @@ TBOOL GW2TacO::MessageProc( CWBMessage& Message )
         tpTracker->AddItem( GetConfigActiveString( "TPTrackerNextSellOnly" ) + DICT( "tptracker_nextsellonly" ), Menu_ToggleTPTracker_OnlyNextFulfilled );
       }
       ctx->AddSeparator();
-      extern TBOOL IsTacOUptoDate;
+      extern TBOOL isTacOUptoDate;
 
       auto settings = ctx->AddItem( DICT( "tacosettings" ), Menu_TacOSettings );
       settings->AddItem( GetConfigActiveString( "EditMode" ) + GetKeybindString( TacOKeyAction::Toggle_window_edit_mode ) + DICT( "togglewindoweditmode" ), Menu_ToggleEditMode );
@@ -600,7 +600,7 @@ TBOOL GW2TacO::MessageProc( CWBMessage& Message )
 
       ctx->AddSeparator();
       ctx->AddItem( DICT( "abouttaco" ), Menu_About );
-      if ( !IsTacOUptoDate )
+      if ( !isTacOUptoDate )
         ctx->AddItem( DICT( "getnewbuild" ), Menu_DownloadNewBuild );
       ctx->AddItem( DICT( "supporttaco" ), Menu_SupportTacO, true );
       ctx->AddSeparator();
@@ -668,16 +668,16 @@ TBOOL GW2TacO::MessageProc( CWBMessage& Message )
 
       auto& dta = CategoryList[ Message.Data - Menu_MarkerFilter_Base ];
 
-      if ( !dta->IsOnlySeparator )
+      if ( !dta->isOnlySeparator )
       {
-        CString txt = "[" + CString( dta->IsDisplayed ? "x" : " " ) + "] ";
+        CString txt = "[" + CString( dta->isDisplayed ? "x" : " " ) + "] ";
         if ( dta->displayName.Length() )
           txt += dta->displayName;
         else
           txt += dta->name;
 
         itm->SetText( txt );
-        itm->SetHighlight( dta->IsDisplayed );
+        itm->SetHighlight( dta->isDisplayed );
       }
 
       //TBOOL displayed = !CategoryList[ Message.Data - Menu_MarkerFilter_Base ]->IsDisplayed;
@@ -816,8 +816,8 @@ TBOOL GW2TacO::MessageProc( CWBMessage& Message )
 
     if ( Message.Data >= Menu_MarkerFilter_Base && Message.Data < Menu_MarkerFilter_Base + CategoryList.NumItems() )
     {
-      TBOOL displayed = !CategoryList[ Message.Data - Menu_MarkerFilter_Base ]->IsDisplayed;
-      CategoryList[ Message.Data - Menu_MarkerFilter_Base ]->IsDisplayed = displayed;
+      TBOOL displayed = !CategoryList[ Message.Data - Menu_MarkerFilter_Base ]->isDisplayed;
+      CategoryList[ Message.Data - Menu_MarkerFilter_Base ]->isDisplayed = displayed;
       Config::SetValue( ( CString( "CategoryVisible_" ) + CategoryList[ Message.Data - Menu_MarkerFilter_Base ]->GetFullTypeName() ).GetPointer(), displayed );
       CategoryRoot.CalculateVisibilityCache();
       break;
@@ -1377,7 +1377,7 @@ void GW2TacO::InitScriptEngines()
   */
 }
 
-void GW2TacO::TickScriptEngine()
+void GW2TacO::TickScriptEngines()
 {
   /*
     for ( TS32 x = 0; x < scriptEngines.NumItems(); x++ )
@@ -1513,7 +1513,7 @@ void GW2TacO::OnDraw( CWBDrawAPI* API )
     {
 #define speed 500.0f
 
-      TS32 currTime = GetTime();
+      TS32 currTime = globalTimer.GetTime();
       TF32 delta = max( 0, min( 1, ( currTime - lastMenuHoverTransitionTime ) / speed ) );
 
       TBOOL hover = ClientToScreen( it->GetClientRect() ).Contains( App->GetMousePos() );
@@ -1557,8 +1557,8 @@ void GW2TacO::OnDraw( CWBDrawAPI* API )
     CWBSkinElement* e = App->GetSkin()->GetElement( skin );
     if ( e )
     {
-      API->DrawAtlasElementRotated( e->GetHandle(), r, 0x80ffffff, GetTime() / 1000.0f );
-      API->DrawAtlasElementRotated( e->GetHandle(), r, 0x80ffffff, -GetTime() / 1000.0f );
+      API->DrawAtlasElementRotated( e->GetHandle(), r, 0x80ffffff, globalTimer.GetTime() / 1000.0f );
+      API->DrawAtlasElementRotated( e->GetHandle(), r, 0x80ffffff, -( globalTimer.GetTime() / 1000.0f ) );
     }
   }
 
@@ -1641,24 +1641,18 @@ void GW2TacO::OnDraw( CWBDrawAPI* API )
     ypos += font->GetLineHeight();
   }
 
-  extern TBOOL IsTacOUptoDate;
-  extern int NewTacOVersion;
-  if ( !IsTacOUptoDate )
+  extern TBOOL isTacOUptoDate;
+  extern int newTacOVersion;
+  if ( !isTacOUptoDate )
   {
     auto font = App->GetFont( "UniFontOutlined" );
     if ( !font ) return;
 
-    CString infoline = DICT( "new_build_txt1" ) + CString::Format( " %d ", NewTacOVersion - RELEASECOUNT ) + DICT( "new_build_txt2" );
+    CString infoline = DICT( "new_build_txt1" ) + CString::Format( " %d ", newTacOVersion - RELEASECOUNT ) + DICT( "new_build_txt2" );
 
     CPoint startpos = font->GetTextPosition( infoline, GetClientRect(), WBTA_CENTERX, WBTA_TOP, WBTT_UPPERCASE );
     if ( Config::GetValue( "InfoLineVisible" ) )
       startpos.y += font->GetLineHeight();
-
-/*
-    for ( int x = 0; x < 3; x++ )
-      for ( int y = 0; y < 3; y++ )
-        font->Write( API, infoline, startpos + CPoint( x - 1, y - 1 ), 0xff000000, WBTT_UPPERCASE, true );
-*/
 
     font->Write( API, infoline, startpos, 0xffffffff, WBTT_UPPERCASE, true );
     ypos += font->GetLineHeight();
@@ -1670,12 +1664,6 @@ void GW2TacO::OnDraw( CWBDrawAPI* API )
     SAFEDELETEA( data2 );
 
     CPoint spos2 = font->GetTextPosition( build, GetClientRect(), WBTA_CENTERX, WBTA_TOP, WBTT_UPPERCASE );
-
-/*
-    for ( int x = 0; x < 3; x++ )
-      for ( int y = 0; y < 3; y++ )
-        font->Write( API, build, CPoint( spos2.x + x - 1, startpos.y + y - 1 + font->GetLineHeight() ), 0xff000000, WBTT_UPPERCASE, true );
-*/
 
     font->Write( API, build, CPoint( spos2.x, startpos.y + font->GetLineHeight() ), 0xffffffff, WBTT_UPPERCASE, true );
     ypos += font->GetLineHeight();
@@ -1689,12 +1677,6 @@ void GW2TacO::OnDraw( CWBDrawAPI* API )
 
     CString infoline = DICT( "multiclientwarning" );
     CPoint spos2 = font->GetTextPosition( infoline, GetClientRect(), WBTA_CENTERX, WBTA_TOP, WBTT_UPPERCASE );
-
-/*
-    for ( int x = 0; x < 3; x++ )
-      for ( int y = 0; y < 3; y++ )
-        font->Write( API, infoline, CPoint( spos2.x + x - 1, ypos + y - 1 ), 0xff000000, WBTT_UPPERCASE, true );
-*/
 
     font->Write( API, infoline, CPoint( spos2.x, ypos ), 0xffff4040, WBTT_UPPERCASE, true );
     ypos += font->GetLineHeight();
@@ -2010,7 +1992,7 @@ void GW2TacO::CheckItemPickup()
 
   GW2::APIKey* key = GW2::apiKeyManager.GetIdentifiedAPIKey();
 
-  if ( key && key->valid && ( GetTime() - lastPickupFetchTime > 150000 || !lastPickupFetchTime ) && !pickupsBeingFetched && !pickupFetcherThread.joinable() )
+  if ( key && key->valid && ( globalTimer.GetTime() - lastPickupFetchTime > 150000 || !lastPickupFetchTime ) && !pickupsBeingFetched && !pickupFetcherThread.joinable() )
   {
     pickupsBeingFetched = true;
     pickupFetcherThread = std::thread( [this, key]()
@@ -2059,7 +2041,7 @@ void GW2TacO::CheckItemPickup()
 
   if ( !pickupsBeingFetched && pickupFetcherThread.joinable() )
   {
-    lastPickupFetchTime = GetTime();
+    lastPickupFetchTime = globalTimer.GetTime();
     pickupFetcherThread.join();
   }
 }

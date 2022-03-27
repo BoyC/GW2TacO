@@ -109,10 +109,10 @@ public:
   bool Update();
   TBOOL IsValid();
 
-  CRingBuffer<TS32>* FrameTimes;
+  CRingBuffer<TS32>* frameTimes;
   TF32 GetFrameRate();
 
-  TS32 LastFrameTime = 0;
+  TS32 lastFrameTime = 0;
   CMumbleLink();
   virtual ~CMumbleLink();
 

@@ -23,18 +23,30 @@
 #include <locale>
 #include <codecvt>
 #include "InputHooks.h"
-
+#include <ShellScalingAPI.h>
+#include "WvW.h"
+#include <TlHelp32.h>
+#include <imm.h>
 #include "ThirdParty/BugSplat/inc/BugSplat.h"
+#include "MarkerPack.h"
+
+#define MINIZ_HEADER_FILE_ONLY
+#include "Bedrock/UtilLib/miniz.c"
+
 #pragma comment(lib,"ThirdParty/BugSplat/lib/BugSplat.lib")
+#pragma comment(lib,"Dwmapi.lib")
+#pragma comment(lib,"Imm32.lib")
 
 MiniDmpSender* bugSplat = nullptr;
 CLoggerOutput_RingBuffer* ringbufferLog = nullptr;
 
-#pragma comment(lib,"Dwmapi.lib")
-
 CWBApplication* App = NULL;
-HWND gw2Window;
+HWND gameWindow;
 HWND gw2WindowFromPid = nullptr;
+TBOOL isTacOUptoDate = true;
+int newTacOVersion = RELEASECOUNT;
+int gw2WindowCount = 0;
+CArrayThreadSafe< CString > markerPackQueue;
 
 TBOOL InitGUI( CWBApplication* App )
 {
@@ -131,8 +143,6 @@ LONG WINAPI CrashOverride( struct _EXCEPTION_POINTERS* excpInfo )
   }
 }
 
-#include <TlHelp32.h>
-
 DWORD GetProcessIntegrityLevel( HANDLE hProcess )
 {
   HANDLE hToken;
@@ -201,25 +211,6 @@ bool IsProcessRunning( DWORD pid )
 
   return procRunning;
 }
-
-TBOOL IsTacOUptoDate = true;
-int NewTacOVersion = RELEASECOUNT;
-
-volatile int mainLoopCounter = 0;
-volatile int lastCnt = 0;
-int lastMainLoopTime = 0;
-#include <thread>
-
-#include <ShellScalingAPI.h>
-//#pragma comment(lib,"Shcore.lib")
-
-#include "Bedrock/UtilLib/jsonxx.h"
-
-using namespace jsonxx;
-
-#include "WvW.h"
-
-#include <tlhelp32.h>
 
 void GetFileName( CHAR pfname[ MAX_PATH ] )
 {
@@ -309,11 +300,6 @@ bool SetupTacoProtocolHandling()
   return true;
 }
 
-#define MINIZ_HEADER_FILE_ONLY
-#include "Bedrock/UtilLib/miniz.c"
-
-CArrayThreadSafe< CString > loadList;
-
 void FetchMarkerPackOnline( CString& ourl )
 {
   TS32 pos = ourl.Find( "gw2taco://markerpack/" );
@@ -392,43 +378,16 @@ void FetchMarkerPackOnline( CString& ourl )
                                           return (DWORD)0;
                                         }
 
-                                        loadList.Add( fileName );
+                                        markerPackQueue.Add( fileName );
 
                                         return (DWORD)0;
                                       }, urlPtr, 0, &downloadThreadID );
 }
 
-void ImportMarkerPack( CWBApplication* App, const CString& zipFile );
-
-#include <imm.h>
-#pragma comment(lib,"Imm32.lib")
-
-void FlushZipDict();
-
-TU32 lastSlowEventTime = 0;
-int gw2WindowCount = 0;
-
-BOOL __stdcall gw2WindowCountFunc( HWND   hwnd, LPARAM lParam )
+BOOL __stdcall GW2WindowFromPIDFunction( HWND hWnd, LPARAM a2 )
 {
-  TCHAR name[ 400 ];
-  memset( name, 0, 400 );
-  GetWindowText( hwnd, name, 199 );
-  if ( !strcmp( name, "Guild Wars 2" ) )
-  {
-    memset( name, 0, 400 );
-    GetClassName( hwnd, name, 199 );
-    if ( !strcmp( name, "ArenaNet_Dx_Window_Class" ) || !strcmp( name, "ArenaNet_Gr_Window_Class" ) )
-    {
-      gw2WindowCount++;
-    }
-  }
-  return true;
-}
-
-BOOL __stdcall gw2WindowFromPIDFunction( HWND hWnd, LPARAM a2 )
-{
-  DWORD dwProcessId; // [esp+4h] [ebp-198h]
-  CHAR ClassName[ 400 ]; // [esp+8h] [ebp-194h]
+  DWORD dwProcessId;
+  CHAR ClassName[ 400 ];
 
   memset( &ClassName, 0, 400 );
   GetClassNameA( hWnd, ClassName, 199 );
@@ -634,8 +593,8 @@ void CheckForNewTacOBuild()
                                           extern TS32 TacOBuildCount;
                                           if ( release > TacORelease || build > TacOBuildCount )
                                           {
-                                            NewTacOVersion = release;
-                                            IsTacOUptoDate = false;
+                                            newTacOVersion = release;
+                                            isTacOUptoDate = false;
                                           }
                                         }
                                       }
@@ -646,10 +605,101 @@ void CheckForNewTacOBuild()
   }
 }
 
+void ValidateGW2ProcessIntegrity( DWORD gameProcessID )
+{
+  GetWindowThreadProcessId( gameWindow, &gameProcessID );
+
+  DWORD currentProcessIntegrity = GetProcessIntegrityLevel( GetCurrentProcess() );
+  DWORD gw2ProcessIntegrity = GetProcessIntegrityLevel( OpenProcess( PROCESS_QUERY_INFORMATION, TRUE, gameProcessID ) );
+
+  LOG_DBG( "[GW2TacO] Taco integrity: %x, GW2 integrity: %x", currentProcessIntegrity, gw2ProcessIntegrity );
+
+  if ( gw2ProcessIntegrity > currentProcessIntegrity || gw2ProcessIntegrity == -1 )
+    MessageBox( NULL, "GW2 seems to have more elevated rights than GW2 TacO.\nThis will probably result in TacO not being interactive when GW2 is in focus.\nIf this is an issue for you, restart TacO in Administrator mode.", "Warning", MB_ICONWARNING );
+}
+
+void HandleGW2WindowPositionChange( CRect& tacoWindowPos, HWND hwnd )
+{
+  RECT gameClientRect;
+  POINT topLeft{};
+  GetClientRect( gameWindow, &gameClientRect );
+  ClientToScreen( gameWindow, &topLeft );
+
+  if ( gameClientRect.right - gameClientRect.left != tacoWindowPos.Width() ||
+       gameClientRect.bottom - gameClientRect.top != tacoWindowPos.Height() ||
+       topLeft.x != tacoWindowPos.x1 ||
+       topLeft.y != tacoWindowPos.y1 )
+  {
+    LOG_NFO( "[GW2TacO] gw2 window size change: %d %d %d %d (%d %d)", gameClientRect.left, gameClientRect.top, gameClientRect.right, gameClientRect.bottom, gameClientRect.right - gameClientRect.left, gameClientRect.bottom - gameClientRect.top );
+
+    bool sizeChanged = gameClientRect.right - gameClientRect.left != tacoWindowPos.Width() || gameClientRect.bottom - gameClientRect.top != tacoWindowPos.Height();
+    tacoWindowPos = CRect( gameClientRect.left + topLeft.x,
+                           gameClientRect.top + topLeft.y,
+                           gameClientRect.left + topLeft.x + gameClientRect.right - gameClientRect.left,
+                           gameClientRect.top + topLeft.y + gameClientRect.bottom - gameClientRect.top );
+
+    ::SetWindowPos( hwnd, 0, tacoWindowPos.x1, tacoWindowPos.y1, tacoWindowPos.Width(), tacoWindowPos.Height(), SWP_NOREPOSITION );
+
+    if ( sizeChanged )
+    {
+      App->HandleResize();
+      MARGINS marg = { -1, -1, -1, -1 };
+      DwmExtendFrameIntoClientArea( hwnd, &marg );
+    }
+  }
+}
+
+void LoadQueuedMarkerPacks()
+{
+  if ( markerPackQueue.NumItems() )
+  {
+    CString file = markerPackQueue[ 0 ];
+    markerPackQueue.DeleteByIndex( 0 );
+    ImportMarkerPack( App, file );
+  }
+}
+
+void CheckIfShutdownNeeded( TBOOL foundGameWindow, DWORD gameProcessID )
+{
+  // check to close with gw2
+  if ( Config::GetValue( "CloseWithGW2" ) )
+    if ( !gameWindow && foundGameWindow )
+      if ( !IsProcessRunning( gameProcessID ) )
+        App->SetDone( true );
+
+  if ( !foundGameWindow )
+  {
+    if ( !mumbleLink.IsValid() && globalTimer.GetTime() > 60000 )
+    {
+      LOG_ERR( "[GW2TacO] Closing TacO because GW2 with mumble link '%s' was not found in under a minute", mumbleLink.mumblePath.GetPointer() );
+      App->SetDone( true );
+    }
+  }
+}
+
+void WaitForMumble( bool frameThrottling )
+{
+  for ( int x = 0; x < ( frameThrottling ? 32 : 1 ); x++ )
+  {
+    if ( mumbleLink.Update() )
+      break;
+    if ( frameThrottling )
+      Sleep( 1 );
+  }
+}
+
+void EnumGW2Windows()
+{
+  gw2WindowCount = 0;
+  gameWindow = nullptr;
+  gw2WindowFromPid = nullptr;
+  EnumWindows( GW2WindowFromPIDFunction, mumbleLink.lastGW2ProcessID );
+  gameWindow = gw2WindowFromPid;
+}
+
 INT WINAPI WinMain( _In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ INT nCmdShow )
 {
   ImmDisableIME( -1 );
-  lastSlowEventTime = globalTimer.GetTime();
 
   InitCrashTracking();
   InitLogging();
@@ -664,7 +714,9 @@ INT WINAPI WinMain( _In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 
   if ( !InitOverlayApp( hInstance ) )
     return 0;
-  ShowWindow( (HWND)App->GetHandle(), nCmdShow );
+
+  HWND tacoHWND = (HWND)App->GetHandle();
+  ShowWindow( tacoHWND, nCmdShow );
 
   ImportPOIS( App );
   mumbleLink.Update();
@@ -681,12 +733,10 @@ INT WINAPI WinMain( _In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
   LoadWvWObjectives();
   OpenOverlayWindows( App );
 
-  HWND hwnd = (HWND)App->GetHandle();
+  TBOOL foundGameWindow = false;
+  CRect tacoWindowPos{};
 
-  TBOOL foundGW2Window = false;
-  CRect tacoWindowPos;
-
-  DWORD GW2Pid = 0;
+  DWORD gameProcessID = 0;
   GW2TacO* taco = (GW2TacO*)App->GetRoot()->FindChildByID( "tacoroot", "GW2TacO" );
 
   if ( !taco )
@@ -694,13 +744,11 @@ INT WINAPI WinMain( _In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 
   taco->InitScriptEngines();
 
-  auto lastRenderTime = globalTimer.GetTime();
-
   bool frameThrottling = Config::GetValue( "FrameThrottling" ) != 0;
-
-  TS32 hideOnLoadingScreens = Config::GetValue( "HideOnLoadingScreens" );
-
-  bool hadRetrace = false;
+  bool hideOnLoadingScreens = Config::GetValue( "HideOnLoadingScreens" ) != 0;
+  TU32 oncePerSecondEvent = globalTimer.GetTime();
+  
+  InitInputHooks();
 
   while ( App->HandleMessages() )
   {
@@ -709,188 +757,89 @@ INT WINAPI WinMain( _In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
       break;
 #endif
 
-    if ( globalTimer.GetTime() - lastSlowEventTime > 1000 )
+    LoadQueuedMarkerPacks();
+    WaitForMumble( frameThrottling );
+
+    if ( !App->DeviceOK() )
     {
-      if ( Config::GetValue( "CloseWithGW2" ) )
-        if ( !gw2Window && foundGW2Window )
-          if ( !IsProcessRunning( GW2Pid ) )
-            App->SetDone( true );
+      LOG_ERR( "[GW2TacO] Device fail" );
+      continue;
+    }
+    
+    auto currTime = globalTimer.GetTime();
+
+    if ( currTime - oncePerSecondEvent > 1000 )
+    {
+      // once per second checks
+      CheckIfShutdownNeeded( foundGameWindow, gameProcessID );
+
+      hideOnLoadingScreens = Config::GetValue( "HideOnLoadingScreens" ) != 0;
+      EnumGW2Windows();
+
+      oncePerSecondEvent = globalTimer.GetTime();
     }
 
-    if ( loadList.NumItems() )
+    if ( !mumbleLink.IsValid() || !gameWindow )
     {
-      CString file = loadList[ 0 ];
-      loadList.DeleteByIndex( 0 );
-      ImportMarkerPack( App, file );
-      //FlushZipDict();
+      Sleep( 1000 );
+      continue;
     }
 
-    for ( int x = 0; x < ( frameThrottling ? 32 : 1 ); x++ )
+    bool shortTick = !hideOnLoadingScreens || ( currTime - mumbleLink.lastFrameTime ) < 333;
+
+    if ( !gameWindow )
+      continue;
+
+    if ( !foundGameWindow )
+      ValidateGW2ProcessIntegrity( gameProcessID );
+    foundGameWindow = true;
+
+    HandleGW2WindowPositionChange( tacoWindowPos, tacoHWND );
+
+    auto foregroundWindow = GetForegroundWindow();
+
+    if ( App->GetFocusItem() && App->GetFocusItem()->InstanceOf( "textbox" ) && foregroundWindow == gameWindow )
     {
-      if ( mumbleLink.Update() )
-        break;
-      if ( frameThrottling )
-        Sleep( 1 );
-    }
-
-    bool shortTick = ( GetTime() - mumbleLink.LastFrameTime ) < 333;
-
-    if ( !hideOnLoadingScreens )
-      shortTick = true;
-
-    if ( !foundGW2Window )
-    {
-      //if (mumbleLink.mumblePath != "MumbleLink")
-      {
-        if ( !mumbleLink.IsValid() && GetTime() > 60000 )
-        {
-          LOG_ERR( "[GW2TacO] Closing TacO because GW2 with mumble link '%s' was not found in under a minute", mumbleLink.mumblePath.GetPointer() );
-          App->SetDone( true );
-        }
-      }
-    }
-
-    if ( App->DeviceOK() )
-    {
-      extern bool frameTriggered;
-
-      auto currTime = globalTimer.GetTime();
-
-      if ( currTime - lastSlowEventTime > 1000 )
-      {
-        hideOnLoadingScreens = Config::GetValue( "HideOnLoadingScreens" );
-        lastSlowEventTime = globalTimer.GetTime();
-        gw2WindowCount = 0;
-        gw2Window = nullptr;
-        gw2WindowFromPid = nullptr;
-        EnumWindows( gw2WindowFromPIDFunction, mumbleLink.lastGW2ProcessID );
-        gw2Window = gw2WindowFromPid;
-
-/*
-        if (!gw2Window)
-          gw2Window = FindWindow("ArenaNet_Dx_Window_Class", nullptr);
-
-        if ( !gw2Window )
-          gw2Window = FindWindow( "ArenaNet_Gr_Window_Class", nullptr );
-*/
-      }
-
-      if ( !mumbleLink.IsValid() || !gw2Window )
-      {
-        Sleep( 1000 );
-        continue;
-      }
-
-      //if ( !frameThrottling || frameTriggered || lastRenderTime + 200 < currTime )
-      {
-        if ( gw2Window )
-        {
-          if ( !foundGW2Window )
-          {
-            GetWindowThreadProcessId( gw2Window, &GW2Pid );
-
-            DWORD currentProcessIntegrity = GetProcessIntegrityLevel( GetCurrentProcess() );
-            DWORD gw2ProcessIntegrity = GetProcessIntegrityLevel( OpenProcess( PROCESS_QUERY_INFORMATION, TRUE, GW2Pid ) );
-
-            LOG_DBG( "[GW2TacO] Taco integrity: %x, GW2 integrity: %x", currentProcessIntegrity, gw2ProcessIntegrity );
-
-            if ( gw2ProcessIntegrity > currentProcessIntegrity || gw2ProcessIntegrity == -1 )
-              MessageBox( NULL, "GW2 seems to have more elevated rights than GW2 TacO.\nThis will probably result in TacO not being interactive when GW2 is in focus.\nIf this is an issue for you, restart TacO in Administrator mode.", "Warning", MB_ICONWARNING );
-
-            //::SetWindowLong( handle, GWL_HWNDPARENT, (LONG)gw2Window );
-            //::SetParent( handle, gw2Window );
-          }
-          foundGW2Window = true;
-          //auto style = GetWindowLong( handle, GWL_EXSTYLE );
-          ////login window: 0x94000000
-          ////fullscreen windowed: 0x94000000
-          ////fullscreen: 0x02080020
-
-          //int x = 0;
-
-          RECT GW2ClientRect;
-          POINT p = { 0, 0 };
-          GetClientRect( gw2Window, &GW2ClientRect );
-          ClientToScreen( gw2Window, &p );
-
-          if ( GW2ClientRect.right - GW2ClientRect.left != tacoWindowPos.Width() || GW2ClientRect.bottom - GW2ClientRect.top != tacoWindowPos.Height() || p.x != tacoWindowPos.x1 || p.y != tacoWindowPos.y1 )
-          {
-            LOG_ERR( "[GW2TacO] gw2 window size change: %d %d %d %d (%d %d)", GW2ClientRect.left, GW2ClientRect.top, GW2ClientRect.right, GW2ClientRect.bottom, GW2ClientRect.right - GW2ClientRect.left, GW2ClientRect.bottom - GW2ClientRect.top );
-            bool NeedsResize = GW2ClientRect.right - GW2ClientRect.left != tacoWindowPos.Width() || GW2ClientRect.bottom - GW2ClientRect.top != tacoWindowPos.Height();
-            tacoWindowPos = CRect( GW2ClientRect.left + p.x, GW2ClientRect.top + p.y, GW2ClientRect.left + p.x + GW2ClientRect.right - GW2ClientRect.left, GW2ClientRect.top + p.y + GW2ClientRect.bottom - GW2ClientRect.top );
-
-            ::SetWindowPos( hwnd, 0, tacoWindowPos.x1, tacoWindowPos.y1, tacoWindowPos.Width(), tacoWindowPos.Height(), SWP_NOREPOSITION );
-            //::SetWindowPos( gw2Window, handle, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE );
-            //::SetParent( handle, gw2Window );
-            //::SetWindowLong( handle, GWL_STYLE, WS_CHILD );
-
-            if ( NeedsResize )
-            {
-              App->HandleResize();
-              MARGINS marg = { -1, -1, -1, -1 };
-              DwmExtendFrameIntoClientArea( hwnd, &marg );
-            }
-          }
-
-          auto foregroundWindow = GetForegroundWindow();
-
-          if ( foregroundWindow == gw2Window && App->GetFocusItem() && App->GetFocusItem()->InstanceOf( "textbox" ) )
-          {
-            SetForegroundWindow( (HWND)App->GetHandle() );
-            SetFocus( (HWND)App->GetHandle() );
-            ::SetWindowPos( (HWND)App->GetHandle(), HWND_TOPMOST, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE );
-          }
-
-          if ( foregroundWindow == (HWND)App->GetHandle() && !( App->GetFocusItem() && App->GetFocusItem()->InstanceOf( "textbox" ) ) )
-          {
-            SetForegroundWindow( gw2Window );
-            SetFocus( gw2Window );
-          }
-
-          bool EditedButNotSelected = ( foregroundWindow != gw2Window && foregroundWindow != (HWND)App->GetHandle() && App->GetFocusItem() && App->GetFocusItem()->InstanceOf( "textbox" ) );
-          if ( EditedButNotSelected )
-            App->GetRoot()->SetFocus();
-
-          if ( gw2Window && ( !( App->GetFocusItem() && App->GetFocusItem()->InstanceOf( "textbox" ) || EditedButNotSelected ) ) )
-          {
-            HWND wnd = ::GetNextWindow( gw2Window, GW_HWNDPREV );
-            if ( wnd != hwnd )
-            {
-              if ( wnd )
-                ::SetWindowPos( hwnd, wnd, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE );
-              else
-                ::SetWindowPos( hwnd, HWND_TOPMOST, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE );
-            }
-
-            App->GetRoot()->Hide( !shortTick || ( ( GW2ClientRect.right - GW2ClientRect.left == 1120 ) && ( GW2ClientRect.bottom - GW2ClientRect.top == 976 ) && ( p.x != 0 || p.y != 0 ) ) );
-          }
-        }
-        else
-          App->GetRoot()->Hide( !shortTick );
-
-        taco->TickScriptEngine();
-        Config::AutoSaveConfig();
-
-        App->Display();
-
-        frameTriggered = false;
-        lastRenderTime = currTime;
-        hadRetrace = false;
-      }
-
-      InitInputHooks();
+      // if gw2 is in focus but we're editing text in taco - switch to taco
+      SetForegroundWindow( tacoHWND );
+      SetFocus( tacoHWND );
+      ::SetWindowPos( tacoHWND, HWND_TOPMOST, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE );
     }
     else
-      LOG_ERR( "[GW2TacO] Device fail" );
+    {
+      // if taco is in focus and we're not editing text - switch to gw2
+      if ( foregroundWindow == tacoHWND )
+      {
+        SetForegroundWindow( gameWindow );
+        SetFocus( gameWindow );
+      }
+    }
 
-    mainLoopCounter++;
-    lastMainLoopTime = GetTime();
+    bool editedButNotSelected = ( foregroundWindow != gameWindow && foregroundWindow != tacoHWND && App->GetFocusItem() && App->GetFocusItem()->InstanceOf( "textbox" ) );
+    if ( editedButNotSelected )
+      App->GetRoot()->SetFocus();
 
-    //if ( GetAsyncKeyState( VK_HOME ) )
-    //  Sleep( 5000 );
+    if ( !( App->GetFocusItem() && App->GetFocusItem()->InstanceOf( "textbox" ) || editedButNotSelected ) )
+    {
+      HWND wnd = ::GetNextWindow( gameWindow, GW_HWNDPREV );
+      if ( wnd != tacoHWND )
+      {
+        if ( wnd )
+          ::SetWindowPos( tacoHWND, wnd, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE );
+        else
+          ::SetWindowPos( tacoHWND, HWND_TOPMOST, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE );
+      }
+
+      App->GetRoot()->Hide( !shortTick );
+    }
+
+    taco->TickScriptEngines();
+    Config::AutoSaveConfig();
+
+    App->Display();
   }
 
-  ShowWindow( hwnd, SW_HIDE );
+  ShowWindow( tacoHWND, SW_HIDE );
 
   FlushZipDict();
   ShutDownInputHooks();

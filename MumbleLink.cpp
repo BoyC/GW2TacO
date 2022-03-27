@@ -2,10 +2,7 @@
 #include "OverlayConfig.h"
 #include "TrailLogger.h"
 
-#pragma comment(lib,"Synchronization.lib")
-
 CMumbleLink mumbleLink;
-bool frameTriggered = false;
 extern CWBApplication* App;
 
 void ChangeUIScale( int size );
@@ -96,10 +93,9 @@ bool CMumbleLink::Update()
     tick = lm->uiTick;
 
     globalTimer.Update();
-    TS32 frametime = GetTime();
-    FrameTimes->Add( frametime - LastFrameTime );
-    LastFrameTime = frametime;
-    frameTriggered = true;
+    TS32 frametime = globalTimer.GetTime();
+    frameTimes->Add( frametime - lastFrameTime );
+    lastFrameTime = frametime;
   }
 
   float inter = 1.0;// +( measurement - lastTickTime ) / lastTickLength;
@@ -303,8 +299,8 @@ TF32 CMumbleLink::GetFrameRate()
   TS32 FrameCount = 0;
   for ( TS32 x = 0; x < 60; x++ )
   {
-    if ( FrameTimes->NumItems() < x ) break;
-    FrameTimeAcc += ( *FrameTimes )[ FrameTimes->NumItems() - 1 - x ];
+    if ( frameTimes->NumItems() < x ) break;
+    FrameTimeAcc += ( *frameTimes )[ frameTimes->NumItems() - 1 - x ];
     FrameCount++;
   }
 
@@ -315,13 +311,13 @@ TF32 CMumbleLink::GetFrameRate()
 
 CMumbleLink::CMumbleLink()
 {
-  LastFrameTime = GetTime();
-  FrameTimes = new CRingBuffer<TS32>( 60 );
+  lastFrameTime = globalTimer.GetTime();
+  frameTimes = new CRingBuffer<TS32>( 60 );
 }
 
 CMumbleLink::~CMumbleLink()
 {
-  SAFEDELETE( FrameTimes );
+  SAFEDELETE( frameTimes );
 }
 
 TBOOL CMumbleLink::IsValid()

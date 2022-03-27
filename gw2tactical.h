@@ -126,7 +126,7 @@ struct POI
   TS16 Type = -1; //type string id
 
   time_t lastUpdateTime = 0;
-  TBOOL External = false;
+  TBOOL external = false;
   TBOOL routeMember = false;
 
   TS16 zipFile;
@@ -146,26 +146,16 @@ struct POIActivationDataKey
   int uniqueData = 0;
 
   POIActivationDataKey() = default;
-
-  //POIActivationDataKey( GUID g )
-  //  : guid( g )
-  //  , instanceID( 0 )
-  //{
-
-  //}
-
   POIActivationDataKey( GUID g, int inst )
     : guid( g )
     , uniqueData( inst )
   {
-
   }
 
   bool operator== ( const POIActivationDataKey& d )
   {
     return guid == d.guid && uniqueData == d.uniqueData;
   }
-
 };
 
 struct POIActivationData
@@ -193,16 +183,17 @@ TU32 DictionaryHash( const GUID& i );
 TU32 DictionaryHash( const POIActivationDataKey& i );
 
 extern std::unordered_map<int, CDictionaryEnumerable<GUID, POI>> POISet;
-extern CDictionaryEnumerable<POIActivationDataKey, POIActivationData> ActivationData;
+extern CDictionaryEnumerable<POIActivationDataKey, POIActivationData> activationData;
 extern CArray<POIRoute> Routes;
 extern CDictionaryEnumerable<CString, POI> wvwPOIs;
 extern GW2TacticalCategory CategoryRoot;
+extern CDictionaryEnumerable<CString, GW2TacticalCategory*> CategoryMap;
 
 CDictionaryEnumerable<GUID, POI>& GetMapPOIs();
 
 class GW2TacticalDisplay : public CWBItem
 {
-  TBOOL TacticalIconsOnEdge;
+  bool tacticalIconsOnEdge;
   TF32 asp;
   CMatrix4x4 cam;
   CMatrix4x4 persp;
@@ -255,15 +246,15 @@ public:
   TS16 zipFile;
 
   MarkerTypeData data;
-  TBOOL KeepSaveState = false;
-  TBOOL IsOnlySeparator = false;
-  GW2TacticalCategory* Parent = nullptr;
+  TBOOL keepSaveState = false;
+  TBOOL isOnlySeparator = false;
+  GW2TacticalCategory* parent = nullptr;
   CArray<GW2TacticalCategory*> children;
   std::set<int> containedMapIds;
 
   CString GetFullTypeName();
 
-  TBOOL IsDisplayed = true;
+  TBOOL isDisplayed = true;
   TBOOL cachedVisibility = true;
   TBOOL IsVisible() const;
   void CacheVisibility();
@@ -284,10 +275,6 @@ public:
 void AddPOI( CWBApplication* App );
 void DeletePOI();
 void UpdatePOI( CWBApplication* App );
-void ImportPOIS( CWBApplication* App );
-void ExportPOIS();
-void ImportPOIActivationData();
-void ExportPOIActivationData();
 
 void OpenTypeContextMenu( CWBContextMenu* ctx, CArray<GW2TacticalCategory*>& CategoryList, TBOOL AddVisibilityMarkers = false, TS32 BaseID = 0, TBOOL markerEditor = false, CDictionary<TS32, Achievement>& achievements = CDictionary<TS32, Achievement>() );
 void OpenTypeContextMenu( CWBContextItem* ctx, CArray<GW2TacticalCategory*>& CategoryList, TBOOL AddVisibilityMarkers = false, TS32 BaseID = 0, TBOOL markerEditor = false, CDictionary<TS32, Achievement>& achievements = CDictionary<TS32, Achievement>() );
@@ -299,6 +286,6 @@ float WorldToGameCoords( float world );
 float GameToWorldCoords( float game );
 void FindClosestRouteMarkers( TBOOL force );
 
-TS32 GetTime();
 TS32 AddStringToMap( const CString& string );
 CString& GetStringFromMap( TS32 idx );
+GW2TacticalCategory* GetCategory( CString s );

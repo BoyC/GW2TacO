@@ -329,6 +329,7 @@
     <ClCompile Include="LocationalTimer.cpp" />
     <ClCompile Include="MapTimer.cpp" />
     <ClCompile Include="MarkerEditor.cpp" />
+    <ClCompile Include="MarkerPack.cpp" />
     <ClCompile Include="MouseHighlight.cpp" />
     <ClCompile Include="MumbleLink.cpp" />
     <ClCompile Include="Notepad.cpp" />
@@ -359,6 +360,7 @@
     <ClInclude Include="LocationalTimer.h" />
     <ClInclude Include="MapTimer.h" />
     <ClInclude Include="MarkerEditor.h" />
+    <ClInclude Include="MarkerPack.h" />
     <ClInclude Include="MouseHighlight.h" />
     <ClInclude Include="MumbleLink.h" />
     <ClInclude Include="Notepad.h" />

@@ -17,7 +17,7 @@ void DungeonProgress::OnDraw( CWBDrawAPI* API )
   GW2::APIKeyManager::Status status = GW2::apiKeyManager.DisplayStatusText( API, f );
   GW2::APIKey* key = GW2::apiKeyManager.GetIdentifiedAPIKey();
 
-  if ( key && key->valid && ( GetTime() - lastFetchTime > 150000 || !lastFetchTime ) && !beingFetched && !fetchThread.joinable() )
+  if ( key && key->valid && ( globalTimer.GetTime() - lastFetchTime > 150000 || !lastFetchTime ) && !beingFetched && !fetchThread.joinable() )
   {
     beingFetched = true;
     fetchThread = std::thread( [this, key]()
@@ -162,7 +162,7 @@ void DungeonProgress::OnDraw( CWBDrawAPI* API )
 
   if ( !beingFetched && fetchThread.joinable() )
   {
-    lastFetchTime = GetTime();
+    lastFetchTime = globalTimer.GetTime();
     fetchThread.join();
   }
 

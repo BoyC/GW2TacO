@@ -43,13 +43,13 @@ void LocationalTimer::Update()
     if ( EnterSphere.Contains( mumbleLink.charPosition ) )
     {
       IsRunning = true;
-      StartTime = GetTime();
+      StartTime = globalTimer.GetTime();
     }
   }
 
   if ( IsRunning )
   {
-    if ( ( GetTime() - StartTime ) / 1000.0f > TimerLength )
+    if ( ( globalTimer.GetTime() - StartTime ) / 1000.0f > TimerLength )
       IsRunning = false;
     if ( !ExitSphere.Contains( mumbleLink.charPosition ) )
       IsRunning = false;
@@ -95,7 +95,7 @@ void TimerDisplay::OnDraw( CWBDrawAPI* API )
   if ( !Config::GetValue( "LocationalTimersVisible" ) )
     return;
 
-  TS32 tme = GetTime();
+  TS32 tme = globalTimer.GetTime();
   CWBFont* f = GetFont( GetState() );
 
   TS32 ypos = Lerp( GetClientRect().y1, GetClientRect().y2, 0.25f );

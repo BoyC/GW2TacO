@@ -98,10 +98,10 @@ void TS3Connection::Tick()
 
   if ( !authenticated )
   {
-    if ( GetTime() - LastPingTime > 1000 )
+    if ( globalTimer.GetTime() - LastPingTime > 1000 )
     {
       InitConnection();
-      LastPingTime = GetTime();
+      LastPingTime = globalTimer.GetTime();
     }
 
     if ( !authenticated )
@@ -110,10 +110,10 @@ void TS3Connection::Tick()
 
   ProcessNotifications();
 
-  if ( GetTime() - LastPingTime > 5000 )
+  if ( globalTimer.GetTime() - LastPingTime > 5000 )
   {
     CommandResponse res = SendCommand( "whoami" );
-    LastPingTime = GetTime();
+    LastPingTime = globalTimer.GetTime();
   }
 }
 
@@ -269,7 +269,7 @@ void TS3Connection::ProcessNotification( CString& s )
     {
       if ( handlers[ schandlerid ].Clients[ clientid ].talkStatus != status && status > 0 )
       {
-        handlers[ schandlerid ].Clients[ clientid ].lastTalkTime = GetTime();
+        handlers[ schandlerid ].Clients[ clientid ].lastTalkTime = globalTimer.GetTime();
         handlers[ schandlerid ].Clients.SortByValue( ClientTalkTimeSorter );
       }
 
@@ -301,7 +301,7 @@ void TS3Connection::ProcessNotification( CString& s )
       handlers[ schandlerid ].Clients[ clientid ].channelid = channelid;
       if ( channelid == handlers[ schandlerid ].Clients[ handlers[ schandlerid ].myclientid ].channelid )
       {
-        handlers[ schandlerid ].Clients[ clientid ].lastTalkTime = GetTime();
+        handlers[ schandlerid ].Clients[ clientid ].lastTalkTime = globalTimer.GetTime();
         handlers[ schandlerid ].Clients.SortByValue( ClientTalkTimeSorter );
       }
     }
@@ -556,7 +556,7 @@ void TS3Connection::ProcessClientList( CString& clientdata, TS32 handler )
       }
     }
     handlers[ handler ].Clients[ client.clientid ] = client;
-    handlers[ handler ].Clients[ client.clientid ].lastTalkTime = GetTime();
+    handlers[ handler ].Clients[ client.clientid ].lastTalkTime = globalTimer.GetTime();
     if ( handlers[ handler ].myclientid && handlers[ handler ].Clients[ client.clientid ].channelid == handlers[ handler ].Clients[ handlers[ handler ].myclientid ].channelid )
       needsSort = true;
   }
