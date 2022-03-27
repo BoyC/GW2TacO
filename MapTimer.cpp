@@ -296,7 +296,8 @@ GW2MapTimer::GW2MapTimer( CWBItem *Parent, CRect Position ) : CWBItem( Parent, P
 
 GW2MapTimer::~GW2MapTimer()
 {
-
+  if ( fetchThread.joinable() )
+    fetchThread.join();
 }
 
 CWBItem * GW2MapTimer::Factory( CWBItem *Root, CXMLNode &node, CRect &Pos )
