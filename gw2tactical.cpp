@@ -381,81 +381,6 @@ float GetMapFade()
   return mapFade;
 }
 
-void GW2TacticalDisplay::FetchAchievements()
-{
-  if ( GW2::apiKeyManager.GetStatus() != GW2::APIKeyManager::Status::OK )
-    return;
-
-  GW2::APIKey* key = GW2::apiKeyManager.GetIdentifiedAPIKey();
-
-  if ( key && key->valid && ( globalTimer.GetTime() - lastFetchTime > 150000 || !lastFetchTime ) && !beingFetched && !fetchThread.joinable() )
-  {
-    beingFetched = true;
-    fetchThread = std::thread( [this, key]()
-                               {
-                                 SetPerThreadCRTExceptionBehavior();
-                                 CheckFestivalActive();
-                                 CString dungeonFrequenterStatus = CString( "{\"achievements\":" ) + key->QueryAPI( "v2/account/achievements" ) + "}";
-                                 Object json;
-                                 json.parse( dungeonFrequenterStatus.GetPointer() );
-
-                                 if ( json.has<Array>( "achievements" ) )
-                                 {
-                                   auto achiData = json.get<Array>( "achievements" ).values();
-
-                                   CDictionary<TS32, Achievement> incoming;
-
-                                   for ( unsigned int x = 0; x < achiData.size(); x++ )
-                                   {
-                                     if ( !achiData[ x ]->is<Object>() )
-                                       continue;
-                                     auto& data = achiData[ x ]->get<Object>();
-
-                                     if ( !data.has<Boolean>( "done" ) )
-                                       continue;
-
-                                     TBOOL done = data.get<Boolean>( "done" );
-
-                                     if ( !data.has<Number>( "id" ) )
-                                       continue;
-
-                                     TS32 achiId = TS32( data.get<Number>( "id" ) );
-                                     incoming[ achiId ].done = done;
-
-                                     if ( !done && data.has<Array>( "bits" ) )
-                                     {
-                                       auto& bitArray = incoming[ achiId ].bits;
-                                       auto bits = data.get<Array>( "bits" ).values();
-                                       for ( unsigned int y = 0; y < bits.size(); y++ )
-                                       {
-                                         if ( !bits[ y ]->is<Number>() )
-                                           continue;
-                                         bitArray += TS32( bits[ y ]->get<Number>() );
-                                       }
-                                     }
-                                     else
-                                       if ( done )
-                                         incoming[ achiId ].bits.FlushFast();
-                                   }
-
-                                   {
-                                     CLightweightCriticalSection cs( &dataWriteCritSec );
-                                     achievements = incoming;
-                                   }
-                                 }
-
-                                 beingFetched = false;
-                                 achievementsFetched = true;
-                               } );
-  }
-
-  if ( !beingFetched && fetchThread.joinable() )
-  {
-    lastFetchTime = globalTimer.GetTime();
-    fetchThread.join();
-  }
-}
-
 void GW2TacticalDisplay::InsertPOI( POI& poi )
 {
 /*
@@ -503,7 +428,7 @@ void GW2TacticalDisplay::DrawPOI( CWBDrawAPI* API, const tm& ptm, const time_t& 
   TS32 timeLeft;
   float alphaMultiplier = 1;
 
-  if ( !poi.IsVisible( ptm, currtime, achievementsFetched, achievements, dataWriteCritSec ) )
+  if ( !poi.IsVisible( ptm, currtime ) )
     return;
 
   if ( poi.typeData.behavior == POIBehavior::WvWObjective )
@@ -791,7 +716,7 @@ void GW2TacticalDisplay::DrawPOIMinimap( CWBDrawAPI* API, const CRect& miniRect,
 {
   if ( alpha <= 0 )
     return;
-  if ( !poi.IsVisible( ptm, currtime, achievementsFetched, achievements, dataWriteCritSec ) )
+  if ( !poi.IsVisible( ptm, currtime ) )
     return;
 
   if ( !poi.typeData.bits.keepOnMapEdge && !miniRect.Contains( CPoint( TS32( pos.x ), TS32( pos.y ) ) ) )
@@ -862,7 +787,7 @@ void GW2TacticalDisplay::OnDraw( CWBDrawAPI* API )
   int showBigmapMarkers = Config::GetValue( "ShowBigmapMarkers" );
   int showIngameMarkers = Config::GetValue( "ShowInGameMarkers" );
 
-  FetchAchievements();
+  Achievements::FetchAchievements();
   UpdateWvWStatus();
 
   tacticalIconsOnEdge = Config::GetValue( "TacticalIconsOnEdge" );
@@ -975,7 +900,7 @@ void GW2TacticalDisplay::OnDraw( CWBDrawAPI* API )
     {
       if ( !minimapPOIs[ x ]->typeData.bits.miniMapVisible && showMinimapMarkers != 2 )
         continue;
-      if ( !minimapPOIs[ x ]->IsVisible( ptm, currtime, achievementsFetched, achievements, dataWriteCritSec ) )
+      if ( !minimapPOIs[ x ]->IsVisible( ptm, currtime ) )
         continue;
 
       CVector3 poiPos = minimapPOIs[ x ]->position * miniMapTrafo;
@@ -991,7 +916,7 @@ void GW2TacticalDisplay::OnDraw( CWBDrawAPI* API )
     {
       if ( !minimapPOIs[ x ]->typeData.bits.bigMapVisible && showBigmapMarkers != 2 )
         continue;
-      if ( !minimapPOIs[ x ]->IsVisible( ptm, currtime, achievementsFetched, achievements, dataWriteCritSec ) )
+      if ( !minimapPOIs[ x ]->IsVisible( ptm, currtime ) )
         continue;
 
       CVector3 poiPos = minimapPOIs[ x ]->position * miniMapTrafo;
@@ -1029,10 +954,6 @@ void GW2TacticalDisplay::OnDraw( CWBDrawAPI* API )
   }
 }
 
-CDictionary<TS32, Achievement> GW2TacticalDisplay::achievements;
-
-LIGHTWEIGHT_CRITICALSECTION GW2TacticalDisplay::dataWriteCritSec;
-
 GW2TacticalDisplay::GW2TacticalDisplay( CWBItem* Parent, CRect Position ) : CWBItem( Parent, Position )
 {
 
@@ -1040,8 +961,7 @@ GW2TacticalDisplay::GW2TacticalDisplay( CWBItem* Parent, CRect Position ) : CWBI
 
 GW2TacticalDisplay::~GW2TacticalDisplay()
 {
-  if ( fetchThread.joinable() )
-    fetchThread.join();
+  Achievements::WaitForFetch();
 }
 
 CWBItem* GW2TacticalDisplay::Factory( CWBItem* Root, CXMLNode& node, CRect& Pos )
@@ -1144,6 +1064,15 @@ void UpdatePOI( CWBApplication* App )
   if ( mumbleLink.mapID == -1 ) 
     return;
 
+
+  time_t rawtime;
+  time( &rawtime );
+  struct tm ptm;
+  gmtime_s( &ptm, &rawtime );
+
+  time_t currtime;
+  time( &currtime );
+
   //TBOOL found = false;
 
   auto& POIs = GetMapPOIs();
@@ -1168,7 +1097,7 @@ void UpdatePOI( CWBApplication* App )
           categoriesToToggle.AddUnique( cat );
       }
 
-      if ( /*!found &&*/ cpoi.typeData.behavior != POIBehavior::AlwaysVisible )
+      if ( /*!found &&*/ cpoi.typeData.behavior != POIBehavior::AlwaysVisible && cpoi.IsVisible( ptm, currtime ) )
       {
         POIActivationData activation;
         time( &activation.lastUpdateTime );
@@ -1830,7 +1759,7 @@ void POI::SetCategory( CWBApplication* App, GW2TacticalCategory* t )
   //iconSize = App->GetAtlas()->GetSize( icon );
 }
 
-bool POI::IsVisible( const tm& ptm, const time_t& currtime, bool achievementsFetched, CDictionary<TS32, Achievement>& achievements, LIGHTWEIGHT_CRITICALSECTION& dataWriteCritSec )
+bool POI::IsVisible( const tm& ptm, const time_t& currtime )
 {
   if ( category && !category->IsVisible() )
     return false;
@@ -1894,16 +1823,16 @@ bool POI::IsVisible( const tm& ptm, const time_t& currtime, bool achievementsFet
   }
 */
 
-  if ( achievementsFetched && typeData.achievementId != -1 )
+  if ( Achievements::fetched && typeData.achievementId != -1 )
   {
-    CLightweightCriticalSection cs( &dataWriteCritSec );
-    if ( achievements.HasKey( typeData.achievementId ) )
+    CLightweightCriticalSection cs( &Achievements::critSec );
+    if ( Achievements::achievements.HasKey( typeData.achievementId ) )
     {
 
       if ( typeData.achievementBit == -1 )
-        return !achievements[ typeData.achievementId ].done;
+        return !Achievements::achievements[ typeData.achievementId ].done;
 
-      return !achievements[ typeData.achievementId ].done && achievements[ typeData.achievementId ].bits.Find( typeData.achievementBit ) < 0;
+      return !Achievements::achievements[ typeData.achievementId ].done && Achievements::achievements[ typeData.achievementId ].bits.Find( typeData.achievementBit ) < 0;
     }
   }
 

@@ -3,6 +3,7 @@
 #include <objbase.h>
 #include <unordered_map>
 #include <set>
+#include "Achievements.h"
 
 enum class POIBehavior : TS32
 {
@@ -107,12 +108,6 @@ struct MarkerTypeData
 
 class GW2TacticalCategory;
 
-struct Achievement
-{
-  bool done = false;
-  CArray<TS32> bits;
-};
-
 struct POI
 {
   MarkerTypeData typeData;
@@ -137,7 +132,7 @@ struct POI
   GW2TacticalCategory* category = nullptr;
   void SetCategory( CWBApplication* App, GW2TacticalCategory* t );
 
-  bool IsVisible( const tm& ptm, const time_t& currtime, bool achievementsFetched, CDictionary<TS32, Achievement>& achievements, LIGHTWEIGHT_CRITICALSECTION& dataWriteCritSec );
+  bool IsVisible( const tm& ptm, const time_t& currtime );
 };
 
 struct POIActivationDataKey
@@ -199,7 +194,6 @@ class GW2TacticalDisplay : public CWBItem
   CMatrix4x4 persp;
   CRect drawrect;
 
-  void FetchAchievements();
   void InsertPOI( POI& poi );
   void DrawPOI( CWBDrawAPI* API, const tm& ptm, const time_t& currtime, POI& poi, bool drawDistance, CString& infoText );
   void DrawPOIMinimap( CWBDrawAPI* API, const CRect& miniRect, CVector2& pos, const tm& ptm, const time_t& currtime, POI& poi, float alpha, float zoomLevel );
@@ -209,20 +203,12 @@ class GW2TacticalDisplay : public CWBItem
   CArray<POI*> minimapPOIs;
   bool drawWvWNames;
 
-  bool beingFetched = false;
-  bool achievementsFetched = false;
-  TS32 lastFetchTime = 0;
-  std::thread fetchThread;
-
   TS64 bigMessageStart = 0;
   int bigMessageLength = 3000;
   POI* triggeredPOI = nullptr;
   TS32 bigMessage = -1;
 
 public:
-
-  static CDictionary<TS32, Achievement> achievements;
-  static LIGHTWEIGHT_CRITICALSECTION dataWriteCritSec;
 
   GW2TacticalDisplay( CWBItem* Parent, CRect Position );
   virtual ~GW2TacticalDisplay();

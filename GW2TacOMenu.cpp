@@ -19,6 +19,7 @@
 #include "Language.h"
 #include "BuildCount.h"
 #include "ThirdParty/BugSplat/inc/BugSplat.h"
+#include "MarkerPack.h"
 using namespace jsonxx;
 
 CString UIFileNames[] =
@@ -294,8 +295,8 @@ TBOOL GW2TacO::MessageProc( CWBMessage& Message )
       {
         auto flt = ctx->AddItem( DICT( "filtermarkers" ), Menu_ToggleTacticalsOnEdge );
         {
-          CLightweightCriticalSection cs( &GW2TacticalDisplay::dataWriteCritSec );
-          OpenTypeContextMenu( flt, CategoryList, true, Menu_MarkerFilter_Base, false, GW2TacticalDisplay::achievements );
+          CLightweightCriticalSection cs( &Achievements::critSec );
+          OpenTypeContextMenu( flt, CategoryList, true, Menu_MarkerFilter_Base, false, Achievements::achievements );
         }
         auto options = ctx->AddItem( DICT( "tacticalsettings" ), 0 );
 

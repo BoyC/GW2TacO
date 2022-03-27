@@ -317,6 +317,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Achievements.cpp" />
     <ClCompile Include="BuildInfo.cpp" />
     <ClCompile Include="DungeonProgress.cpp" />
     <ClCompile Include="GW2API.cpp" />
@@ -348,6 +349,7 @@
     <ClCompile Include="WvW.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Achievements.h" />
     <ClInclude Include="BuildCount.h" />
     <ClInclude Include="BuildInfo.h" />
     <ClInclude Include="DungeonProgress.h" />
