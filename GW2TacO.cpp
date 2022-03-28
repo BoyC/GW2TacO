@@ -799,22 +799,19 @@ INT WINAPI WinMain( _In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 
     auto foregroundWindow = GetForegroundWindow();
 
-    if ( App->GetFocusItem() && App->GetFocusItem()->InstanceOf( "textbox" ) && foregroundWindow == gameWindow )
+    if ( foregroundWindow == gameWindow && App->GetFocusItem() && App->GetFocusItem()->InstanceOf( "textbox" ) )
     {
-      // if gw2 is in focus but we're editing text in taco - switch to taco
       SetForegroundWindow( tacoHWND );
       SetFocus( tacoHWND );
       ::SetWindowPos( tacoHWND, HWND_TOPMOST, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE );
     }
-    else
+
+    if ( foregroundWindow == tacoHWND && !( App->GetFocusItem() && App->GetFocusItem()->InstanceOf( "textbox" ) ) )
     {
-      // if taco is in focus and we're not editing text - switch to gw2
-      if ( foregroundWindow == tacoHWND )
-      {
-        SetForegroundWindow( gameWindow );
-        SetFocus( gameWindow );
-      }
+      SetForegroundWindow( gameWindow );
+      SetFocus( gameWindow );
     }
+
 
     bool editedButNotSelected = ( foregroundWindow != gameWindow && foregroundWindow != tacoHWND && App->GetFocusItem() && App->GetFocusItem()->InstanceOf( "textbox" ) );
     if ( editedButNotSelected )
