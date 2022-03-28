@@ -12,7 +12,7 @@
       "enabledbydefault": true
     },
     {
-      "name": "Teh's Train Trails",
+      "name": "Teh's Trails",
       "id": "Tehs",
       "filename": "TehsTrails.taco",
       "versionurl": "https://github.com/xrandox/TehsTrails/releases/latest",
@@ -22,7 +22,7 @@
       "enabledbydefault": false
     },
     {
-      "name": "[fast]",
+      "name": "[fast] Fast Solo Farming",
       "id": "fast",
       "filename": "602fd903dad6efast_TacO_pack_001.taco",
       "forcedversion" : "001",
