@@ -224,11 +224,11 @@ CString FetchAPIData( char* path, const CString& apiKey )
 }
 
 GW2::FestivalData GW2::festivals[ 6 ] = { { "halloween"             , 79,  false }, // halloween daily
-                                        { "wintersday"            , 98,  false }, // wintersday daily
-                                        { "superadventurefestival", 162, false }, // sab daily
-                                        { "lunarnewyear"          , 201, false }, // daily lunar new year
-                                        { "festivalofthefourwinds", 213, false }, // festival of the four winds daily
-                                        { "dragonbash"            , 233, false }  // daily dragon bash
+                                          { "wintersday"            , 98,  false }, // wintersday daily
+                                          { "superadventurefestival", 162, false }, // sab daily
+                                          { "lunarnewyear"          , 201, false }, // daily lunar new year
+                                          { "festivalofthefourwinds", 213, false }, // festival of the four winds daily
+                                          { "dragonbash"            , 233, false }  // daily dragon bash
 };
 
 
@@ -332,6 +332,8 @@ void CheckFestivalActive()
     }
     cnt++;
   }
+
+  //GW2::festivals[ 1 ].active = true;
 }
 
 namespace GW2

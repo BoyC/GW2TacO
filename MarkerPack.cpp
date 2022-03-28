@@ -14,6 +14,7 @@ std::thread markerPackFetcherThread;
 extern CWBApplication* App;
 
 LIGHTWEIGHT_CRITICALSECTION dlTextCritSec;
+LIGHTWEIGHT_CRITICALSECTION zipCritSec;
 
 CString GetCurrentDownload()
 {
@@ -210,6 +211,12 @@ void RecursiveImportPOIType( CXMLNode& root, GW2TacticalCategory* Root, CString 
         c = new GW2TacticalCategory();
         c->name = nameExploded[ y ];
         c->data = defaults;
+
+        // don't propagate defaulttoggle
+        c->data.bits.defaultToggleLoaded = false;
+        c->data.bits.defaultToggle = false;
+        c->data.bits.defaultToggleSaved = false;
+
         CategoryMap[ newCatName ] = c;
         Root2->children += c;
         c->parent = Root2;
@@ -251,9 +258,11 @@ void RecursiveImportPOIType( CXMLNode& root, GW2TacticalCategory* Root, CString 
 void ImportPOITypes()
 {
   CXMLDocument d;
-  if ( !d.LoadFromFile( "categorydata.xml" ) ) return;
+  if ( !d.LoadFromFile( "categorydata.xml" ) ) 
+    return;
 
-  if ( !d.GetDocumentNode().GetChildCount( "OverlayData" ) ) return;
+  if ( !d.GetDocumentNode().GetChildCount( "OverlayData" ) ) 
+    return;
   CXMLNode root = d.GetDocumentNode().GetChild( "OverlayData" );
 
   CategoryMap.Flush();
@@ -334,7 +343,10 @@ TBOOL ImportTrail( CWBApplication* App, CXMLNode& t, GW2Trail& p, const CString&
 
 void ImportPOIDocument( CWBApplication* App, CXMLDocument& d, TBOOL External, const CString& zipFile )
 {
-  if ( !d.GetDocumentNode().GetChildCount( "OverlayData" ) ) return;
+
+
+  if ( !d.GetDocumentNode().GetChildCount( "OverlayData" ) ) 
+    return;
   CXMLNode root = d.GetDocumentNode().GetChild( "OverlayData" );
 
   RecursiveImportPOIType( root, &CategoryRoot, CString(), MarkerTypeData(), !External, zipFile );
@@ -418,14 +430,19 @@ void ImportPOIDocument( CWBApplication* App, CXMLDocument& d, TBOOL External, co
 void ImportPOIFile( CWBApplication* App, CString s, TBOOL External )
 {
   CXMLDocument d;
-  if ( !d.LoadFromFile( s.GetPointer() ) ) return;
+  {
+    CLightweightCriticalSection fileWrite( &zipCritSec );
+    if ( !d.LoadFromFile( s.GetPointer() ) )
+      return;
+  }
   ImportPOIDocument( App, d, External, CString( "" ) );
 }
 
 void ImportPOIString( CWBApplication* App, const CString& data, const CString& zipFile )
 {
   CXMLDocument d;
-  if ( !d.LoadFromString( data ) ) return;
+  if ( !d.LoadFromString( data ) ) 
+    return;
   ImportPOIDocument( App, d, true, zipFile );
 }
 
@@ -507,7 +524,8 @@ void ImportPOIS( CWBApplication* App )
 void ImportPOIActivationData()
 {
   CXMLDocument d;
-  if ( !d.LoadFromFile( "activationdata.xml" ) ) return;
+  if ( !d.LoadFromFile( "activationdata.xml" ) ) 
+    return;
 
   if ( !d.GetDocumentNode().GetChildCount( "OverlayData" ) ) return;
   CXMLNode root = d.GetDocumentNode().GetChild( "OverlayData" );
@@ -780,21 +798,26 @@ bool MarkerPack::UpdateFromWeb()
 
   CString fn = "POIs/Online/" + fileName;
   FILE* f = nullptr;
-  fopen_s( &f, fn.GetPointer(), "wb" );
-  if ( !f )
-  {
-    LOG_ERR( "[GW2TacO] Package %s cannot be saved", downloadURL.GetPointer() );
-    beingDownloaded = false;
-    {
-      CLightweightCriticalSection cs( &dlTextCritSec );
-      currentDownload = "";
-    }
-    failed = true;
-    return false;
-  }
 
-  fwrite( markerPack.GetPointer(), 1, markerPack.Length(), f );
-  fclose( f );
+  {
+    CLightweightCriticalSection fileWrite( &zipCritSec );
+
+    fopen_s( &f, fn.GetPointer(), "wb" );
+    if ( !f )
+    {
+      LOG_ERR( "[GW2TacO] Package %s cannot be saved", downloadURL.GetPointer() );
+      beingDownloaded = false;
+      {
+        CLightweightCriticalSection cs( &dlTextCritSec );
+        currentDownload = "";
+      }
+      failed = true;
+      return false;
+    }
+
+    fwrite( markerPack.GetPointer(), 1, markerPack.Length(), f );
+    fclose( f );
+  }
 
   CString versionConfigValue = "MarkerPack_" + id + "_version\0";
   Config::SetString( versionConfigValue.GetPointer(), versionString );

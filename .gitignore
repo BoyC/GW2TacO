@@ -123,3 +123,4 @@ poidata.xml
 notepad.txt
 *.taco
 *.bck
+!TacOMarkers.taco

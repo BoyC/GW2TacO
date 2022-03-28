@@ -287,7 +287,7 @@ TBOOL CCoreDX11Device::CreateDirectCompositionSwapchain( const TU32 hWnd, const 
   //res = dxgiFactory->CreateSwapChain( Device, (DXGI_SWAP_CHAIN_DESC*)&swapChainDesc, (IDXGISwapChain**)&SwapChain );
   if ( res != S_OK )
   {
-    swapChainDesc.SwapEffect = DXGI_SWAP_EFFECT_SEQUENTIAL;
+    swapChainDesc.SwapEffect = DXGI_SWAP_EFFECT_FLIP_SEQUENTIAL;
     swapChainDesc.Flags = 0;
     res = dxgiFactory->CreateSwapChainForComposition( Device, &swapChainDesc, nullptr, &SwapChain );
 

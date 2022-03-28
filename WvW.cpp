@@ -361,7 +361,7 @@ void LoadWvWObjectives()
 
                                    CoCreateGuid( &poi.guid );
 
-                                   auto cat = GetCategory( CString( "Tactical.WvW." ) + o.type );
+                                   auto cat = GetCategory( CString( "WvW." ) + o.type );
 
                                    extern CWBApplication* App;
 

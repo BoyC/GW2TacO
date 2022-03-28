@@ -38,15 +38,7 @@
 		<sourcepath>POIs\</sourcepath>
 		<destpath>POIs\</destpath>
 		<mask>!pois.txt</mask>
-		<mask>keyrequired*.xml</mask>
-		<mask>collectibles*.xml</mask>
-		<mask>raid1*.xml</mask>
-		<mask>SAB*.xml</mask>
-		<mask>GuildMission*.xml</mask>
-		<mask>Adventure*.xml</mask>
-		<mask>Festival*.xml</mask>
-		<mask>JP*.xml</mask>
-		<mask>GuildRaces*.xml</mask>
+		<mask>TacOMarkers.*</mask>
 	</buildfile>
 
 	<buildfile>
