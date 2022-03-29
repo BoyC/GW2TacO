@@ -74,6 +74,7 @@ void Config::InitDefaults()
   SetDefaultValue( "ShowBigmapTrails", 1 );
   SetDefaultValue( "ShowInGameTrails", 1 );
   SetDefaultValue( "FetchMarkerPacks", 1 );
+  SetDefaultValue( "ForceFestivals", 0 );
 }
 
 void Config::Load()

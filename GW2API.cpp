@@ -333,6 +333,19 @@ void CheckFestivalActive()
     cnt++;
   }
 
+  cnt = 0;
+
+  for ( auto& festival : festivalDailies )
+  {
+    if ( !festivalDailies.empty() )
+      GW2::festivals[ cnt ].active = true;
+    cnt++;
+  }
+
+  if ( Config::GetValue( "ForceFestivals" ) )
+    for ( auto& festival : GW2::festivals )
+      festival.active = true;
+
   //GW2::festivals[ 1 ].active = true;
 }
 

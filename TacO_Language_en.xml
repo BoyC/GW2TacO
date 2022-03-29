@@ -187,6 +187,8 @@
   <token key="downloadingmarkerpack" value="Downloading new version of marker pack:"/>
   <token key="onlinemarkers" value="Online Marker Packs"/>
   <token key="downloadmarkers" value="Update Marker Packs Automatically"/>
+  <token key="downloadmarkers" value="Update Marker Packs Automatically"/>
+  <token key="forcefestivals" value="Show Festival Markers When Festival is Inactive"/>
 
   <token key="wurm_tunnel" value="Wurm Tunnel"/>
   <token key="airport" value="Airport"/>

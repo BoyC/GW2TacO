@@ -169,6 +169,7 @@ enum MainMenuItems
   Menu_OptOutFromCrashReports,
   Menu_ToggleClipboardAccess,
   Menu_ToggleAutomaticMarkerUpdates,
+  Menu_ForceFestivals,
 
   Menu_OpacityIngame_Solid,
   Menu_OpacityIngame_Transparent,
@@ -310,6 +311,7 @@ TBOOL GW2TacO::MessageProc( CWBMessage& Message )
         options->AddItem( GetConfigActiveString( "UseMetricDisplay" ) + DICT( "togglemetricsystem" ), Menu_ToggleMetricSystem );
         options->AddItem( GetConfigActiveString( "TacticalInfoTextVisible" ) + DICT( "toggletacticalinfotext" ), Menu_TogglePOIInfoText );
         options->AddItem( GetConfigActiveString( "CanWriteToClipboard" ) + DICT( "toggleclipboardaccess" ), Menu_ToggleClipboardAccess );
+        options->AddItem( GetConfigActiveString( "ForceFestivals" ) + DICT( "forcefestivals" ), Menu_ForceFestivals );
 
         auto opacityMenu = options->AddItem( DICT( "markeropacity" ), 0 );
         auto opacityInGame = opacityMenu->AddItem( DICT( "ingameopacity" ), 0 );
@@ -364,7 +366,7 @@ TBOOL GW2TacO::MessageProc( CWBMessage& Message )
           for ( int x = 0; x < markerPacks.NumItems(); x++ )
           {
             CString enabled = "MarkerPack_" + markerPacks[ x ].id + "_autoupdate";
-            onlineMarkers->AddItem( ( Config::GetValue( enabled.GetPointer() ) ? "[x] " : "[ ] " ) + markerPacks[ x ].name, Menu_MarkerPacks_Base + x );
+            onlineMarkers->AddItem( ( Config::GetValue( enabled.GetPointer() ) ? "[x] " : "[ ] " ) + markerPacks[ x ].name, Menu_MarkerPacks_Base + x, false, false );
           }
         }
       }
@@ -703,6 +705,25 @@ TBOOL GW2TacO::MessageProc( CWBMessage& Message )
     }
     break;
   }
+
+  {
+    if ( Message.Data >= Menu_MarkerPacks_Base && Message.Data < Menu_MarkerPacks_Base + markerPacks.NumItems() )
+    {
+      CWBContextMenu* ctxMenu = (CWBContextMenu*)App->FindItemByGuid( Message.Position[ 1 ] );
+      if ( ctxMenu )
+      {
+        auto itm = ctxMenu->GetItem( Message.Data );
+        if ( itm )
+        {
+          CString enabled = "MarkerPack_" + markerPacks[ Message.Data - Menu_MarkerPacks_Base ].id + "_autoupdate";
+          itm->SetText( ( Config::GetValue( enabled.GetPointer() ) ? "[x] " : "[ ] " ) + markerPacks[ Message.Data - Menu_MarkerPacks_Base ].name );
+        }
+      }
+        
+      break;
+    }
+  }
+
   if ( Message.Data >= Menu_ToggleMapTimerMap )
   {
     CWBContextMenu* ctxMenu = (CWBContextMenu*)App->FindItemByGuid( Message.Position[ 1 ] );
@@ -1025,6 +1046,13 @@ TBOOL GW2TacO::MessageProc( CWBMessage& Message )
       return true;
     case Menu_ToggleClipboardAccess:
       Config::ToggleValue( "CanWriteToClipboard" );
+      return true;
+    case Menu_ForceFestivals:
+      Config::ToggleValue( "ForceFestivals" );
+      CheckFestivalActive();
+      return true;
+    case Menu_ToggleAutomaticMarkerUpdates:
+      Config::ToggleValue( "FetchMarkerPacks" );
       return true;
     case Menu_Crash:
     {
