@@ -29,12 +29,6 @@
 	</buildfile>
 
 	<buildfile>
-		<sourcepath>Data\Guildraces\</sourcepath>
-		<destpath>Data\Guildraces\</destpath>
-		<mask>*.png</mask>
-	</buildfile>
-
-	<buildfile>
 		<sourcepath>POIs\</sourcepath>
 		<destpath>POIs\</destpath>
 		<mask>!pois.txt</mask>
