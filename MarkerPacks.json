@@ -2,7 +2,7 @@
   "markerpacks": 
   [
     {
-      "name": "Tekkit's Marker Pack",
+      "name": "Tekkit's All-In-One (Festivals, JPs, Achievements, Gathering, Map Completion)",
       "id": "Tekkit",
       "filename": "tw_ALL_IN_ONE.taco",
       "versionurl": "http://tekkitsworkshop.net/index.php/gw2-taco/download",
@@ -12,7 +12,27 @@
       "enabledbydefault": true
     },
     {
-      "name": "Teh's Trails",
+      "name": "ReActif English (Festivals, JPs, Achievements, Gathering)",
+      "id": "ReactifEn",
+      "filename": "reactif.en.taco",
+      "versionurl": "https://www.heinze.fr/taco/?lang=en",
+      "versionsearchstring": "r\"><span class=\"green\">",
+      "versionterminator": "<",
+      "downloadurl": "https://www.heinze.fr/taco/download.php?f=3",
+      "enabledbydefault": false
+    },
+    {
+      "name": "ReActif English Guild Missions (Guild Missions)",
+      "id": "ReactifGuild",
+      "filename": "reactif.en.gm.taco",
+      "versionurl": "https://www.heinze.fr/taco/?lang=en",
+      "versionsearchstring": "r\"><span class=\"green\">",
+      "versionterminator": "<",
+      "downloadurl": "https://www.heinze.fr/taco/download.php?f=7",
+      "enabledbydefault": false
+    },
+    {
+      "name": "Teh's Trails (Fast Map Completion)",
       "id": "Tehs",
       "filename": "TehsTrails.taco",
       "versionurl": "https://github.com/xrandox/TehsTrails/releases/latest",
@@ -22,11 +42,61 @@
       "enabledbydefault": false
     },
     {
-      "name": "[fast] Fast Solo Farming",
+      "name": "Kresky's GW2 Markers (Hero Points)",
+      "id": "Kreskys",
+      "filename": "Kreskys.taco",
+      "versionurl": "https://github.com/Kresky/gw2-blish-markers/releases/latest",
+      "versionsearchstring": "releases/tag/",
+      "versionterminator": "\"",
+      "downloadurl": "https://github.com/Kresky/gw2-blish-markers/releases/download/%s/kreskysmarkers.zip",
+      "enabledbydefault": false
+    },
+    {
+      "name": "Movement on the World (Generic: Scenic Routes)",
+      "id": "Mow",
+      "filename": "MoW.taco",
+      "versionurl": "https://github.com/Sutcenes/MovementOnTheWorld_TacoSupport/releases/latest",
+      "versionsearchstring": "releases/tag/",
+      "versionterminator": "\"",
+      "downloadurl": "https://github.com/Sutcenes/MovementOnTheWorld_TacoSupport/releases/download/%s/MoW.taco",
+      "enabledbydefault": false
+    },
+    {
+      "name": "Nexploration (EoD Map Completion)",
+      "id": "Nexploration",
+      "filename": "Nexploration.taco",
+      "versionurl": "https://github.com/Nexrym/Nexploration/releases/latest",
+      "versionsearchstring": "releases/tag/",
+      "versionterminator": "\"",
+      "downloadurl": "https://github.com/Nexrym/Nexploration/releases/download/%s/Nexploration.taco",
+      "enabledbydefault": false
+    },
+    {
+      "name": "Metal Marker Myriad (EoD Content)",
+      "id": "MMM",
+      "filename": "metal_marker_myriad.taco",
+      "versionurl": "https://github.com/Metallis/Metal-Marker-Myriad/releases/latest",
+      "versionsearchstring": "releases/tag/",
+      "versionterminator": "\"",
+      "downloadurl": "https://github.com/Metallis/Metal-Marker-Myriad/releases/download/%s/Metal_Marker_Myriad.taco",
+      "enabledbydefault": false
+    },
+    {
+      "name": "[fast] TacO Markers (Solo Farming)",
       "id": "fast",
       "filename": "602fd903dad6efast_TacO_pack_001.taco",
       "forcedversion" : "001",
       "downloadurl": "https://fast.farming-community.eu/cockpit/storage/uploads/2021/02/19/602fd903dad6efast_TacO_pack_001.taco",
+      "enabledbydefault": false
+    },
+    {
+      "name": "Hero's Marker Pack (Fractals, Raids, Strikes, Dungeons) Performance Warning: Large Icons",
+      "id": "Heros",
+      "filename": "hero.blish.pack.taco",
+      "versionurl": "https://github.com/QuitarHero/Heros-Marker-Pack/releases/latest",
+      "versionsearchstring": "releases/tag/",
+      "versionterminator": "\"",
+      "downloadurl": "https://github.com/QuitarHero/Heros-Marker-Pack/releases/download/%s/Hero.Blish.Pack.zip",
       "enabledbydefault": false
     }
   ]
