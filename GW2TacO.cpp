@@ -733,6 +733,7 @@ INT WINAPI WinMain( _In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
   ImportLocationalTimers();
   LoadWvWObjectives();
   OpenOverlayWindows( App );
+  CheckForNewTacOBuild();
 
   TBOOL foundGameWindow = false;
   CRect tacoWindowPos{};
