@@ -9,7 +9,7 @@
       "versionsearchstring": "--- ALL-IN-ONE --- ",
       "versionterminator": "<",
       "downloadurl": "http://tekkitsworkshop.net/index.php/gw2-taco/download/send/2-taco-marker-packs/32-all-in-one",
-      "enabledbydefault": true
+      "enabledbydefault": false
     },
     {
       "name": "ReActif English (Festivals, JPs, Achievements, Gathering)",
@@ -19,7 +19,7 @@
       "versionsearchstring": "r\"><span class=\"green\">",
       "versionterminator": "<",
       "downloadurl": "https://www.heinze.fr/taco/download.php?f=3",
-      "enabledbydefault": false
+      "enabledbydefault": true
     },
     {
       "name": "ReActif English Guild Missions (Guild Missions)",
