@@ -165,7 +165,7 @@ void Config::ToggleValue( TCHAR* value )
   ToggleValue( CString( value ) );
 }
 
-TS32 Config::GetValue( TCHAR* value )
+TS32 Config::GetValue( const TCHAR* value )
 {
   if ( configValues.HasKey( value ) )
     return configValues[ value ];

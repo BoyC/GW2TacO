@@ -337,7 +337,7 @@ void CheckFestivalActive()
 
   for ( auto& festival : festivalDailies )
   {
-    if ( !festivalDailies.empty() )
+    if ( !festival.dailyAchievements.empty() )
       GW2::festivals[ cnt ].active = true;
     cnt++;
   }

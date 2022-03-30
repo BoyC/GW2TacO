@@ -266,11 +266,31 @@ CString GW2TacO::GetKeybindString( TacOKeyAction action )
   return "";
 }
 
-CString GetConfigActiveString( char* cfg, int active = -1 )
+CString GetConfigActiveString( const char* cfg, int active = -1 )
 {
   if ( active == -1 )
     return Config::GetValue( cfg ) ? "[x] " : "[ ] ";
   return Config::GetValue( cfg ) == active ? "[x] " : "[ ] ";
+}
+
+struct ToggleOption
+{
+  CString text;
+  const TCHAR* configOption;
+  int menuItem;
+};
+
+CDictionary<int, ToggleOption> toggleOptions;
+
+CWBContextItem* AddToggleOption( CWBContextItem* root, const TCHAR* config, const CString& text, int menuItem, bool highlighted = false )
+{ 
+  ToggleOption option;
+  option.text = text;
+  option.configOption = config;
+  option.menuItem = menuItem;
+  toggleOptions[ menuItem ] = option;
+
+  return root->AddItem( ( GetConfigActiveString( config ) + text ).GetPointer(), menuItem, highlighted, false );
 }
 
 TBOOL GW2TacO::MessageProc( CWBMessage& Message )
@@ -292,6 +312,8 @@ TBOOL GW2TacO::MessageProc( CWBMessage& Message )
 
     if ( b->GetID() == _T( "MenuButton" ) )
     {
+      toggleOptions.Flush();
+
       auto ctx = b->OpenContextMenu( App->GetMousePos() );
       ctx->SetID( "TacOMenu" );
 
@@ -304,14 +326,14 @@ TBOOL GW2TacO::MessageProc( CWBMessage& Message )
         }
         auto options = ctx->AddItem( DICT( "tacticalsettings" ), 0 );
 
-        options->AddItem( GetConfigActiveString( "TacticalDrawDistance" ) + DICT( "togglepoidistance" ), Menu_ToggleDrawDistance );
-        options->AddItem( GetConfigActiveString( "TacticalIconsOnEdge" ) + DICT( "toggleherdicons" ), Menu_ToggleTacticalsOnEdge );
-        options->AddItem( GetConfigActiveString( "DrawWvWNames" ) + DICT( "toggledrawwvwnames" ), Menu_DrawWvWNames );
-        options->AddItem( GetConfigActiveString( "FadeoutBubble" ) + DICT( "togglefadeoutbubble" ), Menu_ToggleFadeoutBubble );
-        options->AddItem( GetConfigActiveString( "UseMetricDisplay" ) + DICT( "togglemetricsystem" ), Menu_ToggleMetricSystem );
-        options->AddItem( GetConfigActiveString( "TacticalInfoTextVisible" ) + DICT( "toggletacticalinfotext" ), Menu_TogglePOIInfoText );
-        options->AddItem( GetConfigActiveString( "CanWriteToClipboard" ) + DICT( "toggleclipboardaccess" ), Menu_ToggleClipboardAccess );
-        options->AddItem( GetConfigActiveString( "ForceFestivals" ) + DICT( "forcefestivals" ), Menu_ForceFestivals );
+        AddToggleOption( options, "TacticalDrawDistance", DICT( "togglepoidistance" ), Menu_ToggleDrawDistance );
+        AddToggleOption( options, "TacticalIconsOnEdge", DICT( "toggleherdicons" ), Menu_ToggleTacticalsOnEdge );
+        AddToggleOption( options, "DrawWvWNames", DICT( "toggledrawwvwnames" ), Menu_DrawWvWNames );
+        AddToggleOption( options, "FadeoutBubble", DICT( "togglefadeoutbubble" ), Menu_ToggleFadeoutBubble );
+        AddToggleOption( options, "UseMetricDisplay", DICT( "togglemetricsystem" ), Menu_ToggleMetricSystem );
+        AddToggleOption( options, "TacticalInfoTextVisible", DICT( "toggletacticalinfotext" ), Menu_TogglePOIInfoText );
+        AddToggleOption( options, "CanWriteToClipboard", DICT( "toggleclipboardaccess" ), Menu_ToggleClipboardAccess );
+        AddToggleOption( options, "ForceFestivals", DICT( "forcefestivals" ), Menu_ForceFestivals );
 
         auto opacityMenu = options->AddItem( DICT( "markeropacity" ), 0 );
         auto opacityInGame = opacityMenu->AddItem( DICT( "ingameopacity" ), 0 );
@@ -358,7 +380,7 @@ TBOOL GW2TacO::MessageProc( CWBMessage& Message )
         utils->AddItem( DICT( "removemymarkers" ), 0 )->AddItem( DICT( "reallyremovemarkers" ), Menu_DeleteMyMarkers );
 
         auto onlineMarkers = ctx->AddItem( DICT( "onlinemarkers" ), 0 );
-        onlineMarkers->AddItem( GetConfigActiveString( "FetchMarkerPacks" ) + DICT( "downloadmarkers" ), Menu_ToggleAutomaticMarkerUpdates );
+        AddToggleOption( onlineMarkers, "FetchMarkerPacks", DICT( "downloadmarkers" ), Menu_ToggleAutomaticMarkerUpdates );
         onlineMarkers->AddSeparator();
 
         {
@@ -647,6 +669,22 @@ TBOOL GW2TacO::MessageProc( CWBMessage& Message )
   case WBM_REBUILDCONTEXTITEM:
 
     //LOG_ERR( "CONTEXT REBUILD" );
+
+    if ( toggleOptions.HasKey( (MainMenuItems)Message.Data ) )
+    {
+      CWBContextMenu* ctxMenu = (CWBContextMenu*)App->FindItemByGuid( Message.Position[ 1 ] );
+      if ( ctxMenu )
+      {
+        auto& option = toggleOptions[ (MainMenuItems)Message.Data ];
+
+        auto itm = ctxMenu->GetItem( Message.Data );
+        if ( itm )
+          itm->SetText( GetConfigActiveString( option.configOption ) + option.text );
+      }
+
+      break;
+    }
+
 
   {
     CWBContextMenu* ctxMenu = (CWBContextMenu*)App->FindItemByGuid( Message.Position[ 1 ] );
