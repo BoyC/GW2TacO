@@ -190,6 +190,12 @@
   <token key="downloadmarkers" value="Update Marker Packs Automatically"/>
   <token key="forcefestivals" value="Show Festival Markers When Festival is Inactive"/>
 
+  <token key="nocategoryhiding" value="Always Show Full Category Tree"/>
+  <token key="downloadpackfail" value="FAILED TO DOWNLOAD: "/>
+  <token key="downloadingpack" value="(Downloading) "/>
+  <token key="packdownloaded" value="(Updated!) "/>
+  <token key="packversioncheckfail" value="VERSION CHECK FAIL: "/>
+
   <token key="wurm_tunnel" value="Wurm Tunnel"/>
   <token key="airport" value="Airport"/>
   <token key="thunder_hollow_reactor" value="Thunder Hollow Reactor"/>

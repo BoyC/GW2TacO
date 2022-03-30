@@ -1572,10 +1572,12 @@ void AddTypeContextMenu( CWBContextItem* ctx, CArray<GW2TacticalCategory*>& Cate
 {
   int hiddenCount = 0;
 
+  bool noHiding = Config::GetValue( "NoCategoryHiding" );
+
   for ( TS32 x = 0; x < Parent->children.NumItems(); x++ )
   {
     auto dta = Parent->children[ x ];
-    if ( dta->hiddenFromContextMenu )
+    if ( dta->hiddenFromContextMenu && !noHiding )
     {
       if ( !dta->isOnlySeparator )
         hiddenCount++;
@@ -1617,10 +1619,12 @@ void AddTypeContextMenu( CWBContextMenu* ctx, CArray<GW2TacticalCategory*>& Cate
 {
   int hiddenCount = 0;
 
+  bool noHiding = Config::GetValue( "NoCategoryHiding" );
+
   for ( TS32 x = 0; x < Parent->children.NumItems(); x++ )
   {
     auto dta = Parent->children[ x ];
-    if ( dta->hiddenFromContextMenu )
+    if ( dta->hiddenFromContextMenu && !noHiding )
     {
       if ( !dta->isOnlySeparator )
         hiddenCount++;

@@ -766,6 +766,9 @@ bool MarkerPack::NeedsUpdate()
 
 bool MarkerPack::UpdateFromWeb()
 {
+  if ( failed )
+    return false;
+
   {
     CLightweightCriticalSection cs( &dlTextCritSec );
     currentDownload = id;

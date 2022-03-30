@@ -14,8 +14,8 @@ public:
 
   static void Load();
   static void Save();
-  static void ToggleValue( TCHAR* value );
-  static void ToggleValue( CString& value );
+  static void ToggleValue( const TCHAR* value );
+  static void ToggleValue( const CString& value );
   static TS32 GetValue( const TCHAR* value );
   static void SetValue( TCHAR* value, TS32 val );
   static TBOOL HasValue( TCHAR* value );

@@ -19,7 +19,7 @@ public:
   CString versionString;
 
   bool versionCheckDone = false;
-  bool defaultEnabled = false;;
+  bool defaultEnabled = false;
   bool outdated = false;
   bool versionCheckOk = false;
   bool beingDownloaded = false;

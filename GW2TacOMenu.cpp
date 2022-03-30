@@ -170,6 +170,7 @@ enum MainMenuItems
   Menu_ToggleClipboardAccess,
   Menu_ToggleAutomaticMarkerUpdates,
   Menu_ForceFestivals,
+  Menu_NoCategoryHiding,
 
   Menu_OpacityIngame_Solid,
   Menu_OpacityIngame_Transparent,
@@ -276,13 +277,41 @@ CString GetConfigActiveString( const char* cfg, int active = -1 )
 struct ToggleOption
 {
   CString text;
-  const TCHAR* configOption;
+  CString configOption;
   int menuItem;
+  bool toggle = true;
+  int value = -1;
+  bool doHighlight = false;
 };
 
 CDictionary<int, ToggleOption> toggleOptions;
 
-CWBContextItem* AddToggleOption( CWBContextItem* root, const TCHAR* config, const CString& text, int menuItem, bool highlighted = false )
+CWBContextItem* AddToggleOption( CWBContextMenu* root, const CString config, const CString& text, int menuItem, bool highlighted = false )
+{
+  ToggleOption option;
+  option.text = text;
+  option.configOption = config;
+  option.menuItem = menuItem;
+  toggleOptions[ menuItem ] = option;
+
+  return root->AddItem( ( GetConfigActiveString( config.GetPointer() ) + text ).GetPointer(), menuItem, highlighted, false );
+}
+
+CWBContextItem* AddSetValueOption( CWBContextItem* root, const CString config, const CString& text, int menuItem, int value, bool highlighted = false )
+{
+  ToggleOption option;
+  option.text = text;
+  option.configOption = config;
+  option.menuItem = menuItem;
+  option.toggle = false;
+  option.value = value;
+  option.doHighlight = highlighted;
+  toggleOptions[ menuItem ] = option;
+
+  return root->AddItem( ( GetConfigActiveString( config.GetPointer(), value ) + text ).GetPointer(), menuItem, highlighted ? ( value == Config::GetValue( config.GetPointer() ) ) : false, false );
+}
+
+CWBContextItem* AddToggleOption( CWBContextItem* root, const CString config, const CString& text, int menuItem, bool highlighted = false )
 { 
   ToggleOption option;
   option.text = text;
@@ -290,7 +319,7 @@ CWBContextItem* AddToggleOption( CWBContextItem* root, const TCHAR* config, cons
   option.menuItem = menuItem;
   toggleOptions[ menuItem ] = option;
 
-  return root->AddItem( ( GetConfigActiveString( config ) + text ).GetPointer(), menuItem, highlighted, false );
+  return root->AddItem( ( GetConfigActiveString( config.GetPointer() ) + text ).GetPointer(), menuItem, highlighted, false );
 }
 
 TBOOL GW2TacO::MessageProc( CWBMessage& Message )
@@ -319,7 +348,7 @@ TBOOL GW2TacO::MessageProc( CWBMessage& Message )
 
       if ( Config::GetValue( "TacticalLayerVisible" ) )
       {
-        auto flt = ctx->AddItem( DICT( "filtermarkers" ), Menu_ToggleTacticalsOnEdge );
+        auto flt = ctx->AddItem( DICT( "filtermarkers" ), 0 );
         {
           CLightweightCriticalSection cs( &Achievements::critSec );
           OpenTypeContextMenu( flt, CategoryList, true, Menu_MarkerFilter_Base, false, Achievements::achievements );
@@ -334,6 +363,7 @@ TBOOL GW2TacO::MessageProc( CWBMessage& Message )
         AddToggleOption( options, "TacticalInfoTextVisible", DICT( "toggletacticalinfotext" ), Menu_TogglePOIInfoText );
         AddToggleOption( options, "CanWriteToClipboard", DICT( "toggleclipboardaccess" ), Menu_ToggleClipboardAccess );
         AddToggleOption( options, "ForceFestivals", DICT( "forcefestivals" ), Menu_ForceFestivals );
+        AddToggleOption( options, "NoCategoryHiding", DICT( "nocategoryhiding" ), Menu_NoCategoryHiding );
 
         auto opacityMenu = options->AddItem( DICT( "markeropacity" ), 0 );
         auto opacityInGame = opacityMenu->AddItem( DICT( "ingameopacity" ), 0 );
@@ -387,12 +417,25 @@ TBOOL GW2TacO::MessageProc( CWBMessage& Message )
           CLightweightCriticalSection cs( &dlTextCritSec );
           for ( int x = 0; x < markerPacks.NumItems(); x++ )
           {
-            CString enabled = "MarkerPack_" + markerPacks[ x ].id + "_autoupdate";
-            onlineMarkers->AddItem( ( Config::GetValue( enabled.GetPointer() ) ? "[x] " : "[ ] " ) + markerPacks[ x ].name, Menu_MarkerPacks_Base + x, false, false );
+            CString state = "";
+
+            if ( markerPacks[ x ].beingDownloaded )
+              state = DICT( "downloadingpack" );
+
+            if ( markerPacks[ x ].versionCheckDone && !markerPacks[ x ].versionCheckOk )
+              state = DICT( "packversioncheckfail" );
+
+            if ( markerPacks[ x ].downloadFinished )
+              state = DICT( "packdownloaded" );
+
+            if ( markerPacks[ x ].failed )
+              state = DICT( "downloadpackfail" );
+
+            AddToggleOption( onlineMarkers, "MarkerPack_" + markerPacks[ x ].id + "_autoupdate", state + markerPacks[ x ].name, Menu_MarkerPacks_Base + x, false );
           }
         }
       }
-      ctx->AddItem( GetConfigActiveString( "TacticalLayerVisible" ) + GetKeybindString( TacOKeyAction::Toggle_tactical_layer ) + DICT( "toggletactical" ), Menu_ToggleTactical );
+      AddToggleOption( ctx, "TacticalLayerVisible", GetKeybindString( TacOKeyAction::Toggle_tactical_layer ) + DICT( "toggletactical" ), Menu_ToggleTactical );
 
       ctx->AddSeparator();
 
@@ -402,58 +445,51 @@ TBOOL GW2TacO::MessageProc( CWBMessage& Message )
       }
       else
       {
-        ctx->AddItem( GetConfigActiveString( "RangeCirclesVisible" ) + GetKeybindString( TacOKeyAction::Toggle_range_circles ) + DICT( "togglerangecircles" ), Menu_ToggleRangeCircles );
+        AddToggleOption( ctx, "RangeCirclesVisible", GetKeybindString( TacOKeyAction::Toggle_range_circles ) + DICT( "togglerangecircles" ), Menu_ToggleRangeCircles );
         if ( Config::GetValue( "RangeCirclesVisible" ) )
         {
           auto trns = ctx->AddItem( DICT( "rangevisibility" ), 0 );
-          trns->AddItem( "40%", Menu_RangeCircleTransparency40 );
-          trns->AddItem( "60%", Menu_RangeCircleTransparency60 );
-          trns->AddItem( "100%", Menu_RangeCircleTransparency100 );
+          AddSetValueOption( trns, "RangeCircleTransparency", "40%", Menu_RangeCircleTransparency40, 40 );
+          AddSetValueOption( trns, "RangeCircleTransparency", "60%", Menu_RangeCircleTransparency60, 60 );
+          AddSetValueOption( trns, "RangeCircleTransparency", "100%", Menu_RangeCircleTransparency100, 100 );
+
           auto ranges = ctx->AddItem( DICT( "toggleranges" ), 0 );
-          ranges->AddItem( GetConfigActiveString( "RangeCircle90" ) + "90", Menu_ToggleRangeCircle90, false, false );
-          ranges->AddItem( GetConfigActiveString( "RangeCircle120" ) + "120", Menu_ToggleRangeCircle120, false, false );
-          ranges->AddItem( GetConfigActiveString( "RangeCircle180" ) + "180", Menu_ToggleRangeCircle180, false, false );
-          ranges->AddItem( GetConfigActiveString( "RangeCircle240" ) + "240", Menu_ToggleRangeCircle240, false, false );
-          ranges->AddItem( GetConfigActiveString( "RangeCircle300" ) + "300", Menu_ToggleRangeCircle300, false, false );
-          ranges->AddItem( GetConfigActiveString( "RangeCircle400" ) + "400", Menu_ToggleRangeCircle400, false, false );
-          ranges->AddItem( GetConfigActiveString( "RangeCircle600" ) + "600", Menu_ToggleRangeCircle600, false, false );
-          ranges->AddItem( GetConfigActiveString( "RangeCircle900" ) + "900", Menu_ToggleRangeCircle900, false, false );
-          ranges->AddItem( GetConfigActiveString( "RangeCircle1200" ) + "1200", Menu_ToggleRangeCircle1200, false, false );
-          ranges->AddItem( GetConfigActiveString( "RangeCircle1500" ) + "1500", Menu_ToggleRangeCircle1500, false, false );
-          ranges->AddItem( GetConfigActiveString( "RangeCircle1600" ) + "1600", Menu_ToggleRangeCircle1600, false, false );
+          AddToggleOption( ranges, "RangeCircle90", "90", Menu_ToggleRangeCircle90 );
+          AddToggleOption( ranges, "RangeCircle120", "120", Menu_ToggleRangeCircle120 );
+          AddToggleOption( ranges, "RangeCircle180", "180", Menu_ToggleRangeCircle180 );
+          AddToggleOption( ranges, "RangeCircle240", "240", Menu_ToggleRangeCircle240 );
+          AddToggleOption( ranges, "RangeCircle300", "300", Menu_ToggleRangeCircle300 );
+          AddToggleOption( ranges, "RangeCircle400", "400", Menu_ToggleRangeCircle400 );
+          AddToggleOption( ranges, "RangeCircle600", "600", Menu_ToggleRangeCircle600 );
+          AddToggleOption( ranges, "RangeCircle900", "900", Menu_ToggleRangeCircle900 );
+          AddToggleOption( ranges, "RangeCircle1200", "1200", Menu_ToggleRangeCircle1200 );
+          AddToggleOption( ranges, "RangeCircle1500", "1500", Menu_ToggleRangeCircle1500 );
+          AddToggleOption( ranges, "RangeCircle1600", "1600", Menu_ToggleRangeCircle1600 );
         }
       }
 
       ctx->AddSeparator();
 
-      ctx->AddItem( GetConfigActiveString( "TacticalCompassVisible" ) + GetKeybindString( TacOKeyAction::Toggle_tactical_compass ) + DICT( "togglecompass" ), Menu_ToggleTacticalCompass );
-      ctx->AddItem( GetConfigActiveString( "LocationalTimersVisible" ) + GetKeybindString( TacOKeyAction::Toggle_locational_timers ) + DICT( "toggleloctimers" ), Menu_ToggleLocationalTimers );
-      ctx->AddItem( GetConfigActiveString( "HPGridVisible" ) + GetKeybindString( TacOKeyAction::Toggle_hp_grids ) + DICT( "togglehpgrid" ), Menu_ToggleHPGrid );
+      AddToggleOption(ctx, "TacticalCompassVisible", GetKeybindString( TacOKeyAction::Toggle_tactical_compass ) + DICT( "togglecompass" ), Menu_ToggleTacticalCompass );
+      AddToggleOption(ctx, "LocationalTimersVisible", GetKeybindString( TacOKeyAction::Toggle_locational_timers ) + DICT( "toggleloctimers" ), Menu_ToggleLocationalTimers );
+      AddToggleOption(ctx, "HPGridVisible", GetKeybindString( TacOKeyAction::Toggle_hp_grids ) + DICT( "togglehpgrid" ), Menu_ToggleHPGrid );
+
       //ctx->AddItem( GetConfigValue( "Vsync" ) ? "Toggle TacO Vsync [x]" : "Toggle TacO Vsync [ ]", Menu_ToggleVsync );
+
       ctx->AddSeparator();
-      ctx->AddItem( GetConfigActiveString( "MouseHighlightVisible" ) + GetKeybindString( TacOKeyAction::Toggle_mouse_highlight ) + DICT( "togglemousehighlight" ), Menu_ToggleHighLight );
+      AddToggleOption( ctx, "MouseHighlightVisible", GetKeybindString( TacOKeyAction::Toggle_mouse_highlight ) + DICT( "togglemousehighlight" ), Menu_ToggleHighLight );
       if ( Config::GetValue( "MouseHighlightVisible" ) )
       {
-        ctx->AddItem( GetConfigActiveString( "MouseHighlightOutline" ) + DICT( "togglemouseoutline" ), Menu_ToggleMouseHighlightOutline );
-        auto cols = ctx->AddItem( DICT( "mousecolor" ), 0 );
+        AddToggleOption( ctx, "MouseHighlightOutline", DICT( "togglemouseoutline" ), Menu_ToggleMouseHighlightOutline );
 
         extern CString CGAPaletteNames[];
-
-        int mouseColor = 0;
-        if ( Config::HasValue( "MouseHighlightColor" ) )
-          mouseColor = Config::GetValue( "MouseHighlightColor" );
+        auto cols = ctx->AddItem( DICT( "mousecolor" ), 0 );
 
         for ( int x = 0; x < 16; x++ )
-        {
-          if ( mouseColor == x )
-            cols->AddItem( ( CString( "[x] " ) + DICT( CGAPaletteNames[ x ] ) ).GetPointer(), Menu_MouseHighlightColor0 + x, true );
-          else
-            cols->AddItem( ( CString( "[ ] " ) + DICT( CGAPaletteNames[ x ] ) ).GetPointer(), Menu_MouseHighlightColor0 + x, false );
-        }
-
+          AddSetValueOption( cols, "MouseHighlightColor", DICT( CGAPaletteNames[ x ] ), Menu_MouseHighlightColor0 + x, x, true );
       }
       ctx->AddSeparator();
-      //auto it = ctx->AddItem("Windows", 0);
+
       ctx->AddItem( ( Config::IsWindowOpen( "MapTimer" ) ? DICT( "closemaptimer" ) : DICT( "openmaptimer" ) ) + GetKeybindString( TacOKeyAction::Toggle_map_timer ), Menu_ToggleMapTimer );
       if ( Config::IsWindowOpen( "MapTimer" ) )
       {
@@ -466,15 +502,7 @@ TBOOL GW2TacO::MessageProc( CWBMessage& Message )
           auto itm = ctx->AddItem( DICT( "configmaptimer" ), 0 );
 
           for ( TS32 x = 0; x < timer->maps.NumItems(); x++ )
-          {
-            TBOOL open = true;
-            CString str = CString( "maptimer_mapopen_" ) + timer->maps[ x ].id;
-
-            if ( Config::HasValue( str.GetPointer() ) )
-              open = Config::GetValue( str.GetPointer() );
-
-            itm->AddItem( open ? ( "[x] " + timer->maps[ x ].name ).GetPointer() : ( "[ ] " + timer->maps[ x ].name ).GetPointer(), Menu_ToggleMapTimerMap + x, open, false );
-          }
+            AddToggleOption( itm, CString( "maptimer_mapopen_" ) + timer->maps[ x ].id, timer->maps[ x ].name, Menu_ToggleMapTimerMap + x );
         }
 
       }
@@ -677,9 +705,29 @@ TBOOL GW2TacO::MessageProc( CWBMessage& Message )
       {
         auto& option = toggleOptions[ (MainMenuItems)Message.Data ];
 
-        auto itm = ctxMenu->GetItem( Message.Data );
-        if ( itm )
-          itm->SetText( GetConfigActiveString( option.configOption ) + option.text );
+        if ( option.toggle )
+        {
+          auto itm = ctxMenu->GetItem( Message.Data );
+          if ( itm )
+            itm->SetText( GetConfigActiveString( option.configOption.GetPointer() ) + option.text );
+        }
+        else
+        {
+          for ( int x = 0; x < toggleOptions.NumItems(); x++ )
+          {
+            auto& other = toggleOptions.GetByIndex( x );
+            if ( other.configOption == option.configOption )
+            {
+              auto itm = ctxMenu->GetItem( other.menuItem );
+              if ( itm )
+              {
+                itm->SetText( ( GetConfigActiveString( option.configOption.GetPointer(), other.value ) + other.text ).GetPointer() );
+                if ( option.doHighlight )
+                  itm->SetHighlight( Config::GetValue( option.configOption.GetPointer() ) == other.value );
+              }
+            }
+          }
+        }
       }
 
       break;
@@ -744,6 +792,7 @@ TBOOL GW2TacO::MessageProc( CWBMessage& Message )
     break;
   }
 
+/*
   {
     if ( Message.Data >= Menu_MarkerPacks_Base && Message.Data < Menu_MarkerPacks_Base + markerPacks.NumItems() )
     {
@@ -761,6 +810,7 @@ TBOOL GW2TacO::MessageProc( CWBMessage& Message )
       break;
     }
   }
+*/
 
   if ( Message.Data >= Menu_ToggleMapTimerMap )
   {
@@ -781,48 +831,6 @@ TBOOL GW2TacO::MessageProc( CWBMessage& Message )
     itm->SetText( open ? ( timer->maps[ mapIdx ].name + " [x]" ).GetPointer() : ( timer->maps[ mapIdx ].name + " [ ]" ).GetPointer() );
     itm->SetHighlight( open );
     break;
-  }
-
-  {
-    CWBContextMenu* ctxMenu = (CWBContextMenu*)App->FindItemByGuid( Message.Position[ 1 ] );
-    auto itm = ctxMenu->GetItem( Message.Data );
-
-    switch ( Message.Data )
-    {
-    case Menu_ToggleRangeCircle90:
-      if ( itm ) itm->SetText( Config::GetValue( "RangeCircle90" ) ? "90 [x]" : "90 [ ]" );
-      break;
-    case Menu_ToggleRangeCircle120:
-      if ( itm ) itm->SetText( Config::GetValue( "RangeCircle120" ) ? "120 [x]" : "120 [ ]" );
-      break;
-    case Menu_ToggleRangeCircle180:
-      if ( itm ) itm->SetText( Config::GetValue( "RangeCircle180" ) ? "180 [x]" : "180 [ ]" );
-      break;
-    case Menu_ToggleRangeCircle240:
-      if ( itm ) itm->SetText( Config::GetValue( "RangeCircle240" ) ? "240 [x]" : "240 [ ]" );
-      break;
-    case Menu_ToggleRangeCircle300:
-      if ( itm ) itm->SetText( Config::GetValue( "RangeCircle300" ) ? "300 [x]" : "300 [ ]" );
-      break;
-    case Menu_ToggleRangeCircle400:
-      if ( itm ) itm->SetText( Config::GetValue( "RangeCircle400" ) ? "400 [x]" : "400 [ ]" );
-      break;
-    case Menu_ToggleRangeCircle600:
-      if ( itm ) itm->SetText( Config::GetValue( "RangeCircle600" ) ? "600 [x]" : "600 [ ]" );
-      break;
-    case Menu_ToggleRangeCircle900:
-      if ( itm ) itm->SetText( Config::GetValue( "RangeCircle900" ) ? "900 [x]" : "900 [ ]" );
-      break;
-    case Menu_ToggleRangeCircle1200:
-      if ( itm ) itm->SetText( Config::GetValue( "RangeCircle1200" ) ? "1200 [x]" : "1200 [ ]" );
-      break;
-    case Menu_ToggleRangeCircle1500:
-      if ( itm ) itm->SetText( Config::GetValue( "RangeCircle1500" ) ? "1500 [x]" : "1500 [ ]" );
-      break;
-    case Menu_ToggleRangeCircle1600:
-      if ( itm ) itm->SetText( Config::GetValue( "RangeCircle1600" ) ? "1600 [x]" : "1600 [ ]" );
-      break;
-    }
   }
 
   break;
@@ -926,6 +934,15 @@ TBOOL GW2TacO::MessageProc( CWBMessage& Message )
       }
     }
 
+    if ( toggleOptions.HasKey( Message.Data ) )
+    {
+      auto& opts = toggleOptions[ Message.Data ];
+      if ( opts.toggle )
+        Config::ToggleValue( opts.configOption );
+      else
+        Config::SetValue( opts.configOption.GetPointer(), opts.value );
+    }
+
     switch ( Message.Data )
     {
     case Menu_Exit:
@@ -942,21 +959,6 @@ TBOOL GW2TacO::MessageProc( CWBMessage& Message )
       return true;
     case Menu_ToggleHighLight:
       Config::ToggleValue( "MouseHighlightVisible" );
-      return true;
-    case Menu_ToggleTactical:
-      Config::ToggleValue( "TacticalLayerVisible" );
-      return true;
-    case Menu_ToggleTacticalsOnEdge:
-      Config::ToggleValue( "TacticalIconsOnEdge" );
-      return true;
-    case Menu_ToggleDrawDistance:
-      Config::ToggleValue( "TacticalDrawDistance" );
-      return true;
-    case Menu_DrawWvWNames:
-      Config::ToggleValue( "DrawWvWNames" );
-      return true;
-    case Menu_ToggleLocationalTimers:
-      Config::ToggleValue( "LocationalTimersVisible" );
       return true;
     case Menu_ToggleGW2ExitMode:
       Config::ToggleValue( "CloseWithGW2" );
@@ -1003,60 +1005,9 @@ TBOOL GW2TacO::MessageProc( CWBMessage& Message )
     case Menu_DownloadNewBuild:
       ShellExecute( (HWND)App->GetHandle(), "open", "http://www.gw2taco.com", NULL, NULL, SW_SHOW );
       return true;
-    case Menu_ToggleRangeCircles:
-      Config::ToggleValue( "RangeCirclesVisible" );
-      return true;
-    case Menu_RangeCircleTransparency40:
-      Config::SetValue( "RangeCircleTransparency", 40 );
-      return true;
-    case Menu_RangeCircleTransparency60:
-      Config::SetValue( "RangeCircleTransparency", 60 );
-      return true;
-    case Menu_RangeCircleTransparency100:
-      Config::SetValue( "RangeCircleTransparency", 100 );
-      return true;
-    case Menu_ToggleRangeCircle90:
-      Config::ToggleValue( "RangeCircle90" );
-      return true;
-    case Menu_ToggleRangeCircle120:
-      Config::ToggleValue( "RangeCircle120" );
-      return true;
-    case Menu_ToggleRangeCircle180:
-      Config::ToggleValue( "RangeCircle180" );
-      return true;
-    case Menu_ToggleRangeCircle240:
-      Config::ToggleValue( "RangeCircle240" );
-      return true;
-    case Menu_ToggleRangeCircle300:
-      Config::ToggleValue( "RangeCircle300" );
-      return true;
-    case Menu_ToggleRangeCircle400:
-      Config::ToggleValue( "RangeCircle400" );
-      return true;
-    case Menu_ToggleRangeCircle600:
-      Config::ToggleValue( "RangeCircle600" );
-      return true;
-    case Menu_ToggleRangeCircle900:
-      Config::ToggleValue( "RangeCircle900" );
-      return true;
-    case Menu_ToggleRangeCircle1200:
-      Config::ToggleValue( "RangeCircle1200" );
-      return true;
-    case Menu_ToggleRangeCircle1500:
-      Config::ToggleValue( "RangeCircle1500" );
-      return true;
-    case Menu_ToggleRangeCircle1600:
-      Config::ToggleValue( "RangeCircle1600" );
-      return true;
-    case Menu_ToggleTacticalCompass:
-      Config::ToggleValue( "TacticalCompassVisible" );
-      return true;
     case Menu_ToggleVsync:
       Config::ToggleValue( "Vsync" );
       App->SetVSync( Config::GetValue( "Vsync" ) );
-      return true;
-    case Menu_ToggleHPGrid:
-      Config::ToggleValue( "HPGridVisible" );
       return true;
     case Menu_ToggleCompactMapTimer:
       Config::ToggleValue( "MapTimerCompact" );
@@ -1079,18 +1030,8 @@ TBOOL GW2TacO::MessageProc( CWBMessage& Message )
     case Menu_ToggleCompactRaids:
       Config::ToggleValue( "CompactRaidWindow" );
       return true;
-    case Menu_TogglePOIInfoText:
-      Config::ToggleValue( "TacticalInfoTextVisible" );
-      return true;
-    case Menu_ToggleClipboardAccess:
-      Config::ToggleValue( "CanWriteToClipboard" );
-      return true;
     case Menu_ForceFestivals:
-      Config::ToggleValue( "ForceFestivals" );
       CheckFestivalActive();
-      return true;
-    case Menu_ToggleAutomaticMarkerUpdates:
-      Config::ToggleValue( "FetchMarkerPacks" );
       return true;
     case Menu_Crash:
     {
@@ -1099,6 +1040,7 @@ TBOOL GW2TacO::MessageProc( CWBMessage& Message )
       int z = 15 / ( (int)sin( 0 ) );
       break;
     }
+/*
     case Menu_MouseHighlightColor0:
     case Menu_MouseHighlightColor1:
     case Menu_MouseHighlightColor2:
@@ -1117,6 +1059,7 @@ TBOOL GW2TacO::MessageProc( CWBMessage& Message )
     case Menu_MouseHighlightColorf:
       Config::SetValue( "MouseHighlightColor", Message.Data - Menu_MouseHighlightColor0 );
       return true;
+*/
     case Menu_TS3APIKey:
       ApiKeyInputAction( APIKeys::TS3APIKey, 0 );
       return true;
@@ -1125,12 +1068,6 @@ TBOOL GW2TacO::MessageProc( CWBMessage& Message )
       return true;
     case Menu_ToggleAutoHideMarkerEditor:
       Config::ToggleValue( "AutoHideMarkerEditor" );
-      return true;
-    case Menu_ToggleFadeoutBubble:
-      Config::ToggleValue( "FadeoutBubble" );
-      return true;
-    case Menu_ToggleMetricSystem:
-      Config::ToggleValue( "UseMetricDisplay" );
       return true;
     case Menu_ToggleForceDPIAware:
       Config::ToggleValue( "ForceDPIAware" );

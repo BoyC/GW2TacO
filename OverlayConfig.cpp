@@ -75,6 +75,7 @@ void Config::InitDefaults()
   SetDefaultValue( "ShowInGameTrails", 1 );
   SetDefaultValue( "FetchMarkerPacks", 1 );
   SetDefaultValue( "ForceFestivals", 0 );
+  SetDefaultValue( "NoCategoryHiding", 0 );
 }
 
 void Config::Load()
@@ -147,7 +148,7 @@ void Config::Save()
   doc.SaveToFile( "TacOConfig.xml" );
 }
 
-void Config::ToggleValue( CString& value )
+void Config::ToggleValue( const CString& value )
 {
   configChanged = true;
   lastConfigChangeTime = globalTimer.GetTime();
@@ -160,7 +161,7 @@ void Config::ToggleValue( CString& value )
     configValues[ value ] = 0;
 }
 
-void Config::ToggleValue( TCHAR* value )
+void Config::ToggleValue( const TCHAR* value )
 {
   ToggleValue( CString( value ) );
 }
