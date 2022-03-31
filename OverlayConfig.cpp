@@ -207,7 +207,12 @@ CString Config::GetString( TCHAR* value )
 TBOOL Config::IsWindowOpen( TCHAR* windowname )
 {
   CString s( windowname );
-  return GetValue( ( s + L"_open" ).GetPointer() );
+  return GetValue( GetWindowOpenConfigValue( windowname ).GetPointer() );
+}
+
+CString Config::GetWindowOpenConfigValue( TCHAR* windowname )
+{
+  return CString( windowname ) + L"_open";
 }
 
 void Config::SetWindowOpenState( TCHAR* windowname, TBOOL Open )

@@ -281,7 +281,7 @@ TBOOL CWBContextMenu::MessageProc( CWBMessage &Message )
         CRect EntryPos = GetItemRect( x );
         if ( MouseOver() && EntryPos.Contains( ScreenToClient( App->GetMousePos() ) ) )
         {
-          App->SendMessage( CWBMessage( App, WBM_CONTEXTMESSAGE, Target, Items[ x ]->ReturnID ) );
+          App->SendMessage( CWBMessage( App, WBM_CONTEXTMESSAGE, Target, Items[ x ]->ReturnID, GetGuid() ) );
           if ( Items[ x ]->closesContext )
           {
             MarkForDeletion();
@@ -504,4 +504,9 @@ CWBContextItem * CWBContextMenu::GetItem( TS32 ID )
     if ( Items[ x ]->ReturnID == ID )
       return Items[ x ];
   return nullptr;
+}
+
+CWBContextMenu* CWBContextMenu::GetParentMenu()
+{
+  return ParentMenu;
 }

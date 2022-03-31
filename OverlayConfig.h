@@ -25,6 +25,7 @@ public:
 
   static TBOOL HasWindowData( TCHAR* windowname );
   static TBOOL IsWindowOpen( TCHAR* windowname );
+  static CString GetWindowOpenConfigValue( TCHAR* windowname );
   static void SetWindowOpenState( TCHAR* windowname, TBOOL Open );
   static CRect GetWindowPosition( TCHAR* windowname );
   static void SetWindowPosition( TCHAR* windowname, CRect Pos );

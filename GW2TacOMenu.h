@@ -89,6 +89,9 @@ class GW2TacO : public CWBItem
   CString mouseToolTip;
   CString GetKeybindString( TacOKeyAction action );
 
+  void OpenMainMenu( CWBContextMenu* ctx );
+  void RebuildMainMenu( CWBContextMenu* ctx );
+
 public:
   virtual void OnDraw( CWBDrawAPI* API );
   virtual void OnPostDraw( CWBDrawAPI* API );

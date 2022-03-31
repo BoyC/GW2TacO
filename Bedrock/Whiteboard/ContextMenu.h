@@ -70,4 +70,6 @@ public:
 
   virtual TBOOL ApplyStyle( CString & prop, CString & value, CStringArray &pseudo );
   virtual CWBContextItem *GetItem( TS32 ID );
+
+  CWBContextMenu* GetParentMenu();
 };
