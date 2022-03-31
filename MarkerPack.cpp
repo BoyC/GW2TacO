@@ -701,6 +701,9 @@ void FetchMarkerPacks()
 
 bool MarkerPack::CheckVersion()
 {
+  if ( versionCheckDone )
+    return true;
+
   CString versionUpdateValue = "MarkerPack_" + id + "_autoupdate";
   if ( Config::GetValue( versionUpdateValue.GetPointer() ) == 0 )
     return false;
