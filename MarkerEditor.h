@@ -2,8 +2,80 @@
 #include "Bedrock/WhiteBoard/WhiteBoard.h"
 #include "gw2tactical.h"
 
+enum class MarkerAction
+{
+  AddMarker,
+  DeleteMarker,
+  AddCategory,
+  DeleteCategory,
+  SetMarkerCategory,
+  UpdateCategory,
+  MoveMarker,
+};
+
+class MarkerActionData
+{
+  MarkerAction action{};
+  GUID targetMarker{};
+
+  MarkerTypeData typeData{};
+  GUID guid{};
+
+  int intData{}; // vertex index / map id
+  CVector3 position{}; // marker/vertex pos
+  CVector3 rotation{}; // rotation
+  TS32 stringID = -1;
+
+public:
+
+  MarkerActionData() = default;
+  MarkerActionData( MarkerAction action, const GUID& guid, const CVector3& pos = CVector3(), const int intData = 0 );
+  MarkerActionData( MarkerAction action, const GUID& guid, const MarkerTypeData& typeData, const CVector3& pos = CVector3(), const CVector3& rot = CVector3(), int intData = 0, int stringId = -1 );
+  MarkerActionData( MarkerAction action, const int stringId, const MarkerTypeData& typeData );
+
+  void Do();
+};
+
+class MarkerDOM
+{
+  static int bufferIndex;
+  static CArray<MarkerActionData> actionBuffer;
+  static CArray<MarkerActionData> undoBuffer;
+
+public:
+
+  static void AddMarker( const GUID& guid, const CVector3& pos, const int mapID );
+  static void DeleteMarker( const GUID& guid );
+  static void SetMarketPosition( const GUID& guid, const CVector3& pos );
+  static void SetTrailVertexPosition( const GUID& guid, int vertex, const CVector3& pos );
+
+  static void Undo();
+  static void Redo();
+};
+
+struct UberToolPart
+{
+  CCoreVertexBuffer* mesh = nullptr;
+  int triCount = 0;
+
+  ~UberToolPart();
+};
+
+enum class UberToolMode
+{
+  Move,
+  Scale,
+  Rotate
+};
+
 class GW2MarkerEditor : public CWBItem
 {
+  UberToolMode uberToolMode = UberToolMode::Move;
+
+  CMatrix4x4 cam;
+  CMatrix4x4 persp;
+  CMatrix4x4 uberTool;
+
   virtual TBOOL MessageProc( CWBMessage& message );
   virtual void OnDraw( CWBDrawAPI* API );
   TBOOL hidden = false;
@@ -12,7 +84,25 @@ class GW2MarkerEditor : public CWBItem
   CArray<GW2TacticalCategory*> categoryList;
   TBOOL changeDefault = false;
 
+  GUID editedMarker{};
+
+  CCoreVertexFormat* vertexFormat = nullptr;
+  CCoreVertexShader* vxShader = nullptr;
+  CCorePixelShader* pxShader = nullptr;
+  CCoreConstantBuffer* constBuffer = nullptr;
+  CCoreRasterizerState* rasterizer = nullptr;
+  CCoreDepthStencilState* depthStencil = nullptr;
+
+  UberToolPart plane;
+  UberToolPart arrow;
+  UberToolPart circle;
+
+  void InitUberTool();
+
 public:
+
+  TBOOL HandleUberToolMessages( CWBMessage& message );
+  void DrawUberTool( CWBDrawAPI* API, const CRect& drawrect );
 
   virtual TBOOL IsMouseTransparent( CPoint& ClientSpacePoint, WBMESSAGE MessageType );
 

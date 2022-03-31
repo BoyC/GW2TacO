@@ -1361,6 +1361,13 @@ void GW2TacO::OnDraw( CWBDrawAPI* API )
 {
   //API->DrawRect( GetClientRect(), CColor( 0, 0, 0, 255 ) );
 
+  if ( Config::IsWindowOpen( "MarkerEditor" ) )
+  {
+    auto editor = App->GetRoot()->FindChildByID<GW2MarkerEditor>( "MarkerEditor" );
+    if ( editor && !editor->IsHidden() )
+      editor->DrawUberTool( API, GetClientRect() );
+  }
+
   mouseToolTip = "";
 
   float windowTooSmallScale = GetWindowTooSmallScale();
@@ -1773,6 +1780,7 @@ void GW2TacO::OpenWindow( CString s )
     w->SetID( s );
     Config::SetWindowOpenState( s.GetPointer(), true );
     GW2MarkerEditor* mt = new GW2MarkerEditor( w, w->GetClientRect() );
+    mt->SetID( "MarkerEditor" );
     w->ReapplyStyles();
   }
 

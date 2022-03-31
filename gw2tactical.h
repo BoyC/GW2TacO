@@ -111,14 +111,17 @@ class GW2TacticalCategory;
 struct POI
 {
   MarkerTypeData typeData;
+  CVector3 position;
+  CVector3 rotation;
+  TS32 mapID;
+  GUID guid;
+  TS16 Type = -1; //type string id
+
   WBATLASHANDLE icon = 0;
 
   CVector4 cameraSpacePosition;
 
-  CVector3 position;
-  TS32 mapID;
   TU8 wvwObjectiveID;
-  TS16 Type = -1; //type string id
 
   time_t lastUpdateTime = 0;
   TBOOL external = false;
@@ -126,8 +129,6 @@ struct POI
 
   TS16 zipFile;
   TS16 iconFile;
-
-  GUID guid;
 
   GW2TacticalCategory* category = nullptr;
   void SetCategory( CWBApplication* App, GW2TacticalCategory* t );
