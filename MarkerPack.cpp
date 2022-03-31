@@ -670,6 +670,13 @@ void FetchMarkerPacks()
           pack.downloadURL = data.get<String>( "downloadurl" ).data();
         else
           incomplete = true;
+
+        if ( data.has<String>( "backupurl" ) )
+          pack.backupURL = data.get<String>( "backupurl" ).data();
+
+        if ( data.has<String>( "backupversion" ) )
+          pack.backupVersion = data.get<String>( "backupversion" ).data();
+
         if ( data.has<Boolean>( "enabledbydefault" ) )
           pack.defaultEnabled = data.get<Boolean>( "enabledbydefault" );
         else
@@ -699,6 +706,29 @@ void FetchMarkerPacks()
   }
 }
 
+bool MarkerPack::BackupVersionCheck()
+{
+  if ( !backupURL.Length() || !backupVersion.Length() )
+    return false;
+
+  versionCheckOk = true;
+  CString versionConfigValue = "MarkerPack_" + id + "_version";
+  versionString = backupVersion;
+
+  bool upToDate = false;
+
+  if ( Config::HasString( versionConfigValue.GetPointer() ) )
+    if ( Config::GetString( versionConfigValue.GetPointer() ) == versionString )
+      upToDate = true;
+
+  if ( exists( ( "POIs/Online/" + fileName ).GetPointer() ) )
+    upToDate = true; // assume previously downloaded file to be up to date
+
+  outdated = !upToDate;
+  downloadURL = backupURL;
+  return true;
+}
+
 bool MarkerPack::CheckVersion()
 {
   if ( versionCheckDone )
@@ -715,14 +745,14 @@ bool MarkerPack::CheckVersion()
   if ( !data.Length() )
   {
     LOG_ERR( "[GW2TacO] Package %s version page download fail", id.GetPointer() );
-    return false;
+    return BackupVersionCheck();
   }
 
   int versionStart = data.Find( versionSearchString );
   if ( versionStart < 0 )
   {
     LOG_ERR( "[GW2TacO] Package %s version string not found", id.GetPointer() );
-    return false;
+    return BackupVersionCheck();
   }
   versionStart += versionSearchString.Length();
 
@@ -730,7 +760,7 @@ bool MarkerPack::CheckVersion()
   if ( versionEnd < 0 )
   {
     LOG_ERR( "[GW2TacO] Package %s version string end not found", id.GetPointer() );
-    return false;
+    return BackupVersionCheck();
   }
 
   CString currentVersion = data.Substring( versionStart, versionEnd - versionStart );
@@ -780,7 +810,25 @@ bool MarkerPack::UpdateFromWeb()
   beingDownloaded = true;
   CString markerPack = FetchWeb( downloadURL );
   if ( !markerPack.Length() )
-    return false;
+  {
+    if ( downloadURL != backupURL )
+    {
+      if ( backupVersion == Config::GetString( ( "MarkerPack_" + id + "_version" ).GetPointer() ) && exists( ( "POIs/Online/" + fileName ).GetPointer() ) )
+      {
+        beingDownloaded = false;
+
+      }
+
+
+      markerPack = FetchWeb( backupURL );
+    }
+
+    if ( !markerPack.Length() )
+    {
+      beingDownloaded = false;
+      return false;
+    }
+  }
 
   mz_zip_archive zip;
   memset( &zip, 0, sizeof( zip ) );
@@ -821,19 +869,23 @@ bool MarkerPack::UpdateFromWeb()
       return false;
     }
 
-    fwrite( markerPack.GetPointer(), 1, markerPack.Length(), f );
+    if ( fwrite( markerPack.GetPointer(), 1, markerPack.Length(), f ) != markerPack.Length() )
+      failed = true;
     fclose( f );
   }
 
-  CString versionConfigValue = "MarkerPack_" + id + "_version\0";
-  Config::SetString( versionConfigValue.GetPointer(), versionString );
-
-  markerPackQueue.Add( fn );
-  beingDownloaded = false;
-  downloadFinished = true;
+  if ( !failed )
   {
-    CLightweightCriticalSection cs( &dlTextCritSec );
-    currentDownload = "";
+    CString versionConfigValue = "MarkerPack_" + id + "_version\0";
+    Config::SetString( versionConfigValue.GetPointer(), versionString );
+
+    markerPackQueue.Add( fn );
+    beingDownloaded = false;
+    downloadFinished = true;
+    {
+      CLightweightCriticalSection cs( &dlTextCritSec );
+      currentDownload = "";
+    }
   }
   outdated = false;
   return true;

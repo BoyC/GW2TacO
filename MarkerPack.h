@@ -15,6 +15,8 @@ public:
   CString versionSearchString;
   CString versionTerminator;
   CString downloadURL;
+  CString backupURL;
+  CString backupVersion;
 
   CString versionString;
 
@@ -26,6 +28,7 @@ public:
   bool downloadFinished = false;
   bool failed = false;
 
+  bool BackupVersionCheck();
   bool CheckVersion();
   bool NeedsUpdate();
   bool UpdateFromWeb();
