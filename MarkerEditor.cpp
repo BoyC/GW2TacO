@@ -5,6 +5,8 @@
 #include "TrailLogger.h"
 #include "GW2Tactical.h"
 
+extern CWBApplication* App;
+
 //////////////////////////////////////////////////////////////////////////
 // Marker DOM
 
@@ -123,16 +125,10 @@ TBOOL GW2MarkerEditor::HandleUberToolMessages( CWBMessage& message )
 
 void GW2MarkerEditor::DrawUberTool( CWBDrawAPI* API, const CRect& drawrect )
 {
-  cam.SetLookAtLH( mumbleLink.camPosition, mumbleLink.camPosition + mumbleLink.camDir, CVector3( 0, 1, 0 ) );
-  persp.SetPerspectiveFovLH( mumbleLink.fov, drawrect.Width() / (TF32)drawrect.Height(), 0.01f, 150.0f );
-  uberTool.SetTransformation( CVector3( 1, 1, 1 ), CQuaternion( CVector3( 0, 0, 0 ) ), mumbleLink.charPosition );
-
-  constBuffer->Reset();
-  constBuffer->AddData( uberTool, 16 * 4 );
-  constBuffer->AddData( cam, 16 * 4 );
-  constBuffer->AddData( persp, 16 * 4 );
-  constBuffer->AddData( CVector4( 1, 1, 1, 1 ), 4 * 4 );
-  constBuffer->Upload();
+  CVector3 location = mumbleLink.charPosition;
+  float scale = ( mumbleLink.camPosition - location ).Length() * 0.1f;
+  CVector3 eye = mumbleLink.camPosition;
+  CVector3 mirror( eye.x > location.x ? 1.0f : -1.0f, eye.y > location.y ? 1.0f : -1.0f, eye.z > location.z ? 1.0f : -1.0f );
 
   API->FlushDrawBuffer();
 
@@ -143,8 +139,39 @@ void GW2MarkerEditor::DrawUberTool( CWBDrawAPI* API, const CRect& drawrect )
   depthStencil->Apply();
   rasterizer->Apply();
 
-  App->GetDevice()->SetVertexBuffer( circle.mesh, 0 );
-  App->GetDevice()->DrawTriangles( circle.triCount );
+  struct ConstBuffer
+  {
+    CMatrix4x4 uberTool;
+    CMatrix4x4 cam;
+    CMatrix4x4 persp;
+    CVector4 color;
+  } bufferData;
+
+  bufferData.cam.SetLookAtLH( eye, mumbleLink.camPosition + mumbleLink.camDir, CVector3( 0, 1, 0 ) );
+  bufferData.persp.SetPerspectiveFovLH( mumbleLink.fov, drawrect.Width() / (TF32)drawrect.Height(), 0.01f, 150.0f );
+  bufferData.uberTool = CMatrix4x4::Rotation( CQuaternion( CVector3( 0, 0, 0 ) ) ) * CMatrix4x4::Scaling( mirror * scale ) * CMatrix4x4::Translation( location );
+  bufferData.color = CVector4( 0, 0, 1, 1 );
+
+  constBuffer->Reset();
+  constBuffer->AddData( &bufferData, sizeof( ConstBuffer ) );
+  constBuffer->Upload();
+
+  App->GetDevice()->SetVertexBuffer( arrow.mesh, 0 );
+  App->GetDevice()->DrawTriangles( arrow.triCount );
+  
+  bufferData.uberTool = CMatrix4x4::Rotation( CQuaternion( 0, PI / 2.0f, 0 ) ) * CMatrix4x4::Scaling( mirror * scale ) * CMatrix4x4::Translation( location );
+  bufferData.color = CVector4( 1, 0, 0, 1 );
+  constBuffer->Reset();
+  constBuffer->AddData( &bufferData, sizeof( ConstBuffer ) );
+  constBuffer->Upload();
+  App->GetDevice()->DrawTriangles( arrow.triCount );
+
+  bufferData.uberTool = CMatrix4x4::Rotation( CQuaternion( -PI / 2.0f, 0, 0 ) ) * CMatrix4x4::Scaling( mirror * scale ) * CMatrix4x4::Translation( location );
+  bufferData.color = CVector4( 0, 1, 0, 1 );
+  constBuffer->Reset();
+  constBuffer->AddData( &bufferData, sizeof( ConstBuffer ) );
+  constBuffer->Upload();
+  App->GetDevice()->DrawTriangles( arrow.triCount );
 
   API->SetUIRenderState();
 }
@@ -262,7 +289,7 @@ void GW2MarkerEditor::InitUberTool()
   rasterizer->Update();
 
   depthStencil = App->GetDevice()->CreateDepthStencilState();
-  depthStencil->SetDepthEnable( false );
+  depthStencil->SetDepthEnable( true );
   depthStencil->Update();
 
   LPCSTR code = R"_(
@@ -329,9 +356,9 @@ float4 psmain(VSOUT x) : SV_TARGET0
   CArray<UberToolVertex> arrowVertices;
 
   float segCount = 12;
-  float shaftRad = 0.1f;
-  float headRad = 0.3f;
-  float arrowHead = 0.8f;
+  float shaftRad = 0.02f;
+  float headRad = 0.1f;
+  float arrowHead = 0.7f;
 
   for ( int x = 0; x < segCount; x++ )
   {
