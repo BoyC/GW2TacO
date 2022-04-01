@@ -114,9 +114,16 @@ class GW2MarkerEditor : public CWBItem
 
   UberToolElement hoverElement = UberToolElement::none;
   UberToolElement draggedElement = UberToolElement::none;
-  CVector3 clickedPos{};
 
+  CVector3 clickedPos{};
   CVector3 hoverPos{};
+
+  CVector3 originalPosition{};
+  CVector3 originalRotation{};
+  CVector3 originalScale{};
+  CVector3 clickedOriginalDelta{};
+
+  CVector3 GetUberToolMovePos( const CVector3& location );
 
   void InitUberTool();
 

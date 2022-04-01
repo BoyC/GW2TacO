@@ -122,8 +122,18 @@ TBOOL GW2MarkerEditor::HandleUberToolMessages( CWBMessage& message )
 
     if ( editedMarker != GUID{} && hoverElement != UberToolElement::none )
     {
-      clickedPos = hoverPos;
-      draggedElement = hoverElement;
+      auto* marker = FindMarkerByGUID( editedMarker );
+      if ( marker )
+      {
+        clickedPos = hoverPos;
+        draggedElement = hoverElement;
+
+        clickedOriginalDelta = GetUberToolMovePos( marker->position ) - marker->position;
+        originalPosition = marker->position;
+        originalRotation = marker->rotation;
+        originalScale = CVector3( 1, 1, 1 ) * marker->typeData.size;
+      }
+
       return true;
     }
 
@@ -159,8 +169,16 @@ TBOOL GW2MarkerEditor::HandleUberToolMessages( CWBMessage& message )
     break;
 
   case WBM_MOUSEMOVE:
-    if ( draggedElement != UberToolElement::none )
+    if ( draggedElement != UberToolElement::none && editedMarker != GUID{} )
     {
+      auto* marker = FindMarkerByGUID( editedMarker );
+      if ( !marker )
+        return false;
+
+      CVector3 pos = GetUberToolMovePos( originalPosition );
+
+      marker->position = pos - clickedOriginalDelta;
+
       return true;
     }
     break;
@@ -180,6 +198,17 @@ struct ConstBuffer
 
 float moverPlaneSize = 0.3f;
 
+CVector3 GetHitPositionMoverPlane( ConstBuffer& bufferData, CMatrix4x4& matrix, CVector4& mouse1, CVector4& mouse2 )
+{
+  CMatrix4x4 invMatrix = ( matrix * bufferData.cam * bufferData.persp ).Inverted();
+  CVector4 localMouse1 = mouse1 * invMatrix;
+  CVector4 localMouse2 = mouse2 * invMatrix;
+  localMouse1 /= localMouse1.w;
+  localMouse2 /= localMouse2.w;
+  CPlane hitPlane( CVector3( 0, 0, 0 ), CVector3( 0, 0, 1 ) );
+  return hitPlane.Intersect( CLine( localMouse1, ( localMouse2 - localMouse1 ).Normalized() ) );
+}
+
 bool HitTestMoverPlane( ConstBuffer& bufferData, CMatrix4x4& matrix, CVector4& mouse1, CVector4& mouse2, CVector3& hitPos )
 {
   CMatrix4x4 invMatrix = ( matrix * bufferData.cam * bufferData.persp ).Inverted();
@@ -193,6 +222,21 @@ bool HitTestMoverPlane( ConstBuffer& bufferData, CMatrix4x4& matrix, CVector4& m
   if ( hit )
     hitPos = intersect;
   return hit;
+}
+
+CVector3 GetHitPositionMoverArrow( ConstBuffer& bufferData, CMatrix4x4& matrix, CVector4& mouse1, CVector4& mouse2 )
+{
+  CMatrix4x4 invMatrix = ( matrix * bufferData.cam * bufferData.persp ).Inverted();
+  CVector4 localMouse1 = mouse1 * invMatrix;
+  CVector4 localMouse2 = mouse2 * invMatrix;
+  localMouse1 /= localMouse1.w;
+  localMouse2 /= localMouse2.w;
+
+  CVector3 planeDir = CVector3( localMouse2.x - localMouse1.x, localMouse2.y - localMouse1.y, 0 ).Normalized();
+
+  CPlane hitPlane( CVector3( 0, 0, 0 ), planeDir );
+  CVector3 intersect = hitPlane.Intersect( CLine( localMouse1, ( localMouse2 - localMouse1 ).Normalized() ) );
+  return CVector3( 0, 0, intersect.z );
 }
 
 bool HitTestMoverArrow( ConstBuffer& bufferData, CMatrix4x4& matrix, CVector4& mouse1, CVector4& mouse2, CVector3& hitPos )
@@ -482,6 +526,61 @@ struct UberToolVertex
   CVector4 Pos;
   CVector4 Color;
 };
+
+CVector3 GW2MarkerEditor::GetUberToolMovePos( const CVector3& location )
+{
+  CRect drawrect = App->GetRoot()->GetPosition();
+
+  float scale = ( mumbleLink.camPosition - location ).Length() * 0.1f;
+  CVector3 eye = mumbleLink.camPosition;
+  CVector3 mirror( eye.x > location.x ? 1.0f : -1.0f, eye.y > location.y ? 1.0f : -1.0f, eye.z > location.z ? 1.0f : -1.0f );
+
+  ConstBuffer bufferData;
+  bufferData.cam.SetLookAtLH( eye, mumbleLink.camPosition + mumbleLink.camDir, CVector3( 0, 1, 0 ) );
+  bufferData.persp.SetPerspectiveFovLH( mumbleLink.fov, drawrect.Width() / (TF32)drawrect.Height(), 0.01f, 150.0f );
+
+  CMatrix4x4 matrix;
+
+  POINT mousePos;
+  mousePos.x = App->GetMousePos().x;
+  mousePos.y = App->GetMousePos().y;
+
+  if ( IsDebuggerPresent() )
+    GetCursorPos( &mousePos );
+
+  CVector4 mouse1 = CVector4( mousePos.x / (float)drawrect.Width() * 2 - 1, ( ( 1 - mousePos.y / (float)drawrect.Height() ) * 2 - 1 ), -1, 1 );
+  CVector4 mouse2 = CVector4( mouse1.x, mouse1.y, 1, 1 );
+
+  switch ( draggedElement )
+  {
+  case moveX:
+    matrix = CMatrix4x4::Rotation( CQuaternion( 0, PI / 2.0f, 0 ) ) * CMatrix4x4::Scaling( mirror * scale ) * CMatrix4x4::Translation( location );
+    return GetHitPositionMoverArrow( bufferData, matrix, mouse1, mouse2 ) * matrix;
+  case moveY:
+    matrix = CMatrix4x4::Rotation( CQuaternion( -PI / 2.0f, 0, 0 ) ) * CMatrix4x4::Scaling( mirror * scale ) * CMatrix4x4::Translation( location );
+    return GetHitPositionMoverArrow( bufferData, matrix, mouse1, mouse2 ) * matrix;
+  case moveZ:
+    matrix = CMatrix4x4::Rotation( CQuaternion( CVector3( 0, 0, 0 ) ) ) * CMatrix4x4::Scaling( mirror * scale ) * CMatrix4x4::Translation( location );
+    return GetHitPositionMoverArrow( bufferData, matrix, mouse1, mouse2 ) * matrix;
+  case moveYZ:
+    matrix = CMatrix4x4::Rotation( CQuaternion( 0, PI / 2.0f, 0 ) ) * CMatrix4x4::Scaling( CVector3( mirror.x, mirror.y, -mirror.z ) * scale ) * CMatrix4x4::Translation( location );
+    return GetHitPositionMoverPlane( bufferData, matrix, mouse1, mouse2 ) * matrix;
+  case moveXZ:
+    matrix = CMatrix4x4::Rotation( CQuaternion( -PI / 2.0f, 0, 0 ) ) * CMatrix4x4::Scaling( CVector3( mirror.x, mirror.y, -mirror.z ) * scale ) * CMatrix4x4::Translation( location );
+    return GetHitPositionMoverPlane( bufferData, matrix, mouse1, mouse2 ) * matrix;
+  case moveXY:
+    matrix = CMatrix4x4::Rotation( CQuaternion( CVector3( 0, 0, 0 ) ) ) * CMatrix4x4::Scaling( CVector3( mirror.x, mirror.y, -mirror.z ) * scale ) * CMatrix4x4::Translation( location );
+    return GetHitPositionMoverPlane( bufferData, matrix, mouse1, mouse2 ) * matrix;
+  case rotateX:
+    break;
+  case rotateY:
+    break;
+  case rotateZ:
+    break;
+  }
+
+  return CVector3();
+}
 
 void GW2MarkerEditor::InitUberTool()
 {
