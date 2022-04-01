@@ -12,6 +12,7 @@
 #include <unordered_map>
 #include "MarkerPack.h"
 #include "Bedrock/UtilLib/jsonxx.h"
+#include "MarkerEditor.h"
 using namespace jsonxx;
 
 WBATLASHANDLE DefaultIconHandle = -1;
@@ -589,6 +590,9 @@ void GW2TacticalDisplay::DrawPOI( CWBDrawAPI* API, const tm& ptm, const time_t& 
 
   CRect rect = CRect( p - CPoint( s, s ), p + CPoint( s, s ) );
 
+  if ( storeMarkerPositions )
+    markerPositions[ poi.guid ] = rect;
+
   if ( tacticalIconsOnEdge )
   {
     TS32 edge = poi.typeData.minSize;
@@ -751,6 +755,8 @@ void GW2TacticalDisplay::DrawPOIMinimap( CWBDrawAPI* API, const CRect& miniRect,
   CColor col = poi.typeData.color;
   col.A() = TU8( col.A() * alpha * minimapOpacity * poi.typeData.alpha );
 
+  if ( storeMarkerPositions )
+    markerMinimapPositions[ poi.guid ] = displayRect;
 
   API->DrawAtlasElement( poi.icon, displayRect, false, false, true, true, col );
 }
@@ -780,6 +786,13 @@ void GW2TacticalDisplay::OnDraw( CWBDrawAPI* API )
 
   if ( !mumbleLink.IsValid() )
     return;
+
+  storeMarkerPositions = Config::IsWindowOpen( "MarkerEditor" );
+  if ( storeMarkerPositions )
+  {
+    markerPositions.Flush();
+    markerMinimapPositions.Flush();
+  }
 
   uiScale = GetUIScale();
 
@@ -906,6 +919,13 @@ void GW2TacticalDisplay::OnDraw( CWBDrawAPI* API )
       CVector3 poiPos = minimapPOIs[ x ]->position * miniMapTrafo;
       DrawPOIMinimap( API, miniRect, CVector2( poiPos.x, poiPos.y ), ptm, currtime, *minimapPOIs[ x ], mapFade, mumbleLink.miniMap.mapScale );
     }
+  }
+
+  if ( Config::IsWindowOpen( "MarkerEditor" ) )
+  {
+    auto editor = App->GetRoot()->FindChildByID<GW2MarkerEditor>( "MarkerEditor" );
+    if ( editor && !editor->IsHidden() )
+      editor->DrawUberTool( API, GetClientRect() );
   }
 
   if ( mumbleLink.isMapOpen && mapFade < 1.0 && showBigmapMarkers > 0 )

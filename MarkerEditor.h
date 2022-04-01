@@ -133,5 +133,5 @@ public:
   static CWBItem* Factory( CWBItem* Root, CXMLNode& node, CRect& Pos );
   WB_DECLARE_GUIITEM( _T( "markereditor" ), CWBItem );
 
-  bool GetMouseTransparency();
+  bool GetMouseTransparency( CPoint& ClientSpacePoint, WBMESSAGE MessageType );
 };

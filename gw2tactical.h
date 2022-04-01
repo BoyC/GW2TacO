@@ -211,6 +211,10 @@ class GW2TacticalDisplay : public CWBItem
 
 public:
 
+  bool storeMarkerPositions = false;
+  CDictionary<GUID, CRect> markerPositions;
+  CDictionary<GUID, CRect> markerMinimapPositions;
+
   GW2TacticalDisplay( CWBItem* Parent, CRect Position );
   virtual ~GW2TacticalDisplay();
 

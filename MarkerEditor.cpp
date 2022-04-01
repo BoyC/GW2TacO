@@ -116,18 +116,40 @@ TBOOL GW2MarkerEditor::HandleUberToolMessages( CWBMessage& message )
   switch ( message.GetMessage() )
   {
   case WBM_LEFTBUTTONDOWN:
-/*
-    if ( editedMarker == GUID{} )
-      break;
-*/
-    if ( hoverElement == UberToolElement::none )
-      break;
+  {
     if ( draggedElement != UberToolElement::none )
       break;
 
-    clickedPos = hoverPos;
-    draggedElement = hoverElement;
-    return true;
+    if ( editedMarker != GUID{} && hoverElement != UberToolElement::none )
+    {
+      clickedPos = hoverPos;
+      draggedElement = hoverElement;
+      return true;
+    }
+
+    auto tactical = App->GetRoot()->FindChildByID<GW2TacticalDisplay>( "tactical" );
+
+    if ( tactical )
+    {
+      auto mouse = App->GetMousePos();
+
+      for ( int x = 0; x < tactical->markerPositions.NumItems(); x++ )
+        if ( tactical->markerPositions.GetByIndex( x ).Contains( mouse ) )
+        {
+          editedMarker = tactical->markerPositions.GetKDPair( x )->Key;
+          return true;
+        }
+
+      for ( int x = 0; x < tactical->markerMinimapPositions.NumItems(); x++ )
+        if ( tactical->markerMinimapPositions.GetByIndex( x ).Contains( mouse ) )
+        {
+          editedMarker = tactical->markerMinimapPositions.GetKDPair( x )->Key;
+          return true;
+        }
+    }
+
+    return false;
+  }
   case WBM_LEFTBUTTONUP:
     if ( draggedElement != UberToolElement::none )
     {
@@ -202,7 +224,17 @@ void UpdateObjectData( CCoreConstantBuffer* constBuffer, ConstBuffer& bufferData
 
 void GW2MarkerEditor::DrawUberTool( CWBDrawAPI* API, const CRect& drawrect )
 {
-  CVector3 location = mumbleLink.charPosition;
+  hoverElement = UberToolElement::none;
+
+  if ( editedMarker == GUID{} )
+    return;
+
+  auto* marker = FindMarkerByGUID( editedMarker );
+  if ( !marker )
+    return;
+
+  CVector3 location = marker->position;
+
   float scale = ( mumbleLink.camPosition - location ).Length() * 0.1f;
   CVector3 eye = mumbleLink.camPosition;
   CVector3 mirror( eye.x > location.x ? 1.0f : -1.0f, eye.y > location.y ? 1.0f : -1.0f, eye.z > location.z ? 1.0f : -1.0f );
@@ -225,8 +257,8 @@ void GW2MarkerEditor::DrawUberTool( CWBDrawAPI* API, const CRect& drawrect )
   App->GetDevice()->SetVertexShader( vxShader );
   App->GetDevice()->SetPixelShader( pxShader );
   App->GetDevice()->SetVertexFormat( vertexFormat );
-  depthStencil->Apply();
-  rasterizer->Apply();
+  App->GetDevice()->SetRenderState( depthStencil );
+  App->GetDevice()->SetRenderState( rasterizer );
 
   ConstBuffer bufferData;
   bufferData.cam.SetLookAtLH( eye, mumbleLink.camPosition + mumbleLink.camDir, CVector3( 0, 1, 0 ) );
@@ -349,9 +381,28 @@ CWBItem* GW2MarkerEditor::Factory( CWBItem* Root, CXMLNode& node, CRect& Pos )
   return new GW2MarkerEditor( Root, Pos );
 }
 
-bool GW2MarkerEditor::GetMouseTransparency()
+bool GW2MarkerEditor::GetMouseTransparency( CPoint& ClientSpacePoint, WBMESSAGE MessageType )
 {
-  return hoverElement == UberToolElement::none && draggedElement == UberToolElement::none;
+  if ( draggedElement == UberToolElement::none && MessageType == WBM_RIGHTBUTTONDOWN )
+    return true;
+
+
+  if ( hoverElement != UberToolElement::none || draggedElement != UberToolElement::none )
+    return false;
+
+  auto tactical = App->GetRoot()->FindChildByID<GW2TacticalDisplay>( "tactical" );
+  if ( !tactical )
+    return true;
+
+  for ( int x = 0; x < tactical->markerPositions.NumItems(); x++ )
+    if ( tactical->markerPositions.GetByIndex( x ).Contains( ClientSpacePoint ) )
+      return false;
+
+  for ( int x = 0; x < tactical->markerMinimapPositions.NumItems(); x++ )
+    if ( tactical->markerMinimapPositions.GetByIndex( x ).Contains( ClientSpacePoint ) )
+      return false;
+
+  return true;
 }
 
 void GW2MarkerEditor::OnDraw( CWBDrawAPI* API )

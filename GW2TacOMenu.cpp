@@ -205,7 +205,7 @@ TBOOL GW2TacO::IsMouseTransparent( CPoint& ClientSpacePoint, WBMESSAGE MessageTy
   {
     auto editor = App->GetRoot()->FindChildByID<GW2MarkerEditor>( "MarkerEditor" );
     if ( editor && !editor->IsHidden() )
-      return editor->GetMouseTransparency();
+      return editor->GetMouseTransparency( ClientSpacePoint, MessageType );
   }
 
 
@@ -1376,13 +1376,6 @@ int camDirIdx = 0;
 void GW2TacO::OnDraw( CWBDrawAPI* API )
 {
   //API->DrawRect( GetClientRect(), CColor( 0, 0, 0, 255 ) );
-
-  if ( Config::IsWindowOpen( "MarkerEditor" ) )
-  {
-    auto editor = App->GetRoot()->FindChildByID<GW2MarkerEditor>( "MarkerEditor" );
-    if ( editor && !editor->IsHidden() )
-      editor->DrawUberTool( API, GetClientRect() );
-  }
 
   mouseToolTip = "";
 
