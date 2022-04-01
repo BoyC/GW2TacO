@@ -131,6 +131,34 @@ struct ConstBuffer
   CVector4 color;
 };
 
+float moverPlaneSize = 0.3f;
+
+bool HitTestMoverPlane( ConstBuffer& bufferData, CMatrix4x4& matrix, CVector4& mouse1, CVector4& mouse2 )
+{
+  CMatrix4x4 invMatrix = ( matrix * bufferData.cam * bufferData.persp ).Inverted();
+  CVector4 localMouse1 = mouse1 * invMatrix;
+  CVector4 localMouse2 = mouse2 * invMatrix;
+  localMouse1 /= localMouse1.w;
+  localMouse2 /= localMouse2.w;
+  CPlane hitPlane( CVector3( 0, 0, 0 ), CVector3( 0, 0, 1 ) );
+  CVector3 intersect = hitPlane.Intersect( CLine( localMouse1, ( localMouse2 - localMouse1 ).Normalized() ) );
+  return intersect.x > 0 && intersect.x < moverPlaneSize&& intersect.y>0 && intersect.y < moverPlaneSize;
+}
+
+bool HitTestMoverArrow( ConstBuffer& bufferData, CMatrix4x4& matrix, CVector4& mouse1, CVector4& mouse2 )
+{
+  CMatrix4x4 invMatrix = ( matrix * bufferData.cam * bufferData.persp ).Inverted();
+  CVector4 localMouse1 = mouse1 * invMatrix;
+  CVector4 localMouse2 = mouse2 * invMatrix;
+  localMouse1 /= localMouse1.w;
+  localMouse2 /= localMouse2.w;
+
+  CVector3 planeDir = CVector3( localMouse2.x - localMouse1.x, localMouse2.y - localMouse2.y, 0 ).Normalized();  
+
+  CPlane hitPlane( CVector3( 0, 0, 0 ), planeDir );
+  CVector3 intersect = hitPlane.Intersect( CLine( localMouse1, ( localMouse2 - localMouse1 ).Normalized() ) );
+  return intersect.z > 0 && intersect.z < 1 && ( intersect.y * intersect.y + intersect.x * intersect.x < 0.1 * 0.1 );
+}
 
 void UpdateObjectData( CCoreConstantBuffer* constBuffer, ConstBuffer& bufferData, CMatrix4x4& objMatrix, CVector4& color )
 {
@@ -161,20 +189,43 @@ void GW2MarkerEditor::DrawUberTool( CWBDrawAPI* API, const CRect& drawrect )
   bufferData.cam.SetLookAtLH( eye, mumbleLink.camPosition + mumbleLink.camDir, CVector3( 0, 1, 0 ) );
   bufferData.persp.SetPerspectiveFovLH( mumbleLink.fov, drawrect.Width() / (TF32)drawrect.Height(), 0.01f, 150.0f );
 
+  CMatrix4x4 matrix;
+
+  POINT mousePos;
+  mousePos.x = App->GetMousePos().x;
+  mousePos.y = App->GetMousePos().y;
+
+  if ( IsDebuggerPresent() )
+    GetCursorPos( &mousePos );
+
+  CVector4 mouse1 = CVector4( mousePos.x / (float)drawrect.Width() * 2 - 1, ( ( 1 - mousePos.y / (float)drawrect.Height() ) * 2 - 1 ), -1, 1 );
+  CVector4 mouse2 = CVector4( mouse1.x, mouse1.y, 1, 1 );
+
+  bool hit = false;
+
   // arrows
 
   // x
-  UpdateObjectData( constBuffer, bufferData, CMatrix4x4::Rotation( CQuaternion( 0, PI / 2.0f, 0 ) ) * CMatrix4x4::Scaling( mirror * scale ) * CMatrix4x4::Translation( location ), CVector4( 1, 0, 0, 1 ) );
+  matrix = CMatrix4x4::Rotation( CQuaternion( 0, PI / 2.0f, 0 ) ) * CMatrix4x4::Scaling( mirror * scale ) * CMatrix4x4::Translation( location );
+  hit = HitTestMoverArrow( bufferData, matrix, mouse1, mouse2 );
+
+  UpdateObjectData( constBuffer, bufferData, matrix, hit ? CVector4( 1, 1, 0, 1 ) : CVector4( 1, 0, 0, 0.5 ) );
   App->GetDevice()->SetVertexBuffer( arrow.mesh, 0 );
   App->GetDevice()->DrawTriangles( arrow.triCount );
 
   // y
-  UpdateObjectData( constBuffer, bufferData, CMatrix4x4::Rotation( CQuaternion( -PI / 2.0f, 0, 0 ) ) * CMatrix4x4::Scaling( mirror * scale ) * CMatrix4x4::Translation( location ), CVector4( 0, 1, 0, 1 ) );
+  matrix = CMatrix4x4::Rotation( CQuaternion( -PI / 2.0f, 0, 0 ) ) * CMatrix4x4::Scaling( mirror * scale ) * CMatrix4x4::Translation( location );
+  hit = HitTestMoverArrow( bufferData, matrix, mouse1, mouse2 );
+
+  UpdateObjectData( constBuffer, bufferData, matrix, hit ? CVector4( 1, 1, 0, 1 ) : CVector4( 0, 1, 0, 0.5f ) );
   App->GetDevice()->SetVertexBuffer( arrow.mesh, 0 );
   App->GetDevice()->DrawTriangles( arrow.triCount );
 
   // z
-  UpdateObjectData( constBuffer, bufferData, CMatrix4x4::Rotation( CQuaternion( CVector3( 0, 0, 0 ) ) ) * CMatrix4x4::Scaling( mirror * scale ) * CMatrix4x4::Translation( location ), CVector4( 0, 0, 1, 1 ) );
+  matrix = CMatrix4x4::Rotation( CQuaternion( CVector3( 0, 0, 0 ) ) ) * CMatrix4x4::Scaling( mirror * scale ) * CMatrix4x4::Translation( location );
+  hit = HitTestMoverArrow( bufferData, matrix, mouse1, mouse2 );
+
+  UpdateObjectData( constBuffer, bufferData, matrix, hit ? CVector4( 1, 1, 0, 1 ) : CVector4( 0, 0, 1, 0.5f ) );
   App->GetDevice()->SetVertexBuffer( arrow.mesh, 0 );
   App->GetDevice()->DrawTriangles( arrow.triCount );
 
@@ -182,17 +233,26 @@ void GW2MarkerEditor::DrawUberTool( CWBDrawAPI* API, const CRect& drawrect )
   // planes
 
   // yz
-  UpdateObjectData( constBuffer, bufferData, CMatrix4x4::Rotation( CQuaternion( 0, PI / 2.0f, 0 ) ) * CMatrix4x4::Scaling( CVector3( mirror.x, mirror.y, -mirror.z ) * scale ) * CMatrix4x4::Translation( location ), CVector4( 1, 0, 0, 1 ) );
+  matrix = CMatrix4x4::Rotation( CQuaternion( 0, PI / 2.0f, 0 ) ) * CMatrix4x4::Scaling( CVector3( mirror.x, mirror.y, -mirror.z ) * scale ) * CMatrix4x4::Translation( location );
+  hit = HitTestMoverPlane( bufferData, matrix, mouse1, mouse2 );
+
+  UpdateObjectData( constBuffer, bufferData, matrix, hit ? CVector4( 1, 1, 0, 1 ) : CVector4( 1, 0, 0, 0.5f ) );
   App->GetDevice()->SetVertexBuffer( plane.mesh, 0 );
   App->GetDevice()->DrawTriangles( plane.triCount );
 
   // xz
-  UpdateObjectData( constBuffer, bufferData, CMatrix4x4::Rotation( CQuaternion( -PI / 2.0f, 0, 0 ) ) * CMatrix4x4::Scaling( CVector3( mirror.x, mirror.y, -mirror.z ) * scale ) * CMatrix4x4::Translation( location ), CVector4( 0, 1, 0, 1 ) );
+  matrix = CMatrix4x4::Rotation( CQuaternion( -PI / 2.0f, 0, 0 ) ) * CMatrix4x4::Scaling( CVector3( mirror.x, mirror.y, -mirror.z ) * scale ) * CMatrix4x4::Translation( location );
+  hit = HitTestMoverPlane( bufferData, matrix, mouse1, mouse2 );
+
+  UpdateObjectData( constBuffer, bufferData, matrix, hit ? CVector4( 1, 1, 0, 1 ) : CVector4( 0, 1, 0, 0.5f ) );
   App->GetDevice()->SetVertexBuffer( plane.mesh, 0 );
   App->GetDevice()->DrawTriangles( plane.triCount );
 
   // xy
-  UpdateObjectData( constBuffer, bufferData, CMatrix4x4::Rotation( CQuaternion( CVector3( 0, 0, 0 ) ) ) * CMatrix4x4::Scaling( CVector3( mirror.x, mirror.y, -mirror.z ) * scale ) * CMatrix4x4::Translation( location ), CVector4( 0, 0, 1, 1 ) );
+  matrix = CMatrix4x4::Rotation( CQuaternion( CVector3( 0, 0, 0 ) ) ) * CMatrix4x4::Scaling( CVector3( mirror.x, mirror.y, -mirror.z ) * scale ) * CMatrix4x4::Translation( location );
+  hit = HitTestMoverPlane( bufferData, matrix, mouse1, mouse2 );
+
+  UpdateObjectData( constBuffer, bufferData, matrix, hit ? CVector4( 1, 1, 0, 1 ) : CVector4( 0, 0, 1, 0.5f ) );
   App->GetDevice()->SetVertexBuffer( plane.mesh, 0 );
   App->GetDevice()->DrawTriangles( plane.triCount );
 
@@ -308,7 +368,7 @@ void GW2MarkerEditor::InitUberTool()
   constBuffer = App->GetDevice()->CreateConstantBuffer();
 
   rasterizer = App->GetDevice()->CreateRasterizerState();
-  rasterizer->SetCullMode( CORECULL_NONE );
+  rasterizer->SetCullMode( CORECULL_CCW );
   rasterizer->Update();
 
   depthStencil = App->GetDevice()->CreateDepthStencilState();
@@ -366,7 +426,7 @@ float4 psmain(VSOUT x) : SV_TARGET0
   if ( !vertexFormat )
     LOG( LOG_ERROR, _T( "[GW2TacO]  Error creating Trail Vertex Format" ) );
 
-  float scale = 0.2f;
+  float scale = moverPlaneSize;
 
   CArray<UberToolVertex> planeVertices;
   planeVertices += { CVector4( 0, 0, 0, 1 / scale )* scale, CVector4( 1, 1, 1, 1 ) };
@@ -374,6 +434,13 @@ float4 psmain(VSOUT x) : SV_TARGET0
   planeVertices += { CVector4( 1, 1, 0, 1 / scale )* scale, CVector4( 1, 1, 1, 1 ) };
   planeVertices += { CVector4( 0, 0, 0, 1 / scale )* scale, CVector4( 1, 1, 1, 1 ) };
   planeVertices += { CVector4( 1, 1, 0, 1 / scale )* scale, CVector4( 1, 1, 1, 1 ) };
+  planeVertices += { CVector4( 0, 1, 0, 1 / scale )* scale, CVector4( 1, 1, 1, 1 ) };
+
+  planeVertices += { CVector4( 1, 0, 0, 1 / scale )* scale, CVector4( 1, 1, 1, 1 ) };
+  planeVertices += { CVector4( 0, 0, 0, 1 / scale )* scale, CVector4( 1, 1, 1, 1 ) };
+  planeVertices += { CVector4( 1, 1, 0, 1 / scale )* scale, CVector4( 1, 1, 1, 1 ) };
+  planeVertices += { CVector4( 1, 1, 0, 1 / scale )* scale, CVector4( 1, 1, 1, 1 ) };
+  planeVertices += { CVector4( 0, 0, 0, 1 / scale )* scale, CVector4( 1, 1, 1, 1 ) };
   planeVertices += { CVector4( 0, 1, 0, 1 / scale )* scale, CVector4( 1, 1, 1, 1 ) };
   plane.mesh = App->GetDevice()->CreateVertexBuffer( (TU8*)planeVertices.GetPointer( 0 ), planeVertices.NumItems() * sizeof( UberToolVertex ) );
   plane.triCount = planeVertices.NumItems() / 3;

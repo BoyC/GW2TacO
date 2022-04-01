@@ -3,7 +3,7 @@
 
 CVector3 CPlane::Intersect( const CLine &l ) const
 {
-  TF32 u = ( Normal*l.Point + D ) / ( Normal*l.Direction );
+  TF32 u = ( -Normal*l.Point + D ) / ( Normal*l.Direction );
   return l.GetPoint( u );
 }
 
