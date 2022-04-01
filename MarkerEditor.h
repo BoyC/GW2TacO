@@ -68,6 +68,20 @@ enum class UberToolMode
   Rotate
 };
 
+enum UberToolElement
+{
+  none,
+  moveX,
+  moveY,
+  moveZ,
+  moveYZ,
+  moveXZ,
+  moveXY,
+  rotateX,
+  rotateY,
+  rotateZ
+};
+
 class GW2MarkerEditor : public CWBItem
 {
   UberToolMode uberToolMode = UberToolMode::Move;
@@ -90,12 +104,16 @@ class GW2MarkerEditor : public CWBItem
   CCoreVertexShader* vxShader = nullptr;
   CCorePixelShader* pxShader = nullptr;
   CCoreConstantBuffer* constBuffer = nullptr;
-  CCoreRasterizerState* rasterizer = nullptr;
+  CCoreRasterizerState* rasterizer1 = nullptr;
+  CCoreRasterizerState* rasterizer2 = nullptr;
   CCoreDepthStencilState* depthStencil = nullptr;
 
   UberToolPart plane;
   UberToolPart arrow;
   UberToolPart circle;
+
+  UberToolElement hoverElement = UberToolElement::none;
+  CVector3 hoverPos{};
 
   void InitUberTool();
 

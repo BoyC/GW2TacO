@@ -133,7 +133,7 @@ struct ConstBuffer
 
 float moverPlaneSize = 0.3f;
 
-bool HitTestMoverPlane( ConstBuffer& bufferData, CMatrix4x4& matrix, CVector4& mouse1, CVector4& mouse2 )
+bool HitTestMoverPlane( ConstBuffer& bufferData, CMatrix4x4& matrix, CVector4& mouse1, CVector4& mouse2, CVector3& hitPos )
 {
   CMatrix4x4 invMatrix = ( matrix * bufferData.cam * bufferData.persp ).Inverted();
   CVector4 localMouse1 = mouse1 * invMatrix;
@@ -142,10 +142,13 @@ bool HitTestMoverPlane( ConstBuffer& bufferData, CMatrix4x4& matrix, CVector4& m
   localMouse2 /= localMouse2.w;
   CPlane hitPlane( CVector3( 0, 0, 0 ), CVector3( 0, 0, 1 ) );
   CVector3 intersect = hitPlane.Intersect( CLine( localMouse1, ( localMouse2 - localMouse1 ).Normalized() ) );
-  return intersect.x > 0 && intersect.x < moverPlaneSize&& intersect.y>0 && intersect.y < moverPlaneSize;
+  bool hit = intersect.x > 0 && intersect.x < moverPlaneSize&& intersect.y>0 && intersect.y < moverPlaneSize;
+  if ( hit )
+    hitPos = intersect;
+  return hit;
 }
 
-bool HitTestMoverArrow( ConstBuffer& bufferData, CMatrix4x4& matrix, CVector4& mouse1, CVector4& mouse2 )
+bool HitTestMoverArrow( ConstBuffer& bufferData, CMatrix4x4& matrix, CVector4& mouse1, CVector4& mouse2, CVector3& hitPos )
 {
   CMatrix4x4 invMatrix = ( matrix * bufferData.cam * bufferData.persp ).Inverted();
   CVector4 localMouse1 = mouse1 * invMatrix;
@@ -153,11 +156,14 @@ bool HitTestMoverArrow( ConstBuffer& bufferData, CMatrix4x4& matrix, CVector4& m
   localMouse1 /= localMouse1.w;
   localMouse2 /= localMouse2.w;
 
-  CVector3 planeDir = CVector3( localMouse2.x - localMouse1.x, localMouse2.y - localMouse2.y, 0 ).Normalized();  
+  CVector3 planeDir = CVector3( localMouse2.x - localMouse1.x, localMouse2.y - localMouse1.y, 0 ).Normalized();  
 
   CPlane hitPlane( CVector3( 0, 0, 0 ), planeDir );
   CVector3 intersect = hitPlane.Intersect( CLine( localMouse1, ( localMouse2 - localMouse1 ).Normalized() ) );
-  return intersect.z > 0 && intersect.z < 1 && ( intersect.y * intersect.y + intersect.x * intersect.x < 0.1 * 0.1 );
+  bool hit = intersect.z > 0 && intersect.z < 1 && ( intersect.y * intersect.y + intersect.x * intersect.x < 0.15 * 0.15 );
+  if ( hit )
+    hitPos = CVector3( 0, 0, intersect.z );
+  return hit;
 }
 
 void UpdateObjectData( CCoreConstantBuffer* constBuffer, ConstBuffer& bufferData, CMatrix4x4& objMatrix, CVector4& color )
@@ -175,6 +181,18 @@ void GW2MarkerEditor::DrawUberTool( CWBDrawAPI* API, const CRect& drawrect )
   float scale = ( mumbleLink.camPosition - location ).Length() * 0.1f;
   CVector3 eye = mumbleLink.camPosition;
   CVector3 mirror( eye.x > location.x ? 1.0f : -1.0f, eye.y > location.y ? 1.0f : -1.0f, eye.z > location.z ? 1.0f : -1.0f );
+
+  int cnt = 0;
+  if ( mirror.x < 0 )
+    cnt++;
+  if ( mirror.y < 0 )
+    cnt++;
+  if ( mirror.z < 0 )
+    cnt++;
+
+  CCoreRasterizerState* rasterizer = cnt % 2 ? rasterizer1 : rasterizer2;
+
+  UberToolElement hitPart = UberToolElement::none;
 
   API->FlushDrawBuffer();
 
@@ -203,60 +221,70 @@ void GW2MarkerEditor::DrawUberTool( CWBDrawAPI* API, const CRect& drawrect )
 
   bool hit = false;
 
-  // arrows
-
-  // x
-  matrix = CMatrix4x4::Rotation( CQuaternion( 0, PI / 2.0f, 0 ) ) * CMatrix4x4::Scaling( mirror * scale ) * CMatrix4x4::Translation( location );
-  hit = HitTestMoverArrow( bufferData, matrix, mouse1, mouse2 );
-
-  UpdateObjectData( constBuffer, bufferData, matrix, hit ? CVector4( 1, 1, 0, 1 ) : CVector4( 1, 0, 0, 0.5 ) );
-  App->GetDevice()->SetVertexBuffer( arrow.mesh, 0 );
-  App->GetDevice()->DrawTriangles( arrow.triCount );
-
-  // y
-  matrix = CMatrix4x4::Rotation( CQuaternion( -PI / 2.0f, 0, 0 ) ) * CMatrix4x4::Scaling( mirror * scale ) * CMatrix4x4::Translation( location );
-  hit = HitTestMoverArrow( bufferData, matrix, mouse1, mouse2 );
-
-  UpdateObjectData( constBuffer, bufferData, matrix, hit ? CVector4( 1, 1, 0, 1 ) : CVector4( 0, 1, 0, 0.5f ) );
-  App->GetDevice()->SetVertexBuffer( arrow.mesh, 0 );
-  App->GetDevice()->DrawTriangles( arrow.triCount );
-
-  // z
-  matrix = CMatrix4x4::Rotation( CQuaternion( CVector3( 0, 0, 0 ) ) ) * CMatrix4x4::Scaling( mirror * scale ) * CMatrix4x4::Translation( location );
-  hit = HitTestMoverArrow( bufferData, matrix, mouse1, mouse2 );
-
-  UpdateObjectData( constBuffer, bufferData, matrix, hit ? CVector4( 1, 1, 0, 1 ) : CVector4( 0, 0, 1, 0.5f ) );
-  App->GetDevice()->SetVertexBuffer( arrow.mesh, 0 );
-  App->GetDevice()->DrawTriangles( arrow.triCount );
-
-
   // planes
 
+  App->GetDevice()->SetVertexBuffer( plane.mesh, 0 );
   // yz
   matrix = CMatrix4x4::Rotation( CQuaternion( 0, PI / 2.0f, 0 ) ) * CMatrix4x4::Scaling( CVector3( mirror.x, mirror.y, -mirror.z ) * scale ) * CMatrix4x4::Translation( location );
-  hit = HitTestMoverPlane( bufferData, matrix, mouse1, mouse2 );
+  hit = !App->GetRightButtonState() && hitPart == UberToolElement::none && HitTestMoverPlane( bufferData, matrix, mouse1, mouse2, hoverPos );
+  if ( hit )
+    hitPart = UberToolElement::moveYZ;
 
   UpdateObjectData( constBuffer, bufferData, matrix, hit ? CVector4( 1, 1, 0, 1 ) : CVector4( 1, 0, 0, 0.5f ) );
-  App->GetDevice()->SetVertexBuffer( plane.mesh, 0 );
   App->GetDevice()->DrawTriangles( plane.triCount );
 
   // xz
   matrix = CMatrix4x4::Rotation( CQuaternion( -PI / 2.0f, 0, 0 ) ) * CMatrix4x4::Scaling( CVector3( mirror.x, mirror.y, -mirror.z ) * scale ) * CMatrix4x4::Translation( location );
-  hit = HitTestMoverPlane( bufferData, matrix, mouse1, mouse2 );
+  hit = !App->GetRightButtonState() && hitPart == UberToolElement::none && HitTestMoverPlane( bufferData, matrix, mouse1, mouse2, hoverPos );
+  if ( hit )
+    hitPart = UberToolElement::moveXZ;
 
   UpdateObjectData( constBuffer, bufferData, matrix, hit ? CVector4( 1, 1, 0, 1 ) : CVector4( 0, 1, 0, 0.5f ) );
-  App->GetDevice()->SetVertexBuffer( plane.mesh, 0 );
   App->GetDevice()->DrawTriangles( plane.triCount );
 
   // xy
   matrix = CMatrix4x4::Rotation( CQuaternion( CVector3( 0, 0, 0 ) ) ) * CMatrix4x4::Scaling( CVector3( mirror.x, mirror.y, -mirror.z ) * scale ) * CMatrix4x4::Translation( location );
-  hit = HitTestMoverPlane( bufferData, matrix, mouse1, mouse2 );
+  hit = !App->GetRightButtonState() && hitPart == UberToolElement::none && HitTestMoverPlane( bufferData, matrix, mouse1, mouse2, hoverPos );
+  if ( hit )
+    hitPart = UberToolElement::moveXY;
 
   UpdateObjectData( constBuffer, bufferData, matrix, hit ? CVector4( 1, 1, 0, 1 ) : CVector4( 0, 0, 1, 0.5f ) );
-  App->GetDevice()->SetVertexBuffer( plane.mesh, 0 );
   App->GetDevice()->DrawTriangles( plane.triCount );
 
+  // arrows
+  App->GetDevice()->SetVertexBuffer( arrow.mesh, 0 );
+
+  // x
+  matrix = CMatrix4x4::Rotation( CQuaternion( 0, PI / 2.0f, 0 ) ) * CMatrix4x4::Scaling( mirror * scale ) * CMatrix4x4::Translation( location );
+  hit = !App->GetRightButtonState() && hitPart == UberToolElement::none && HitTestMoverArrow( bufferData, matrix, mouse1, mouse2, hoverPos );
+  if ( hit )
+    hitPart = UberToolElement::moveX;
+
+  UpdateObjectData( constBuffer, bufferData, matrix, hit ? CVector4( 1, 1, 0, 1 ) : CVector4( 1, 0, 0, 0.5 ) );
+  App->GetDevice()->DrawTriangles( arrow.triCount );
+
+  // y
+  matrix = CMatrix4x4::Rotation( CQuaternion( -PI / 2.0f, 0, 0 ) ) * CMatrix4x4::Scaling( mirror * scale ) * CMatrix4x4::Translation( location );
+  hit = !App->GetRightButtonState() && hitPart == UberToolElement::none && HitTestMoverArrow( bufferData, matrix, mouse1, mouse2, hoverPos );
+  if ( hit )
+    hitPart = UberToolElement::moveY;
+
+  UpdateObjectData( constBuffer, bufferData, matrix, hit ? CVector4( 1, 1, 0, 1 ) : CVector4( 0, 1, 0, 0.5f ) );
+  App->GetDevice()->DrawTriangles( arrow.triCount );
+
+  // z
+  matrix = CMatrix4x4::Rotation( CQuaternion( CVector3( 0, 0, 0 ) ) ) * CMatrix4x4::Scaling( mirror * scale ) * CMatrix4x4::Translation( location );
+  hit = !App->GetRightButtonState() && hitPart == UberToolElement::none && HitTestMoverArrow( bufferData, matrix, mouse1, mouse2, hoverPos );
+  if ( hit )
+    hitPart = UberToolElement::moveZ;
+
+  UpdateObjectData( constBuffer, bufferData, matrix, hit ? CVector4( 1, 1, 0, 1 ) : CVector4( 0, 0, 1, 0.5f ) );
+  App->GetDevice()->DrawTriangles( arrow.triCount );
+
+
   API->SetUIRenderState();
+
+  hoverElement = hitPart;
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -279,7 +307,8 @@ GW2MarkerEditor::~GW2MarkerEditor()
   SAFEDELETE( vxShader );
   SAFEDELETE( pxShader );
   SAFEDELETE( constBuffer );
-  SAFEDELETE( rasterizer );
+  SAFEDELETE( rasterizer1 );
+  SAFEDELETE( rasterizer2 );
   SAFEDELETE( depthStencil );
 }
 
@@ -367,9 +396,12 @@ void GW2MarkerEditor::InitUberTool()
 {
   constBuffer = App->GetDevice()->CreateConstantBuffer();
 
-  rasterizer = App->GetDevice()->CreateRasterizerState();
-  rasterizer->SetCullMode( CORECULL_CCW );
-  rasterizer->Update();
+  rasterizer1 = App->GetDevice()->CreateRasterizerState();
+  rasterizer1->SetCullMode( CORECULL_CW );
+  rasterizer1->Update();
+  rasterizer2 = App->GetDevice()->CreateRasterizerState();
+  rasterizer2->SetCullMode( CORECULL_CCW );
+  rasterizer2->Update();
 
   depthStencil = App->GetDevice()->CreateDepthStencilState();
   depthStencil->SetDepthEnable( true );
