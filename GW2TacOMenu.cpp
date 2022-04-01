@@ -201,6 +201,14 @@ enum MainMenuItems
 
 TBOOL GW2TacO::IsMouseTransparent( CPoint& ClientSpacePoint, WBMESSAGE MessageType )
 {
+  if ( Config::IsWindowOpen( "MarkerEditor" ) )
+  {
+    auto editor = App->GetRoot()->FindChildByID<GW2MarkerEditor>( "MarkerEditor" );
+    if ( editor && !editor->IsHidden() )
+      return editor->GetMouseTransparency();
+  }
+
+
   return true;
 }
 
@@ -687,6 +695,14 @@ void GW2TacO::RebuildMainMenu( CWBContextMenu* ctx )
 
 TBOOL GW2TacO::MessageProc( CWBMessage& Message )
 {
+  if ( Config::IsWindowOpen( "MarkerEditor" ) )
+  {
+    auto editor = App->GetRoot()->FindChildByID<GW2MarkerEditor>( "MarkerEditor" );
+    if ( editor && !editor->IsHidden() )
+      if ( editor->HandleUberToolMessages( Message ) )
+        return true;
+  }
+
   switch ( Message.GetMessage() )
   {
   case WBM_COMMAND:

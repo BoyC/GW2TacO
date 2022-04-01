@@ -113,13 +113,38 @@ void MarkerDOM::Redo()
 
 TBOOL GW2MarkerEditor::HandleUberToolMessages( CWBMessage& message )
 {
-/*
   switch ( message.GetMessage() )
   {
+  case WBM_LEFTBUTTONDOWN:
+/*
+    if ( editedMarker == GUID{} )
+      break;
+*/
+    if ( hoverElement == UberToolElement::none )
+      break;
+    if ( draggedElement != UberToolElement::none )
+      break;
+
+    clickedPos = hoverPos;
+    draggedElement = hoverElement;
+    return true;
+  case WBM_LEFTBUTTONUP:
+    if ( draggedElement != UberToolElement::none )
+    {
+      draggedElement = UberToolElement::none;
+      return true;
+    }
+    break;
+
+  case WBM_MOUSEMOVE:
+    if ( draggedElement != UberToolElement::none )
+    {
+      return true;
+    }
+    break;
   default:
     break;
   }
-*/
   return false;
 }
 
@@ -220,35 +245,39 @@ void GW2MarkerEditor::DrawUberTool( CWBDrawAPI* API, const CRect& drawrect )
   CVector4 mouse2 = CVector4( mouse1.x, mouse1.y, 1, 1 );
 
   bool hit = false;
+  bool dragged = false;
 
   // planes
 
   App->GetDevice()->SetVertexBuffer( plane.mesh, 0 );
   // yz
   matrix = CMatrix4x4::Rotation( CQuaternion( 0, PI / 2.0f, 0 ) ) * CMatrix4x4::Scaling( CVector3( mirror.x, mirror.y, -mirror.z ) * scale ) * CMatrix4x4::Translation( location );
-  hit = !App->GetRightButtonState() && hitPart == UberToolElement::none && HitTestMoverPlane( bufferData, matrix, mouse1, mouse2, hoverPos );
+  dragged = draggedElement == UberToolElement::moveYZ;
+  hit = draggedElement == UberToolElement::none && !App->GetRightButtonState() && hitPart == UberToolElement::none && HitTestMoverPlane( bufferData, matrix, mouse1, mouse2, hoverPos );
   if ( hit )
     hitPart = UberToolElement::moveYZ;
 
-  UpdateObjectData( constBuffer, bufferData, matrix, hit ? CVector4( 1, 1, 0, 1 ) : CVector4( 1, 0, 0, 0.5f ) );
+  UpdateObjectData( constBuffer, bufferData, matrix, hit || dragged ? CVector4( 1, 1, 0, dragged ? 1 : 0.5f ) : CVector4( 1, 0, 0, 0.5f ) );
   App->GetDevice()->DrawTriangles( plane.triCount );
 
   // xz
   matrix = CMatrix4x4::Rotation( CQuaternion( -PI / 2.0f, 0, 0 ) ) * CMatrix4x4::Scaling( CVector3( mirror.x, mirror.y, -mirror.z ) * scale ) * CMatrix4x4::Translation( location );
-  hit = !App->GetRightButtonState() && hitPart == UberToolElement::none && HitTestMoverPlane( bufferData, matrix, mouse1, mouse2, hoverPos );
+  dragged = draggedElement == UberToolElement::moveXZ;
+  hit = draggedElement == UberToolElement::none && !App->GetRightButtonState() && hitPart == UberToolElement::none && HitTestMoverPlane( bufferData, matrix, mouse1, mouse2, hoverPos );
   if ( hit )
     hitPart = UberToolElement::moveXZ;
 
-  UpdateObjectData( constBuffer, bufferData, matrix, hit ? CVector4( 1, 1, 0, 1 ) : CVector4( 0, 1, 0, 0.5f ) );
+  UpdateObjectData( constBuffer, bufferData, matrix, hit || dragged ? CVector4( 1, 1, 0, dragged ? 1 : 0.5f ) : CVector4( 0, 1, 0, 0.5f ) );
   App->GetDevice()->DrawTriangles( plane.triCount );
 
   // xy
   matrix = CMatrix4x4::Rotation( CQuaternion( CVector3( 0, 0, 0 ) ) ) * CMatrix4x4::Scaling( CVector3( mirror.x, mirror.y, -mirror.z ) * scale ) * CMatrix4x4::Translation( location );
-  hit = !App->GetRightButtonState() && hitPart == UberToolElement::none && HitTestMoverPlane( bufferData, matrix, mouse1, mouse2, hoverPos );
+  dragged = draggedElement == UberToolElement::moveXY;
+  hit = draggedElement == UberToolElement::none && !App->GetRightButtonState() && hitPart == UberToolElement::none && HitTestMoverPlane( bufferData, matrix, mouse1, mouse2, hoverPos );
   if ( hit )
     hitPart = UberToolElement::moveXY;
 
-  UpdateObjectData( constBuffer, bufferData, matrix, hit ? CVector4( 1, 1, 0, 1 ) : CVector4( 0, 0, 1, 0.5f ) );
+  UpdateObjectData( constBuffer, bufferData, matrix, hit || dragged ? CVector4( 1, 1, 0, dragged ? 1 : 0.5f ) : CVector4( 0, 0, 1, 0.5f ) );
   App->GetDevice()->DrawTriangles( plane.triCount );
 
   // arrows
@@ -256,29 +285,32 @@ void GW2MarkerEditor::DrawUberTool( CWBDrawAPI* API, const CRect& drawrect )
 
   // x
   matrix = CMatrix4x4::Rotation( CQuaternion( 0, PI / 2.0f, 0 ) ) * CMatrix4x4::Scaling( mirror * scale ) * CMatrix4x4::Translation( location );
-  hit = !App->GetRightButtonState() && hitPart == UberToolElement::none && HitTestMoverArrow( bufferData, matrix, mouse1, mouse2, hoverPos );
+  dragged = draggedElement == UberToolElement::moveX;
+  hit = draggedElement == UberToolElement::none && !App->GetRightButtonState() && hitPart == UberToolElement::none && HitTestMoverArrow( bufferData, matrix, mouse1, mouse2, hoverPos );
   if ( hit )
     hitPart = UberToolElement::moveX;
 
-  UpdateObjectData( constBuffer, bufferData, matrix, hit ? CVector4( 1, 1, 0, 1 ) : CVector4( 1, 0, 0, 0.5 ) );
+  UpdateObjectData( constBuffer, bufferData, matrix, hit || dragged ? CVector4( 1, 1, 0, dragged ? 1 : 0.5f ) : CVector4( 1, 0, 0, 0.5 ) );
   App->GetDevice()->DrawTriangles( arrow.triCount );
 
   // y
   matrix = CMatrix4x4::Rotation( CQuaternion( -PI / 2.0f, 0, 0 ) ) * CMatrix4x4::Scaling( mirror * scale ) * CMatrix4x4::Translation( location );
-  hit = !App->GetRightButtonState() && hitPart == UberToolElement::none && HitTestMoverArrow( bufferData, matrix, mouse1, mouse2, hoverPos );
+  dragged = draggedElement == UberToolElement::moveY;
+  hit = draggedElement == UberToolElement::none && !App->GetRightButtonState() && hitPart == UberToolElement::none && HitTestMoverArrow( bufferData, matrix, mouse1, mouse2, hoverPos );
   if ( hit )
     hitPart = UberToolElement::moveY;
 
-  UpdateObjectData( constBuffer, bufferData, matrix, hit ? CVector4( 1, 1, 0, 1 ) : CVector4( 0, 1, 0, 0.5f ) );
+  UpdateObjectData( constBuffer, bufferData, matrix, hit || dragged ? CVector4( 1, 1, 0, dragged ? 1 : 0.5f ) : CVector4( 0, 1, 0, 0.5f ) );
   App->GetDevice()->DrawTriangles( arrow.triCount );
 
   // z
   matrix = CMatrix4x4::Rotation( CQuaternion( CVector3( 0, 0, 0 ) ) ) * CMatrix4x4::Scaling( mirror * scale ) * CMatrix4x4::Translation( location );
-  hit = !App->GetRightButtonState() && hitPart == UberToolElement::none && HitTestMoverArrow( bufferData, matrix, mouse1, mouse2, hoverPos );
+  dragged = draggedElement == UberToolElement::moveZ;
+  hit = draggedElement == UberToolElement::none && !App->GetRightButtonState() && hitPart == UberToolElement::none && HitTestMoverArrow( bufferData, matrix, mouse1, mouse2, hoverPos );
   if ( hit )
     hitPart = UberToolElement::moveZ;
 
-  UpdateObjectData( constBuffer, bufferData, matrix, hit ? CVector4( 1, 1, 0, 1 ) : CVector4( 0, 0, 1, 0.5f ) );
+  UpdateObjectData( constBuffer, bufferData, matrix, hit || dragged ? CVector4( 1, 1, 0, dragged ? 1 : 0.5f ) : CVector4( 0, 0, 1, 0.5f ) );
   App->GetDevice()->DrawTriangles( arrow.triCount );
 
 
@@ -315,6 +347,11 @@ GW2MarkerEditor::~GW2MarkerEditor()
 CWBItem* GW2MarkerEditor::Factory( CWBItem* Root, CXMLNode& node, CRect& Pos )
 {
   return new GW2MarkerEditor( Root, Pos );
+}
+
+bool GW2MarkerEditor::GetMouseTransparency()
+{
+  return hoverElement == UberToolElement::none && draggedElement == UberToolElement::none;
 }
 
 void GW2MarkerEditor::OnDraw( CWBDrawAPI* API )

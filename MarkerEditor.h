@@ -113,6 +113,9 @@ class GW2MarkerEditor : public CWBItem
   UberToolPart circle;
 
   UberToolElement hoverElement = UberToolElement::none;
+  UberToolElement draggedElement = UberToolElement::none;
+  CVector3 clickedPos{};
+
   CVector3 hoverPos{};
 
   void InitUberTool();
@@ -129,4 +132,6 @@ public:
 
   static CWBItem* Factory( CWBItem* Root, CXMLNode& node, CRect& Pos );
   WB_DECLARE_GUIITEM( _T( "markereditor" ), CWBItem );
+
+  bool GetMouseTransparency();
 };
