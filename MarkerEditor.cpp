@@ -383,7 +383,10 @@ CWBItem* GW2MarkerEditor::Factory( CWBItem* Root, CXMLNode& node, CRect& Pos )
 
 bool GW2MarkerEditor::GetMouseTransparency( CPoint& ClientSpacePoint, WBMESSAGE MessageType )
 {
-  if ( draggedElement == UberToolElement::none && MessageType == WBM_RIGHTBUTTONDOWN )
+  if ( draggedElement == UberToolElement::none && ( MessageType == WBM_RIGHTBUTTONDOWN || MessageType == WBM_RIGHTBUTTONUP ) )
+    return true;
+
+  if ( MessageType == WBM_MOUSEMOVE && draggedElement == UberToolElement::none )
     return true;
 
 

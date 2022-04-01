@@ -179,7 +179,8 @@ LRESULT __stdcall MouseHook( int code, WPARAM wParam, LPARAM lParam )
   if ( wParam == WM_LBUTTONDOWN || wParam == WM_RBUTTONDOWN )
   {
     PostMessage( (HWND)App->GetHandle(), wParam, 0, ap.x + ( ap.y << 16 ) );
-    if ( App->GetMouseItem() && App->GetMouseItem() != App->GetRoot() && App->GetMouseItem()->GetType() != "clickthroughbutton" )
+    auto item = App->GetItemUnderMouse( CPoint( ap.x, ap.y ), wParam == WM_LBUTTONDOWN ? WBM_LEFTBUTTONDOWN : WBM_RIGHTBUTTONDOWN );
+    if ( item && item != App->GetRoot() && item->GetType() != "clickthroughbutton" )
       return 1;
   }
 
@@ -197,10 +198,8 @@ void InitInputHooks()
   if ( HooksInitialized )
     return;
 
-/*
   if ( IsDebuggerPresent() )
     return;
-*/
 
   auto hookThread = CreateThread( NULL, 0,
                                   []( LPVOID data )

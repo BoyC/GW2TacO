@@ -46,7 +46,6 @@ class CWBApplication : public CCoreWindowHandlerWin
 
   TBOOL SendMessageToItem( CWBMessage &Message, CWBItem *Target );
   void ProcessMessage( CWBMessage &Message );
-  CWBItem *GetItemUnderMouse( CPoint &Point, WBMESSAGE w );
 
   virtual void UpdateMouseItem();
   virtual void CleanTrash();
@@ -99,6 +98,8 @@ public:
   virtual void SetDone( TBOOL d );
   virtual void Display();
   virtual void Display( CWBDrawAPI *DrawAPI );
+
+  CWBItem* GetItemUnderMouse( CPoint& Point, WBMESSAGE w );
 
   void RegisterItem( CWBItem *Item );
   void UnRegisterItem( CWBItem *Item );
