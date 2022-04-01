@@ -123,6 +123,24 @@ TBOOL GW2MarkerEditor::HandleUberToolMessages( CWBMessage& message )
   return false;
 }
 
+struct ConstBuffer
+{
+  CMatrix4x4 uberTool;
+  CMatrix4x4 cam;
+  CMatrix4x4 persp;
+  CVector4 color;
+};
+
+
+void UpdateObjectData( CCoreConstantBuffer* constBuffer, ConstBuffer& bufferData, CMatrix4x4& objMatrix, CVector4& color )
+{
+  bufferData.uberTool = objMatrix;
+  bufferData.color = color;
+  constBuffer->Reset();
+  constBuffer->AddData( &bufferData, sizeof( ConstBuffer ) );
+  constBuffer->Upload();
+}
+
 void GW2MarkerEditor::DrawUberTool( CWBDrawAPI* API, const CRect& drawrect )
 {
   CVector3 location = mumbleLink.charPosition;
@@ -139,39 +157,44 @@ void GW2MarkerEditor::DrawUberTool( CWBDrawAPI* API, const CRect& drawrect )
   depthStencil->Apply();
   rasterizer->Apply();
 
-  struct ConstBuffer
-  {
-    CMatrix4x4 uberTool;
-    CMatrix4x4 cam;
-    CMatrix4x4 persp;
-    CVector4 color;
-  } bufferData;
-
+  ConstBuffer bufferData;
   bufferData.cam.SetLookAtLH( eye, mumbleLink.camPosition + mumbleLink.camDir, CVector3( 0, 1, 0 ) );
   bufferData.persp.SetPerspectiveFovLH( mumbleLink.fov, drawrect.Width() / (TF32)drawrect.Height(), 0.01f, 150.0f );
-  bufferData.uberTool = CMatrix4x4::Rotation( CQuaternion( CVector3( 0, 0, 0 ) ) ) * CMatrix4x4::Scaling( mirror * scale ) * CMatrix4x4::Translation( location );
-  bufferData.color = CVector4( 0, 0, 1, 1 );
 
-  constBuffer->Reset();
-  constBuffer->AddData( &bufferData, sizeof( ConstBuffer ) );
-  constBuffer->Upload();
+  // arrows
 
+  // x
+  UpdateObjectData( constBuffer, bufferData, CMatrix4x4::Rotation( CQuaternion( 0, PI / 2.0f, 0 ) ) * CMatrix4x4::Scaling( mirror * scale ) * CMatrix4x4::Translation( location ), CVector4( 1, 0, 0, 1 ) );
   App->GetDevice()->SetVertexBuffer( arrow.mesh, 0 );
   App->GetDevice()->DrawTriangles( arrow.triCount );
-  
-  bufferData.uberTool = CMatrix4x4::Rotation( CQuaternion( 0, PI / 2.0f, 0 ) ) * CMatrix4x4::Scaling( mirror * scale ) * CMatrix4x4::Translation( location );
-  bufferData.color = CVector4( 1, 0, 0, 1 );
-  constBuffer->Reset();
-  constBuffer->AddData( &bufferData, sizeof( ConstBuffer ) );
-  constBuffer->Upload();
+
+  // y
+  UpdateObjectData( constBuffer, bufferData, CMatrix4x4::Rotation( CQuaternion( -PI / 2.0f, 0, 0 ) ) * CMatrix4x4::Scaling( mirror * scale ) * CMatrix4x4::Translation( location ), CVector4( 0, 1, 0, 1 ) );
+  App->GetDevice()->SetVertexBuffer( arrow.mesh, 0 );
   App->GetDevice()->DrawTriangles( arrow.triCount );
 
-  bufferData.uberTool = CMatrix4x4::Rotation( CQuaternion( -PI / 2.0f, 0, 0 ) ) * CMatrix4x4::Scaling( mirror * scale ) * CMatrix4x4::Translation( location );
-  bufferData.color = CVector4( 0, 1, 0, 1 );
-  constBuffer->Reset();
-  constBuffer->AddData( &bufferData, sizeof( ConstBuffer ) );
-  constBuffer->Upload();
+  // z
+  UpdateObjectData( constBuffer, bufferData, CMatrix4x4::Rotation( CQuaternion( CVector3( 0, 0, 0 ) ) ) * CMatrix4x4::Scaling( mirror * scale ) * CMatrix4x4::Translation( location ), CVector4( 0, 0, 1, 1 ) );
+  App->GetDevice()->SetVertexBuffer( arrow.mesh, 0 );
   App->GetDevice()->DrawTriangles( arrow.triCount );
+
+
+  // planes
+
+  // yz
+  UpdateObjectData( constBuffer, bufferData, CMatrix4x4::Rotation( CQuaternion( 0, PI / 2.0f, 0 ) ) * CMatrix4x4::Scaling( CVector3( mirror.x, mirror.y, -mirror.z ) * scale ) * CMatrix4x4::Translation( location ), CVector4( 1, 0, 0, 1 ) );
+  App->GetDevice()->SetVertexBuffer( plane.mesh, 0 );
+  App->GetDevice()->DrawTriangles( plane.triCount );
+
+  // xz
+  UpdateObjectData( constBuffer, bufferData, CMatrix4x4::Rotation( CQuaternion( -PI / 2.0f, 0, 0 ) ) * CMatrix4x4::Scaling( CVector3( mirror.x, mirror.y, -mirror.z ) * scale ) * CMatrix4x4::Translation( location ), CVector4( 0, 1, 0, 1 ) );
+  App->GetDevice()->SetVertexBuffer( plane.mesh, 0 );
+  App->GetDevice()->DrawTriangles( plane.triCount );
+
+  // xy
+  UpdateObjectData( constBuffer, bufferData, CMatrix4x4::Rotation( CQuaternion( CVector3( 0, 0, 0 ) ) ) * CMatrix4x4::Scaling( CVector3( mirror.x, mirror.y, -mirror.z ) * scale ) * CMatrix4x4::Translation( location ), CVector4( 0, 0, 1, 1 ) );
+  App->GetDevice()->SetVertexBuffer( plane.mesh, 0 );
+  App->GetDevice()->DrawTriangles( plane.triCount );
 
   API->SetUIRenderState();
 }
@@ -343,13 +366,15 @@ float4 psmain(VSOUT x) : SV_TARGET0
   if ( !vertexFormat )
     LOG( LOG_ERROR, _T( "[GW2TacO]  Error creating Trail Vertex Format" ) );
 
+  float scale = 0.2f;
+
   CArray<UberToolVertex> planeVertices;
-  planeVertices += { CVector4( 0, 0, 0, 1 ), CVector4( 1, 1, 1, 1 ) };
-  planeVertices += { CVector4( 1, 0, 0, 1 ), CVector4( 1, 1, 1, 1 ) };
-  planeVertices += { CVector4( 1, 1, 0, 1 ), CVector4( 1, 1, 1, 1 ) };
-  planeVertices += { CVector4( 0, 0, 0, 1 ), CVector4( 1, 1, 1, 1 ) };
-  planeVertices += { CVector4( 1, 1, 0, 1 ), CVector4( 1, 1, 1, 1 ) };
-  planeVertices += { CVector4( 1, 1, 0, 1 ), CVector4( 1, 1, 1, 1 ) };
+  planeVertices += { CVector4( 0, 0, 0, 1 / scale )* scale, CVector4( 1, 1, 1, 1 ) };
+  planeVertices += { CVector4( 1, 0, 0, 1 / scale )* scale, CVector4( 1, 1, 1, 1 ) };
+  planeVertices += { CVector4( 1, 1, 0, 1 / scale )* scale, CVector4( 1, 1, 1, 1 ) };
+  planeVertices += { CVector4( 0, 0, 0, 1 / scale )* scale, CVector4( 1, 1, 1, 1 ) };
+  planeVertices += { CVector4( 1, 1, 0, 1 / scale )* scale, CVector4( 1, 1, 1, 1 ) };
+  planeVertices += { CVector4( 0, 1, 0, 1 / scale )* scale, CVector4( 1, 1, 1, 1 ) };
   plane.mesh = App->GetDevice()->CreateVertexBuffer( (TU8*)planeVertices.GetPointer( 0 ), planeVertices.NumItems() * sizeof( UberToolVertex ) );
   plane.triCount = planeVertices.NumItems() / 3;
 
@@ -406,10 +431,10 @@ float4 psmain(VSOUT x) : SV_TARGET0
 
     circleVertices += { CVector4( c1, s1, -thickness, 1 ), CVector4( 1, 1, 1, 1 ) };
     circleVertices += { CVector4( c2, s2, -thickness, 1 ), CVector4( 1, 1, 1, 1 ) };
-    circleVertices += { CVector4( c2, s2,  thickness, 1 ), CVector4( 1, 1, 1, 1 ) };
+    circleVertices += { CVector4( c2, s2, thickness, 1 ), CVector4( 1, 1, 1, 1 ) };
     circleVertices += { CVector4( c1, s1, -thickness, 1 ), CVector4( 1, 1, 1, 1 ) };
-    circleVertices += { CVector4( c2, s2,  thickness, 1 ), CVector4( 1, 1, 1, 1 ) };
-    circleVertices += { CVector4( c1, s1,  thickness, 1 ), CVector4( 1, 1, 1, 1 ) };
+    circleVertices += { CVector4( c2, s2, thickness, 1 ), CVector4( 1, 1, 1, 1 ) };
+    circleVertices += { CVector4( c1, s1, thickness, 1 ), CVector4( 1, 1, 1, 1 ) };
   }
 
   circle.mesh = App->GetDevice()->CreateVertexBuffer( (TU8*)circleVertices.GetPointer( 0 ), circleVertices.NumItems() * sizeof( UberToolVertex ) );
