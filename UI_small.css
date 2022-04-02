@@ -543,3 +543,13 @@ markereditor
 {
   border:1px;
 }
+
+.separator
+{
+  height:10px;
+}
+
+#deletemarker
+{
+   padding:2px;
+}

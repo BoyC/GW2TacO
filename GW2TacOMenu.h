@@ -29,6 +29,10 @@ enum class TacOKeyAction : TS32
   Toggle_dungeon_progress,
   Toggle_tp_tracker,
   Toggle_window_edit_mode,
+  AddDefaultPOI_1,
+  AddDefaultPOI_2,
+  AddDefaultPOI_3,
+  AddDefaultPOI_4,
 
   //if you add one here, add it to the ActionNames array in the .cpp as well!
 };

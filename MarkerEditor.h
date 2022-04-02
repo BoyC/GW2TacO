@@ -124,6 +124,7 @@ class GW2MarkerEditor : public CWBItem
   CVector3 clickedOriginalDelta{};
 
   CVector3 GetUberToolMovePos( const CVector3& location );
+  int defaultCatBeingSet = -1;
 
   void InitUberTool();
 

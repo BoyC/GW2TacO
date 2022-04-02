@@ -1019,9 +1019,7 @@ void GW2TacticalDisplay::TriggerBigMessage( TS32 messageString )
   bigMessage = messageString;
 }
 
-CString DefaultMarkerCategory = "";
-
-void AddPOI( CWBApplication* App )
+void AddPOI( CWBApplication* App, int defaultCategory )
 {
   if ( !mumbleLink.IsValid() ) return;
   POI poi;
@@ -1032,7 +1030,22 @@ void AddPOI( CWBApplication* App )
 
   CoCreateGuid( &poi.guid );
 
-  auto cat = GetCategory( DefaultMarkerCategory );
+  auto cat = GetCategory( Config::GetString( "defaultcategory0" ) );
+  switch ( defaultCategory )
+  {
+    case 1:
+      cat = GetCategory( Config::GetString( "defaultcategory1" ) );
+      break;
+    case 2:
+      cat = GetCategory( Config::GetString( "defaultcategory2" ) );
+      break;
+    case 3:
+      cat = GetCategory( Config::GetString( "defaultcategory3" ) );
+      break;
+    case 4:
+      cat = GetCategory( Config::GetString( "defaultcategory4" ) );
+      break;
+  }
 
   if ( poi.mapID == -1 ) return;
 

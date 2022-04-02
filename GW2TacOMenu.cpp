@@ -55,6 +55,10 @@ CString ActionNames[] =
   "toggle_dungeon_progress",
   "toggle_tp_tracker",
   "toggle_window_edit_mode",
+  "*add_default_marker_2",
+  "*add_default_marker_3",
+  "*add_default_marker_4",
+  "*add_default_marker_5",
 };
 
 CString APIKeyNames[] =
@@ -1116,7 +1120,13 @@ TBOOL GW2TacO::MessageProc( CWBMessage& Message )
       switch ( KeyBindings[ Message.Key ] )
       {
       case TacOKeyAction::AddPOI:
-        AddPOI( App );
+        AddPOI( App, 0 );
+        return true;
+      case TacOKeyAction::AddDefaultPOI_1:
+      case TacOKeyAction::AddDefaultPOI_2:
+      case TacOKeyAction::AddDefaultPOI_3:
+      case TacOKeyAction::AddDefaultPOI_4:
+        AddPOI( App, (int)KeyBindings[ Message.Key ] - (int)TacOKeyAction::AddDefaultPOI_1 + 1 );
         return true;
       case TacOKeyAction::RemovePOI:
         DeletePOI();

@@ -262,7 +262,7 @@ public:
   }
 };
 
-void AddPOI( CWBApplication* App );
+void AddPOI( CWBApplication* App, int defaultCat );
 void DeletePOI();
 void UpdatePOI( CWBApplication* App );
 

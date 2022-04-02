@@ -49,7 +49,7 @@
   <token key="rebindkeys" value="Rebind Keys"/>
   <token key="action_no_key_bound" value="[no key bound]"/>
   <token key="no_action" value="No Action"/>
-  <token key="add_marker" value="Add New Marker"/>
+  <token key="add_marker" value="Add New Marker (Default Category 1)"/>
   <token key="remove_marker" value="Remove Marker"/>
   <token key="action_key" value="Action Key"/>
   <token key="edit_notepad" value="Edit notepad"/>
@@ -195,6 +195,10 @@
   <token key="downloadingpack" value="(Downloading) "/>
   <token key="packdownloaded" value="(Updated!) "/>
   <token key="packversioncheckfail" value="VERSION CHECK FAIL: "/>
+  <token key="*add_default_marker_2" value="Add POI (Default Category 2)"/>
+  <token key="*add_default_marker_3" value="Add POI (Default Category 3)"/>
+  <token key="*add_default_marker_4" value="Add POI (Default Category 4)"/>
+  <token key="*add_default_marker_5" value="Add POI (Default Category 5)"/>
 
   <token key="wurm_tunnel" value="Wurm Tunnel"/>
   <token key="airport" value="Airport"/>

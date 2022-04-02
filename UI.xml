@@ -215,6 +215,8 @@
             <button id="default4" text="4"/>
             <button id="default5" text="5"/>
           </box>
+          <label class="separator"/>
+          <button id="deletemarker" text="DELETE MARKER"/>
         </box>
       </box>
     </box>

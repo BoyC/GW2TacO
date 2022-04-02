@@ -755,7 +755,7 @@ TBOOL GW2MarkerEditor::MessageProc( CWBMessage& message )
       changeDefault = false;
     }
 
-    if ( b->GetID() == _T( "changedefaultmarkertype" ) )
+    if ( b->GetID() == _T( "default1" ) || b->GetID() == _T( "default2" ) || b->GetID() == _T( "default3" ) || b->GetID() == _T( "default4" ) || b->GetID() == _T( "default5" ) )
     {
       auto ctx = b->OpenContextMenu( App->GetMousePos() );
       OpenTypeContextMenu( ctx, categoryList, false, 0, true );
@@ -787,6 +787,20 @@ TBOOL GW2MarkerEditor::MessageProc( CWBMessage& message )
     if ( b->GetID() == _T( "loadtrail" ) && trails )
       trails->ImportTrail();
 
+    if ( b->GetID() == _T( "default1" ) )
+      defaultCatBeingSet = 0;
+
+    if ( b->GetID() == _T( "default2" ) )
+      defaultCatBeingSet = 1;
+
+    if ( b->GetID() == _T( "default3" ) )
+      defaultCatBeingSet = 2;
+
+    if ( b->GetID() == _T( "default4" ) )
+      defaultCatBeingSet = 3;
+
+    if ( b->GetID() == _T( "default5" ) )
+      defaultCatBeingSet = 4;
   }
   break;
 
@@ -805,11 +819,29 @@ TBOOL GW2MarkerEditor::MessageProc( CWBMessage& message )
       }
       else
       {
-        extern CString DefaultMarkerCategory;
-        DefaultMarkerCategory = categoryList[ message.Data ]->GetFullTypeName();
+        switch ( defaultCatBeingSet )
+        {
+        case 0: 
+          Config::SetString( "defaultcategory0", categoryList[ message.Data ]->GetFullTypeName() );
+          break;
+        case 1:
+          Config::SetString( "defaultcategory1", categoryList[ message.Data ]->GetFullTypeName() );
+          break;
+        case 2:
+          Config::SetString( "defaultcategory2", categoryList[ message.Data ]->GetFullTypeName() );
+          break;
+        case 3:
+          Config::SetString( "defaultcategory3", categoryList[ message.Data ]->GetFullTypeName() );
+          break;
+        case 4:
+          Config::SetString( "defaultcategory4", categoryList[ message.Data ]->GetFullTypeName() );
+          break;
+        }
+/*
         CWBLabel* type = (CWBLabel*)FindChildByID( "defaultmarkertype", "label" );
         if ( type )
           type->SetText( "Default Marker Type: " + categoryList[ message.Data ]->GetFullTypeName() );
+*/
       }
     }
 
