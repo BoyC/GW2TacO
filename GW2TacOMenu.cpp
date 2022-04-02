@@ -32,6 +32,8 @@ CString UIFileNames[] =
 
 CString ActionNames[] =
 {
+  // '*' at start means this will be placed under the marker editor menu!
+
   "no_action",//"No Action",
   "add_marker",//"Add New Marker",
   "remove_marker",//"Remove Marker",

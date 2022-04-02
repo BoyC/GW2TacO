@@ -354,7 +354,7 @@ markereditor
 	child-fill-x: true;
 	child-fill-y: true;
 	child-spacing: 1px;
-	background-color:rgba(0,0,0,0.2);
+	background-color:rgba(0,0,0,0.5);
 }
 
 #markereditorheader

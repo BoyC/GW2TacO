@@ -69,22 +69,22 @@
          <box class="markereditorsetting">
            <button class="checkbox" id="cb_alpha"/>
            <label class="optionlabel" text="ALPHA:"/>
-           <textbox class="optiontextbox" id="icon" singleline="1"/>
+           <textbox class="optiontextbox" id="alpha" singleline="1"/>
          </box>
          <box class="markereditorsetting">
            <button class="checkbox" id="cb_fadenear"/>
            <label class="optionlabel" text="FADE NEAR:"/>
-           <textbox class="optiontextbox" id="icon" singleline="1"/>
+           <textbox class="optiontextbox" id="fadeNear" singleline="1"/>
          </box>
          <box class="markereditorsetting">
            <button class="checkbox" id="cb_fadefar"/>
            <label class="optionlabel" text="FADE FAR:"/>
-           <textbox class="optiontextbox" id="icon" singleline="1"/>
+           <textbox class="optiontextbox" id="fadeFar" singleline="1"/>
          </box>
          <box class="markereditorsetting">
            <button class="checkbox" id="cb_height"/>
            <label class="optionlabel" text="HEIGHT:"/>
-           <textbox class="optiontextbox" id="icon" singleline="1"/>
+           <textbox class="optiontextbox" id="height" singleline="1"/>
          </box>
         </box>
         <box class="markereditorpanel">
@@ -92,7 +92,7 @@
          <box class="markereditorsetting">
            <button class="checkbox" id="cb_behavior"/>
            <label class="optionlabel" text="BEHAVIOR:"/>
-           <dropdown class="optiontextbox" id="size" singleline="1">
+           <dropdown class="optiontextbox" id="behavior" singleline="1">
              <listitem id="0" name="ALWAYS VISIBLE"/>
              <listitem id="1" name="REAPPEAR ON MAP CHANGE"/>
              <listitem id="2" name="REAPPEAR ON DAILY RESET"/>

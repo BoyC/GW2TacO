@@ -7,6 +7,481 @@
 
 extern CWBApplication* App;
 
+enum TypeParameterTypes
+{
+  Boolean,
+  String,
+  Float,
+  Int,
+  Color,
+  FloatNormalized,
+  DropDown,
+};
+
+enum class TypeParameters
+{
+  Size,
+  MiniMapSize,
+  MiniMapFadeoutLevel,
+  MinSize,
+  MaxSize,
+  IconFile,
+  ScaleWithZoom,
+  Color,
+  Alpha,
+  FadeNear,
+  FadeFar,
+  Height,
+  Behavior,
+  AchievementID,
+  AchievementBit,
+  ResetLength,
+  DefaultToggle,
+  HasCountDown,
+  ToggleCategory,
+  AutoTrigger,
+  TriggerRange,
+  InfoRange,
+  Info,
+  Copy,
+  CopyMessage,
+  MiniMapVisible,
+  BigMapVisible,
+  InGameVisible,
+  KeepOnMapEdge,
+  AnimSpeed,
+  TrailScale,
+  Texture,
+
+  MAX
+};
+
+struct TypeParameter
+{
+  TypeParameters param;
+  char* targetName;
+  char* enableCheckBoxName;
+  TypeParameterTypes paramType;
+};
+
+TypeParameter typeParameters[ (int)TypeParameters::MAX ] = {
+
+  {TypeParameters::Size,                 "size",           "cb_size",           TypeParameterTypes::Float },
+  {TypeParameters::MiniMapSize,          "miniMapSize",    "cb_minimapsize",    TypeParameterTypes::Int },
+  {TypeParameters::MiniMapFadeoutLevel,  "miniMapFadeOut", "cb_minimapfadeout", TypeParameterTypes::Float },
+  {TypeParameters::MinSize,              "minSize",        "cb_minsize",        TypeParameterTypes::Int },
+  {TypeParameters::MaxSize,              "maxSize",        "cb_maxsize",        TypeParameterTypes::Int },
+  {TypeParameters::IconFile,             "icon",           "cb_icon",           TypeParameterTypes::String },
+  {TypeParameters::ScaleWithZoom,        "scalewithzoom",  "cb_scalewithzoom",  TypeParameterTypes::Boolean },
+  {TypeParameters::Color,                "color",          "cb_color",          TypeParameterTypes::Color },
+  {TypeParameters::Alpha,                "alpha",          "cb_alpha",          TypeParameterTypes::FloatNormalized },
+  {TypeParameters::FadeNear,             "fadeNear",       "cb_fadenear",       TypeParameterTypes::Float },
+  {TypeParameters::FadeFar,              "fadeFar",        "cb_fadefar",        TypeParameterTypes::Float },
+  {TypeParameters::Height,               "height",         "cb_height",         TypeParameterTypes::Float },
+  {TypeParameters::Behavior,             "behavior",       "cb_behavior",       TypeParameterTypes::DropDown },
+  {TypeParameters::AchievementID,        "achievementid",  "cb_achievementid",  TypeParameterTypes::Int },
+  {TypeParameters::AchievementBit,       "achievementbit", "cb_achievementbit", TypeParameterTypes::Int },
+  {TypeParameters::ResetLength,          "resetlength",    "cb_resetlength",    TypeParameterTypes::Int },
+  {TypeParameters::DefaultToggle,        "defaulttoggle",  "cb_defaulttoggle",  TypeParameterTypes::Boolean },
+  {TypeParameters::HasCountDown,         "hascountdown",   "cb_hascountdown",   TypeParameterTypes::Boolean },
+  {TypeParameters::ToggleCategory,       "togglecategory", "cb_togglecategory", TypeParameterTypes::String },
+  {TypeParameters::AutoTrigger,          "autotrigger",    "cb_autotrigger",    TypeParameterTypes::Boolean },
+  {TypeParameters::TriggerRange,         "triggerrange",   "cb_triggerrange",   TypeParameterTypes::Float },
+  {TypeParameters::InfoRange,            "inforange",      "cb_inforange",      TypeParameterTypes::Float },
+  {TypeParameters::Info,                 "infotext",       "cb_infotext",       TypeParameterTypes::String },
+  {TypeParameters::Copy,                 "copytext",       "cb_copytext",       TypeParameterTypes::String },
+  {TypeParameters::CopyMessage,          "copymessage",    "cb_copymessage",    TypeParameterTypes::String },
+  {TypeParameters::MiniMapVisible,       "minimapvisible", "cb_minimapvisible", TypeParameterTypes::Boolean },
+  {TypeParameters::BigMapVisible,        "bigmapvisible",  "cb_bigmapvisible",  TypeParameterTypes::Boolean },
+  {TypeParameters::InGameVisible,        "ingamevisible",  "cb_ingamevisible",  TypeParameterTypes::Boolean },
+  {TypeParameters::KeepOnMapEdge,        "keeponmapedge",  "cb_keeponmapedge",  TypeParameterTypes::Boolean },
+  {TypeParameters::AnimSpeed,            "trailanimspeed", "cb_trailanimspeed", TypeParameterTypes::Float },
+  {TypeParameters::TrailScale,           "trailscale",     "cb_trailscale",     TypeParameterTypes::Float },
+  {TypeParameters::Texture,              "trailtexture",   "cb_trailtexture",   TypeParameterTypes::String },
+};
+
+bool IsTypeParameterSaved( const MarkerTypeData& data, TypeParameters param )
+{
+  switch ( param )
+  {
+  case TypeParameters::Size:
+    return data.bits.sizeSaved;
+  case TypeParameters::MiniMapSize:
+    return data.bits.miniMapSizeSaved;
+  case TypeParameters::MiniMapFadeoutLevel:
+    return data.bits.miniMapFadeOutLevelSaved;
+  case TypeParameters::MinSize:
+    return data.bits.minSizeSaved;
+  case TypeParameters::MaxSize:
+    return data.bits.maxSizeSaved;
+  case TypeParameters::IconFile:
+    return data.bits.iconFileSaved;
+  case TypeParameters::ScaleWithZoom:
+    return data.bits.scaleWithZoomSaved;
+  case TypeParameters::Color:
+    return data.bits.colorSaved;
+  case TypeParameters::Alpha:
+    return data.bits.alphaSaved;
+  case TypeParameters::FadeNear:
+    return data.bits.fadeNearSaved;
+  case TypeParameters::FadeFar:
+    return data.bits.fadeFarSaved;
+  case TypeParameters::Height:
+    return data.bits.heightSaved;
+  case TypeParameters::Behavior:
+    return data.bits.behaviorSaved;
+  case TypeParameters::AchievementID:
+    return data.bits.achievementIdSaved;
+  case TypeParameters::AchievementBit:
+    return data.bits.achievementBitSaved;
+  case TypeParameters::ResetLength:
+    return data.bits.resetLengthSaved;
+  case TypeParameters::DefaultToggle:
+    return data.bits.defaultToggleSaved;
+  case TypeParameters::HasCountDown:
+    return data.bits.hasCountdownSaved;
+  case TypeParameters::ToggleCategory:
+    return data.bits.toggleCategorySaved;
+  case TypeParameters::AutoTrigger:
+    return data.bits.autoTriggerSaved;
+  case TypeParameters::TriggerRange:
+    return data.bits.triggerRangeSaved;
+  case TypeParameters::InfoRange:
+    return data.bits.infoRangeSaved;
+  case TypeParameters::Info:
+    return data.bits.infoSaved;
+  case TypeParameters::Copy:
+    return data.bits.copySaved;
+  case TypeParameters::CopyMessage:
+    return data.bits.copyMessageSaved;
+  case TypeParameters::MiniMapVisible:
+    return data.bits.miniMapVisibleSaved;
+  case TypeParameters::BigMapVisible:
+    return data.bits.bigMapVisibleSaved;
+  case TypeParameters::InGameVisible:
+    return data.bits.inGameVisibleSaved;
+  case TypeParameters::KeepOnMapEdge:
+    return data.bits.keepOnMapEdgeSaved;
+  case TypeParameters::AnimSpeed:
+    return data.bits.animSpeedSaved;
+  case TypeParameters::TrailScale:
+    return data.bits.trailScaleSaved;
+  case TypeParameters::Texture:
+    return data.bits.textureSaved;
+  }
+  return false;
+}
+
+void SetTypeParameterSaved( MarkerTypeData& data, TypeParameters param, bool saved )
+{
+  switch ( param )
+  {
+  case TypeParameters::Size:
+    data.bits.sizeSaved = saved;
+    break;
+  case TypeParameters::MiniMapSize:
+    data.bits.miniMapSizeSaved = saved;
+    break;
+  case TypeParameters::MiniMapFadeoutLevel:
+    data.bits.miniMapFadeOutLevelSaved = saved;
+    break;
+  case TypeParameters::MinSize:
+    data.bits.minSizeSaved = saved;
+    break;
+  case TypeParameters::MaxSize:
+    data.bits.maxSizeSaved = saved;
+    break;
+  case TypeParameters::IconFile:
+    data.bits.iconFileSaved = saved;
+    break;
+  case TypeParameters::ScaleWithZoom:
+    data.bits.scaleWithZoomSaved = saved; 
+    break;
+  case TypeParameters::Color:
+    data.bits.colorSaved = saved; 
+    break;
+  case TypeParameters::Alpha:
+    data.bits.alphaSaved = saved; 
+    break;
+  case TypeParameters::FadeNear:
+    data.bits.fadeNearSaved = saved; 
+    break;
+  case TypeParameters::FadeFar:
+    data.bits.fadeFarSaved = saved;
+    break;
+  case TypeParameters::Height:
+    data.bits.heightSaved = saved; 
+    break;
+  case TypeParameters::Behavior:
+    data.bits.behaviorSaved = saved; 
+    break;
+  case TypeParameters::AchievementID:
+    data.bits.achievementIdSaved = saved;
+    break;
+  case TypeParameters::AchievementBit:
+    data.bits.achievementBitSaved = saved; 
+    break;
+  case TypeParameters::ResetLength:
+    data.bits.resetLengthSaved = saved; 
+    break;
+  case TypeParameters::DefaultToggle:
+    data.bits.defaultToggleSaved = saved; 
+    break;
+  case TypeParameters::HasCountDown:
+    data.bits.hasCountdownSaved = saved; 
+    break;
+  case TypeParameters::ToggleCategory:
+    data.bits.toggleCategorySaved = saved; 
+    break;
+  case TypeParameters::AutoTrigger:
+    data.bits.autoTriggerSaved = saved; 
+    break;
+  case TypeParameters::TriggerRange:
+    data.bits.triggerRangeSaved = saved; 
+    break;
+  case TypeParameters::InfoRange:
+    data.bits.infoRangeSaved = saved; 
+    break;
+  case TypeParameters::Info:
+    data.bits.infoSaved = saved; 
+    break;
+  case TypeParameters::Copy:
+    data.bits.copySaved = saved; 
+    break;
+  case TypeParameters::CopyMessage:
+    data.bits.copyMessageSaved = saved; 
+    break;
+  case TypeParameters::MiniMapVisible:
+    data.bits.miniMapVisibleSaved = saved; 
+    break;
+  case TypeParameters::BigMapVisible:
+    data.bits.bigMapVisibleSaved = saved; 
+    break;
+  case TypeParameters::InGameVisible:
+    data.bits.inGameVisibleSaved = saved; 
+    break;
+  case TypeParameters::KeepOnMapEdge:
+    data.bits.keepOnMapEdgeSaved = saved; 
+    break;
+  case TypeParameters::AnimSpeed:
+    data.bits.animSpeedSaved = saved; 
+    break;
+  case TypeParameters::TrailScale:
+    data.bits.trailScaleSaved = saved; 
+    break;
+  case TypeParameters::Texture:
+    data.bits.textureSaved = saved; 
+    break;
+  }
+}
+
+void SetTypeParameter( MarkerTypeData& data, TypeParameters param, const float& floatResult, const int& intResult, const CString& stringResult, const bool& boolResult )
+{
+  switch ( param )
+  {
+  case TypeParameters::Size:
+    data.size = floatResult;
+    return;
+  case TypeParameters::MiniMapSize:
+    data.miniMapSize = intResult;
+    return;
+  case TypeParameters::MiniMapFadeoutLevel:
+    data.miniMapFadeOutLevel = floatResult;
+    return;
+  case TypeParameters::MinSize:
+    data.minSize = intResult;
+    return;
+  case TypeParameters::MaxSize:
+    data.maxSize = intResult;
+    return;
+  case TypeParameters::IconFile:
+    data.iconFile = AddStringToMap( stringResult );
+    return;
+  case TypeParameters::ScaleWithZoom:    
+    data.bits.scaleWithZoom = boolResult;
+    return;
+  case TypeParameters::Color:
+    data.color = CColor::FromARGB( intResult );
+    return;
+  case TypeParameters::Alpha:
+    data.alpha = floatResult;
+    return;
+  case TypeParameters::FadeNear:
+    data.fadeNear = floatResult;
+    return;
+  case TypeParameters::FadeFar:
+    data.fadeFar = floatResult;
+    return;
+  case TypeParameters::Height:
+    data.height = floatResult;
+    return;
+  case TypeParameters::Behavior:
+    data.behavior = (POIBehavior)intResult;
+    return;
+  case TypeParameters::AchievementID:
+    data.achievementId = intResult;
+    return;
+  case TypeParameters::AchievementBit:
+    data.achievementBit = intResult;
+    return;
+  case TypeParameters::ResetLength:
+    data.resetLength = intResult;
+    return;
+  case TypeParameters::DefaultToggle:
+    data.bits.defaultToggle = boolResult;
+    return;
+  case TypeParameters::HasCountDown:
+    data.bits.hasCountdown = boolResult;
+    return;
+  case TypeParameters::ToggleCategory:
+    data.toggleCategory = AddStringToMap( stringResult );
+    return;
+  case TypeParameters::AutoTrigger:
+    data.bits.autoTrigger = boolResult;
+    return;
+  case TypeParameters::TriggerRange:
+    data.triggerRange = floatResult;
+    return;
+  case TypeParameters::InfoRange:
+    data.infoRange = floatResult;
+    return;
+  case TypeParameters::Info:
+    data.info = AddStringToMap( stringResult );
+    return;
+  case TypeParameters::Copy:
+    data.copy = AddStringToMap( stringResult );
+    return;
+  case TypeParameters::CopyMessage:
+    data.copyMessage = AddStringToMap( stringResult );
+    return;
+  case TypeParameters::MiniMapVisible:
+    data.bits.miniMapVisible = boolResult;
+    return;
+  case TypeParameters::BigMapVisible:
+    data.bits.bigMapVisible = boolResult;
+    return;
+  case TypeParameters::InGameVisible:
+    data.bits.inGameVisible = boolResult;
+    return;
+  case TypeParameters::KeepOnMapEdge:
+    data.bits.keepOnMapEdge = boolResult;
+    return;
+  case TypeParameters::AnimSpeed:
+    data.animSpeed = floatResult;
+    return;
+  case TypeParameters::TrailScale:
+    data.trailScale = floatResult;
+    return;
+  case TypeParameters::Texture:
+    data.texture = AddStringToMap( stringResult );
+    return;
+  }
+}
+
+void GetTypeParameter( const MarkerTypeData& data, TypeParameters param, float& floatResult, int& intResult, CString& stringResult, bool& boolResult )
+{
+  switch ( param )
+  {
+  case TypeParameters::Size:
+    floatResult = data.size;
+    return;
+  case TypeParameters::MiniMapSize:
+    intResult = data.miniMapSize;
+    return;
+  case TypeParameters::MiniMapFadeoutLevel:
+    floatResult = data.miniMapFadeOutLevel;
+    return;
+  case TypeParameters::MinSize:
+    intResult = data.minSize;
+    return;
+  case TypeParameters::MaxSize:
+    intResult = data.maxSize;
+    return;
+  case TypeParameters::IconFile:
+    stringResult = GetStringFromMap( data.iconFile );
+    return;
+  case TypeParameters::ScaleWithZoom:
+    boolResult = data.bits.scaleWithZoom;
+    return;
+  case TypeParameters::Color:
+    intResult = data.color.argb();
+    return;
+  case TypeParameters::Alpha:
+    floatResult = data.alpha;
+    return;
+  case TypeParameters::FadeNear:
+    floatResult = data.fadeNear;
+    return;
+  case TypeParameters::FadeFar:
+    floatResult = data.fadeFar;
+    return;
+  case TypeParameters::Height:
+    floatResult = data.height;
+    return;
+  case TypeParameters::Behavior:
+    intResult = (int)data.behavior;
+    return;
+  case TypeParameters::AchievementID:
+    intResult = data.achievementId;
+    return;
+  case TypeParameters::AchievementBit:
+    intResult = data.achievementBit;
+    return;
+  case TypeParameters::ResetLength:
+    intResult = data.resetLength;
+    return;
+  case TypeParameters::DefaultToggle:
+    boolResult = data.bits.defaultToggle;
+    return;
+  case TypeParameters::HasCountDown:
+    boolResult = data.bits.hasCountdown;
+    return;
+  case TypeParameters::ToggleCategory:
+    stringResult = GetStringFromMap( data.toggleCategory );
+    return;
+  case TypeParameters::AutoTrigger:
+    boolResult = data.bits.autoTrigger;
+    return;
+  case TypeParameters::TriggerRange:
+    floatResult = data.triggerRange;
+    return;
+  case TypeParameters::InfoRange:
+    floatResult = data.infoRange;
+    return;
+  case TypeParameters::Info:
+    stringResult = GetStringFromMap( data.info );
+    return;
+  case TypeParameters::Copy:
+    stringResult = GetStringFromMap( data.copy );
+    return;
+  case TypeParameters::CopyMessage:
+    stringResult = GetStringFromMap( data.copyMessage );
+    return;
+  case TypeParameters::MiniMapVisible:
+    boolResult = data.bits.miniMapVisible;
+    return;
+  case TypeParameters::BigMapVisible:
+    boolResult = data.bits.bigMapVisible;
+    return;
+  case TypeParameters::InGameVisible:
+    boolResult = data.bits.inGameVisible;
+    return;
+  case TypeParameters::KeepOnMapEdge:
+    boolResult = data.bits.keepOnMapEdge;
+    return;
+  case TypeParameters::AnimSpeed:
+    floatResult = data.animSpeed;
+    return;
+  case TypeParameters::TrailScale:
+    floatResult = data.trailScale;
+    return;
+  case TypeParameters::Texture:
+    stringResult = GetStringFromMap( data.texture );
+    return;
+  }
+}
+
+
 //////////////////////////////////////////////////////////////////////////
 // Marker DOM
 
@@ -252,7 +727,7 @@ bool HitTestMoverArrow( ConstBuffer& bufferData, CMatrix4x4& matrix, CVector4& m
   localMouse1 /= localMouse1.w;
   localMouse2 /= localMouse2.w;
 
-  CVector3 planeDir = CVector3( localMouse2.x - localMouse1.x, localMouse2.y - localMouse1.y, 0 ).Normalized();  
+  CVector3 planeDir = CVector3( localMouse2.x - localMouse1.x, localMouse2.y - localMouse1.y, 0 ).Normalized();
 
   CPlane hitPlane( CVector3( 0, 0, 0 ), planeDir );
   CVector3 intersect = hitPlane.Intersect( CLine( localMouse1, ( localMouse2 - localMouse1 ).Normalized() ) );
@@ -821,7 +1296,7 @@ TBOOL GW2MarkerEditor::MessageProc( CWBMessage& message )
       {
         switch ( defaultCatBeingSet )
         {
-        case 0: 
+        case 0:
           Config::SetString( "defaultcategory0", categoryList[ message.Data ]->GetFullTypeName() );
           break;
         case 1:
