@@ -76,6 +76,9 @@
     <ClInclude Include="ItemSelector.h">
       <Filter>Header Files\GuiItems</Filter>
     </ClInclude>
+    <ClInclude Include="DropDown.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="TODO.txt" />
@@ -134,6 +137,9 @@
     </ClCompile>
     <ClCompile Include="ItemSelector.cpp">
       <Filter>Source Files\GuiItems</Filter>
+    </ClCompile>
+    <ClCompile Include="DropDown.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

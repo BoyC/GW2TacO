@@ -25,6 +25,7 @@ CWBApplication::CWBApplication() : CCoreWindowHandlerWin()
   RegisterUIFactoryCallback( _T( "box" ), CWBBox::Factory );
   RegisterUIFactoryCallback( _T( "label" ), CWBLabel::Factory );
   RegisterUIFactoryCallback( _T( "textbox" ), CWBTextBox::Factory );
+  RegisterUIFactoryCallback( _T( "dropdown" ), CWBDropDown::Factory );
 }
 
 CWBApplication::~CWBApplication()
@@ -1013,6 +1014,24 @@ CWBItem * CWBApplication::GenerateUIItem( CWBItem *Root, CXMLNode &node, CRect &
   if ( FactoryCallbacks.HasKey( node.GetNodeName() ) )
   {
     return FactoryCallbacks[ node.GetNodeName() ]( Root, node, Pos );
+  }
+
+  if ( node.GetNodeName() == _T( "listitem" ) )
+  {
+    CString s = _T( "Missing Listitem Name" );
+
+    if ( node.HasAttribute( _T( "name" ) ) ) s = node.GetAttributeAsString( _T( "name" ) );
+
+    if ( !Root->InstanceOf( _T( "itemselector" ) ) )
+    {
+      LOG( LOG_ERROR, _T( "[xml2gui] Listitem added to non list element: '%s'" ), s.GetPointer() );
+      return NULL;
+    }
+
+    CWBItemSelector* l = (CWBItemSelector*)Root;
+    l->AddItem( s );
+
+    return Root;
   }
 
   LOG( LOG_ERROR, _T( "[xml2gui] Unknown tag: '%s'" ), node.GetNodeName().GetPointer() );

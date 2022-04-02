@@ -246,7 +246,6 @@ ts3control
 markereditor
 {
 	margin:0px;
-	background-color:rgba(0,0,0,0);
 }
 
 #markereditorbox
@@ -256,6 +255,7 @@ markereditor
 	child-fill-x: false;
 	child-fill-y: false;
 	child-spacing: 1px;
+	background-color:rgba(0,0,0,0.2);
 }
 
 markereditor label
@@ -346,4 +346,206 @@ contextmenu:active
 {
 	width:100%;
 	height:100%;
+}
+
+markereditor
+{
+	margin:0px;
+	background-color:rgba(0,0,0,0);
+}
+
+#markereditorbox
+{
+	margin:0px;
+	child-layout: vertical;
+	child-fill-x: true;
+	child-fill-y: true;
+	child-spacing: 1px;
+}
+
+#markereditorheader
+{
+    child-layout:horizontal;
+    child-spacing:2px;
+    padding:2px;
+    child-fill-x:true;
+}
+
+#markereditormain
+{
+    margin:0px;
+    width:100%;
+	child-layout: horizontal;
+	child-fill-x: true;
+	child-fill-y: true;
+	child-spacing: 1px;
+}
+
+.markereditorpanel
+{
+	child-layout: vertical;
+	child-fill-x: true;
+	//child-fill-y: true;
+//	child-spacing: 1px;
+}
+
+#markereditorbox *
+{
+    font:unifont;
+}
+
+
+#markereditorbox label
+{
+	width:100%;
+	height:22px;
+	text-align:left;
+}
+
+#markereditorbox button
+{
+	width:170px;
+	height:22px;
+    padding-bottom:4px;
+    font:unifont;
+}
+
+.markereditorsetting
+{
+    height:20px;
+	child-layout: horizontal;
+	child-fill-x: true;
+	//child-fill-y: true;
+    child-align-y:center;
+    horizontal-align:center;
+	child-spacing: 3px;
+}
+
+.checkbox
+{
+    width:10px;
+    height:10px;
+}
+
+.optionlabel
+{
+	width:40%;
+    text-align:right;
+}
+
+.optiontextbox
+{
+	height:100%-4px;
+    padding:2px;
+}
+
+.optiontoggle
+{
+	height:100%-4px;
+    padding:2px;
+    width:100%;
+}
+
+.colorselect
+{
+	height:100%-4px;
+    width:80%;
+    padding:2px;
+}
+
+.colorpreview
+{
+	height:100%-4px;
+    padding:2px;
+}
+
+.panellabel
+{
+   text-align:center;
+}
+
+#categorylabel
+{
+   text-align:center;
+  height:10px;
+}
+
+#defaultmarkers button
+{
+   text-align:center;
+   width:none;
+   padding:2px;
+}
+
+#defaultmarkers
+{
+	width:30%;
+    height:16px;
+    child-layout:horizontal;
+ 	child-fill-x: true;
+    child-fill-y:true;
+    child-spacing:1px;
+}
+
+#defaultmarkertext
+{
+   width:30%;
+   height:10px;
+   top:0px;
+   right:0px;
+   text-align:center;
+}
+
+#traileditor
+{
+  child-layout:horizontal;
+  child-spacing:1px;
+  child-align-x:center;
+}
+
+#traileditor button
+{
+  width:20px;
+}
+
+#starttrail
+{
+	background: skin(play) center middle;
+}
+
+#pausetrail
+{
+	background: skin(pause) center middle;
+}
+
+#starnewsection
+{
+	background: skin(rotate) center middle;
+}
+
+#deletelastsegment
+{
+	background: skin(play) center middle;
+}
+
+#savetrail
+{
+	background: skin(play) center middle;
+}
+
+#loadtrail
+{
+	background: skin(play) center middle;
+}
+
+#markereditorheader button
+{
+  width:none;
+  height:15px;
+  padding-bottom:1px;
+}
+
+#Editcategory
+{
+  border:1px;
 }

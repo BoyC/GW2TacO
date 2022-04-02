@@ -25,6 +25,7 @@
     <ClInclude Include="ContextMenu.h" />
     <ClInclude Include="CSSItem.h" />
     <ClInclude Include="DrawAPI.h" />
+    <ClInclude Include="DropDown.h" />
     <ClInclude Include="Font.h" />
     <ClInclude Include="GuiItem.h" />
     <ClInclude Include="Box.h" />
@@ -66,6 +67,7 @@
     <ClCompile Include="ContextMenu.cpp" />
     <ClCompile Include="CSSItem.cpp" />
     <ClCompile Include="DrawAPI.cpp" />
+    <ClCompile Include="DropDown.cpp" />
     <ClCompile Include="Font.cpp" />
     <ClCompile Include="GuiItem.cpp" />
     <ClCompile Include="Box.cpp" />

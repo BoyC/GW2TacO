@@ -23,7 +23,6 @@ struct MarkerTypeData
 {
   struct
   {
-    TBOOL needsExportToUserData : 1;
     TBOOL iconFileSaved : 1;
     TBOOL sizeSaved : 1;
     TBOOL alphaSaved : 1;

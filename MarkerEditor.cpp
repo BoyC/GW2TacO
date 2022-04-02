@@ -143,19 +143,24 @@ TBOOL GW2MarkerEditor::HandleUberToolMessages( CWBMessage& message )
     {
       auto mouse = App->GetMousePos();
 
+      bool found = false;
+
       for ( int x = 0; x < tactical->markerPositions.NumItems(); x++ )
         if ( tactical->markerPositions.GetByIndex( x ).Contains( mouse ) )
         {
           editedMarker = tactical->markerPositions.GetKDPair( x )->Key;
-          return true;
+          found = true;
         }
 
       for ( int x = 0; x < tactical->markerMinimapPositions.NumItems(); x++ )
         if ( tactical->markerMinimapPositions.GetByIndex( x ).Contains( mouse ) )
         {
           editedMarker = tactical->markerMinimapPositions.GetKDPair( x )->Key;
-          return true;
+          found = true;
         }
+
+      if ( found )
+        return true;
     }
 
     return false;
@@ -278,6 +283,7 @@ void GW2MarkerEditor::DrawUberTool( CWBDrawAPI* API, const CRect& drawrect )
     return;
 
   CVector3 location = marker->position;
+  location.y += marker->typeData.height;
 
   float scale = ( mumbleLink.camPosition - location ).Length() * 0.1f;
   CVector3 eye = mumbleLink.camPosition;
