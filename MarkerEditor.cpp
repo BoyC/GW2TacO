@@ -105,69 +105,69 @@ bool IsTypeParameterSaved( const MarkerTypeData& data, TypeParameters param )
   switch ( param )
   {
   case TypeParameters::Size:
-    return data.bits.sizeSaved;
+    return data.saveBits.sizeSaved;
   case TypeParameters::MiniMapSize:
-    return data.bits.miniMapSizeSaved;
+    return data.saveBits.miniMapSizeSaved;
   case TypeParameters::MiniMapFadeoutLevel:
-    return data.bits.miniMapFadeOutLevelSaved;
+    return data.saveBits.miniMapFadeOutLevelSaved;
   case TypeParameters::MinSize:
-    return data.bits.minSizeSaved;
+    return data.saveBits.minSizeSaved;
   case TypeParameters::MaxSize:
-    return data.bits.maxSizeSaved;
+    return data.saveBits.maxSizeSaved;
   case TypeParameters::IconFile:
-    return data.bits.iconFileSaved;
+    return data.saveBits.iconFileSaved;
   case TypeParameters::ScaleWithZoom:
-    return data.bits.scaleWithZoomSaved;
+    return data.saveBits.scaleWithZoomSaved;
   case TypeParameters::Color:
-    return data.bits.colorSaved;
+    return data.saveBits.colorSaved;
   case TypeParameters::Alpha:
-    return data.bits.alphaSaved;
+    return data.saveBits.alphaSaved;
   case TypeParameters::FadeNear:
-    return data.bits.fadeNearSaved;
+    return data.saveBits.fadeNearSaved;
   case TypeParameters::FadeFar:
-    return data.bits.fadeFarSaved;
+    return data.saveBits.fadeFarSaved;
   case TypeParameters::Height:
-    return data.bits.heightSaved;
+    return data.saveBits.heightSaved;
   case TypeParameters::Behavior:
-    return data.bits.behaviorSaved;
+    return data.saveBits.behaviorSaved;
   case TypeParameters::AchievementID:
-    return data.bits.achievementIdSaved;
+    return data.saveBits.achievementIdSaved;
   case TypeParameters::AchievementBit:
-    return data.bits.achievementBitSaved;
+    return data.saveBits.achievementBitSaved;
   case TypeParameters::ResetLength:
-    return data.bits.resetLengthSaved;
+    return data.saveBits.resetLengthSaved;
   case TypeParameters::DefaultToggle:
-    return data.bits.defaultToggleSaved;
+    return data.saveBits.defaultToggleSaved;
   case TypeParameters::HasCountDown:
-    return data.bits.hasCountdownSaved;
+    return data.saveBits.hasCountdownSaved;
   case TypeParameters::ToggleCategory:
-    return data.bits.toggleCategorySaved;
+    return data.saveBits.toggleCategorySaved;
   case TypeParameters::AutoTrigger:
-    return data.bits.autoTriggerSaved;
+    return data.saveBits.autoTriggerSaved;
   case TypeParameters::TriggerRange:
-    return data.bits.triggerRangeSaved;
+    return data.saveBits.triggerRangeSaved;
   case TypeParameters::InfoRange:
-    return data.bits.infoRangeSaved;
+    return data.saveBits.infoRangeSaved;
   case TypeParameters::Info:
-    return data.bits.infoSaved;
+    return data.saveBits.infoSaved;
   case TypeParameters::Copy:
-    return data.bits.copySaved;
+    return data.saveBits.copySaved;
   case TypeParameters::CopyMessage:
-    return data.bits.copyMessageSaved;
+    return data.saveBits.copyMessageSaved;
   case TypeParameters::MiniMapVisible:
-    return data.bits.miniMapVisibleSaved;
+    return data.saveBits.miniMapVisibleSaved;
   case TypeParameters::BigMapVisible:
-    return data.bits.bigMapVisibleSaved;
+    return data.saveBits.bigMapVisibleSaved;
   case TypeParameters::InGameVisible:
-    return data.bits.inGameVisibleSaved;
+    return data.saveBits.inGameVisibleSaved;
   case TypeParameters::KeepOnMapEdge:
-    return data.bits.keepOnMapEdgeSaved;
+    return data.saveBits.keepOnMapEdgeSaved;
   case TypeParameters::AnimSpeed:
-    return data.bits.animSpeedSaved;
+    return data.saveBits.animSpeedSaved;
   case TypeParameters::TrailScale:
-    return data.bits.trailScaleSaved;
+    return data.saveBits.trailScaleSaved;
   case TypeParameters::Texture:
-    return data.bits.textureSaved;
+    return data.saveBits.textureSaved;
   }
   return false;
 }
@@ -177,100 +177,100 @@ void SetTypeParameterSaved( MarkerTypeData& data, TypeParameters param, bool sav
   switch ( param )
   {
   case TypeParameters::Size:
-    data.bits.sizeSaved = saved;
+    data.saveBits.sizeSaved = saved;
     break;
   case TypeParameters::MiniMapSize:
-    data.bits.miniMapSizeSaved = saved;
+    data.saveBits.miniMapSizeSaved = saved;
     break;
   case TypeParameters::MiniMapFadeoutLevel:
-    data.bits.miniMapFadeOutLevelSaved = saved;
+    data.saveBits.miniMapFadeOutLevelSaved = saved;
     break;
   case TypeParameters::MinSize:
-    data.bits.minSizeSaved = saved;
+    data.saveBits.minSizeSaved = saved;
     break;
   case TypeParameters::MaxSize:
-    data.bits.maxSizeSaved = saved;
+    data.saveBits.maxSizeSaved = saved;
     break;
   case TypeParameters::IconFile:
-    data.bits.iconFileSaved = saved;
+    data.saveBits.iconFileSaved = saved;
     break;
   case TypeParameters::ScaleWithZoom:
-    data.bits.scaleWithZoomSaved = saved; 
+    data.saveBits.scaleWithZoomSaved = saved; 
     break;
   case TypeParameters::Color:
-    data.bits.colorSaved = saved; 
+    data.saveBits.colorSaved = saved; 
     break;
   case TypeParameters::Alpha:
-    data.bits.alphaSaved = saved; 
+    data.saveBits.alphaSaved = saved; 
     break;
   case TypeParameters::FadeNear:
-    data.bits.fadeNearSaved = saved; 
+    data.saveBits.fadeNearSaved = saved; 
     break;
   case TypeParameters::FadeFar:
-    data.bits.fadeFarSaved = saved;
+    data.saveBits.fadeFarSaved = saved;
     break;
   case TypeParameters::Height:
-    data.bits.heightSaved = saved; 
+    data.saveBits.heightSaved = saved; 
     break;
   case TypeParameters::Behavior:
-    data.bits.behaviorSaved = saved; 
+    data.saveBits.behaviorSaved = saved; 
     break;
   case TypeParameters::AchievementID:
-    data.bits.achievementIdSaved = saved;
+    data.saveBits.achievementIdSaved = saved;
     break;
   case TypeParameters::AchievementBit:
-    data.bits.achievementBitSaved = saved; 
+    data.saveBits.achievementBitSaved = saved; 
     break;
   case TypeParameters::ResetLength:
-    data.bits.resetLengthSaved = saved; 
+    data.saveBits.resetLengthSaved = saved; 
     break;
   case TypeParameters::DefaultToggle:
-    data.bits.defaultToggleSaved = saved; 
+    data.saveBits.defaultToggleSaved = saved; 
     break;
   case TypeParameters::HasCountDown:
-    data.bits.hasCountdownSaved = saved; 
+    data.saveBits.hasCountdownSaved = saved; 
     break;
   case TypeParameters::ToggleCategory:
-    data.bits.toggleCategorySaved = saved; 
+    data.saveBits.toggleCategorySaved = saved; 
     break;
   case TypeParameters::AutoTrigger:
-    data.bits.autoTriggerSaved = saved; 
+    data.saveBits.autoTriggerSaved = saved; 
     break;
   case TypeParameters::TriggerRange:
-    data.bits.triggerRangeSaved = saved; 
+    data.saveBits.triggerRangeSaved = saved; 
     break;
   case TypeParameters::InfoRange:
-    data.bits.infoRangeSaved = saved; 
+    data.saveBits.infoRangeSaved = saved; 
     break;
   case TypeParameters::Info:
-    data.bits.infoSaved = saved; 
+    data.saveBits.infoSaved = saved; 
     break;
   case TypeParameters::Copy:
-    data.bits.copySaved = saved; 
+    data.saveBits.copySaved = saved; 
     break;
   case TypeParameters::CopyMessage:
-    data.bits.copyMessageSaved = saved; 
+    data.saveBits.copyMessageSaved = saved; 
     break;
   case TypeParameters::MiniMapVisible:
-    data.bits.miniMapVisibleSaved = saved; 
+    data.saveBits.miniMapVisibleSaved = saved; 
     break;
   case TypeParameters::BigMapVisible:
-    data.bits.bigMapVisibleSaved = saved; 
+    data.saveBits.bigMapVisibleSaved = saved; 
     break;
   case TypeParameters::InGameVisible:
-    data.bits.inGameVisibleSaved = saved; 
+    data.saveBits.inGameVisibleSaved = saved; 
     break;
   case TypeParameters::KeepOnMapEdge:
-    data.bits.keepOnMapEdgeSaved = saved; 
+    data.saveBits.keepOnMapEdgeSaved = saved; 
     break;
   case TypeParameters::AnimSpeed:
-    data.bits.animSpeedSaved = saved; 
+    data.saveBits.animSpeedSaved = saved; 
     break;
   case TypeParameters::TrailScale:
-    data.bits.trailScaleSaved = saved; 
+    data.saveBits.trailScaleSaved = saved; 
     break;
   case TypeParameters::Texture:
-    data.bits.textureSaved = saved; 
+    data.saveBits.textureSaved = saved; 
     break;
   }
 }

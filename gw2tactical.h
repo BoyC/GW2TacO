@@ -23,6 +23,19 @@ struct MarkerTypeData
 {
   struct
   {
+    TBOOL autoTrigger : 1;
+    TBOOL hasCountdown : 1;
+    TBOOL miniMapVisible : 1;
+    TBOOL bigMapVisible : 1;
+    TBOOL inGameVisible : 1;
+    TBOOL scaleWithZoom : 1;
+    TBOOL keepOnMapEdge : 1;
+    TBOOL defaultToggle : 1;
+    TBOOL defaultToggleLoaded : 1;
+  } bits;
+
+  struct
+  {
     TBOOL iconFileSaved : 1;
     TBOOL sizeSaved : 1;
     TBOOL alphaSaved : 1;
@@ -44,28 +57,19 @@ struct MarkerTypeData
     TBOOL toggleCategorySaved : 1;
     TBOOL achievementIdSaved : 1;
     TBOOL achievementBitSaved : 1;
-    TBOOL autoTrigger : 1;
-    TBOOL hasCountdown : 1;
-    TBOOL miniMapVisible : 1;
-    TBOOL bigMapVisible : 1;
-    TBOOL inGameVisible : 1;
     TBOOL miniMapVisibleSaved : 1;
     TBOOL bigMapVisibleSaved : 1;
     TBOOL inGameVisibleSaved : 1;
-    TBOOL scaleWithZoom : 1;
     TBOOL scaleWithZoomSaved : 1;
     TBOOL miniMapSizeSaved : 1;
     TBOOL miniMapFadeOutLevelSaved : 1;
-    TBOOL keepOnMapEdge : 1;
     TBOOL keepOnMapEdgeSaved : 1;
     TBOOL infoSaved : 1;
     TBOOL infoRangeSaved : 1;
     TBOOL copySaved : 1;
     TBOOL copyMessageSaved : 1;
     TBOOL defaultToggleSaved : 1;
-    TBOOL defaultToggle : 1;
-    TBOOL defaultToggleLoaded : 1;
-  } bits;
+  } saveBits;
 
   unsigned char festivalSaveMask = 0;
   unsigned char festivalMask = 0;
@@ -103,6 +107,7 @@ struct MarkerTypeData
 
   void Read( CXMLNode& n, TBOOL StoreSaveState );
   void Write( CXMLNode* n );
+  void ClearSavedBits();
 };
 
 class GW2TacticalCategory;

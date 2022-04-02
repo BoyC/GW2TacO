@@ -1231,40 +1231,39 @@ void MarkerTypeData::Read( CXMLNode& n, TBOOL StoreSaveState )
 
   if ( StoreSaveState )
   {
-    bits.iconFileSaved = _iconFileSaved;
-    bits.sizeSaved = _sizeSaved;
-    bits.alphaSaved = _alphaSaved;
-    bits.fadeNearSaved = _fadeNearSaved;
-    bits.fadeFarSaved = _fadeFarSaved;
-    bits.heightSaved = _heightSaved;
-    bits.behaviorSaved = _behaviorSaved;
-    bits.resetLengthSaved = _resetLengthSaved;
-    //bits.resetOffsetSaved = _resetOffsetSaved;
-    bits.autoTriggerSaved = _autoTriggerSaved;
-    bits.hasCountdownSaved = _hasCountdownSaved;
-    bits.triggerRangeSaved = _triggerRangeSaved;
-    bits.minSizeSaved = _minSizeSaved;
-    bits.maxSizeSaved = _maxSizeSaved;
-    bits.colorSaved = _colorSaved;
-    bits.trailDataSaved = _trailDataSaved;
-    bits.animSpeedSaved = _animSpeedSaved;
-    bits.textureSaved = _textureSaved;
-    bits.trailScaleSaved = _trailScaleSaved;
-    bits.toggleCategorySaved = _toggleCategorySaved;
-    bits.achievementIdSaved = _achievementIdSaved;
-    bits.achievementBitSaved = _achievementBitSaved;
-    bits.miniMapVisibleSaved = _miniMapVisibleSaved;
-    bits.bigMapVisibleSaved = _bigMapVisibleSaved;
-    bits.inGameVisibleSaved = _inGameVisibleSaved;
-    bits.scaleWithZoomSaved = _scaleWithZoomSaved;
-    bits.miniMapSizeSaved = _miniMapSizeSaved;
-    bits.miniMapFadeOutLevelSaved = _miniMapFadeOutLevelSaved;
-    bits.keepOnMapEdgeSaved = _keepOnMapEdgeSaved;
-    bits.infoSaved = _infoSaved;
-    bits.infoRangeSaved = _infoRangeSaved;
-    bits.copySaved = _copySaved;
-    bits.copyMessageSaved = _copyMessageSaved;
-    bits.defaultToggleSaved = _defaultToggleSaved;
+    saveBits.iconFileSaved = _iconFileSaved;
+    saveBits.sizeSaved = _sizeSaved;
+    saveBits.alphaSaved = _alphaSaved;
+    saveBits.fadeNearSaved = _fadeNearSaved;
+    saveBits.fadeFarSaved = _fadeFarSaved;
+    saveBits.heightSaved = _heightSaved;
+    saveBits.behaviorSaved = _behaviorSaved;
+    saveBits.resetLengthSaved = _resetLengthSaved;
+    saveBits.autoTriggerSaved = _autoTriggerSaved;
+    saveBits.hasCountdownSaved = _hasCountdownSaved;
+    saveBits.triggerRangeSaved = _triggerRangeSaved;
+    saveBits.minSizeSaved = _minSizeSaved;
+    saveBits.maxSizeSaved = _maxSizeSaved;
+    saveBits.colorSaved = _colorSaved;
+    saveBits.trailDataSaved = _trailDataSaved;
+    saveBits.animSpeedSaved = _animSpeedSaved;
+    saveBits.textureSaved = _textureSaved;
+    saveBits.trailScaleSaved = _trailScaleSaved;
+    saveBits.toggleCategorySaved = _toggleCategorySaved;
+    saveBits.achievementIdSaved = _achievementIdSaved;
+    saveBits.achievementBitSaved = _achievementBitSaved;
+    saveBits.miniMapVisibleSaved = _miniMapVisibleSaved;
+    saveBits.bigMapVisibleSaved = _bigMapVisibleSaved;
+    saveBits.inGameVisibleSaved = _inGameVisibleSaved;
+    saveBits.scaleWithZoomSaved = _scaleWithZoomSaved;
+    saveBits.miniMapSizeSaved = _miniMapSizeSaved;
+    saveBits.miniMapFadeOutLevelSaved = _miniMapFadeOutLevelSaved;
+    saveBits.keepOnMapEdgeSaved = _keepOnMapEdgeSaved;
+    saveBits.infoSaved = _infoSaved;
+    saveBits.infoRangeSaved = _infoRangeSaved;
+    saveBits.copySaved = _copySaved;
+    saveBits.copyMessageSaved = _copyMessageSaved;
+    saveBits.defaultToggleSaved = _defaultToggleSaved;
     festivalSaveMask = festivalMask;
   }
 
@@ -1411,73 +1410,73 @@ void MarkerTypeData::Read( CXMLNode& n, TBOOL StoreSaveState )
 
 void MarkerTypeData::Write( CXMLNode* n )
 {
-  if ( bits.iconFileSaved )
+  if ( saveBits.iconFileSaved )
     n->SetAttribute( "iconFile", GetStringFromMap( iconFile ).GetPointer() );
-  if ( bits.sizeSaved )
+  if ( saveBits.sizeSaved )
     n->SetAttributeFromFloat( "iconSize", size );
-  if ( bits.alphaSaved )
+  if ( saveBits.alphaSaved )
     n->SetAttributeFromFloat( "alpha", alpha );
-  if ( bits.fadeNearSaved )
+  if ( saveBits.fadeNearSaved )
     n->SetAttributeFromFloat( "fadeNear", fadeNear );
-  if ( bits.fadeFarSaved )
+  if ( saveBits.fadeFarSaved )
     n->SetAttributeFromFloat( "fadeFar", fadeFar );
-  if ( bits.heightSaved )
+  if ( saveBits.heightSaved )
     n->SetAttributeFromFloat( "heightOffset", height );
-  if ( bits.behaviorSaved )
+  if ( saveBits.behaviorSaved )
     n->SetAttributeFromInteger( "behavior", (TS32)behavior );
-  if ( bits.resetLengthSaved )
+  if ( saveBits.resetLengthSaved )
     n->SetAttributeFromInteger( "resetLength", resetLength );
-  //if ( bits.resetOffsetSaved )
+  //if ( saveBits.resetOffsetSaved )
   //  n->SetAttributeFromInteger( "resetOffset", resetOffset );
-  if ( bits.autoTriggerSaved )
+  if ( saveBits.autoTriggerSaved )
     n->SetAttributeFromInteger( "autoTrigger", bits.autoTrigger );
-  if ( bits.defaultToggleSaved )
+  if ( saveBits.defaultToggleSaved )
     n->SetAttributeFromInteger( "defaulttoggle", bits.defaultToggle );
-  if ( bits.hasCountdownSaved )
+  if ( saveBits.hasCountdownSaved )
     n->SetAttributeFromInteger( "hasCountdown", bits.hasCountdown );
-  if ( bits.triggerRangeSaved )
+  if ( saveBits.triggerRangeSaved )
     n->SetAttributeFromFloat( "triggerRange", triggerRange );
-  if ( bits.minSizeSaved )
+  if ( saveBits.minSizeSaved )
     n->SetAttributeFromInteger( "minSize", minSize );
-  if ( bits.maxSizeSaved )
+  if ( saveBits.maxSizeSaved )
     n->SetAttributeFromInteger( "maxSize", maxSize );
-  if ( bits.colorSaved )
+  if ( saveBits.colorSaved )
     n->SetAttribute( "color", CString::Format( "%x", color.argb() ).GetPointer() );
-  if ( bits.trailDataSaved )
+  if ( saveBits.trailDataSaved )
     n->SetAttribute( "trailData", GetStringFromMap( trailData ).GetPointer() );
-  if ( bits.animSpeedSaved )
+  if ( saveBits.animSpeedSaved )
     n->SetAttributeFromFloat( "animSpeed", animSpeed );
-  if ( bits.textureSaved )
+  if ( saveBits.textureSaved )
     n->SetAttribute( "texture", GetStringFromMap( texture ).GetPointer() );
-  if ( bits.trailScaleSaved )
+  if ( saveBits.trailScaleSaved )
     n->SetAttributeFromFloat( "trailScale", trailScale );
-  if ( bits.toggleCategorySaved )
+  if ( saveBits.toggleCategorySaved )
     n->SetAttribute( "toggleCategory", GetStringFromMap( toggleCategory ).GetPointer() );
-  if ( bits.achievementIdSaved )
+  if ( saveBits.achievementIdSaved )
     n->SetAttributeFromInteger( "achievementId", achievementId );
-  if ( bits.achievementBitSaved )
+  if ( saveBits.achievementBitSaved )
     n->SetAttributeFromInteger( "achievementBit", achievementBit );
-  if ( bits.miniMapVisibleSaved )
+  if ( saveBits.miniMapVisibleSaved )
     n->SetAttributeFromInteger( "miniMapVisibility", bits.miniMapVisible );
-  if ( bits.bigMapVisibleSaved )
+  if ( saveBits.bigMapVisibleSaved )
     n->SetAttributeFromInteger( "mapVisibility", bits.bigMapVisible );
-  if ( bits.inGameVisibleSaved )
+  if ( saveBits.inGameVisibleSaved )
     n->SetAttributeFromInteger( "inGameVisibility", bits.inGameVisible );
-  if ( bits.scaleWithZoomSaved )
+  if ( saveBits.scaleWithZoomSaved )
     n->SetAttributeFromInteger( "scaleOnMapWithZoom", bits.scaleWithZoom );
-  if ( bits.miniMapFadeOutLevelSaved )
+  if ( saveBits.miniMapFadeOutLevelSaved )
     n->SetAttributeFromFloat( "mapFadeoutScaleLevel", miniMapFadeOutLevel );
-  if ( bits.miniMapSizeSaved )
+  if ( saveBits.miniMapSizeSaved )
     n->SetAttributeFromInteger( "mapDisplaySize", miniMapSize );
-  if ( bits.keepOnMapEdgeSaved )
+  if ( saveBits.keepOnMapEdgeSaved )
     n->SetAttributeFromInteger( "keepOnMapEdge", bits.keepOnMapEdge );
-  if ( bits.infoSaved )
+  if ( saveBits.infoSaved )
     n->SetAttribute( "info", GetStringFromMap( info ).GetPointer() );
-  if ( bits.infoRangeSaved )
+  if ( saveBits.infoRangeSaved )
     n->SetAttributeFromFloat( "infoRange", infoRange );
-  if ( bits.copySaved )
+  if ( saveBits.copySaved )
     n->SetAttribute( "copy", GetStringFromMap( copy ).GetPointer() );
-  if ( bits.copyMessageSaved )
+  if ( saveBits.copyMessageSaved )
     n->SetAttribute( "copy-message", GetStringFromMap( copyMessage ).GetPointer() );
   if ( festivalSaveMask )
   {
@@ -1499,6 +1498,11 @@ void MarkerTypeData::Write( CXMLNode* n )
     if ( output.Length() )
       n->SetAttribute( "festival", output.GetPointer() );
   }
+}
+
+void MarkerTypeData::ClearSavedBits()
+{
+  memset( &saveBits, 0, sizeof( saveBits ) );
 }
 
 bool SingleAchievementTarget( GW2TacticalCategory* cat, int& resultId )

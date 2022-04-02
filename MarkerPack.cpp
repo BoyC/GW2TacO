@@ -215,7 +215,9 @@ void RecursiveImportPOIType( CXMLNode& root, GW2TacticalCategory* Root, CString 
         // don't propagate defaulttoggle
         c->data.bits.defaultToggleLoaded = false;
         c->data.bits.defaultToggle = false;
-        c->data.bits.defaultToggleSaved = false;
+
+        // don't propagate save bits
+        c->data.ClearSavedBits();
 
         CategoryMap[ newCatName ] = c;
         Root2->children += c;
@@ -267,7 +269,7 @@ void ImportPOITypes()
 
   CategoryMap.Flush();
   CategoryRoot.children.FreeArray();
-  RecursiveImportPOIType( root, &CategoryRoot, CString(), MarkerTypeData(), false, CString() );
+  RecursiveImportPOIType( root, &CategoryRoot, CString(), MarkerTypeData(), true, CString() );
 }
 
 void ImportPOI( CWBApplication* App, CXMLNode& t, POI& p, const CString& zipFile )
@@ -349,7 +351,7 @@ void ImportPOIDocument( CWBApplication* App, CXMLDocument& d, TBOOL External, co
     return;
   CXMLNode root = d.GetDocumentNode().GetChild( "OverlayData" );
 
-  RecursiveImportPOIType( root, &CategoryRoot, CString(), MarkerTypeData(), !External, zipFile );
+  RecursiveImportPOIType( root, &CategoryRoot, CString(), MarkerTypeData(), true, zipFile );
 
   if ( root.GetChildCount( "POIs" ) )
   {
