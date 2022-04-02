@@ -99,6 +99,7 @@ class GW2MarkerEditor : public CWBItem
   TBOOL changeDefault = false;
 
   GUID editedMarker{};
+  CString editedCategory{};
 
   CCoreVertexFormat* vertexFormat = nullptr;
   CCoreVertexShader* vxShader = nullptr;
@@ -125,8 +126,14 @@ class GW2MarkerEditor : public CWBItem
 
   CVector3 GetUberToolMovePos( const CVector3& location );
   int defaultCatBeingSet = -1;
+  bool selectingEditedCategory = false;
 
   void InitUberTool();
+
+  void UpdateEditorFromCategory( const MarkerTypeData& data );
+
+  void SetEditedGUID( const GUID& guid );
+  void SetEditedCategory( const CString& category );
 
 public:
 

@@ -93,16 +93,16 @@
            <button class="checkbox" id="cb_behavior"/>
            <label class="optionlabel" text="BEHAVIOR:"/>
            <dropdown class="optiontextbox" id="behavior" singleline="1">
-             <listitem id="0" name="ALWAYS VISIBLE"/>
-             <listitem id="1" name="REAPPEAR ON MAP CHANGE"/>
-             <listitem id="2" name="REAPPEAR ON DAILY RESET"/>
-             <listitem id="3" name="ONLY VISIBLE BEFORE ACTIVATION"/>
-             <listitem id="4" name="REAPPEAR AFTER TIMER"/>
-             <listitem id="5" name="REAPPEAR ON MAP RESET"/>
-             <listitem id="6" name="ACTIVATE ONCE PER INSTANCE"/>
-             <listitem id="7" name="ACTIVATE DAILY PER CHAR"/>
-             <listitem id="8" name="ACTIVATE ONCE PER INSTANCE PER CHAR"/>
-             <listitem id="9" name="WVW OBJECTIVE"/>
+             <listitem name="ALWAYS VISIBLE"/>
+             <listitem name="REAPPEAR ON MAP CHANGE"/>
+             <listitem name="REAPPEAR ON DAILY RESET"/>
+             <listitem name="ONLY VISIBLE BEFORE ACTIVATION"/>
+             <listitem name="REAPPEAR AFTER TIMER"/>
+             <listitem name="REAPPEAR ON MAP RESET"/>
+             <listitem name="ACTIVATE ONCE PER INSTANCE"/>
+             <listitem name="ACTIVATE DAILY PER CHAR"/>
+             <listitem name="ACTIVATE ONCE PER INSTANCE PER CHAR"/>
+             <listitem name="WVW OBJECTIVE"/>
            </dropdown>
          </box>
          <box class="markereditorsetting">

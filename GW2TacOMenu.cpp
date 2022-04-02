@@ -847,8 +847,10 @@ TBOOL GW2TacO::MessageProc( CWBMessage& Message )
     break;
 
   case WBM_CONTEXTMESSAGE:
-
   {
+    if ( Message.GetTargetID() != "MenuButton" )
+      break;
+
     if ( FindInCategoryTree( (GW2TacticalCategory*)Message.Data ) )
       break;
 

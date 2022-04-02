@@ -391,7 +391,7 @@ markereditor
 
 #markereditorbox *
 {
-    font:unifont;
+    font:UniFontOutlined;
 }
 
 
@@ -407,7 +407,7 @@ markereditor
 	width:170px;
 	height:22px;
     padding-bottom:4px;
-    font:unifont;
+    font:UniFontOutlined;
 }
 
 .markereditorsetting

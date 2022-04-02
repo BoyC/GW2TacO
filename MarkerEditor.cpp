@@ -623,14 +623,14 @@ TBOOL GW2MarkerEditor::HandleUberToolMessages( CWBMessage& message )
       for ( int x = 0; x < tactical->markerPositions.NumItems(); x++ )
         if ( tactical->markerPositions.GetByIndex( x ).Contains( mouse ) )
         {
-          editedMarker = tactical->markerPositions.GetKDPair( x )->Key;
+          SetEditedGUID( tactical->markerPositions.GetKDPair( x )->Key );
           found = true;
         }
 
       for ( int x = 0; x < tactical->markerMinimapPositions.NumItems(); x++ )
         if ( tactical->markerMinimapPositions.GetByIndex( x ).Contains( mouse ) )
         {
-          editedMarker = tactical->markerMinimapPositions.GetKDPair( x )->Key;
+          SetEditedGUID( tactical->markerMinimapPositions.GetKDPair( x )->Key );
           found = true;
         }
 
@@ -1211,6 +1211,111 @@ float4 psmain(VSOUT x) : SV_TARGET0
   circle.triCount = circleVertices.NumItems() / 3;
 }
 
+void GW2MarkerEditor::UpdateEditorFromCategory( const MarkerTypeData& data )
+{
+  for ( int x = 0; x < (int)TypeParameters::MAX; x++ )
+  {
+    CWBButton* checkBox = FindChildByID<CWBButton>( typeParameters[ x ].enableCheckBoxName );
+    if ( checkBox )
+      checkBox->Push( IsTypeParameterSaved( data, (TypeParameters)x ) );
+
+    bool boolData = 0;
+    int intData = 0;
+    float floatData = 0;
+    CString stringData;
+
+    GetTypeParameter( data, (TypeParameters)x, floatData, intData, stringData, boolData );
+
+    switch ( typeParameters[ x ].paramType )
+    {
+    case Boolean:
+    {
+      CWBButton* button = FindChildByID<CWBButton>( typeParameters[ x ].targetName );
+      if ( button )
+        button->Push( boolData );
+      break;
+    }
+    case String:
+    {
+      CWBTextBox* textBox = FindChildByID<CWBTextBox>( typeParameters[ x ].targetName );
+      if ( textBox )
+        textBox->SetText( stringData );
+      break;
+    }
+    case FloatNormalized:
+    case Float:
+    {
+      CWBTextBox* textBox = FindChildByID<CWBTextBox>( typeParameters[ x ].targetName );
+      if ( textBox )
+        textBox->SetText( CString::Format( "%f", floatData ) );
+      break;
+    }
+    case Int:
+    {
+      CWBTextBox* textBox = FindChildByID<CWBTextBox>( typeParameters[ x ].targetName );
+      if ( textBox )
+        textBox->SetText( CString::Format( "%d", intData ) );
+      break;
+    }
+    case Color:
+    {
+      break;
+    }
+    case DropDown:
+    {
+      CWBDropDown* dropDown = (CWBDropDown*)FindChildByID( typeParameters[ x ].targetName );
+      if ( dropDown )
+        dropDown->SelectItemByIndex( intData );
+      break;
+    }
+    }
+  }
+}
+
+void GW2MarkerEditor::SetEditedGUID( const GUID& guid )
+{
+  editedCategory = CString();
+
+  auto editedText = FindChildByID<CWBLabel>( "categorylabel" );
+  auto marker = FindMarkerByGUID( guid );
+
+  if ( !marker )
+  {
+    editedMarker = GUID{};
+    if ( editedText )
+      editedText->SetText( "NO EDITED ITEM CURRENTLY!" );
+    return;
+  }
+
+  if ( editedText )
+    editedText->SetText( "EDITED ITEM IS A MARKER" );
+
+  editedMarker = guid;
+  UpdateEditorFromCategory( marker->typeData );
+}
+
+void GW2MarkerEditor::SetEditedCategory( const CString& category )
+{
+  editedMarker = GUID{};
+
+  auto editedText = FindChildByID<CWBLabel>( "categorylabel" );
+  auto cat = GetCategory( category );
+
+  if ( !cat )
+  {
+    editedCategory = CString();
+    if ( editedText )
+      editedText->SetText( "NO EDITED ITEM CURRENTLY!" );
+    return;
+  }
+
+  if ( editedText )
+    editedText->SetText( "Editing Category: " + cat->GetFullTypeName() );
+
+  editedCategory = category;
+  UpdateEditorFromCategory( cat->data );
+}
+
 TBOOL GW2MarkerEditor::MessageProc( CWBMessage& message )
 {
   switch ( message.GetMessage() )
@@ -1223,11 +1328,21 @@ TBOOL GW2MarkerEditor::MessageProc( CWBMessage& message )
     CWBButton* b = (CWBButton*)App->FindItemByGuid( message.GetTarget(), _T( "button" ) );
     if ( !b )
       break;
+
+    changeDefault = false;
+    selectingEditedCategory = false;
+
     if ( b->GetID() == _T( "changemarkertype" ) )
     {
       auto ctx = b->OpenContextMenu( App->GetMousePos() );
       OpenTypeContextMenu( ctx, categoryList, false, 0, true );
-      changeDefault = false;
+    }
+
+    if ( b->GetID() == _T( "Editcategory" ) )
+    {
+      auto ctx = b->OpenContextMenu( App->GetMousePos() );
+      OpenTypeContextMenu( ctx, categoryList, false, 0, true );
+      selectingEditedCategory = true;
     }
 
     if ( b->GetID() == _T( "default1" ) || b->GetID() == _T( "default2" ) || b->GetID() == _T( "default3" ) || b->GetID() == _T( "default4" ) || b->GetID() == _T( "default5" ) )
@@ -1282,17 +1397,7 @@ TBOOL GW2MarkerEditor::MessageProc( CWBMessage& message )
   case WBM_CONTEXTMESSAGE:
     if ( message.Data >= 0 && message.Data < categoryList.NumItems() )
     {
-      if ( !changeDefault )
-      {
-        auto& POIs = GetMapPOIs();
-
-        POIs[ currentPOI ].SetCategory( App, categoryList[ message.Data ] );
-        ExportPOIS();
-        CWBLabel* type = (CWBLabel*)FindChildByID( "markertype", "label" );
-        if ( type )
-          type->SetText( "Marker Type: " + categoryList[ message.Data ]->GetFullTypeName() );
-      }
-      else
+      if ( changeDefault )
       {
         switch ( defaultCatBeingSet )
         {
@@ -1312,12 +1417,22 @@ TBOOL GW2MarkerEditor::MessageProc( CWBMessage& message )
           Config::SetString( "defaultcategory4", categoryList[ message.Data ]->GetFullTypeName() );
           break;
         }
-/*
-        CWBLabel* type = (CWBLabel*)FindChildByID( "defaultmarkertype", "label" );
-        if ( type )
-          type->SetText( "Default Marker Type: " + categoryList[ message.Data ]->GetFullTypeName() );
-*/
+        break;
       }
+
+      if ( selectingEditedCategory )
+      {
+        SetEditedCategory( categoryList[ message.Data ]->GetFullTypeName() );
+        break;
+      }
+
+      auto& POIs = GetMapPOIs();
+
+      POIs[ currentPOI ].SetCategory( App, categoryList[ message.Data ] );
+      ExportPOIS();
+      CWBLabel* type = (CWBLabel*)FindChildByID( "markertype", "label" );
+      if ( type )
+        type->SetText( "Marker Type: " + categoryList[ message.Data ]->GetFullTypeName() );
     }
 
     break;

@@ -198,10 +198,8 @@ void InitInputHooks()
   if ( HooksInitialized )
     return;
 
-/*
   if ( IsDebuggerPresent() )
     return;
-*/
 
   auto hookThread = CreateThread( NULL, 0,
                                   []( LPVOID data )
