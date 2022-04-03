@@ -57,21 +57,29 @@ mz_zip_archive* OpenZipFile( const CString& zipFile )
 
 TBOOL FindSavedCategory( GW2TacticalCategory* t )
 {
-  if ( t->keepSaveState )
+  if ( !t )
+    return false;
+
+  if ( t->keepSaveState || t->needsExport )
     return true;
   for ( TS32 x = 0; x < t->children.NumItems(); x++ )
-    if ( FindSavedCategory( t->children[ x ] ) ) return true;
+    if ( FindSavedCategory( t->children[ x ] ) ) 
+      return true;
   return false;
 }
 
 void ExportSavedCategories( CXMLNode* n, GW2TacticalCategory* t )
 {
-  if ( !FindSavedCategory( t ) )
+  if ( !FindSavedCategory( t ) || t->name.Length() == 0 )
     return;
-  auto nn = n->AddChild( "MarkerCategory" );
-  nn.SetAttribute( "name", t->name.GetPointer() );
+  auto& nn = n->AddChild( "MarkerCategory" );
+  nn.SetAttribute( "Name", t->name.GetPointer() );
   if ( t->name != t->displayName )
     nn.SetAttribute( "DisplayName", t->displayName.GetPointer() );
+
+  if ( t->forceExport )
+    nn.SetAttributeFromInteger( "forceExport", 1 );
+
   t->data.Write( &nn );
   for ( TS32 x = 0; x < t->children.NumItems(); x++ )
     ExportSavedCategories( &nn, t->children[ x ] );
@@ -107,10 +115,52 @@ void ExportPOIS()
   CXMLNode& root = d.GetDocumentNode();
   root = root.AddChild( "OverlayData" );
 
+  CategoryRoot.ClearExportNeeded();
+
+  // build cat list
+  for ( auto& POIs : POISet )
+  {
+    for ( TS32 x = 0; x < POIs.second.NumItems(); x++ )
+    {
+      auto& p = POIs.second.GetByIndex( x );
+      if ( !p.external && !p.routeMember )
+        if ( p.category )
+          p.category->SetExportNeeded();
+    }
+  }
+
+  for ( auto& trails : trailSet )
+  {
+    for ( TS32 x = 0; x < trails.second.NumItems(); x++ )
+    {
+      auto& p = trails.second.GetByIndex( x );
+      if ( !p->External )
+        if ( p->category )
+          p->category->SetExportNeeded();
+    }
+  }
+
+  for ( TS32 x = 0; x < Routes.NumItems(); x++ )
+  {
+    if ( Routes[ x ].external )
+      continue;
+
+    for ( TS32 y = 0; y < Routes[ x ].route.NumItems(); y++ )
+    {
+      for ( auto& POIs : POISet )
+      {
+        if ( POIs.second.HasKey( Routes[ x ].route[ y ] ) && POIs.second[ Routes[ x ].route[ y ] ].category )
+          POIs.second[ Routes[ x ].route[ y ] ].category->SetExportNeeded();
+      }
+    }
+  }
+
+
   for ( TS32 x = 0; x < CategoryRoot.children.NumItems(); x++ )
     ExportSavedCategories( &root, CategoryRoot.children[ x ] );
 
   CXMLNode* n = &root.AddChild( "POIs" );
+  // export pois
 
   for ( auto& POIs : POISet )
   {
@@ -188,6 +238,12 @@ void RecursiveImportPOIType( CXMLNode& root, GW2TacticalCategory* Root, CString 
       if ( !isalnum( name.GetPointer()[ x ] ) && name.GetPointer()[ x ] != '.' )
         name.GetPointer()[ x ] = '_';
 
+    int forceExport = 0;
+    if ( n.HasAttribute( "forceExport" ) )
+      n.GetAttributeAsInteger( "forceExport", &forceExport );
+
+    bool needsReExport = forceExport > 0;
+
     CString displayName;
     CString newCatName = currentCategory;
 
@@ -249,9 +305,10 @@ void RecursiveImportPOIType( CXMLNode& root, GW2TacticalCategory* Root, CString 
       c->isOnlySeparator = separator;
     }
 
-    c->data.Read( n, KeepSaveState );
+    c->data.Read( n, true );
     c->zipFile = AddStringToMap( zipFile );
-    c->keepSaveState = KeepSaveState;
+    c->keepSaveState = needsReExport;
+    c->forceExport = forceExport > 0;
 
     RecursiveImportPOIType( n, c, newCatName, c->data, KeepSaveState, zipFile );
   }
@@ -269,7 +326,7 @@ void ImportPOITypes()
 
   CategoryMap.Flush();
   CategoryRoot.children.FreeArray();
-  RecursiveImportPOIType( root, &CategoryRoot, CString(), MarkerTypeData(), true, CString() );
+  RecursiveImportPOIType( root, &CategoryRoot, CString(), MarkerTypeData(), false, CString() );
 }
 
 void ImportPOI( CWBApplication* App, CXMLNode& t, POI& p, const CString& zipFile )
@@ -349,7 +406,7 @@ void ImportPOIDocument( CWBApplication* App, CXMLDocument& d, TBOOL External, co
     return;
   CXMLNode root = d.GetDocumentNode().GetChild( "OverlayData" );
 
-  RecursiveImportPOIType( root, &CategoryRoot, CString(), MarkerTypeData(), true, zipFile );
+  RecursiveImportPOIType( root, &CategoryRoot, CString(), MarkerTypeData(), !External, zipFile );
 
   if ( root.GetChildCount( "POIs" ) )
   {

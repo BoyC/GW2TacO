@@ -242,6 +242,7 @@ public:
 
   MarkerTypeData data;
   TBOOL keepSaveState = false;
+  TBOOL forceExport = false;
   TBOOL isOnlySeparator = false;
   GW2TacticalCategory* parent = nullptr;
   CArray<GW2TacticalCategory*> children;
@@ -261,6 +262,11 @@ public:
   bool hiddenFromContextMenu = false;
   int markerCount = 0;
 
+  bool needsExport = false;
+
+  void SetExportNeeded();
+  void ClearExportNeeded();
+
   virtual ~GW2TacticalCategory()
   {
     children.FreeArray();
@@ -269,6 +275,7 @@ public:
 
 void AddPOI( CWBApplication* App, int defaultCat );
 void DeletePOI();
+void DeletePOI( const GUID& guid );
 void UpdatePOI( CWBApplication* App );
 
 void OpenTypeContextMenu( CWBContextMenu* ctx, CArray<GW2TacticalCategory*>& CategoryList, TBOOL AddVisibilityMarkers = false, TS32 BaseID = 0, TBOOL markerEditor = false, CDictionary<TS32, Achievement>& achievements = CDictionary<TS32, Achievement>() );

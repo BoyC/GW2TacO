@@ -1101,6 +1101,22 @@ void GW2MarkerEditor::OnDraw( CWBDrawAPI* API )
 
     hidden = false;
   }
+
+  auto* mouseItem = App->GetMouseItem();
+
+  if ( mouseItem )
+  {
+    if ( mouseItem->GetID() == "default1" )
+      SetMouseToolTip( Config::GetString( "defaultcategory0" ) );
+    if ( mouseItem->GetID() == "default2" )
+      SetMouseToolTip( Config::GetString( "defaultcategory1" ) );
+    if ( mouseItem->GetID() == "default3" )
+      SetMouseToolTip( Config::GetString( "defaultcategory2" ) );
+    if ( mouseItem->GetID() == "default4" )
+      SetMouseToolTip( Config::GetString( "defaultcategory3" ) );
+    if ( mouseItem->GetID() == "default5" )
+      SetMouseToolTip( Config::GetString( "defaultcategory4" ) );
+  }
 }
 
 struct UberToolVertex
@@ -1796,6 +1812,12 @@ TBOOL GW2MarkerEditor::MessageProc( CWBMessage& message )
 
     changeDefault = false;
     selectingEditedCategory = false;
+
+    if ( b->GetID() == _T( "deletemarker" ) && editedMarker != GUID{} )
+    {
+      DeletePOI( editedMarker );
+      SetEditedGUID( GUID{} );
+    }
 
     if ( b->GetID() == _T( "changemarkertype" ) )
     {

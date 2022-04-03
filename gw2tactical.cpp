@@ -1089,6 +1089,16 @@ void DeletePOI()
   }
 }
 
+void DeletePOI( const GUID& guid )
+{
+  auto& POIs = GetMapPOIs();
+  if ( POIs.HasKey( guid ) )
+  {
+    POIs.Delete( guid );
+    ExportPOIS();
+  }
+}
+
 void UpdatePOI( CWBApplication* App )
 {
   if ( !mumbleLink.IsValid() ) 
@@ -1789,10 +1799,27 @@ void GW2TacticalCategory::SetDefaultToggleValues()
     children[ x ]->SetDefaultToggleValues();
 }
 
+void GW2TacticalCategory::SetExportNeeded()
+{
+  needsExport = true;
+/*
+  if ( parent )
+    parent->SetExportNeeded();
+*/
+}
+
+void GW2TacticalCategory::ClearExportNeeded()
+{
+  needsExport = false;
+  for ( int x = 0; x < children.NumItems(); x++ )
+    children[ x ]->ClearExportNeeded();
+}
+
 void POI::SetCategory( CWBApplication* App, GW2TacticalCategory* t )
 {
   category = t;
   typeData = t->data;
+  typeData.ClearSavedBits();
   Type = AddStringToMap( t->GetFullTypeName() );
   icon = 0;
   iconFile = typeData.iconFile;
