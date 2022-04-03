@@ -600,6 +600,9 @@ TBOOL GW2MarkerEditor::HandleUberToolMessages( CWBMessage& message )
         return true;
     }
 
+    if ( editedMarker != GUID{} )
+      SetEditedGUID( GUID{} );
+
     return false;
   }
   case WBM_LEFTBUTTONUP:
@@ -609,7 +612,18 @@ TBOOL GW2MarkerEditor::HandleUberToolMessages( CWBMessage& message )
       return true;
     }
     break;
-
+  case WBM_RIGHTBUTTONDOWN:
+  {
+    if ( draggedElement == UberToolElement::none || editedMarker == GUID{} )
+      break;
+    auto* marker = FindMarkerByGUID( editedMarker );
+    if ( !marker )
+      return false;
+    marker->position = originalPosition;
+    return true;
+  }
+  break;
+  case WBM_RIGHTBUTTONUP:
   case WBM_MOUSEMOVE:
     if ( draggedElement != UberToolElement::none && editedMarker != GUID{} )
     {
@@ -619,7 +633,8 @@ TBOOL GW2MarkerEditor::HandleUberToolMessages( CWBMessage& message )
 
       CVector3 pos = GetUberToolMovePos( originalPosition );
 
-      marker->position = pos - clickedOriginalDelta;
+      if ( !App->GetRightButtonState() )
+        marker->position = pos - clickedOriginalDelta;
 
       return true;
     }
@@ -712,6 +727,9 @@ void GW2MarkerEditor::DrawUberTool( CWBDrawAPI* API, const CRect& drawrect )
 {
   hoverElement = UberToolElement::none;
 
+  if ( mumbleLink.isMapOpen )
+    return;
+
   if ( editedMarker == GUID{} )
     return;
 
@@ -749,7 +767,7 @@ void GW2MarkerEditor::DrawUberTool( CWBDrawAPI* API, const CRect& drawrect )
 
   ConstBuffer bufferData;
   bufferData.cam.SetLookAtLH( eye, mumbleLink.camPosition + mumbleLink.camDir, CVector3( 0, 1, 0 ) );
-  bufferData.persp.SetPerspectiveFovLH( mumbleLink.fov, drawrect.Width() / (TF32)drawrect.Height(), 0.01f, 150.0f );
+  bufferData.persp.SetPerspectiveFovLH( mumbleLink.fov, drawrect.Width() / (TF32)drawrect.Height(), 0.05f, 1000.0f );
 
   CMatrix4x4 matrix;
 
@@ -876,6 +894,9 @@ bool GW2MarkerEditor::GetMouseTransparency( CPoint& ClientSpacePoint, WBMESSAGE 
   if ( MessageType == WBM_MOUSEMOVE && draggedElement == UberToolElement::none )
     return true;
 
+  // for right click undo
+  if ( draggedElement != UberToolElement::none && ( MessageType == WBM_RIGHTBUTTONDOWN || MessageType == WBM_RIGHTBUTTONUP ) )
+    return false;
 
   if ( hoverElement != UberToolElement::none || draggedElement != UberToolElement::none )
     return false;
@@ -892,7 +913,15 @@ bool GW2MarkerEditor::GetMouseTransparency( CPoint& ClientSpacePoint, WBMESSAGE 
     if ( tactical->markerMinimapPositions.GetByIndex( x ).Contains( ClientSpacePoint ) )
       return false;
 
+  if ( editedMarker != GUID{} )
+    return false;
+
   return true;
+}
+
+bool GW2MarkerEditor::ShouldPassMouseEvent()
+{
+  return editedMarker != GUID{} && hoverElement == UberToolElement::none;
 }
 
 void GW2MarkerEditor::OnDraw( CWBDrawAPI* API )
@@ -1221,6 +1250,12 @@ void GW2MarkerEditor::UpdateEditorFromCategory( const MarkerTypeData& data )
     }
     case Color:
     {
+      CWBTextBox* textBox = FindChildByID<CWBTextBox>( typeParameters[ x ].targetName );
+      if ( textBox )
+        textBox->SetText( CString::Format( "%8X", intData ), false, true );
+      CWBButton* preview = FindChildByID<CWBButton>( "colorpreview" );
+      if ( preview )
+        preview->ApplyStyleDeclarations( CString::Format( "background:#%8X", intData ) );
       break;
     }
     case DropDown:
@@ -1387,6 +1422,17 @@ void GW2MarkerEditor::UpdateTypeParameterValue( TypeParameters param )
   }
   case Color:
   {
+    CWBTextBox* b = FindChildByID<CWBTextBox>( typeParameters[ (int)param ].targetName );
+    if ( !b )
+      return;
+
+    int result = 0;
+    int value = b->GetText().Scan( "%8X", &result );
+    if ( value != 1 )
+      return;
+
+    changed = result != originalIntValue;
+    SetTypeParameter( *data, param, 0, result, "", false );
     break;
   }
   case FloatNormalized:

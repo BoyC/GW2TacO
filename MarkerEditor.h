@@ -195,4 +195,5 @@ public:
   WB_DECLARE_GUIITEM( _T( "markereditor" ), CWBItem );
 
   bool GetMouseTransparency( CPoint& ClientSpacePoint, WBMESSAGE MessageType );
+  bool ShouldPassMouseEvent();
 };

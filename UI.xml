@@ -63,7 +63,8 @@
          </box>
          <box class="markereditorsetting">
            <button class="checkbox" id="cb_color"/>
-           <button class="colorselect" id="color" TEXT="SELECT COLOR"/>
+           <label class="optionlabel" text="Color:"/>
+           <textbox class="colorselect" id="color" singleline="1"/>
            <button class="colorpreview" id="colorpreview"/>
          </box>
          <box class="markereditorsetting">

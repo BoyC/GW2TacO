@@ -443,13 +443,13 @@ markereditor
 .colorselect
 {
 	height:100%-4px;
-    width:80%;
     padding:2px;
 }
 
 .colorpreview
 {
 	height:100%-4px;
+    width:20px;
     padding:2px;
 }
 

@@ -1,6 +1,7 @@
 #include "OverlayApplication.h"
 #include "MumbleLink.h"
 #include "InputHooks.h"
+#include "MarkerEditor.h"
 
 bool ShiftState = false;
 bool HooksInitialized = false;
@@ -180,6 +181,12 @@ LRESULT __stdcall MouseHook( int code, WPARAM wParam, LPARAM lParam )
   {
     PostMessage( (HWND)App->GetHandle(), wParam, 0, ap.x + ( ap.y << 16 ) );
     auto item = App->GetItemUnderMouse( CPoint( ap.x, ap.y ), wParam == WM_LBUTTONDOWN ? WBM_LEFTBUTTONDOWN : WBM_RIGHTBUTTONDOWN );
+    auto markerEditor = App->GetRoot()->FindChildByID<GW2MarkerEditor>( "MarkerEditor" );
+    if ( markerEditor && !markerEditor->IsHidden() )
+    {
+      if ( markerEditor->ShouldPassMouseEvent() )
+        return CallNextHookEx( 0, code, wParam, lParam );
+    }
     if ( item && item != App->GetRoot() && item->GetType() != "clickthroughbutton" )
       return 1;
   }
