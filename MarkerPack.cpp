@@ -345,8 +345,6 @@ TBOOL ImportTrail( CWBApplication* App, CXMLNode& t, GW2Trail& p, const CString&
 
 void ImportPOIDocument( CWBApplication* App, CXMLDocument& d, TBOOL External, const CString& zipFile )
 {
-
-
   if ( !d.GetDocumentNode().GetChildCount( "OverlayData" ) ) 
     return;
   CXMLNode root = d.GetDocumentNode().GetChild( "OverlayData" );

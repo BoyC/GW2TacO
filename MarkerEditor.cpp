@@ -18,44 +18,6 @@ enum TypeParameterTypes
   DropDown,
 };
 
-enum class TypeParameters
-{
-  Size,
-  MiniMapSize,
-  MiniMapFadeoutLevel,
-  MinSize,
-  MaxSize,
-  IconFile,
-  ScaleWithZoom,
-  Color,
-  Alpha,
-  FadeNear,
-  FadeFar,
-  Height,
-  Behavior,
-  AchievementID,
-  AchievementBit,
-  ResetLength,
-  DefaultToggle,
-  HasCountDown,
-  ToggleCategory,
-  AutoTrigger,
-  TriggerRange,
-  InfoRange,
-  Info,
-  Copy,
-  CopyMessage,
-  MiniMapVisible,
-  BigMapVisible,
-  InGameVisible,
-  KeepOnMapEdge,
-  AnimSpeed,
-  TrailScale,
-  Texture,
-
-  MAX
-};
-
 struct TypeParameter
 {
   TypeParameters param;
@@ -195,87 +157,87 @@ void SetTypeParameterSaved( MarkerTypeData& data, TypeParameters param, bool sav
     data.saveBits.iconFileSaved = saved;
     break;
   case TypeParameters::ScaleWithZoom:
-    data.saveBits.scaleWithZoomSaved = saved; 
+    data.saveBits.scaleWithZoomSaved = saved;
     break;
   case TypeParameters::Color:
-    data.saveBits.colorSaved = saved; 
+    data.saveBits.colorSaved = saved;
     break;
   case TypeParameters::Alpha:
-    data.saveBits.alphaSaved = saved; 
+    data.saveBits.alphaSaved = saved;
     break;
   case TypeParameters::FadeNear:
-    data.saveBits.fadeNearSaved = saved; 
+    data.saveBits.fadeNearSaved = saved;
     break;
   case TypeParameters::FadeFar:
     data.saveBits.fadeFarSaved = saved;
     break;
   case TypeParameters::Height:
-    data.saveBits.heightSaved = saved; 
+    data.saveBits.heightSaved = saved;
     break;
   case TypeParameters::Behavior:
-    data.saveBits.behaviorSaved = saved; 
+    data.saveBits.behaviorSaved = saved;
     break;
   case TypeParameters::AchievementID:
     data.saveBits.achievementIdSaved = saved;
     break;
   case TypeParameters::AchievementBit:
-    data.saveBits.achievementBitSaved = saved; 
+    data.saveBits.achievementBitSaved = saved;
     break;
   case TypeParameters::ResetLength:
-    data.saveBits.resetLengthSaved = saved; 
+    data.saveBits.resetLengthSaved = saved;
     break;
   case TypeParameters::DefaultToggle:
-    data.saveBits.defaultToggleSaved = saved; 
+    data.saveBits.defaultToggleSaved = saved;
     break;
   case TypeParameters::HasCountDown:
-    data.saveBits.hasCountdownSaved = saved; 
+    data.saveBits.hasCountdownSaved = saved;
     break;
   case TypeParameters::ToggleCategory:
-    data.saveBits.toggleCategorySaved = saved; 
+    data.saveBits.toggleCategorySaved = saved;
     break;
   case TypeParameters::AutoTrigger:
-    data.saveBits.autoTriggerSaved = saved; 
+    data.saveBits.autoTriggerSaved = saved;
     break;
   case TypeParameters::TriggerRange:
-    data.saveBits.triggerRangeSaved = saved; 
+    data.saveBits.triggerRangeSaved = saved;
     break;
   case TypeParameters::InfoRange:
-    data.saveBits.infoRangeSaved = saved; 
+    data.saveBits.infoRangeSaved = saved;
     break;
   case TypeParameters::Info:
-    data.saveBits.infoSaved = saved; 
+    data.saveBits.infoSaved = saved;
     break;
   case TypeParameters::Copy:
-    data.saveBits.copySaved = saved; 
+    data.saveBits.copySaved = saved;
     break;
   case TypeParameters::CopyMessage:
-    data.saveBits.copyMessageSaved = saved; 
+    data.saveBits.copyMessageSaved = saved;
     break;
   case TypeParameters::MiniMapVisible:
-    data.saveBits.miniMapVisibleSaved = saved; 
+    data.saveBits.miniMapVisibleSaved = saved;
     break;
   case TypeParameters::BigMapVisible:
-    data.saveBits.bigMapVisibleSaved = saved; 
+    data.saveBits.bigMapVisibleSaved = saved;
     break;
   case TypeParameters::InGameVisible:
-    data.saveBits.inGameVisibleSaved = saved; 
+    data.saveBits.inGameVisibleSaved = saved;
     break;
   case TypeParameters::KeepOnMapEdge:
-    data.saveBits.keepOnMapEdgeSaved = saved; 
+    data.saveBits.keepOnMapEdgeSaved = saved;
     break;
   case TypeParameters::AnimSpeed:
-    data.saveBits.animSpeedSaved = saved; 
+    data.saveBits.animSpeedSaved = saved;
     break;
   case TypeParameters::TrailScale:
-    data.saveBits.trailScaleSaved = saved; 
+    data.saveBits.trailScaleSaved = saved;
     break;
   case TypeParameters::Texture:
-    data.saveBits.textureSaved = saved; 
+    data.saveBits.textureSaved = saved;
     break;
   }
 }
 
-void SetTypeParameter( MarkerTypeData& data, TypeParameters param, const float& floatResult, const int& intResult, const CString& stringResult, const bool& boolResult )
+void SetTypeParameter( MarkerTypeData& data, TypeParameters param, const float floatResult, const int intResult, const CString& stringResult, const bool boolResult )
 {
   switch ( param )
   {
@@ -297,7 +259,7 @@ void SetTypeParameter( MarkerTypeData& data, TypeParameters param, const float& 
   case TypeParameters::IconFile:
     data.iconFile = AddStringToMap( stringResult );
     return;
-  case TypeParameters::ScaleWithZoom:    
+  case TypeParameters::ScaleWithZoom:
     data.bits.scaleWithZoom = boolResult;
     return;
   case TypeParameters::Color:
@@ -1239,7 +1201,7 @@ void GW2MarkerEditor::UpdateEditorFromCategory( const MarkerTypeData& data )
     {
       CWBTextBox* textBox = FindChildByID<CWBTextBox>( typeParameters[ x ].targetName );
       if ( textBox )
-        textBox->SetText( stringData );
+        textBox->SetText( stringData, false, true );
       break;
     }
     case FloatNormalized:
@@ -1247,14 +1209,14 @@ void GW2MarkerEditor::UpdateEditorFromCategory( const MarkerTypeData& data )
     {
       CWBTextBox* textBox = FindChildByID<CWBTextBox>( typeParameters[ x ].targetName );
       if ( textBox )
-        textBox->SetText( CString::Format( "%f", floatData ) );
+        textBox->SetText( CString::Format( "%.2f", floatData ), false, true );
       break;
     }
     case Int:
     {
       CWBTextBox* textBox = FindChildByID<CWBTextBox>( typeParameters[ x ].targetName );
       if ( textBox )
-        textBox->SetText( CString::Format( "%d", intData ) );
+        textBox->SetText( CString::Format( "%d", intData ), false, true );
       break;
     }
     case Color:
@@ -1265,11 +1227,19 @@ void GW2MarkerEditor::UpdateEditorFromCategory( const MarkerTypeData& data )
     {
       CWBDropDown* dropDown = (CWBDropDown*)FindChildByID( typeParameters[ x ].targetName );
       if ( dropDown )
-        dropDown->SelectItemByIndex( intData );
+        dropDown->SelectItemByIndex( intData, true );
       break;
     }
     }
   }
+}
+
+void GW2MarkerEditor::UpdateEditorContent()
+{
+  MarkerTypeData* data = GetEditedTypeParameters();
+  if ( !data )
+    return;
+  UpdateEditorFromCategory( *data );
 }
 
 void GW2MarkerEditor::SetEditedGUID( const GUID& guid )
@@ -1288,7 +1258,7 @@ void GW2MarkerEditor::SetEditedGUID( const GUID& guid )
   }
 
   if ( editedText )
-    editedText->SetText( "EDITED ITEM IS A MARKER" );
+    editedText->SetText( "EDITED ITEM IS A MARKER (" + marker->category->GetFullTypeName() + ")" );
 
   editedMarker = guid;
   UpdateEditorFromCategory( marker->typeData );
@@ -1316,18 +1286,333 @@ void GW2MarkerEditor::SetEditedCategory( const CString& category )
   UpdateEditorFromCategory( cat->data );
 }
 
+void UpdatePOICategoryParameter( GW2TacticalCategory* category, TypeParameters param, const bool boolValue, const int intValue, const float floatValue, const CString& stringValue )
+{
+  for ( auto& set : POISet )
+  {
+    for ( int x = 0; x < set.second.NumItems(); x++ )
+    {
+      auto& poi = set.second.GetByIndex( x );
+      if ( poi.category == category )
+      {
+        if ( !IsTypeParameterSaved( poi.category->data, param ) )
+          SetTypeParameter( poi.typeData, param, floatValue, intValue, stringValue, boolValue );
+      }
+    }
+  }
+}
+
+void PropagateCategoryParameter( GW2TacticalCategory* category, TypeParameters param, const bool boolValue, const int intValue, const float floatValue, const CString& stringValue )
+{
+  if ( !category )
+    return;
+
+  if ( IsTypeParameterSaved( category->data, param ) )
+    return;
+
+  UpdatePOICategoryParameter( category, param, boolValue, intValue, floatValue, stringValue );
+
+  SetTypeParameter( category->data, param, floatValue, intValue, stringValue, boolValue );
+  for ( int x = 0; x < category->children.NumItems(); x++ )
+    PropagateCategoryParameter( category->children[ x ], param, boolValue, intValue, floatValue, stringValue );
+}
+
+void GW2MarkerEditor::UpdateTypeParameterValue( TypeParameters param )
+{
+  MarkerTypeData* data = GetEditedTypeParameters();
+  if ( !data )
+    return;
+
+  bool originalBoolValue{};
+  int originalIntValue{};
+  float originalFloatValue{};
+  CString originalStringvalue;
+
+  GetTypeParameter( *data, param, originalFloatValue, originalIntValue, originalStringvalue, originalBoolValue );
+  bool changed = false;
+
+  // update
+
+  switch ( typeParameters[ (int)param ].paramType )
+  {
+  case Boolean:
+  {
+    CWBButton* b = FindChildByID<CWBButton>( typeParameters[ (int)param ].targetName );
+    if ( !b )
+      return;
+
+    changed = ( b->IsPushed() != 0 ) != originalBoolValue;
+    SetTypeParameter( *data, param, 0, 0, "", b->IsPushed() );
+    break;
+  }
+  case String:
+  {
+    CWBTextBox* b = FindChildByID<CWBTextBox>( typeParameters[ (int)param ].targetName );
+    if ( !b )
+      return;
+
+    changed = b->GetText() != originalStringvalue;
+    SetTypeParameter( *data, param, 0, 0, b->GetText(), false );
+    break;
+  }
+  case Float:
+  {
+    CWBTextBox* b = FindChildByID<CWBTextBox>( typeParameters[ (int)param ].targetName );
+    if ( !b )
+      return;
+
+    float result = 0;
+    int value = b->GetText().Scan( "%f", &result );
+    if ( value != 1 )
+      return;
+
+    changed = result != originalFloatValue;
+    SetTypeParameter( *data, param, result, 0, "", false );
+    break;
+  }
+  case Int:
+  {
+    CWBTextBox* b = FindChildByID<CWBTextBox>( typeParameters[ (int)param ].targetName );
+    if ( !b )
+      return;
+
+    int result = 0;
+    int value = b->GetText().Scan( "%d", &result );
+    if ( value != 1 )
+      return;
+
+    changed = result != originalIntValue;
+    SetTypeParameter( *data, param, 0, result, "", false );
+    break;
+  }
+  case Color:
+  {
+    break;
+  }
+  case FloatNormalized:
+  {
+    CWBTextBox* b = FindChildByID<CWBTextBox>( typeParameters[ (int)param ].targetName );
+    if ( !b )
+      return;
+
+    float result = 0;
+    int value = b->GetText().Scan( "%f", &result );
+    if ( value != 1 )
+      return;
+
+    result = max( 0, min( 1, result ) );
+
+    changed = result != originalFloatValue;
+    SetTypeParameter( *data, param, result, 0, "", false );
+    break;
+  }
+  case DropDown:
+  {
+    CWBDropDown* b = FindChildByID<CWBDropDown>( typeParameters[ (int)param ].targetName );
+    if ( !b )
+      return;
+
+    changed = originalIntValue != b->GetCursorPosition();
+    SetTypeParameter( *data, param, 0, b->GetCursorPosition(), "", false );
+    break;
+  }
+  }
+
+  if ( editedCategory.Length() && changed )
+  {
+    auto cat = GetCategory( editedCategory );
+    if ( cat )
+    {
+      bool boolValue{};
+      int intValue{};
+      float floatValue{};
+      CString stringvalue;
+
+      // force propagation
+      SetTypeParameterSaved( *data, param, false );
+
+      GetTypeParameter( cat->data, param, floatValue, intValue, stringvalue, boolValue );
+      PropagateCategoryParameter( cat, param, boolValue, intValue, floatValue, stringvalue );
+    }
+  }
+
+  if ( changed )
+    SetTypeParameterSaved( *data, param, true );
+}
+
+void GW2MarkerEditor::ToggleTypeParameterSaved( TypeParameters param )
+{
+  MarkerTypeData* data = GetEditedTypeParameters();
+  if ( !data )
+    return;
+
+  bool saved = !IsTypeParameterSaved( *data, param );
+  SetTypeParameterSaved( *data, param, saved );
+  
+  if ( saved )
+    return; // we just stored the previous value, no change needed
+
+  // need to propagate parent's default value to current category
+  if ( !saved && editedCategory.Length() )
+  {
+    auto cat = GetCategory( editedCategory );
+    if ( cat )
+    {
+      auto catParent = cat->parent;
+      if ( catParent )
+      {
+        bool boolValue{};
+        int intValue{};
+        float floatValue{};
+        CString stringvalue;
+
+        GetTypeParameter( catParent->data, param, floatValue, intValue, stringvalue, boolValue );
+        PropagateCategoryParameter( cat, param, boolValue, intValue, floatValue, stringvalue );
+      }
+    }
+  }
+
+  // need to propagate parent's default value to current marker
+  if ( !saved && editedMarker != GUID{} )
+  {
+    auto marker = FindMarkerByGUID( editedMarker );
+    if ( marker && marker->category )
+    {
+      bool boolValue{};
+      int intValue{};
+      float floatValue{};
+      CString stringvalue;
+
+      GetTypeParameter( marker->category->data, param, floatValue, intValue, stringvalue, boolValue );
+      SetTypeParameter( *data, param, floatValue, intValue, stringvalue, boolValue );
+    }
+  }
+}
+
+bool GW2MarkerEditor::GetTypeParameterSaved( TypeParameters param )
+{
+  MarkerTypeData* data = GetEditedTypeParameters();
+  if ( !data )
+    return false;
+  return IsTypeParameterSaved( *data, param );
+}
+
+void GW2MarkerEditor::GetTypeParameterValue( TypeParameters param, bool& boolValue, int& intValue, float& floatValue, CString& stringValue )
+{
+  MarkerTypeData* data = GetEditedTypeParameters();
+  if ( !data )
+    return;
+  GetTypeParameter( *data, param, floatValue, intValue, stringValue, boolValue );
+}
+
+MarkerTypeData* GW2MarkerEditor::GetEditedTypeParameters()
+{
+  if ( editedCategory == "" && editedMarker == GUID{} )
+    return nullptr;
+
+  auto marker = FindMarkerByGUID( editedMarker );
+  if ( marker )
+    return &marker->typeData;
+
+  auto category = GetCategory( editedCategory );
+  if ( category )
+    return &category->data;
+
+  return nullptr;
+}
+
 TBOOL GW2MarkerEditor::MessageProc( CWBMessage& message )
 {
   switch ( message.GetMessage() )
   {
+  case WBM_SELECTIONCHANGE:
+  {
+    CWBDropDown* b = (CWBDropDown*)App->FindItemByGuid( message.GetTarget(), "dropdown" );
+    if ( !b )
+      break;
+
+    for ( int x = 0; x < (int)TypeParameters::MAX; x++ )
+    {
+      if ( b->GetID() == typeParameters[ x ].targetName )
+      {
+        UpdateTypeParameterValue( (TypeParameters)x );
+        UpdateEditorContent();
+        return true;
+      }
+    }
+  }
+  break;
+
+  case WBM_FOCUSLOST:
+  {
+    CWBTextBox* t = (CWBTextBox*)App->FindItemByGuid( message.GetTarget(), "textbox" );
+    if ( t )
+    {
+      for ( int x = 0; x < (int)TypeParameters::MAX; x++ )
+      {
+        if ( t->GetID() == typeParameters[ x ].targetName )
+        {
+          UpdateTypeParameterValue( (TypeParameters)x );
+          UpdateEditorContent();
+          break;
+        }
+      }
+      break;
+    }
+    break;
+  }
   case WBM_COMMAND:
   {
     if ( hidden )
       break;
 
+    CWBTextBox* t = (CWBTextBox*)App->FindItemByGuid( message.GetTarget(), "textbox" );
+    if ( t )
+    {
+      for ( int x = 0; x < (int)TypeParameters::MAX; x++ )
+      {
+        if ( t->GetID() == typeParameters[ x ].targetName )
+        {
+          UpdateTypeParameterValue( (TypeParameters)x );
+          UpdateEditorContent();
+          return true;
+        }
+      }
+      break;
+    }
+
     CWBButton* b = (CWBButton*)App->FindItemByGuid( message.GetTarget(), _T( "button" ) );
     if ( !b )
       break;
+
+    for ( int x = 0; x < (int)TypeParameters::MAX; x++ )
+    {
+      if ( b->GetID() == typeParameters[ x ].enableCheckBoxName )
+      {
+        ToggleTypeParameterSaved( (TypeParameters)x );
+        b->Push( GetTypeParameterSaved( (TypeParameters)x ) );
+        UpdateEditorContent();
+        return true;
+      }
+    }
+
+    for ( int x = 0; x < (int)TypeParameters::MAX; x++ )
+    {
+      if ( b->GetID() == typeParameters[ x ].targetName )
+      {
+        b->Push( !b->IsPushed() );
+        UpdateTypeParameterValue( (TypeParameters)x );
+        bool boolValue{};
+        int intValue{};
+        float floatValue{};
+        CString stringValue;
+        GetTypeParameterValue( (TypeParameters)x, boolValue, intValue, floatValue, stringValue );
+        b->Push( boolValue );
+        UpdateEditorContent();
+        return true;
+      }
+    }
+
 
     changeDefault = false;
     selectingEditedCategory = false;

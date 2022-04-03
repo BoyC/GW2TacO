@@ -59,7 +59,7 @@
          </box>
          <box class="markereditorsetting">
            <button class="checkbox" id="cb_scalewithzoom"/>
-           <button class="optiontoggle" id="scalewithzoom" TEXT="SCALE WITH ZOOM"/>
+           <button class="optiontoggle" id="scalewithzoom" TEXT="SCALE ON MINIMAP"/>
          </box>
          <box class="markereditorsetting">
            <button class="checkbox" id="cb_color"/>

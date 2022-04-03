@@ -13,6 +13,44 @@ enum class MarkerAction
   MoveMarker,
 };
 
+enum class TypeParameters
+{
+  Size,
+  MiniMapSize,
+  MiniMapFadeoutLevel,
+  MinSize,
+  MaxSize,
+  IconFile,
+  ScaleWithZoom,
+  Color,
+  Alpha,
+  FadeNear,
+  FadeFar,
+  Height,
+  Behavior,
+  AchievementID,
+  AchievementBit,
+  ResetLength,
+  DefaultToggle,
+  HasCountDown,
+  ToggleCategory,
+  AutoTrigger,
+  TriggerRange,
+  InfoRange,
+  Info,
+  Copy,
+  CopyMessage,
+  MiniMapVisible,
+  BigMapVisible,
+  InGameVisible,
+  KeepOnMapEdge,
+  AnimSpeed,
+  TrailScale,
+  Texture,
+
+  MAX
+};
+
 class MarkerActionData
 {
   MarkerAction action{};
@@ -131,9 +169,17 @@ class GW2MarkerEditor : public CWBItem
   void InitUberTool();
 
   void UpdateEditorFromCategory( const MarkerTypeData& data );
+  void UpdateEditorContent();
 
   void SetEditedGUID( const GUID& guid );
   void SetEditedCategory( const CString& category );
+
+  void UpdateTypeParameterValue( TypeParameters param );
+  void ToggleTypeParameterSaved( TypeParameters param );
+  bool GetTypeParameterSaved( TypeParameters param );
+  void GetTypeParameterValue( TypeParameters param, bool& boolValue, int& intValue, float& floatValue, CString& stringValue );
+
+  MarkerTypeData* GetEditedTypeParameters();
 
 public:
 

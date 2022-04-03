@@ -223,7 +223,7 @@ void CWBItemSelector::SelectItem( SELECTABLEID ItemID )
   if ( idx >= 0 ) SelectItemByIndex( idx );
 }
 
-void CWBItemSelector::SelectItemByIndex( TS32 Idx ) //single select implementation only
+void CWBItemSelector::SelectItemByIndex( TS32 Idx, bool dontSendMessage ) //single select implementation only
 {
   //LOG_DBG("[itemselector] %s selecting idx %d", GetID().GetPointer(), Idx);
 
@@ -238,11 +238,13 @@ void CWBItemSelector::SelectItemByIndex( TS32 Idx ) //single select implementati
   if ( CursorPosition >= 0 && CursorPosition < List.NumItems() )
   {
     List[ CursorPosition ].Select( true );
-    App->SendMessage( CWBMessage( App, WBM_SELECTITEM, GetGuid(), List[ CursorPosition ].GetID() ) );
+    if ( !dontSendMessage )
+      App->SendMessage( CWBMessage( App, WBM_SELECTITEM, GetGuid(), List[ CursorPosition ].GetID() ) );
     //LOG_DBG("[itemselector] %s got item idx %d (%d) selected", GetID().GetPointer(), Idx, List[CursorPosition].GetID());
   }
 
-  App->SendMessage( CWBMessage( App, WBM_SELECTIONCHANGE, GetGuid(), 0 ) );
+  if ( !dontSendMessage )
+    App->SendMessage( CWBMessage( App, WBM_SELECTIONCHANGE, GetGuid(), 0 ) );
 }
 
 SELECTABLEID CWBItemSelector::GetCursorItemID()

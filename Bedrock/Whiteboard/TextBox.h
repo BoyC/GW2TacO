@@ -95,7 +95,7 @@ public:
   virtual TBOOL ApplyStyle( CString & prop, CString & value, CStringArray &pseudo );
 
   CString GetText() const { return Text; } //text returned here will always be in unix newline format ('\n' instead of the windows '\r\n')
-  void SetText( CString val, TBOOL EnableUndo = false );
+  void SetText( CString val, TBOOL EnableUndo = false, TBOOL nonHumanInteraction = false );
 
   static CWBItem *Factory( CWBItem *Root, CXMLNode &node, CRect &Pos );
   WB_DECLARE_GUIITEM( _T( "textbox" ), CWBItem );

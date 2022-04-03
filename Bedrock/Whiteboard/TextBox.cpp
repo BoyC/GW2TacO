@@ -831,9 +831,9 @@ TBOOL CWBTextBox::MessageProc( CWBMessage &Message )
   return CWBItem::MessageProc( Message );
 }
 
-void CWBTextBox::SetText( CString val, TBOOL EnableUndo )
+void CWBTextBox::SetText( CString val, TBOOL EnableUndo, TBOOL nonHumanInteraction )
 {
-  SetTextInternal( val, EnableUndo, true );
+  SetTextInternal( val, EnableUndo, nonHumanInteraction );
 }
 
 void CWBTextBox::SetTextInternal( CString val, TBOOL EnableUndo, TBOOL nonHumanInteraction )

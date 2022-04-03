@@ -70,7 +70,7 @@ public:
   virtual CArray<TS32> GetSelectedIndices(); //Get an array with the indices of the selected items
 
   virtual void SelectItem( SELECTABLEID ItemID );
-  virtual void SelectItemByIndex( TS32 Idx );
+  virtual void SelectItemByIndex( TS32 Idx, bool dontSendMessage = false );
 
   virtual TS32 GetCursorPosition();
   virtual SELECTABLEID GetCursorItemID();
