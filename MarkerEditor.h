@@ -137,6 +137,7 @@ class GW2MarkerEditor : public CWBItem
   TBOOL changeDefault = false;
 
   GUID editedMarker{};
+  int selectedVertexIndex{};
   CString editedCategory{};
 
   CCoreVertexFormat* vertexFormat = nullptr;
@@ -179,7 +180,7 @@ class GW2MarkerEditor : public CWBItem
   MarkerTypeData* GetEditedTypeParameters();
 
   void HideEditorUI( bool fade );
-  GUID GetMouseTrail();
+  GUID GetMouseTrail( int& idx, CVector3& hitPoint );
 
 public:
 
@@ -201,4 +202,6 @@ public:
   void SetEditedCategory( const CString& category );
   void DeleteSelectedMarker();
   GUID GetEditedGUID();
+  int GetSelectedVertexIndex();
+  CVector3 GetSelectedVertexPosition();
 };

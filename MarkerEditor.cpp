@@ -707,9 +707,13 @@ TBOOL GW2MarkerEditor::HandleUberToolMessages( CWBMessage& message )
         return true;
     }
 
-    GUID mouseTrail = GetMouseTrail();
+    int currIdx = 0;
+    CVector3 currHitPoint;
+
+    GUID mouseTrail = GetMouseTrail( currIdx, currHitPoint );
     if ( mouseTrail != GUID{} )
     {
+      selectedVertexIndex = currIdx;
       SetEditedGUID( mouseTrail );
       return true;
     }
@@ -723,6 +727,25 @@ TBOOL GW2MarkerEditor::HandleUberToolMessages( CWBMessage& message )
     }
 
     return false;
+  }
+  case WBM_LEFTBUTTONDBLCLK:
+  {
+    int currIdx = 0;
+    CVector3 currHitPoint;
+
+    GUID mouseTrail = GetMouseTrail( currIdx, currHitPoint );
+    if ( mouseTrail != GUID{} )
+    {
+      selectedVertexIndex = currIdx;
+      auto* trail = FindTrailByGUID( mouseTrail );
+      if ( !trail )
+        break;
+
+      //trail->AddVertex( currIdx, currHitPoint );
+
+      return true;
+    }
+    break;
   }
   case WBM_LEFTBUTTONUP:
     if ( draggedElement != UberToolElement::none )
@@ -853,11 +876,13 @@ void GW2MarkerEditor::DrawUberTool( CWBDrawAPI* API, const CRect& drawrect )
     return;
 
   auto* marker = FindMarkerByGUID( editedMarker );
-  if ( !marker )
+  auto* trail = FindTrailByGUID( editedMarker );
+  if ( !marker && !trail )
     return;
 
-  CVector3 location = marker->position;
-  location.y += marker->typeData.height;
+  CVector3 location = marker ? marker->position : trail->GetVertex( selectedVertexIndex );
+  if ( marker )
+    location.y += marker->typeData.height;
 
   float scale = ( mumbleLink.camPosition - location ).Length() * 0.1f;
   CVector3 eye = mumbleLink.camPosition;
@@ -973,11 +998,14 @@ void GW2MarkerEditor::DrawUberTool( CWBDrawAPI* API, const CRect& drawrect )
   API->SetUIRenderState();
 
 
-  if ( marker->routeMember || ( marker->typeData.behavior != POIBehavior::AlwaysVisible && marker->typeData.behavior != POIBehavior::WvWObjective ) )
-    DrawRangeDisplay( API, App->GetRoot()->GetClientRect(), bufferData.cam, bufferData.persp, location, marker->typeData.triggerRange, CColor::FromARGB( 0xffffff80 ) );
+  if ( marker )
+  {
+    if ( marker->routeMember || ( marker->typeData.behavior != POIBehavior::AlwaysVisible && marker->typeData.behavior != POIBehavior::WvWObjective ) )
+      DrawRangeDisplay( API, App->GetRoot()->GetClientRect(), bufferData.cam, bufferData.persp, location, marker->typeData.triggerRange, CColor::FromARGB( 0xffffff80 ) );
 
-  if ( marker->typeData.info != -1 )
-    DrawRangeDisplay( API, App->GetRoot()->GetClientRect(), bufferData.cam, bufferData.persp, location, marker->typeData.infoRange, CColor::FromARGB( 0xff80ff80 ) );
+    if ( marker->typeData.info != -1 )
+      DrawRangeDisplay( API, App->GetRoot()->GetClientRect(), bufferData.cam, bufferData.persp, location, marker->typeData.infoRange, CColor::FromARGB( 0xff80ff80 ) );
+  }
 
   hoverElement = hitPart;
 }
@@ -1048,7 +1076,9 @@ bool GW2MarkerEditor::GetMouseTransparency( CPoint& ClientSpacePoint, WBMESSAGE 
 
   if ( MessageType == WBM_LEFTBUTTONDOWN )
   {
-    if ( GetMouseTrail() != GUID{} )
+    int currIdx = 0;
+    CVector3 currHitPoint;
+    if ( GetMouseTrail( currIdx, currHitPoint ) != GUID{} )
       return false;
   }
 
@@ -1516,6 +1546,20 @@ GUID GW2MarkerEditor::GetEditedGUID()
   return editedMarker;
 }
 
+int GW2MarkerEditor::GetSelectedVertexIndex()
+{
+  return selectedVertexIndex;
+}
+
+CVector3 GW2MarkerEditor::GetSelectedVertexPosition()
+{
+  auto* trail = FindTrailByGUID( editedMarker );
+  if ( !trail )
+    return CVector3();
+
+  return trail->GetVertex( selectedVertexIndex );
+}
+
 void UpdatePOICategoryParameter( GW2TacticalCategory* category, TypeParameters param, const bool boolValue, const int intValue, const float floatValue, const CString& stringValue )
 {
   for ( auto& set : POISet )
@@ -1812,7 +1856,7 @@ void GW2MarkerEditor::HideEditorUI( bool fade )
 
 }
 
-GUID GW2MarkerEditor::GetMouseTrail()
+GUID GW2MarkerEditor::GetMouseTrail( int& idx, CVector3& hitPoint )
 {
   CRect drawrect = App->GetRoot()->GetClientRect();
 
@@ -1846,16 +1890,22 @@ GUID GW2MarkerEditor::GetMouseTrail()
     return GUID{};
 
   float minZ = 1000000;
+  idx = 0;
+  hitPoint = CVector3();
 
   GUID result = GUID{};
 
   for ( int x = 0; x < trails->second.NumItems(); x++ )
   {
     float currZ = minZ;
-    if ( trails->second.GetByIndex( x )->HitTest( mouseLine, currZ ) && currZ < minZ )
+    int currIdx = 0;
+    CVector3 currHitPoint;
+    if ( trails->second.GetByIndex( x )->HitTest( mouseLine, currZ, currIdx, currHitPoint ) && currZ < minZ )
     {
       minZ = currZ;
       result = trails->second.GetByIndex( x )->guid;
+      idx = currIdx;
+      hitPoint = currHitPoint;
     }
   }
 
