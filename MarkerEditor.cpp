@@ -444,6 +444,101 @@ void GetTypeParameter( const MarkerTypeData& data, TypeParameters param, float& 
 }
 
 
+void DrawRangeCircle( CWBDrawAPI* API, const CRect& drawrect, CMatrix4x4& cam, CMatrix4x4& persp, const CVector4& pos, float scale, const CVector3& _x, const CVector3& _y, const CColor& color )
+{
+  int resolution = 60;
+
+  CVector4 campos = CVector4( mumbleLink.camPosition.x, mumbleLink.camPosition.y, mumbleLink.camPosition.z, 1.0f );
+  //CVector2 camDir = CVector2( camSpaceChar.x - campos.x, camSpaceChar.z - campos.z ).Normalized();
+
+  CVector4 charpos = CVector4( mumbleLink.averagedCharPosition.x, mumbleLink.averagedCharPosition.y, mumbleLink.averagedCharPosition.z, 1.0f );;
+
+  CVector4 camSpaceChar = charpos * cam;
+  camSpaceChar /= camSpaceChar.w;
+  CVector4 camSpaceEye = charpos + CVector4( 0, 1, 0, 0 );
+
+  CVector4 screenSpaceChar = ( camSpaceEye * cam ) * persp;
+  screenSpaceChar /= screenSpaceChar.w;
+  CVector4 screenSpaceEye = ( camSpaceEye * cam ) * persp;
+  screenSpaceEye /= screenSpaceEye.w;
+
+  CColor col1 = color;
+  CColor col2 = color;
+
+  for ( int x = 0; x < resolution; x++ )
+  {
+    float a1 = 1.0f;
+    float a2 = 1.0f;
+    float f1 = x / (TF32)resolution * PI * 2;
+    float f2 = ( x + 1 ) / (TF32)resolution * PI * 2;
+    CVector3 _p1 = ( _x * sinf( f1 ) + _y * cosf( f1 ) ) * scale;
+    CVector3 _p2 = ( _x * sinf( f2 ) + _y * cosf( f2 ) ) * scale;
+    CVector4 p1( _p1.x, _p1.y, _p1.z, 1 );
+    CVector4 p2( _p2.x, _p2.y, _p2.z, 1 );
+
+    //CVector3 toPoint = CVector3( p1 - campos );
+
+    /*if ( !zoomedin )
+    {
+      a1 = 1 - powf( max( 0, camDir * CVector2( p1.x, p1.z ).Normalized() ), 10.0f );
+      a2 = 1 - powf( max( 0, camDir * CVector2( p2.x, p2.z ).Normalized() ), 10.0f );
+    }*/
+
+    p1 = p1 + pos;
+    p2 = p2 + pos;
+
+    p1 = p1 * cam;
+    p2 = p2 * cam;
+
+    p1 /= p1.w;
+    p2 /= p2.w;
+
+    if ( p1.z < 0.01 && p2.z < 0.01 )
+      continue;
+
+    bool behind1 = p1.z > camSpaceChar.z;
+    bool behind2 = p2.z > camSpaceChar.z;
+
+    p1.z = max( 0.01f, p1.z );
+    p2.z = max( 0.01f, p2.z );
+
+    p1 = p1 * persp;
+    p2 = p2 * persp;
+    p1 /= p1.w;
+    p2 /= p2.w;
+
+    if ( behind1 )
+      a1 = 1 - /*( 1 - a1 ) **/ ( 1 - powf( ( CVector2( screenSpaceChar.x, screenSpaceChar.y ) - CVector2( p1.x, p1.y ) ).Length() * 8, 10.0f ) );
+
+    if ( behind2 )
+      a2 = 1 - /*( 1 - a1 ) **/ ( 1 - powf( ( CVector2( screenSpaceChar.x, screenSpaceChar.y ) - CVector2( p2.x, p2.y ) ).Length() * 8, 10.0f ) );
+
+
+    p1 = p1 * 0.5 + CVector4( 0.5, 0.5, 0.5, 0.0 );
+    p2 = p2 * 0.5 + CVector4( 0.5, 0.5, 0.5, 0.0 );
+
+    CPoint pa = CPoint( (int)( p1.x * drawrect.Width() ), (int)( ( 1 - p1.y ) * drawrect.Height() ) );
+    CPoint pb = CPoint( (int)( p2.x * drawrect.Width() ), (int)( ( 1 - p2.y ) * drawrect.Height() ) );
+
+    col1.A() = (int)( max( 0, min( 1, a1 ) ) * 255 );
+    col2.A() = (int)( max( 0, min( 1, a2 ) ) * 255 );
+
+    API->DrawLine( pa, pb, col1, col2 );
+  }
+}
+
+void DrawRangeDisplay( CWBDrawAPI* API, const CRect& drawrect, CMatrix4x4& cam, CMatrix4x4& persp, CVector3& pos, float scale, const CColor& color )
+{
+  DrawRangeCircle( API, drawrect, cam, persp, CVector4( pos.x, pos.y, pos.z, 0 ), scale, CVector3( 1, 0, 0 ), CVector3( 0, 1, 0 ), color );
+  DrawRangeCircle( API, drawrect, cam, persp, CVector4( pos.x, pos.y, pos.z, 0 ), scale, CVector3( 1, 0, 0 ), CVector3( 0, 0, 1 ), color );
+  DrawRangeCircle( API, drawrect, cam, persp, CVector4( pos.x, pos.y, pos.z, 0 ), scale, CVector3( 0, 1, 0 ), CVector3( 0, 0, 1 ), color );
+
+/*
+  DrawRangeCircle( API, drawrect, cam, persp, CVector4( pos.x, pos.y, pos.z, 0 ), scale, CVector3( 0.5, 0, 0.5 ).Normalized(), CVector3( 0, 1, 0 ), color );
+  DrawRangeCircle( API, drawrect, cam, persp, CVector4( pos.x, pos.y, pos.z, 0 ), scale, CVector3( -0.5, 0, 0.5 ).Normalized(), CVector3( 0, 0, 1 ), color );
+*/
+}
+
 //////////////////////////////////////////////////////////////////////////
 // Marker DOM
 
@@ -600,8 +695,13 @@ TBOOL GW2MarkerEditor::HandleUberToolMessages( CWBMessage& message )
         return true;
     }
 
-    if ( editedMarker != GUID{} )
-      SetEditedGUID( GUID{} );
+    auto mouseItem = App->GetItemUnderMouse( App->GetMousePos(), WBM_LEFTBUTTONDOWN );
+
+    if ( !mouseItem || mouseItem == tactical || mouseItem->GetID() == "tacoroot" )
+    {
+      if ( editedMarker != GUID{} )
+        SetEditedGUID( GUID{} );
+    }
 
     return false;
   }
@@ -852,6 +952,13 @@ void GW2MarkerEditor::DrawUberTool( CWBDrawAPI* API, const CRect& drawrect )
 
 
   API->SetUIRenderState();
+
+
+  if ( marker->routeMember || ( marker->typeData.behavior != POIBehavior::AlwaysVisible && marker->typeData.behavior != POIBehavior::WvWObjective ) )
+    DrawRangeDisplay( API, App->GetRoot()->GetClientRect(), bufferData.cam, bufferData.persp, location, marker->typeData.triggerRange, CColor::FromARGB( 0xffffff80 ) );
+
+  if ( marker->typeData.info != -1 )
+    DrawRangeDisplay( API, App->GetRoot()->GetClientRect(), bufferData.cam, bufferData.persp, location, marker->typeData.infoRange, CColor::FromARGB( 0xff80ff80 ) );
 
   hoverElement = hitPart;
 }
@@ -1494,7 +1601,7 @@ void GW2MarkerEditor::ToggleTypeParameterSaved( TypeParameters param )
 
   bool saved = !IsTypeParameterSaved( *data, param );
   SetTypeParameterSaved( *data, param, saved );
-  
+
   if ( saved )
     return; // we just stored the previous value, no change needed
 

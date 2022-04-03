@@ -205,13 +205,15 @@ void InitInputHooks()
   if ( HooksInitialized )
     return;
 
+/*
   if ( IsDebuggerPresent() )
     return;
+*/
 
   auto hookThread = CreateThread( NULL, 0,
                                   []( LPVOID data )
                                   {
-                                    auto keyboardHook = SetWindowsHookEx( WH_KEYBOARD_LL, KeyboardHook, NULL, 0 );
+                                    auto keyboardHook = nullptr;// SetWindowsHookEx( WH_KEYBOARD_LL, KeyboardHook, NULL, 0 );
                                     auto mouseHook = SetWindowsHookEx( WH_MOUSE_LL, MouseHook, NULL, 0 );
                                     MSG msg;
 
