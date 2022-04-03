@@ -975,6 +975,7 @@ GW2MarkerEditor::GW2MarkerEditor( CWBItem* Parent, CRect Position ) : CWBItem( P
 {
   App->GenerateGUITemplate( this, "gw2pois", "markereditor" );
   InitUberTool();
+  HideEditorUI( true );
 }
 
 GW2MarkerEditor::~GW2MarkerEditor()
@@ -1033,7 +1034,7 @@ bool GW2MarkerEditor::ShouldPassMouseEvent()
 
 void GW2MarkerEditor::OnDraw( CWBDrawAPI* API )
 {
-  TBOOL autoHide = Config::GetValue( "AutoHideMarkerEditor" );
+  TBOOL autoHide = false;// Config::GetValue( "AutoHideMarkerEditor" );
 
   if ( !Config::GetValue( "TacticalLayerVisible" ) )
     return;
@@ -1042,6 +1043,7 @@ void GW2MarkerEditor::OnDraw( CWBDrawAPI* API )
 
   if ( mumbleLink.mapID == -1 ) return;
 
+/*
   auto& POIs = GetMapPOIs();
 
   for ( TS32 x = 0; x < POIs.NumItems(); x++ )
@@ -1081,6 +1083,7 @@ void GW2MarkerEditor::OnDraw( CWBDrawAPI* API )
       return;
     }
   }
+*/
 
   if ( autoHide )
   {
@@ -1315,7 +1318,12 @@ void GW2MarkerEditor::UpdateEditorFromCategory( const MarkerTypeData& data )
   {
     CWBButton* checkBox = FindChildByID<CWBButton>( typeParameters[ x ].enableCheckBoxName );
     if ( checkBox )
-      checkBox->Push( IsTypeParameterSaved( data, (TypeParameters)x ) );
+    {
+      bool saved = IsTypeParameterSaved( data, (TypeParameters)x );
+      checkBox->Push( saved );
+      if ( checkBox->GetParent() )
+        checkBox->GetParent()->SetTreeOpacityMultiplier( saved ? 1 : 0.5f );
+    }
 
     bool boolData = 0;
     int intData = 0;
@@ -1396,6 +1404,9 @@ void GW2MarkerEditor::SetEditedGUID( const GUID& guid )
     editedMarker = GUID{};
     if ( editedText )
       editedText->SetText( "NO EDITED ITEM CURRENTLY!" );
+
+    HideEditorUI( true );
+
     return;
   }
 
@@ -1403,6 +1414,7 @@ void GW2MarkerEditor::SetEditedGUID( const GUID& guid )
     editedText->SetText( "EDITED ITEM IS A MARKER (" + marker->category->GetFullTypeName() + ")" );
 
   editedMarker = guid;
+  HideEditorUI( false );
   UpdateEditorFromCategory( marker->typeData );
 }
 
@@ -1418,6 +1430,8 @@ void GW2MarkerEditor::SetEditedCategory( const CString& category )
     editedCategory = CString();
     if ( editedText )
       editedText->SetText( "NO EDITED ITEM CURRENTLY!" );
+
+    HideEditorUI( true );
     return;
   }
 
@@ -1425,6 +1439,7 @@ void GW2MarkerEditor::SetEditedCategory( const CString& category )
     editedText->SetText( "Editing Category: " + cat->GetFullTypeName() );
 
   editedCategory = category;
+  HideEditorUI( false );
   UpdateEditorFromCategory( cat->data );
 }
 
@@ -1674,6 +1689,18 @@ MarkerTypeData* GW2MarkerEditor::GetEditedTypeParameters()
   return nullptr;
 }
 
+void GW2MarkerEditor::HideEditorUI( bool fade )
+{
+  for ( int x = 0; x < (int)TypeParameters::MAX; x++ )
+  {
+    auto* it = FindChildByID( typeParameters[ x ].targetName );
+    if ( it )
+      it = it->GetParent();
+    if ( it )
+      it->Hide( fade );
+  }
+}
+
 TBOOL GW2MarkerEditor::MessageProc( CWBMessage& message )
 {
   switch ( message.GetMessage() )
@@ -1866,7 +1893,9 @@ TBOOL GW2MarkerEditor::MessageProc( CWBMessage& message )
 
       auto& POIs = GetMapPOIs();
 
-      POIs[ currentPOI ].SetCategory( App, categoryList[ message.Data ] );
+      if ( editedMarker != GUID{} && FindMarkerByGUID( editedMarker ) )
+        POIs[ editedMarker ].SetCategory( App, categoryList[ message.Data ] );
+
       ExportPOIS();
       CWBLabel* type = (CWBLabel*)FindChildByID( "markertype", "label" );
       if ( type )

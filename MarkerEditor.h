@@ -131,7 +131,6 @@ class GW2MarkerEditor : public CWBItem
   virtual TBOOL MessageProc( CWBMessage& message );
   virtual void OnDraw( CWBDrawAPI* API );
   TBOOL hidden = false;
-  GUID currentPOI;
 
   CArray<GW2TacticalCategory*> categoryList;
   TBOOL changeDefault = false;
@@ -180,6 +179,8 @@ class GW2MarkerEditor : public CWBItem
   void GetTypeParameterValue( TypeParameters param, bool& boolValue, int& intValue, float& floatValue, CString& stringValue );
 
   MarkerTypeData* GetEditedTypeParameters();
+
+  void HideEditorUI( bool fade );
 
 public:
 
