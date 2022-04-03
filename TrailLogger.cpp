@@ -1021,7 +1021,7 @@ void LineSegDist( const CLine& l1, const CLine& l2, float& S, float& T, CVector3
   hitB = b + v * T;
 }
 
-bool GW2Trail::HitTest( CLine& line, float& hitZ, int& closestIndex, CVector3& clickPos )
+bool GW2Trail::HitTest( CLine& line, float& hitZ, int& closestIndex, CVector3& clickPos, bool& indexPlusOne )
 {
   if ( category && !category->IsVisible() )
     return false;
@@ -1070,6 +1070,7 @@ bool GW2Trail::HitTest( CLine& line, float& hitZ, int& closestIndex, CVector3& c
         hitZ = s;
       hit = true;
       closestIndex = t < 0.5 ? x : x + 1;
+      indexPlusOne = t < 0.5;
       clickPos = b;
     }
   }
@@ -1080,4 +1081,16 @@ bool GW2Trail::HitTest( CLine& line, float& hitZ, int& closestIndex, CVector3& c
 CVector3 GW2Trail::GetVertex( int idx )
 {
   return positions[ idx ];
+}
+
+void GW2Trail::SetVertex( int idx, const CVector3 pos )
+{
+  positions[ idx ] = pos;
+  Update();
+}
+
+void GW2Trail::AddVertex( int idx, const CVector3 pos )
+{
+  positions.Insert( idx, pos );
+  Update();
 }

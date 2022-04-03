@@ -83,6 +83,19 @@ public:
     Array[ 0 ] = Item;
   }
 
+  void Insert( int index, const ItemType& item )
+  {
+    Add( item );
+
+    if ( index < 0 || index > ItemCount )
+      return;
+
+    for ( int x = ItemCount - 1; x > index; x-- )
+      Array[ x ] = std::move( Array[ x - 1 ] );
+
+    Array[ index ] = item;
+  }
+
   void AllocateNewUninitialized( const TS32 Count )
   {
     if ( ItemCount + Count > Capacity || !Array ) Expand( (TS32)( Capacity*EXPANSIONRATIO + Count ) );

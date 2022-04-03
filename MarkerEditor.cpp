@@ -678,6 +678,19 @@ TBOOL GW2MarkerEditor::HandleUberToolMessages( CWBMessage& message )
         originalScale = CVector3( 1, 1, 1 ) * marker->typeData.size;
       }
 
+      auto* trail = FindTrailByGUID( editedMarker );
+      if ( trail )
+      {
+        clickedPos = hoverPos;
+        draggedElement = hoverElement;
+
+        clickedOriginalDelta = GetUberToolMovePos( trail->GetVertex( selectedVertexIndex ) ) - trail->GetVertex( selectedVertexIndex );
+        originalPosition = trail->GetVertex( selectedVertexIndex );
+        //originalRotation = marker->rotation;
+        originalScale = CVector3( 1, 1, 1 );// *marker->typeData.size;
+      }
+
+
       return true;
     }
 
@@ -709,11 +722,13 @@ TBOOL GW2MarkerEditor::HandleUberToolMessages( CWBMessage& message )
 
     int currIdx = 0;
     CVector3 currHitPoint;
+    bool indexPlusOne{};
 
-    GUID mouseTrail = GetMouseTrail( currIdx, currHitPoint );
+    GUID mouseTrail = GetMouseTrail( currIdx, currHitPoint, indexPlusOne );
     if ( mouseTrail != GUID{} )
     {
       selectedVertexIndex = currIdx;
+      originalPosition = GetSelectedVertexPosition();
       SetEditedGUID( mouseTrail );
       return true;
     }
@@ -732,8 +747,9 @@ TBOOL GW2MarkerEditor::HandleUberToolMessages( CWBMessage& message )
   {
     int currIdx = 0;
     CVector3 currHitPoint;
+    bool indexPlusOne{};
 
-    GUID mouseTrail = GetMouseTrail( currIdx, currHitPoint );
+    GUID mouseTrail = GetMouseTrail( currIdx, currHitPoint, indexPlusOne );
     if ( mouseTrail != GUID{} )
     {
       selectedVertexIndex = currIdx;
@@ -741,7 +757,7 @@ TBOOL GW2MarkerEditor::HandleUberToolMessages( CWBMessage& message )
       if ( !trail )
         break;
 
-      //trail->AddVertex( currIdx, currHitPoint );
+      trail->AddVertex( indexPlusOne ? currIdx - 1 : currIdx, currHitPoint );
 
       return true;
     }
@@ -759,9 +775,11 @@ TBOOL GW2MarkerEditor::HandleUberToolMessages( CWBMessage& message )
     if ( draggedElement == UberToolElement::none || editedMarker == GUID{} )
       break;
     auto* marker = FindMarkerByGUID( editedMarker );
-    if ( !marker )
-      return false;
-    marker->position = originalPosition;
+    if ( marker )
+      marker->position = originalPosition;
+    auto* trail = FindTrailByGUID( editedMarker );
+    if ( trail )
+      trail->SetVertex( selectedVertexIndex, originalPosition );
     return true;
   }
   break;
@@ -770,13 +788,22 @@ TBOOL GW2MarkerEditor::HandleUberToolMessages( CWBMessage& message )
     if ( draggedElement != UberToolElement::none && editedMarker != GUID{} )
     {
       auto* marker = FindMarkerByGUID( editedMarker );
-      if ( !marker )
-        return false;
+      if ( marker )
+      {
+        CVector3 pos = GetUberToolMovePos( originalPosition );
 
-      CVector3 pos = GetUberToolMovePos( originalPosition );
+        if ( !App->GetRightButtonState() )
+          marker->position = pos - clickedOriginalDelta;
+      }
 
-      if ( !App->GetRightButtonState() )
-        marker->position = pos - clickedOriginalDelta;
+      auto* trail = FindTrailByGUID( editedMarker );
+      if ( trail )
+      {
+        CVector3 pos = GetUberToolMovePos( originalPosition );
+
+        if ( !App->GetRightButtonState() )
+          trail->SetVertex( selectedVertexIndex, pos - clickedOriginalDelta );
+      }
 
       return true;
     }
@@ -1078,7 +1105,8 @@ bool GW2MarkerEditor::GetMouseTransparency( CPoint& ClientSpacePoint, WBMESSAGE 
   {
     int currIdx = 0;
     CVector3 currHitPoint;
-    if ( GetMouseTrail( currIdx, currHitPoint ) != GUID{} )
+    bool indexPlusOne;
+    if ( GetMouseTrail( currIdx, currHitPoint, indexPlusOne ) != GUID{} )
       return false;
   }
 
@@ -1856,7 +1884,7 @@ void GW2MarkerEditor::HideEditorUI( bool fade )
 
 }
 
-GUID GW2MarkerEditor::GetMouseTrail( int& idx, CVector3& hitPoint )
+GUID GW2MarkerEditor::GetMouseTrail( int& idx, CVector3& hitPoint, bool& indexPlusOne )
 {
   CRect drawrect = App->GetRoot()->GetClientRect();
 
@@ -1900,7 +1928,8 @@ GUID GW2MarkerEditor::GetMouseTrail( int& idx, CVector3& hitPoint )
     float currZ = minZ;
     int currIdx = 0;
     CVector3 currHitPoint;
-    if ( trails->second.GetByIndex( x )->HitTest( mouseLine, currZ, currIdx, currHitPoint ) && currZ < minZ )
+    bool indexPlusOne = false;
+    if ( trails->second.GetByIndex( x )->HitTest( mouseLine, currZ, currIdx, currHitPoint, indexPlusOne ) && currZ < minZ )
     {
       minZ = currZ;
       result = trails->second.GetByIndex( x )->guid;

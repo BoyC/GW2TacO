@@ -53,8 +53,10 @@ public:
   TBOOL Import( CStreamReaderMemory& file, TBOOL keepPoints = false );
   TBOOL Import( CString& fileName, const CString& zipFile, TBOOL keepPoints = false );
 
-  bool HitTest( CLine& line, float& hitZ, int& closestIndex, CVector3& clickPos );
+  bool HitTest( CLine& line, float& hitZ, int& closestIndex, CVector3& clickPos, bool& indexPlusOne );
   CVector3 GetVertex( int idx );
+  void SetVertex( int idx, const CVector3 pos );
+  void AddVertex( int idx, const CVector3 pos );
 };
 
 class GW2TrailDisplay : public CWBItem
