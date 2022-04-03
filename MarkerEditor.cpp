@@ -59,6 +59,7 @@ TypeParameter typeParameters[ (int)TypeParameters::MAX ] = {
   {TypeParameters::KeepOnMapEdge,        "keeponmapedge",  "cb_keeponmapedge",  TypeParameterTypes::Boolean },
   {TypeParameters::AnimSpeed,            "trailanimspeed", "cb_trailanimspeed", TypeParameterTypes::Float },
   {TypeParameters::TrailScale,           "trailscale",     "cb_trailscale",     TypeParameterTypes::Float },
+  {TypeParameters::TrailFile,            "trailfile",      "cb_trailfile",      TypeParameterTypes::String },
   {TypeParameters::Texture,              "trailtexture",   "cb_trailtexture",   TypeParameterTypes::String },
 };
 
@@ -128,6 +129,8 @@ bool IsTypeParameterSaved( const MarkerTypeData& data, TypeParameters param )
     return data.saveBits.animSpeedSaved;
   case TypeParameters::TrailScale:
     return data.saveBits.trailScaleSaved;
+  case TypeParameters::TrailFile:
+    return data.saveBits.trailDataSaved;
   case TypeParameters::Texture:
     return data.saveBits.textureSaved;
   }
@@ -230,6 +233,9 @@ void SetTypeParameterSaved( MarkerTypeData& data, TypeParameters param, bool sav
     break;
   case TypeParameters::TrailScale:
     data.saveBits.trailScaleSaved = saved;
+    break;
+  case TypeParameters::TrailFile:
+    data.saveBits.trailDataSaved = saved;
     break;
   case TypeParameters::Texture:
     data.saveBits.textureSaved = saved;
@@ -334,6 +340,9 @@ void SetTypeParameter( MarkerTypeData& data, TypeParameters param, const float f
   case TypeParameters::TrailScale:
     data.trailScale = floatResult;
     return;
+  case TypeParameters::TrailFile:
+    data.trailData = AddStringToMap( stringResult );
+    return;
   case TypeParameters::Texture:
     data.texture = AddStringToMap( stringResult );
     return;
@@ -436,6 +445,9 @@ void GetTypeParameter( const MarkerTypeData& data, TypeParameters param, float& 
     return;
   case TypeParameters::TrailScale:
     floatResult = data.trailScale;
+    return;
+  case TypeParameters::TrailFile:
+    stringResult = GetStringFromMap( data.trailData );
     return;
   case TypeParameters::Texture:
     stringResult = GetStringFromMap( data.texture );
@@ -693,6 +705,13 @@ TBOOL GW2MarkerEditor::HandleUberToolMessages( CWBMessage& message )
 
       if ( found )
         return true;
+    }
+
+    GUID mouseTrail = GetMouseTrail();
+    if ( mouseTrail != GUID{} )
+    {
+      SetEditedGUID( mouseTrail );
+      return true;
     }
 
     auto mouseItem = App->GetItemUnderMouse( App->GetMousePos(), WBM_LEFTBUTTONDOWN );
@@ -975,7 +994,7 @@ GW2MarkerEditor::GW2MarkerEditor( CWBItem* Parent, CRect Position ) : CWBItem( P
 {
   App->GenerateGUITemplate( this, "gw2pois", "markereditor" );
   InitUberTool();
-  HideEditorUI( true );
+  SetEditedGUID( GUID{} );
 }
 
 GW2MarkerEditor::~GW2MarkerEditor()
@@ -996,6 +1015,9 @@ CWBItem* GW2MarkerEditor::Factory( CWBItem* Root, CXMLNode& node, CRect& Pos )
 
 bool GW2MarkerEditor::GetMouseTransparency( CPoint& ClientSpacePoint, WBMESSAGE MessageType )
 {
+  if ( hidden )
+    return true;
+
   if ( draggedElement == UberToolElement::none && ( MessageType == WBM_RIGHTBUTTONDOWN || MessageType == WBM_RIGHTBUTTONUP ) )
     return true;
 
@@ -1023,6 +1045,12 @@ bool GW2MarkerEditor::GetMouseTransparency( CPoint& ClientSpacePoint, WBMESSAGE 
 
   if ( editedMarker != GUID{} )
     return false;
+
+  if ( MessageType == WBM_LEFTBUTTONDOWN )
+  {
+    if ( GetMouseTrail() != GUID{} )
+      return false;
+  }
 
   return true;
 }
@@ -1414,24 +1442,36 @@ void GW2MarkerEditor::SetEditedGUID( const GUID& guid )
 
   auto editedText = FindChildByID<CWBLabel>( "categorylabel" );
   auto marker = FindMarkerByGUID( guid );
+  auto trail = FindTrailByGUID( guid );
 
-  if ( !marker )
+  auto changetype = FindChildByID( "changemarkertype" );
+  if ( changetype )
+    changetype->Hide( !marker );
+  auto deleteMarker = FindChildByID( "deletemarker" );
+  if ( deleteMarker )
+    deleteMarker->Hide( !marker );
+
+  if ( !marker && !trail )
   {
     editedMarker = GUID{};
     if ( editedText )
       editedText->SetText( "NO EDITED ITEM CURRENTLY!" );
 
     HideEditorUI( true );
-
     return;
   }
 
   if ( editedText )
-    editedText->SetText( "EDITED ITEM IS A MARKER (" + marker->category->GetFullTypeName() + ")" );
+  {
+    if ( marker )
+      editedText->SetText( "EDITED ITEM IS A MARKER (" + marker->category->GetFullTypeName() + ")" );
+    else
+      editedText->SetText( "EDITED ITEM IS A TRAIL (" + trail->category->GetFullTypeName() + ")" );
+  }
 
   editedMarker = guid;
   HideEditorUI( false );
-  UpdateEditorFromCategory( marker->typeData );
+  UpdateEditorFromCategory( marker ? marker->typeData : trail->typeData );
 }
 
 void GW2MarkerEditor::SetEditedCategory( const CString& category )
@@ -1440,6 +1480,13 @@ void GW2MarkerEditor::SetEditedCategory( const CString& category )
 
   auto editedText = FindChildByID<CWBLabel>( "categorylabel" );
   auto cat = GetCategory( category );
+
+  auto changetype = FindChildByID( "changemarkertype" );
+  if ( changetype )
+    changetype->Hide( true );
+  auto deleteMarker = FindChildByID( "deletemarker" );
+  if ( deleteMarker )
+    deleteMarker->Hide( true );
 
   if ( !cat )
   {
@@ -1457,6 +1504,16 @@ void GW2MarkerEditor::SetEditedCategory( const CString& category )
   editedCategory = category;
   HideEditorUI( false );
   UpdateEditorFromCategory( cat->data );
+}
+
+void GW2MarkerEditor::DeleteSelectedMarker()
+{
+  DeletePOI( editedMarker );
+}
+
+GUID GW2MarkerEditor::GetEditedGUID()
+{
+  return editedMarker;
 }
 
 void UpdatePOICategoryParameter( GW2TacticalCategory* category, TypeParameters param, const bool boolValue, const int intValue, const float floatValue, const CString& stringValue )
@@ -1670,6 +1727,18 @@ void GW2MarkerEditor::ToggleTypeParameterSaved( TypeParameters param )
       GetTypeParameter( marker->category->data, param, floatValue, intValue, stringvalue, boolValue );
       SetTypeParameter( *data, param, floatValue, intValue, stringvalue, boolValue );
     }
+
+    auto trail = FindMarkerByGUID( editedMarker );
+    if ( trail && trail->category )
+    {
+      bool boolValue{};
+      int intValue{};
+      float floatValue{};
+      CString stringvalue;
+
+      GetTypeParameter( trail->category->data, param, floatValue, intValue, stringvalue, boolValue );
+      SetTypeParameter( *data, param, floatValue, intValue, stringvalue, boolValue );
+    }
   }
 }
 
@@ -1698,6 +1767,10 @@ MarkerTypeData* GW2MarkerEditor::GetEditedTypeParameters()
   if ( marker )
     return &marker->typeData;
 
+  auto trail = FindTrailByGUID( editedMarker );
+  if ( trail )
+    return &trail->typeData;
+
   auto category = GetCategory( editedCategory );
   if ( category )
     return &category->data;
@@ -1715,6 +1788,78 @@ void GW2MarkerEditor::HideEditorUI( bool fade )
     if ( it )
       it->Hide( fade );
   }
+
+  CWBLabel* label = FindChildByID<CWBLabel>( "label1" );
+  if ( label )
+    label->Hide( fade );
+  label = FindChildByID<CWBLabel>( "label2" );
+  if ( label )
+    label->Hide( fade );
+  label = FindChildByID<CWBLabel>( "label3" );
+  if ( label )
+    label->Hide( fade );
+  label = FindChildByID<CWBLabel>( "label4" );
+  if ( label )
+    label->Hide( fade );
+  label = FindChildByID<CWBLabel>( "label5" );
+  if ( label )
+    label->Hide( fade );
+/*
+  label = FindChildByID<CWBLabel>( "label6" );
+  if ( label )
+    label->Hide( fade );
+*/
+
+}
+
+GUID GW2MarkerEditor::GetMouseTrail()
+{
+  CRect drawrect = App->GetRoot()->GetClientRect();
+
+  POINT mousePos;
+  mousePos.x = App->GetMousePos().x;
+  mousePos.y = App->GetMousePos().y;
+
+  if ( IsDebuggerPresent() )
+    GetCursorPos( &mousePos );
+
+  CVector4 mouse1 = CVector4( mousePos.x / (float)drawrect.Width() * 2 - 1, ( ( 1 - mousePos.y / (float)drawrect.Height() ) * 2 - 1 ), -1, 1 );
+  CVector4 mouse2 = CVector4( mouse1.x, mouse1.y, 1, 1 );
+
+  ConstBuffer bufferData;
+  bufferData.cam.SetLookAtLH( mumbleLink.camPosition, mumbleLink.camPosition + mumbleLink.camDir, CVector3( 0, 1, 0 ) );
+  bufferData.persp.SetPerspectiveFovLH( mumbleLink.fov, drawrect.Width() / (TF32)drawrect.Height(), 0.05f, 1000.0f );
+
+  CMatrix4x4 matrix;
+  matrix.SetIdentity(); // no transform for trails, yay!
+
+  CMatrix4x4 invMatrix = ( matrix * bufferData.cam * bufferData.persp ).Inverted();
+  CVector4 localMouse1 = mouse1 * invMatrix;
+  CVector4 localMouse2 = mouse2 * invMatrix;
+  localMouse1 /= localMouse1.w;
+  localMouse2 /= localMouse2.w;
+
+  CLine mouseLine( localMouse1, localMouse2 - localMouse1 );
+
+  auto trails = trailSet.find( mumbleLink.mapID );
+  if ( trails == trailSet.end() )
+    return GUID{};
+
+  float minZ = 1000000;
+
+  GUID result = GUID{};
+
+  for ( int x = 0; x < trails->second.NumItems(); x++ )
+  {
+    float currZ = minZ;
+    if ( trails->second.GetByIndex( x )->HitTest( mouseLine, currZ ) && currZ < minZ )
+    {
+      minZ = currZ;
+      result = trails->second.GetByIndex( x )->guid;
+    }
+  }
+
+  return result;
 }
 
 TBOOL GW2MarkerEditor::MessageProc( CWBMessage& message )
@@ -1914,9 +2059,13 @@ TBOOL GW2MarkerEditor::MessageProc( CWBMessage& message )
       }
 
       auto& POIs = GetMapPOIs();
+      auto& trails = GetMapTrails();
 
       if ( editedMarker != GUID{} && FindMarkerByGUID( editedMarker ) )
         POIs[ editedMarker ].SetCategory( App, categoryList[ message.Data ] );
+
+      if ( editedMarker != GUID{} && FindTrailByGUID( editedMarker ) )
+        trails[ editedMarker ]->SetCategory( App, categoryList[ message.Data ] );
 
       ExportPOIS();
       CWBLabel* type = (CWBLabel*)FindChildByID( "markertype", "label" );

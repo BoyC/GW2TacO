@@ -52,6 +52,8 @@ public:
 
   TBOOL Import( CStreamReaderMemory& file, TBOOL keepPoints = false );
   TBOOL Import( CString& fileName, const CString& zipFile, TBOOL keepPoints = false );
+
+  bool HitTest( CLine& line, float& hitZ );
 };
 
 class GW2TrailDisplay : public CWBItem

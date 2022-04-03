@@ -928,7 +928,7 @@ void GW2Trail::SetCategory( CWBApplication* App, GW2TacticalCategory* t )
 
 TBOOL GW2Trail::Import( CStreamReaderMemory& f, TBOOL keepPoints )
 {
-  if ( keepPoints )
+  //if ( keepPoints )
   {
     positions.FlushFast();
     for ( TS32 x = 0; x < ( f.GetLength() - 8 ) / 12; x++ )
@@ -978,4 +978,99 @@ TBOOL GW2Trail::Import( CString& fileName, const CString& zipFile, TBOOL keepPoi
   }
 
   return Import( f, keepPoints );
+}
+
+void LineSegDist( const CLine& l1, const CLine& l2, float& S, float& T, CVector3& hitA, CVector3& hitB )
+{
+  CVector3 a = l1.Point;
+  CVector3 u = l1.Direction;
+  CVector3 b = l2.Point;
+  CVector3 v = l2.Direction;
+
+  CVector3 r = b - a;
+
+  float ru = r * u;
+  float rv = r * v;
+  float uu = u * u;
+  float uv = u * v;
+  float vv = v * v;
+
+  float det = uu * vv - uv * uv;
+
+  // if det is too close to 0, then they're parallel
+  //you can work out a way to handle this case
+
+  //compute optimal values for s and t
+  float s = ( ru * vv - rv * uv ) / det;
+  float t = ( ru * uv - rv * uu ) / det;
+
+  // constrain values s and t so that they describe points on the segments
+  s = max( 0, min( 1, s ) );
+  t = max( 0, min( 1, t ) );
+
+  //convert value s for segA into the corresponding closest value t for segB
+  //and vice versa
+  S = ( t * uv + ru ) / uu;
+  T = ( s * uv - rv ) / vv;
+
+  //constrain
+  S = max( 0, min( 1, S ) );
+  T = max( 0, min( 1, T ) );
+
+  hitA = a + u * S;
+  hitB = b + v * T;
+}
+
+bool GW2Trail::HitTest( CLine& line, float& hitZ )
+{
+  if ( category && !category->IsVisible() )
+    return false;
+
+  if ( map != mumbleLink.mapID )
+    return false;
+
+  if ( category && category->data.festivalMask )
+  {
+    bool hasActiveFestival = false;
+    int cnt = 0;
+    for ( auto& festival : GW2::festivals )
+    {
+      if ( category->data.festivalMask & ( 1 << cnt ) && festival.active )
+        hasActiveFestival = true;
+      cnt++;
+    }
+
+    if ( !hasActiveFestival )
+      return false;
+  }
+
+  float width = ( category ? category->data.trailScale : 0.1f ) * 0.5f;
+  width *= width;
+
+  hitZ = 100000;
+  bool hit = false;
+
+  for ( int x = 0; x < positions.NumItems() - 1; x++ )
+  {
+    CLine edge( positions[ x ], positions[ x + 1 ] - positions[ x ] );
+
+    // edge-edge distance from https://zalo.github.io/blog/closest-point-between-segments/
+
+    CVector3 a;
+    CVector3 b;
+    float s;
+    float t;
+    LineSegDist( line, edge, s, t, a, b );
+
+    float distsq = ( b - a ).LengthSquared();
+
+    if ( distsq < width )
+    {
+      if ( hitZ < s )
+        hitZ = s;
+      hit = true;
+    }
+  }
+
+  return hit;
 }

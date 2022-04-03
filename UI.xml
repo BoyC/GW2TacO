@@ -25,8 +25,9 @@
          <box id="markereditorheader">
            <button id="Editcategory" text="EDIT CATEGORY"/>
            <button id="changemarkertype" text="MARKER TYPE"/>
+           <button id="deletemarker" text="DELETE MARKER"/>
          </box>
-         <label class="panellabel" text="VISUAL APPEARANCE"/>
+         <label id="label1" class="panellabel" text="VISUAL APPEARANCE"/>
          <box class="markereditorsetting">
            <button class="checkbox" id="cb_size"/>
            <label class="optionlabel" text="SIZE:"/>
@@ -89,7 +90,7 @@
          </box>
         </box>
         <box class="markereditorpanel">
-         <label class="panellabel" text="BEHAVIOR"/>
+         <label id="label2" class="panellabel" text="BEHAVIOR"/>
          <box class="markereditorsetting">
            <button class="checkbox" id="cb_behavior"/>
            <label class="optionlabel" text="BEHAVIOR:"/>
@@ -134,7 +135,7 @@
            <label class="optionlabel" text="TOGGLE CATEGORY:"/>
            <textbox class="optiontextbox" id="togglecategory" singleline="1"/>
          </box>
-         <label class="panellabel" text="RANGED BEHAVIOR"/>
+         <label id="label3" class="panellabel" text="RANGED BEHAVIOR"/>
          <box class="markereditorsetting">
            <button class="checkbox" id="cb_autotrigger"/>
            <button class="optiontoggle" id="autotrigger" TEXT="AUTO TRIGGER"/>
@@ -166,7 +167,7 @@
          </box>
         </box>
         <box class="markereditorpanel">
-         <label class="panellabel" text="VISIBILITY"/>
+         <label id="label4" class="panellabel" text="VISIBILITY"/>
          <box class="markereditorsetting">
            <button class="checkbox" id="cb_minimapvisible"/>
            <button class="optiontoggle" id="minimapvisible" text="VISIBLE ON MINIMAP"/>
@@ -183,7 +184,7 @@
            <button class="checkbox" id="cb_keeponmapedge"/>
            <button class="optiontoggle" id="keeponmapedge" text="KEEP ON MAP EDGE"/>
          </box>
-         <label class="panellabel" text="TRAILS"/>
+         <label id="label5" class="panellabel" text="TRAILS"/>
          <box class="markereditorsetting">
            <button class="checkbox" id="cb_trailanimspeed"/>
            <label class="optionlabel" text="ANIM SPEED:"/>
@@ -195,11 +196,16 @@
            <textbox class="optiontextbox" id="trailscale" singleline="1"/>
          </box>
          <box class="markereditorsetting">
+           <button class="checkbox" id="cb_trailfile"/>
+           <label class="optionlabel" text="TRAIL FILE:"/>
+           <textbox class="optiontextbox" id="trailfile" singleline="1"/>
+         </box>
+         <box class="markereditorsetting">
            <button class="checkbox" id="cb_trailtexture"/>
            <label class="optionlabel" text="TRAIL TEXTURE:"/>
            <textbox class="optiontextbox" id="trailtexture" singleline="1"/>
          </box>
-          <label class="panellabel" text="TRAIL EDITING"/>
+          <label id="label6" class="panellabel" text="TRAIL EDITING"/>
           <box id="traileditor">
             <button id="starttrail" />
             <button id="pausetrail" />
@@ -216,8 +222,6 @@
             <button id="default4" text="4"/>
             <button id="default5" text="5"/>
           </box>
-          <label class="separator"/>
-          <button id="deletemarker" text="DELETE MARKER"/>
         </box>
       </box>
     </box>

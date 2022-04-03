@@ -199,6 +199,7 @@
   <token key="*add_default_marker_3" value="Add POI (Default Category 3)"/>
   <token key="*add_default_marker_4" value="Add POI (Default Category 4)"/>
   <token key="*add_default_marker_5" value="Add POI (Default Category 5)"/>
+  <token key="*delete_selected_marker" value="Delete Selected Marker"/>
 
   <token key="wurm_tunnel" value="Wurm Tunnel"/>
   <token key="airport" value="Airport"/>

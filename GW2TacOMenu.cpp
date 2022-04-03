@@ -61,6 +61,7 @@ CString ActionNames[] =
   "*add_default_marker_3",
   "*add_default_marker_4",
   "*add_default_marker_5",
+  "*delete_selected_marker",
 };
 
 CString APIKeyNames[] =
@@ -1132,6 +1133,16 @@ TBOOL GW2TacO::MessageProc( CWBMessage& Message )
       case TacOKeyAction::AddDefaultPOI_4:
         AddPOI( App, (int)KeyBindings[ Message.Key ] - (int)TacOKeyAction::AddDefaultPOI_1 + 1 );
         return true;
+      case TacOKeyAction::DeleteSelectedMarker:
+      {
+        if ( Config::IsWindowOpen( "MarkerEditor" ) )
+        {
+          auto editor = App->GetRoot()->FindChildByID<GW2MarkerEditor>( "MarkerEditor" );
+          if ( editor && !editor->IsHidden() )
+            editor->DeleteSelectedMarker();
+        }
+        return true;
+      }
       case TacOKeyAction::RemovePOI:
         DeletePOI();
         return true;

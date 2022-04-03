@@ -46,6 +46,7 @@ enum class TypeParameters
   KeepOnMapEdge,
   AnimSpeed,
   TrailScale,
+  TrailFile,
   Texture,
 
   MAX
@@ -170,9 +171,6 @@ class GW2MarkerEditor : public CWBItem
   void UpdateEditorFromCategory( const MarkerTypeData& data );
   void UpdateEditorContent();
 
-  void SetEditedGUID( const GUID& guid );
-  void SetEditedCategory( const CString& category );
-
   void UpdateTypeParameterValue( TypeParameters param );
   void ToggleTypeParameterSaved( TypeParameters param );
   bool GetTypeParameterSaved( TypeParameters param );
@@ -181,6 +179,7 @@ class GW2MarkerEditor : public CWBItem
   MarkerTypeData* GetEditedTypeParameters();
 
   void HideEditorUI( bool fade );
+  GUID GetMouseTrail();
 
 public:
 
@@ -197,4 +196,9 @@ public:
 
   bool GetMouseTransparency( CPoint& ClientSpacePoint, WBMESSAGE MessageType );
   bool ShouldPassMouseEvent();
+
+  void SetEditedGUID( const GUID& guid );
+  void SetEditedCategory( const CString& category );
+  void DeleteSelectedMarker();
+  GUID GetEditedGUID();
 };
