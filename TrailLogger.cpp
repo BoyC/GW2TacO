@@ -873,13 +873,13 @@ void GW2Trail::SetupAndDraw( CCoreConstantBuffer* constBuffer, CCoreTexture* tex
   if ( map != mumbleLink.mapID )
     return;
 
-  if ( category && category->data.festivalMask )
+  if ( typeData.festivalMask )
   {
     bool hasActiveFestival = false;
     int cnt = 0;
     for ( auto& festival : GW2::festivals )
     {
-      if ( category->data.festivalMask & ( 1 << cnt ) && festival.active )
+      if ( typeData.festivalMask & ( 1 << cnt ) && festival.active )
         hasActiveFestival = true;
       cnt++;
     }
@@ -1047,13 +1047,13 @@ bool GW2Trail::HitTest( CLine& line, float& hitZ, int& closestIndex, CVector3& c
   if ( map != mumbleLink.mapID )
     return false;
 
-  if ( category && category->data.festivalMask )
+  if ( typeData.festivalMask )
   {
     bool hasActiveFestival = false;
     int cnt = 0;
     for ( auto& festival : GW2::festivals )
     {
-      if ( category->data.festivalMask & ( 1 << cnt ) && festival.active )
+      if ( typeData.festivalMask & ( 1 << cnt ) && festival.active )
         hasActiveFestival = true;
       cnt++;
     }
@@ -1062,7 +1062,7 @@ bool GW2Trail::HitTest( CLine& line, float& hitZ, int& closestIndex, CVector3& c
       return false;
   }
 
-  float width = ( category ? category->data.trailScale : 0.1f ) * 0.5f;
+  float width = typeData.trailScale * 0.5f;
   width *= width;
 
   hitZ = 100000;
@@ -1150,8 +1150,6 @@ void GW2Trail::Export()
   if ( External )
     return;
 
-  if ( !category )
-    return;
-  CString trailData = GetStringFromMap( category->data.trailData );
+  CString trailData = GetStringFromMap( typeData.trailData );
   SaveToFile( trailData );
 }
