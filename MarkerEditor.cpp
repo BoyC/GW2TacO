@@ -777,6 +777,7 @@ TBOOL GW2MarkerEditor::HandleUberToolMessages( CWBMessage& message )
     if ( draggedElement != UberToolElement::none )
     {
       draggedElement = UberToolElement::none;
+      ExportPOIS();
       return true;
     }
     break;
@@ -2066,6 +2067,7 @@ TBOOL GW2MarkerEditor::MessageProc( CWBMessage& message )
       {
         UpdateTypeParameterValue( (TypeParameters)x );
         UpdateEditorContent();
+        ExportPOIS();
         return true;
       }
     }
@@ -2083,6 +2085,7 @@ TBOOL GW2MarkerEditor::MessageProc( CWBMessage& message )
         {
           UpdateTypeParameterValue( (TypeParameters)x );
           UpdateEditorContent();
+          ExportPOIS();
           break;
         }
       }
@@ -2104,6 +2107,7 @@ TBOOL GW2MarkerEditor::MessageProc( CWBMessage& message )
         {
           UpdateTypeParameterValue( (TypeParameters)x );
           UpdateEditorContent();
+          ExportPOIS();
           return true;
         }
       }
@@ -2121,6 +2125,7 @@ TBOOL GW2MarkerEditor::MessageProc( CWBMessage& message )
         ToggleTypeParameterSaved( (TypeParameters)x );
         b->Push( GetTypeParameterSaved( (TypeParameters)x ) );
         UpdateEditorContent();
+        ExportPOIS();
         return true;
       }
     }
@@ -2138,6 +2143,7 @@ TBOOL GW2MarkerEditor::MessageProc( CWBMessage& message )
         GetTypeParameterValue( (TypeParameters)x, boolValue, intValue, floatValue, stringValue );
         b->Push( boolValue );
         UpdateEditorContent();
+        ExportPOIS();
         return true;
       }
     }

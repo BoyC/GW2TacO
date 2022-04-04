@@ -158,6 +158,10 @@ void ExportPOI( CXMLNode* n, POI& p )
 
 void ExportTrail( CXMLNode* n, GW2Trail& p )
 {
+  // just cull empty trails
+  if ( !p.GetVertexCount() )
+    return;
+
   CXMLNode* t = &n->AddChild( _T( "Trail" ) );
   if ( p.Type.Length() )
     t->SetAttribute( "type", p.Type.GetPointer() );
@@ -196,7 +200,7 @@ void ExportPOIS( const CString& fileName, bool onlyCurrentMap )
     for ( TS32 x = 0; x < trails.second.NumItems(); x++ )
     {
       auto& p = trails.second.GetByIndex( x );
-      if ( !p->External )
+      if ( !p->External && p->GetVertexCount() )
         if ( p->category )
           p->category->SetExportNeeded();
     }
