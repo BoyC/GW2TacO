@@ -4,6 +4,7 @@
 #include "OverlayConfig.h"
 #include "TrailLogger.h"
 #include "GW2Tactical.h"
+#include "Language.h"
 
 extern CWBApplication* App;
 
@@ -1211,6 +1212,24 @@ void GW2MarkerEditor::OnDraw( CWBDrawAPI* API )
       SetMouseToolTip( Config::GetString( "defaultcategory3" ) );
     if ( mouseItem->GetID() == "default5" )
       SetMouseToolTip( Config::GetString( "defaultcategory4" ) );
+    if ( mouseItem->GetID() == "starttrail" )
+      SetMouseToolTip( DICT( "starttrail" ) );
+    if ( mouseItem->GetID() == "pausetrail" )
+      SetMouseToolTip( DICT( "pausetrail" ) );
+    if ( mouseItem->GetID() == "startnewsection" )
+      SetMouseToolTip( DICT( "startnewsection" ) );
+    if ( mouseItem->GetID() == "deletelastsegment" )
+      SetMouseToolTip( DICT( "deletelastsegment" ) );
+    if ( mouseItem->GetID() == "savetrail" )
+      SetMouseToolTip( DICT( "savetrail" ) );
+    if ( mouseItem->GetID() == "loadtrail" )
+      SetMouseToolTip( DICT( "loadtrail" ) );
+    if ( mouseItem->GetID() == "newtrail" )
+      SetMouseToolTip( DICT( "newtrail" ) );
+    if ( mouseItem->GetID() == "prevsegment" )
+      SetMouseToolTip( DICT( "prevsegment" ) );
+    if ( mouseItem->GetID() == "nextsegment" )
+      SetMouseToolTip( DICT( "nextsegment" ) );
   }
 }
 
@@ -1513,7 +1532,7 @@ void GW2MarkerEditor::SetEditedGUID( const GUID& guid )
 
   auto changetype = FindChildByID( "changemarkertype" );
   if ( changetype )
-    changetype->Hide( !marker );
+    changetype->Hide( !marker && !trail );
   auto deleteMarker = FindChildByID( "deletemarker" );
   if ( deleteMarker )
     deleteMarker->Hide( !marker && !trail );
@@ -1642,7 +1661,11 @@ void UpdatePOICategoryParameter( GW2TacticalCategory* category, TypeParameters p
       if ( trail->category == category )
       {
         if ( !IsTypeParameterSaved( trail->category->data, param ) )
+        {
           SetTypeParameter( trail->typeData, param, floatValue, intValue, stringValue, boolValue );
+          if ( param == TypeParameters::TrailFile )
+            trail->Reload();
+        }
       }
     }
   }
@@ -1791,6 +1814,13 @@ void GW2MarkerEditor::UpdateTypeParameterValue( TypeParameters param )
       GetTypeParameter( cat->data, param, floatValue, intValue, stringvalue, boolValue );
       PropagateCategoryParameter( cat, param, boolValue, intValue, floatValue, stringvalue );
     }
+  }
+
+  if ( editedMarker != GUID{} )
+  {
+    auto trail = FindTrailByGUID( editedMarker );
+    if ( trail && param == TypeParameters::TrailFile )
+      trail->Reload();
   }
 
   if ( changed )
@@ -2125,7 +2155,7 @@ TBOOL GW2MarkerEditor::MessageProc( CWBMessage& message )
         DeletePOI( editedMarker );
 
       if ( trail )
-        trail->DeleteVertex( selectedVertexIndex );
+        DeleteTrail( editedMarker );
 
       SetEditedGUID( GUID{} );
     }
@@ -2155,7 +2185,7 @@ TBOOL GW2MarkerEditor::MessageProc( CWBMessage& message )
     if ( b->GetID() == _T( "starttrail" ) )
     {
       b->Push( !b->IsPushed() );
-      b->SetText( b->IsPushed() ? "Stop Recording" : "Start New Trail" );
+      //b->SetText( b->IsPushed() ? "Stop Recording" : "Start New Trail" );
       if ( trails )
         trails->StartStopTrailRecording( b->IsPushed() );
     }
@@ -2167,7 +2197,13 @@ TBOOL GW2MarkerEditor::MessageProc( CWBMessage& message )
       trails->PauseTrail( false, true );
 
     if ( b->GetID() == _T( "deletelastsegment" ) && trails )
-      trails->DeleteLastTrailSegment();
+    {
+      auto trail = FindTrailByGUID( editedMarker );
+      if ( trail )
+        trail->DeleteVertex( selectedVertexIndex );
+      else
+        trails->DeleteLastTrailSegment();
+    }
 
     if ( b->GetID() == _T( "savetrail" ) && trails )
       trails->ExportTrail();
@@ -2189,6 +2225,32 @@ TBOOL GW2MarkerEditor::MessageProc( CWBMessage& message )
 
     if ( b->GetID() == _T( "default5" ) )
       defaultCatBeingSet = 4;
+
+    if ( b->GetID() == _T( "default5" ) )
+      defaultCatBeingSet = 4;
+
+    if ( b->GetID() == _T( "prevsegment" ) )
+    {
+      auto trail = FindTrailByGUID( editedMarker );
+      if ( trail )
+      {
+        selectedVertexIndex--;
+        if ( selectedVertexIndex < 0 )
+          selectedVertexIndex = trail->GetVertexCount() - 1;
+      }
+    }
+
+    if ( b->GetID() == _T( "nextsegment" ) )
+    {
+      auto trail = FindTrailByGUID( editedMarker );
+      if ( trail )
+        selectedVertexIndex = ( selectedVertexIndex + 1 ) % trail->GetVertexCount();
+    }
+
+    if ( b->GetID() == _T( "newtrail" ) )
+    {
+      AddTrail( App );
+    }
   }
   break;
 

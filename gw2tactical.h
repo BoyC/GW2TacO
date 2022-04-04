@@ -78,8 +78,8 @@ struct MarkerTypeData
 
   TF32 size = 1.0;
   TF32 alpha = 1.0f;
-  TF32 fadeNear = -1;
-  TF32 fadeFar = -1;
+  TF32 fadeNear = 5000;
+  TF32 fadeFar = 5100;
   TF32 height = 1.5f;
   TF32 triggerRange = 2.0f;
   TF32 animSpeed = 1;
@@ -275,9 +275,11 @@ public:
 };
 
 void AddPOI( CWBApplication* App, int defaultCat );
+void AddTrail( CWBApplication* App );
 void DeletePOI();
 void DeletePOI( const GUID& guid );
 void UpdatePOI( CWBApplication* App );
+void DeleteTrail( const GUID& guid );
 
 void OpenTypeContextMenu( CWBContextMenu* ctx, CArray<GW2TacticalCategory*>& CategoryList, TBOOL AddVisibilityMarkers = false, TS32 BaseID = 0, TBOOL markerEditor = false, CDictionary<TS32, Achievement>& achievements = CDictionary<TS32, Achievement>() );
 void OpenTypeContextMenu( CWBContextItem* ctx, CArray<GW2TacticalCategory*>& CategoryList, TBOOL AddVisibilityMarkers = false, TS32 BaseID = 0, TBOOL markerEditor = false, CDictionary<TS32, Achievement>& achievements = CDictionary<TS32, Achievement>() );

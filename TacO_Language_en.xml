@@ -198,11 +198,20 @@
   <token key="*add_default_marker_2" value="Add POI (Default Category 2)"/>
   <token key="*add_default_marker_3" value="Add POI (Default Category 3)"/>
   <token key="*add_default_marker_4" value="Add POI (Default Category 4)"/>
-  <token key="*add_default_marker_5" value="Add POI (Default Category 5)"/>
+  <token key="*add_default_marker_5" value="Add POI (Default Category 5) (DEFAULT TRAIL CATEGORY!)"/>
   <token key="*delete_selected_marker" value="Delete Selected Marker"/>
   <token key="enableexternalediting" value="Allow selection of external markers (edits won't be saved!)"/>
   <token key="hideexternalmarkers" value="Hide all external markers (useful for editing)"/>
   <token key="exportmymapmaprkers" value="Export my markers from this map"/>
+  <token key="prevsegment" value="Select previous trail segment"/>
+  <token key="nextsegment" value="Select next trail segment"/>
+  <token key="starttrail" value="Start recording a new temp trail"/>
+  <token key="pausetrail" value="Pause temp trail recording"/>
+  <token key="startnewsection" value="Start new temp trail section" />
+  <token key="deletelastsegment" value="Delete selected or last temp trail vertex" />
+  <token key="savetrail" value="Save temp trail to .trl file"/>
+  <token key="loadtrail" value="Load temp trail from .trl file"/>
+  <token key="newtrail" value="Add New Trail Marker"/>
 
   <token key="wurm_tunnel" value="Wurm Tunnel"/>
   <token key="airport" value="Airport"/>

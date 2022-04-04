@@ -207,12 +207,15 @@
          </box>
           <label id="label6" class="panellabel" text="TRAIL EDITING"/>
           <box id="traileditor">
-            <button id="starttrail" />
-            <button id="pausetrail" />
-            <button id="startnewsection" />
-            <button id="deletelastsegment" />
-            <button id="savetrail" />
-            <button id="loadtrail" />
+            <button id="starttrail" text="O"/>
+            <button id="pausetrail" text="||"/>
+            <button id="startnewsection" text="N" />
+            <button id="deletelastsegment" text="X" />
+            <button id="savetrail" text="\/"/>
+            <button id="loadtrail" text="/\"/>
+            <button id="newtrail" text="+"/>
+            <button id="prevsegment" text="&lt;&lt;"/>
+            <button id="nextsegment" text="&gt;&gt;"/>
           </box>
           <label class="panellabel" text="SELECT DEFAULT MARKER TYPES"/>
           <box id="defaultmarkers">

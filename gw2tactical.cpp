@@ -1080,6 +1080,29 @@ void AddPOI( CWBApplication* App, int defaultCategory )
   }
 }
 
+void AddTrail( CWBApplication* App )
+{
+  if ( !mumbleLink.IsValid() ) return;
+  GW2Trail* poi = new GW2Trail();
+
+  CoCreateGuid( &poi->guid );
+  auto cat = GetCategory( Config::GetString( "defaultcategory4" ) );
+  auto& POIs = GetMapTrails();
+
+  if ( cat )
+    poi->SetCategory( App, cat );
+
+  POIs[ poi->guid ] = poi;
+  ExportPOIS();
+
+  if ( Config::IsWindowOpen( "MarkerEditor" ) )
+  {
+    auto editor = App->GetRoot()->FindChildByID<GW2MarkerEditor>( "MarkerEditor" );
+    if ( editor && !editor->IsHidden() )
+      editor->SetEditedGUID( poi->guid );
+  }
+}
+
 void DeletePOI()
 {
   if ( !mumbleLink.IsValid() ) return;
@@ -1119,6 +1142,24 @@ void DeletePOI()
 void DeletePOI( const GUID& guid )
 {
   auto& POIs = GetMapPOIs();
+  if ( POIs.HasKey( guid ) )
+  {
+    POIs.Delete( guid );
+    ExportPOIS();
+  }
+
+  if ( Config::IsWindowOpen( "MarkerEditor" ) )
+  {
+    extern CWBApplication* App;
+    auto editor = App->GetRoot()->FindChildByID<GW2MarkerEditor>( "MarkerEditor" );
+    if ( editor && !editor->IsHidden() )
+      editor->SetEditedGUID( GUID{} );
+  }
+}
+
+void DeleteTrail( const GUID& guid )
+{
+  auto& POIs = GetMapTrails();
   if ( POIs.HasKey( guid ) )
   {
     POIs.Delete( guid );

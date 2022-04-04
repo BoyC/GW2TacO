@@ -535,7 +535,7 @@ void GW2TrailDisplay::PauseTrail( TBOOL pause, TBOOL newSection )
   if ( btn )
   {
     btn->Push( pause );
-    btn->SetText( btn->IsPushed() ? "Resume Recording" : "Pause Recording" );
+    //btn->SetText( btn->IsPushed() ? "||" : "||" );
   }
 
   btn = App->GetRoot()->FindChildByID< CWBButton >( "startnewsection" );
@@ -993,6 +993,11 @@ TBOOL GW2Trail::Import( CString& fileName, const CString& zipFile, TBOOL keepPoi
   return Import( f, keepPoints );
 }
 
+void GW2Trail::Reload()
+{
+  Import( GetStringFromMap( typeData.trailData ), CString(), true );
+}
+
 void LineSegDist( const CLine& l1, const CLine& l2, float& S, float& T, CVector3& hitA, CVector3& hitB )
 {
   CVector3 a = l1.Point;
@@ -1093,11 +1098,22 @@ bool GW2Trail::HitTest( CLine& line, float& hitZ, int& closestIndex, CVector3& c
 
 CVector3 GW2Trail::GetVertex( int idx )
 {
+  if ( idx >= positions.NumItems() || idx < 0 )
+    return CVector3{};
+
   return positions[ idx ];
+}
+
+int GW2Trail::GetVertexCount()
+{
+  return positions.NumItems();
 }
 
 void GW2Trail::SetVertex( int idx, const CVector3 pos )
 {
+  if ( idx < 0 || idx >= positions.NumItems() )
+    return;
+
   if ( positions[ idx ] == pos )
     return;
 
@@ -1108,6 +1124,9 @@ void GW2Trail::SetVertex( int idx, const CVector3 pos )
 
 void GW2Trail::AddVertex( int idx, const CVector3 pos )
 {
+  if ( idx < 0 || idx > positions.NumItems() )
+    return;
+
   positions.Insert( idx, pos );
   Update();
   Export();
@@ -1115,6 +1134,9 @@ void GW2Trail::AddVertex( int idx, const CVector3 pos )
 
 void GW2Trail::DeleteVertex( int idx )
 {
+  if ( idx < 0 || idx >= positions.NumItems() )
+    return;
+
   if ( positions.NumItems() <= 2 )
     return;
 
