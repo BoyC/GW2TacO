@@ -34,6 +34,8 @@ enum class TacOKeyAction : TS32
   AddDefaultPOI_3,
   AddDefaultPOI_4,
   DeleteSelectedMarker,
+  DeleteSelectedTrailSegment,
+  CopySelectedMarker,
 
   //if you add one here, add it to the ActionNames array in the .cpp as well!
 };

@@ -202,6 +202,8 @@ public:
   void SetEditedGUID( const GUID& guid );
   void SetEditedCategory( const CString& category );
   void DeleteSelectedMarker();
+  void DeleteSelectedTrailSegment();
+  void CopySelectedMarker();
   GUID GetEditedGUID();
   int GetSelectedVertexIndex();
   CVector3 GetSelectedVertexPosition();

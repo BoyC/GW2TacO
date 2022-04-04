@@ -212,6 +212,8 @@
   <token key="savetrail" value="Save temp trail to .trl file"/>
   <token key="loadtrail" value="Load temp trail from .trl file"/>
   <token key="newtrail" value="Add New Trail Marker"/>
+  <token key="*delete_selected_segment" value="Delete selected trail vertex"/>
+  <token key="*copy_selected_marker" value="Copy selected marker with a small offset"/>
 
   <token key="wurm_tunnel" value="Wurm Tunnel"/>
   <token key="airport" value="Airport"/>

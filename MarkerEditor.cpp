@@ -1570,9 +1570,9 @@ void GW2MarkerEditor::SetEditedGUID( const GUID& guid )
   if ( editedText )
   {
     if ( marker )
-      editedText->SetText( "EDITED ITEM IS A MARKER (" + marker->category->GetFullTypeName() + ")" );
+      editedText->SetText( "EDITED ITEM IS A MARKER!" );
     else
-      editedText->SetText( "EDITED ITEM IS A TRAIL (" + trail->category->GetFullTypeName() + ")" );
+      editedText->SetText( "EDITED ITEM IS A TRAIL!" );
   }
 
   editedMarker = guid;
@@ -1616,6 +1616,33 @@ void GW2MarkerEditor::SetEditedCategory( const CString& category )
 void GW2MarkerEditor::DeleteSelectedMarker()
 {
   DeletePOI( editedMarker );
+}
+
+void GW2MarkerEditor::DeleteSelectedTrailSegment()
+{
+  auto* trail = FindTrailByGUID( editedMarker );
+  if ( !trail )
+    return;
+
+  trail->DeleteVertex( selectedVertexIndex );
+}
+
+void GW2MarkerEditor::CopySelectedMarker()
+{
+  auto* marker = FindMarkerByGUID( editedMarker );
+  if ( !marker )
+    return;
+
+  auto newPoi = AddPOI( App, 0, false );
+  if ( !newPoi )
+    return;
+
+  newPoi->SetCategory( App, marker->category );
+  newPoi->position = marker->position + CVector3( 0, 1, 0 );
+  newPoi->mapID = marker->mapID;
+  newPoi->rotation = marker->rotation;
+  newPoi->Type = marker->Type;
+  newPoi->typeData = marker->typeData;
 }
 
 GUID GW2MarkerEditor::GetEditedGUID()

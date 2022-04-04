@@ -1027,9 +1027,10 @@ void GW2TacticalDisplay::TriggerBigMessage( TS32 messageString )
   bigMessage = messageString;
 }
 
-void AddPOI( CWBApplication* App, int defaultCategory )
+POI* AddPOI( CWBApplication* App, int defaultCategory, bool testRange )
 {
-  if ( !mumbleLink.IsValid() ) return;
+  if ( !mumbleLink.IsValid() )
+    return nullptr;
   POI poi;
   poi.position = mumbleLink.charPosition;
   poi.mapID = mumbleLink.mapID;
@@ -1041,29 +1042,34 @@ void AddPOI( CWBApplication* App, int defaultCategory )
   auto cat = GetCategory( Config::GetString( "defaultcategory0" ) );
   switch ( defaultCategory )
   {
-    case 1:
-      cat = GetCategory( Config::GetString( "defaultcategory1" ) );
-      break;
-    case 2:
-      cat = GetCategory( Config::GetString( "defaultcategory2" ) );
-      break;
-    case 3:
-      cat = GetCategory( Config::GetString( "defaultcategory3" ) );
-      break;
-    case 4:
-      cat = GetCategory( Config::GetString( "defaultcategory4" ) );
-      break;
+  case 1:
+    cat = GetCategory( Config::GetString( "defaultcategory1" ) );
+    break;
+  case 2:
+    cat = GetCategory( Config::GetString( "defaultcategory2" ) );
+    break;
+  case 3:
+    cat = GetCategory( Config::GetString( "defaultcategory3" ) );
+    break;
+  case 4:
+    cat = GetCategory( Config::GetString( "defaultcategory4" ) );
+    break;
   }
 
-  if ( poi.mapID == -1 ) return;
+  if ( poi.mapID == -1 )
+    return nullptr;
 
   auto& POIs = GetMapPOIs();
 
-  for ( TS32 x = 0; x < POIs.NumItems(); x++ )
+  if ( testRange )
   {
-    if ( POIs.GetByIndex( x ).mapID != poi.mapID ) continue;
-    CVector3 v = POIs.GetByIndex( x ).position - poi.position;
-    if ( v.Length() < POIs.GetByIndex( x ).typeData.triggerRange && cat == POIs.GetByIndex( x ).category ) return;
+    for ( TS32 x = 0; x < POIs.NumItems(); x++ )
+    {
+      if ( POIs.GetByIndex( x ).mapID != poi.mapID ) continue;
+      CVector3 v = POIs.GetByIndex( x ).position - poi.position;
+      if ( v.Length() < POIs.GetByIndex( x ).typeData.triggerRange && cat == POIs.GetByIndex( x ).category )
+        return nullptr;
+    }
   }
 
   if ( cat )
@@ -1078,9 +1084,11 @@ void AddPOI( CWBApplication* App, int defaultCategory )
     if ( editor && !editor->IsHidden() )
       editor->SetEditedGUID( poi.guid );
   }
+
+  return &POIs[ poi.guid ];
 }
 
-void AddTrail( CWBApplication* App, const CString& fileName  )
+void AddTrail( CWBApplication* App, const CString& fileName )
 {
   if ( !mumbleLink.IsValid() ) return;
   GW2Trail* poi = new GW2Trail();
@@ -1183,10 +1191,10 @@ void DeleteTrail( const GUID& guid )
 
 void UpdatePOI( CWBApplication* App )
 {
-  if ( !mumbleLink.IsValid() ) 
+  if ( !mumbleLink.IsValid() )
     return;
 
-  if ( mumbleLink.mapID == -1 ) 
+  if ( mumbleLink.mapID == -1 )
     return;
 
 
@@ -1208,7 +1216,7 @@ void UpdatePOI( CWBApplication* App )
   {
     auto& cpoi = POIs.GetByIndex( x );
 
-    if ( cpoi.mapID != mumbleLink.mapID ) 
+    if ( cpoi.mapID != mumbleLink.mapID )
       continue;
 
     CVector3 dist = cpoi.position - CVector3( mumbleLink.charPosition );

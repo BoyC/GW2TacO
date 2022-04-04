@@ -274,7 +274,7 @@ public:
   }
 };
 
-void AddPOI( CWBApplication* App, int defaultCat );
+POI* AddPOI( CWBApplication* App, int defaultCat, bool testRange = true );
 void AddTrail( CWBApplication* App, const CString& fileName );
 void DeletePOI();
 void DeletePOI( const GUID& guid );

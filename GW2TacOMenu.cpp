@@ -62,6 +62,8 @@ CString ActionNames[] =
   "*add_default_marker_4",
   "*add_default_marker_5",
   "*delete_selected_marker",
+  "*delete_selected_segment",
+  "*copy_selected_marker",
 };
 
 CString APIKeyNames[] =
@@ -535,6 +537,8 @@ void GW2TacO::OpenMainMenu( CWBContextMenu* ctx )
     // Menu_ToggleExternalEditing
     markerEditor->AddSeparator();
     int cnt = 1;
+    auto rebinds = markerEditor->AddItem( DICT( "rebindkeys" ), 0, false, false );
+
     for ( TS32 x = 1; x < sizeof( ActionNames ) / sizeof( CString ); x++ )
     {
       CString str = DICT( ActionNames[ x ] ) + " " + DICT( "action_no_key_bound" );
@@ -546,7 +550,7 @@ void GW2TacO::OpenMainMenu( CWBContextMenu* ctx )
         }
 
       if ( ActionNames[ x ][ 0 ] == '*' )
-        markerEditor->AddItem( str.GetPointer(), Menu_RebindKey_Base + x );
+        rebinds->AddItem( str.GetPointer(), Menu_RebindKey_Base + x );
       cnt++;
     }
   }
@@ -1155,6 +1159,25 @@ TBOOL GW2TacO::MessageProc( CWBMessage& Message )
             editor->DeleteSelectedMarker();
         }
         return true;
+      }
+      case TacOKeyAction::DeleteSelectedTrailSegment:
+      {
+        if ( Config::IsWindowOpen( "MarkerEditor" ) )
+        {
+          auto editor = App->GetRoot()->FindChildByID<GW2MarkerEditor>( "MarkerEditor" );
+          if ( editor && !editor->IsHidden() )
+            editor->DeleteSelectedTrailSegment();
+        }
+        return true;
+      }
+      case TacOKeyAction::CopySelectedMarker:
+      {
+        if ( Config::IsWindowOpen( "MarkerEditor" ) )
+        {
+          auto editor = App->GetRoot()->FindChildByID<GW2MarkerEditor>( "MarkerEditor" );
+          if ( editor && !editor->IsHidden() )
+            editor->CopySelectedMarker();
+        }
       }
       case TacOKeyAction::RemovePOI:
         DeletePOI();
