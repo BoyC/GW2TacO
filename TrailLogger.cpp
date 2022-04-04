@@ -1070,7 +1070,7 @@ bool GW2Trail::HitTest( CLine& line, float& hitZ, int& closestIndex, CVector3& c
         hitZ = s;
       hit = true;
       closestIndex = t < 0.5 ? x : x + 1;
-      indexPlusOne = t < 0.5;
+      indexPlusOne = t > 0.5;
       clickPos = b;
     }
   }

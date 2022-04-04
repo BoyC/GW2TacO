@@ -727,9 +727,33 @@ TBOOL GW2MarkerEditor::HandleUberToolMessages( CWBMessage& message )
     GUID mouseTrail = GetMouseTrail( currIdx, currHitPoint, indexPlusOne );
     if ( mouseTrail != GUID{} )
     {
-      selectedVertexIndex = currIdx;
-      originalPosition = GetSelectedVertexPosition();
-      SetEditedGUID( mouseTrail );
+      App->UpdateControlKeyStates();
+      if ( !App->GetCtrlState() )
+      {
+        selectedVertexIndex = currIdx;
+        originalPosition = GetSelectedVertexPosition();
+        SetEditedGUID( mouseTrail );
+      }
+      else
+      {
+        int currIdx = 0;
+        CVector3 currHitPoint;
+        bool indexPlusOne{};
+
+        GUID mouseTrail = GetMouseTrail( currIdx, currHitPoint, indexPlusOne );
+        if ( mouseTrail != GUID{} )
+        {
+          auto* trail = FindTrailByGUID( mouseTrail );
+          if ( !trail )
+            break;
+
+          trail->AddVertex( indexPlusOne ? currIdx : currIdx + 1, currHitPoint );
+          selectedVertexIndex = indexPlusOne ? currIdx : currIdx + 1;
+          originalPosition = currHitPoint;
+
+          return true;
+        }
+      }
       return true;
     }
 
@@ -742,26 +766,6 @@ TBOOL GW2MarkerEditor::HandleUberToolMessages( CWBMessage& message )
     }
 
     return false;
-  }
-  case WBM_LEFTBUTTONDBLCLK:
-  {
-    int currIdx = 0;
-    CVector3 currHitPoint;
-    bool indexPlusOne{};
-
-    GUID mouseTrail = GetMouseTrail( currIdx, currHitPoint, indexPlusOne );
-    if ( mouseTrail != GUID{} )
-    {
-      selectedVertexIndex = currIdx;
-      auto* trail = FindTrailByGUID( mouseTrail );
-      if ( !trail )
-        break;
-
-      trail->AddVertex( indexPlusOne ? currIdx - 1 : currIdx, currHitPoint );
-
-      return true;
-    }
-    break;
   }
   case WBM_LEFTBUTTONUP:
     if ( draggedElement != UberToolElement::none )
@@ -1928,13 +1932,14 @@ GUID GW2MarkerEditor::GetMouseTrail( int& idx, CVector3& hitPoint, bool& indexPl
     float currZ = minZ;
     int currIdx = 0;
     CVector3 currHitPoint;
-    bool indexPlusOne = false;
-    if ( trails->second.GetByIndex( x )->HitTest( mouseLine, currZ, currIdx, currHitPoint, indexPlusOne ) && currZ < minZ )
+    bool currIndexPlusOne = false;
+    if ( trails->second.GetByIndex( x )->HitTest( mouseLine, currZ, currIdx, currHitPoint, currIndexPlusOne ) && currZ < minZ )
     {
       minZ = currZ;
       result = trails->second.GetByIndex( x )->guid;
       idx = currIdx;
       hitPoint = currHitPoint;
+      indexPlusOne = currIndexPlusOne;
     }
   }
 

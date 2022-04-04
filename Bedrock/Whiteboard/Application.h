@@ -49,7 +49,6 @@ class CWBApplication : public CCoreWindowHandlerWin
 
   virtual void UpdateMouseItem();
   virtual void CleanTrash();
-  virtual void UpdateControlKeyStates(); //update ctrl alt shift states
   virtual TS32 GetKeyboardState();
 
   WBMOUSECLICKREPEATMODE ClickRepeaterMode;
@@ -177,4 +176,5 @@ public:
   virtual void HandleResize();
 
   LRESULT InjectMessage( UINT uMsg, WPARAM wParam, LPARAM lParam );
+  virtual void UpdateControlKeyStates(); //update ctrl alt shift states
 };
