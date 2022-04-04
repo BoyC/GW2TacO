@@ -2212,7 +2212,16 @@ TBOOL GW2MarkerEditor::MessageProc( CWBMessage& message )
     }
 
     if ( b->GetID() == _T( "savetrail" ) && trails )
+    {
       trails->ExportTrail();
+      CWBButton* startStop = FindChildByID<CWBButton>( "starttrail" );
+      if ( startStop )
+      {
+        b->Push( false );
+        if ( trails )
+          trails->StartStopTrailRecording( b->IsPushed() );
+      }
+    }
 
     if ( b->GetID() == _T( "loadtrail" ) && trails )
       trails->ImportTrail();
@@ -2255,7 +2264,7 @@ TBOOL GW2MarkerEditor::MessageProc( CWBMessage& message )
 
     if ( b->GetID() == _T( "newtrail" ) )
     {
-      AddTrail( App );
+      AddTrail( App, "" );
     }
   }
   break;

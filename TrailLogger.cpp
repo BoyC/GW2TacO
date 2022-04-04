@@ -2,6 +2,8 @@
 #include "OverlayConfig.h"
 #include <commdlg.h>
 #include "GW2API.h"
+#include "shlwapi.h"
+#pragma comment(lib,"Shlwapi.lib")
 
 #define TRAILFILEVERSION 0
 
@@ -571,9 +573,9 @@ void GW2TrailDisplay::ExportTrail()
 
   disableHooks = true;
 
-  TCHAR dir[ 1024 ];
-  if ( !GetCurrentDirectory( 1024, dir ) )
-    memset( dir, 0, sizeof( TCHAR ) * 1024 );
+  TCHAR dir[ MAX_PATH ];
+  if ( !GetCurrentDirectory( MAX_PATH, dir ) )
+    memset( dir, 0, sizeof( TCHAR ) * MAX_PATH );
   char Filestring[ 256 ];
 
   OPENFILENAME opf;
@@ -607,6 +609,13 @@ void GW2TrailDisplay::ExportTrail()
   if ( GetSaveFileName( &opf ) )
   {
     editedTrail->SaveToFile( CString( opf.lpstrFile ) );
+
+    TCHAR path[ MAX_PATH ]{};
+
+    PathRelativePathTo( path, dir, FILE_ATTRIBUTE_DIRECTORY, opf.lpstrFile, 0 );
+    SetCurrentDirectory( dir );
+
+    AddTrail( App, CString( path ) );
   }
   else
   {

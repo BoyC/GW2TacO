@@ -213,7 +213,7 @@
             <button id="deletelastsegment" text="X" />
             <button id="savetrail" text="\/"/>
             <button id="loadtrail" text="/\"/>
-            <button id="newtrail" text="+"/>
+            <!--button id="newtrail" text="+"/-->
             <button id="prevsegment" text="&lt;&lt;"/>
             <button id="nextsegment" text="&gt;&gt;"/>
           </box>

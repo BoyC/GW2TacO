@@ -1080,7 +1080,7 @@ void AddPOI( CWBApplication* App, int defaultCategory )
   }
 }
 
-void AddTrail( CWBApplication* App )
+void AddTrail( CWBApplication* App, const CString& fileName  )
 {
   if ( !mumbleLink.IsValid() ) return;
   GW2Trail* poi = new GW2Trail();
@@ -1092,7 +1092,13 @@ void AddTrail( CWBApplication* App )
   if ( cat )
     poi->SetCategory( App, cat );
 
+  poi->typeData.trailData = AddStringToMap( fileName );
+  poi->typeData.saveBits.trailDataSaved = true;
+
   POIs[ poi->guid ] = poi;
+
+  poi->Reload();
+
   ExportPOIS();
 
   if ( Config::IsWindowOpen( "MarkerEditor" ) )
