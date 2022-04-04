@@ -429,6 +429,9 @@ void GW2TacticalDisplay::DrawPOI( CWBDrawAPI* API, const tm& ptm, const time_t& 
   TS32 timeLeft;
   float alphaMultiplier = 1;
 
+  if ( poi.external && hideExternal )
+    return;
+
   if ( !poi.IsVisible( ptm, currtime ) )
     return;
 
@@ -720,6 +723,8 @@ void GW2TacticalDisplay::DrawPOIMinimap( CWBDrawAPI* API, const CRect& miniRect,
 {
   if ( alpha <= 0 )
     return;
+  if ( poi.external && hideExternal )
+    return;
   if ( !poi.IsVisible( ptm, currtime ) )
     return;
 
@@ -862,11 +867,14 @@ void GW2TacticalDisplay::OnDraw( CWBDrawAPI* API )
   triggeredPOI = nullptr;
   TS32 prevcopyText = bigMessage;
 
+  hideExternal = Config::GetValue( "HideExternalMarkers" );
+
   if ( showIngameMarkers > 0 )
     for ( int x = 0; x < mapPOIs.NumItems(); x++ )
     {
       if ( !mapPOIs[ x ]->typeData.bits.inGameVisible && showIngameMarkers != 2 )
         continue;
+
       DrawPOI( API, ptm, currtime, *mapPOIs[ x ], drawDistance, infoText );
     }
 

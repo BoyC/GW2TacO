@@ -57,6 +57,8 @@ public:
   CVector3 GetVertex( int idx );
   void SetVertex( int idx, const CVector3 pos );
   void AddVertex( int idx, const CVector3 pos );
+  void DeleteVertex( int idx );
+  void Export();
 };
 
 class GW2TrailDisplay : public CWBItem
@@ -82,6 +84,7 @@ class GW2TrailDisplay : public CWBItem
   CCoreDepthStencilState* trailDepthStencil = nullptr;
 
   GW2Trail* editedTrail = nullptr;
+  bool hideExternal = false;
 
   void ClearEditedTrail();
   TBOOL trailBeingRecorded = false;

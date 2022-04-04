@@ -180,6 +180,7 @@ class GW2MarkerEditor : public CWBItem
   MarkerTypeData* GetEditedTypeParameters();
 
   void HideEditorUI( bool fade );
+  void ShowMarkerUI( bool marker, bool trail );
   GUID GetMouseTrail( int& idx, CVector3& hitPoint, bool& indexPlusOne );
 
 public:

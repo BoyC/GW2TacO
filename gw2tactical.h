@@ -212,6 +212,7 @@ class GW2TacticalDisplay : public CWBItem
   int bigMessageLength = 3000;
   POI* triggeredPOI = nullptr;
   TS32 bigMessage = -1;
+  bool hideExternal = false;
 
 public:
 

@@ -38,7 +38,7 @@ TBOOL FindSavedCategory( GW2TacticalCategory* t );
 void ExportSavedCategories( CXMLNode* n, GW2TacticalCategory* t );
 void ExportPOI( CXMLNode* n, POI& p );
 void ExportTrail( CXMLNode* n, GW2Trail& p );
-void ExportPOIS();
+void ExportPOIS( const CString& fileName = "poidata.xml", bool onlyCurrentMap = false );
 GUID LoadGUID( CXMLNode& n );
 void RecursiveImportPOIType( CXMLNode& root, GW2TacticalCategory* Root, CString currentCategory, MarkerTypeData& defaults, TBOOL KeepSaveState, const CString& zipFile );
 void ImportPOITypes();
@@ -61,3 +61,5 @@ extern LIGHTWEIGHT_CRITICALSECTION dlTextCritSec;
 
 CString GetCurrentDownload();
 extern CArrayThreadSafe<MarkerPack> markerPacks;
+
+void ExportMyMapMarkers();

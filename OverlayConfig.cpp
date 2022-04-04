@@ -76,6 +76,8 @@ void Config::InitDefaults()
   SetDefaultValue( "FetchMarkerPacks", 1 );
   SetDefaultValue( "ForceFestivals", 0 );
   SetDefaultValue( "NoCategoryHiding", 0 );
+  SetDefaultValue( "EnableExternalEditing", 1 );
+  SetDefaultValue( "HideExternalMarkers", 0 );
 }
 
 void Config::Load()

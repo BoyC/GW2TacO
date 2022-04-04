@@ -24,43 +24,45 @@ struct TypeParameter
   char* targetName;
   char* enableCheckBoxName;
   TypeParameterTypes paramType;
+  bool markerData;
+  bool trailData;
 };
 
 TypeParameter typeParameters[ (int)TypeParameters::MAX ] = {
 
-  {TypeParameters::Size,                 "size",           "cb_size",           TypeParameterTypes::Float },
-  {TypeParameters::MiniMapSize,          "miniMapSize",    "cb_minimapsize",    TypeParameterTypes::Int },
-  {TypeParameters::MiniMapFadeoutLevel,  "miniMapFadeOut", "cb_minimapfadeout", TypeParameterTypes::Float },
-  {TypeParameters::MinSize,              "minSize",        "cb_minsize",        TypeParameterTypes::Int },
-  {TypeParameters::MaxSize,              "maxSize",        "cb_maxsize",        TypeParameterTypes::Int },
-  {TypeParameters::IconFile,             "icon",           "cb_icon",           TypeParameterTypes::String },
-  {TypeParameters::ScaleWithZoom,        "scalewithzoom",  "cb_scalewithzoom",  TypeParameterTypes::Boolean },
-  {TypeParameters::Color,                "color",          "cb_color",          TypeParameterTypes::Color },
-  {TypeParameters::Alpha,                "alpha",          "cb_alpha",          TypeParameterTypes::FloatNormalized },
-  {TypeParameters::FadeNear,             "fadeNear",       "cb_fadenear",       TypeParameterTypes::Float },
-  {TypeParameters::FadeFar,              "fadeFar",        "cb_fadefar",        TypeParameterTypes::Float },
-  {TypeParameters::Height,               "height",         "cb_height",         TypeParameterTypes::Float },
-  {TypeParameters::Behavior,             "behavior",       "cb_behavior",       TypeParameterTypes::DropDown },
-  {TypeParameters::AchievementID,        "achievementid",  "cb_achievementid",  TypeParameterTypes::Int },
-  {TypeParameters::AchievementBit,       "achievementbit", "cb_achievementbit", TypeParameterTypes::Int },
-  {TypeParameters::ResetLength,          "resetlength",    "cb_resetlength",    TypeParameterTypes::Int },
-  {TypeParameters::DefaultToggle,        "defaulttoggle",  "cb_defaulttoggle",  TypeParameterTypes::Boolean },
-  {TypeParameters::HasCountDown,         "hascountdown",   "cb_hascountdown",   TypeParameterTypes::Boolean },
-  {TypeParameters::ToggleCategory,       "togglecategory", "cb_togglecategory", TypeParameterTypes::String },
-  {TypeParameters::AutoTrigger,          "autotrigger",    "cb_autotrigger",    TypeParameterTypes::Boolean },
-  {TypeParameters::TriggerRange,         "triggerrange",   "cb_triggerrange",   TypeParameterTypes::Float },
-  {TypeParameters::InfoRange,            "inforange",      "cb_inforange",      TypeParameterTypes::Float },
-  {TypeParameters::Info,                 "infotext",       "cb_infotext",       TypeParameterTypes::String },
-  {TypeParameters::Copy,                 "copytext",       "cb_copytext",       TypeParameterTypes::String },
-  {TypeParameters::CopyMessage,          "copymessage",    "cb_copymessage",    TypeParameterTypes::String },
-  {TypeParameters::MiniMapVisible,       "minimapvisible", "cb_minimapvisible", TypeParameterTypes::Boolean },
-  {TypeParameters::BigMapVisible,        "bigmapvisible",  "cb_bigmapvisible",  TypeParameterTypes::Boolean },
-  {TypeParameters::InGameVisible,        "ingamevisible",  "cb_ingamevisible",  TypeParameterTypes::Boolean },
-  {TypeParameters::KeepOnMapEdge,        "keeponmapedge",  "cb_keeponmapedge",  TypeParameterTypes::Boolean },
-  {TypeParameters::AnimSpeed,            "trailanimspeed", "cb_trailanimspeed", TypeParameterTypes::Float },
-  {TypeParameters::TrailScale,           "trailscale",     "cb_trailscale",     TypeParameterTypes::Float },
-  {TypeParameters::TrailFile,            "trailfile",      "cb_trailfile",      TypeParameterTypes::String },
-  {TypeParameters::Texture,              "trailtexture",   "cb_trailtexture",   TypeParameterTypes::String },
+  {TypeParameters::Size,                 "size",           "cb_size",           TypeParameterTypes::Float           , true,  false },
+  {TypeParameters::MiniMapSize,          "miniMapSize",    "cb_minimapsize",    TypeParameterTypes::Int             , true,  true },
+  {TypeParameters::MiniMapFadeoutLevel,  "miniMapFadeOut", "cb_minimapfadeout", TypeParameterTypes::Float           , true,  true },
+  {TypeParameters::MinSize,              "minSize",        "cb_minsize",        TypeParameterTypes::Int             , true,  false },
+  {TypeParameters::MaxSize,              "maxSize",        "cb_maxsize",        TypeParameterTypes::Int             , true,  false },
+  {TypeParameters::IconFile,             "icon",           "cb_icon",           TypeParameterTypes::String          , true,  false },
+  {TypeParameters::ScaleWithZoom,        "scalewithzoom",  "cb_scalewithzoom",  TypeParameterTypes::Boolean         , true,  true },
+  {TypeParameters::Color,                "color",          "cb_color",          TypeParameterTypes::Color           , true,  true },
+  {TypeParameters::Alpha,                "alpha",          "cb_alpha",          TypeParameterTypes::FloatNormalized , true,  true },
+  {TypeParameters::FadeNear,             "fadeNear",       "cb_fadenear",       TypeParameterTypes::Float           , true,  true },
+  {TypeParameters::FadeFar,              "fadeFar",        "cb_fadefar",        TypeParameterTypes::Float           , true,  true },
+  {TypeParameters::Height,               "height",         "cb_height",         TypeParameterTypes::Float           , true,  false },
+  {TypeParameters::Behavior,             "behavior",       "cb_behavior",       TypeParameterTypes::DropDown        , true,  false },
+  {TypeParameters::AchievementID,        "achievementid",  "cb_achievementid",  TypeParameterTypes::Int             , true,  true  },
+  {TypeParameters::AchievementBit,       "achievementbit", "cb_achievementbit", TypeParameterTypes::Int             , true,  true  },
+  {TypeParameters::ResetLength,          "resetlength",    "cb_resetlength",    TypeParameterTypes::Int             , true,  false },
+  {TypeParameters::DefaultToggle,        "defaulttoggle",  "cb_defaulttoggle",  TypeParameterTypes::Boolean         , false, false }, // this is category only
+  {TypeParameters::HasCountDown,         "hascountdown",   "cb_hascountdown",   TypeParameterTypes::Boolean         , true,  false },
+  {TypeParameters::ToggleCategory,       "togglecategory", "cb_togglecategory", TypeParameterTypes::String          , true,  false },
+  {TypeParameters::AutoTrigger,          "autotrigger",    "cb_autotrigger",    TypeParameterTypes::Boolean         , true,  false },
+  {TypeParameters::TriggerRange,         "triggerrange",   "cb_triggerrange",   TypeParameterTypes::Float           , true,  false },
+  {TypeParameters::InfoRange,            "inforange",      "cb_inforange",      TypeParameterTypes::Float           , true,  false },
+  {TypeParameters::Info,                 "infotext",       "cb_infotext",       TypeParameterTypes::String          , true,  false },
+  {TypeParameters::Copy,                 "copytext",       "cb_copytext",       TypeParameterTypes::String          , true,  false },
+  {TypeParameters::CopyMessage,          "copymessage",    "cb_copymessage",    TypeParameterTypes::String          , true,  false },
+  {TypeParameters::MiniMapVisible,       "minimapvisible", "cb_minimapvisible", TypeParameterTypes::Boolean         , true,  true  },
+  {TypeParameters::BigMapVisible,        "bigmapvisible",  "cb_bigmapvisible",  TypeParameterTypes::Boolean         , true,  true  },
+  {TypeParameters::InGameVisible,        "ingamevisible",  "cb_ingamevisible",  TypeParameterTypes::Boolean         , true,  true  },
+  {TypeParameters::KeepOnMapEdge,        "keeponmapedge",  "cb_keeponmapedge",  TypeParameterTypes::Boolean         , true,  false },
+  {TypeParameters::AnimSpeed,            "trailanimspeed", "cb_trailanimspeed", TypeParameterTypes::Float           , false, true  },
+  {TypeParameters::TrailScale,           "trailscale",     "cb_trailscale",     TypeParameterTypes::Float           , false, true  },
+  {TypeParameters::TrailFile,            "trailfile",      "cb_trailfile",      TypeParameterTypes::String          , false, true  },
+  {TypeParameters::Texture,              "trailtexture",   "cb_trailtexture",   TypeParameterTypes::String          , false, true  },
 };
 
 bool IsTypeParameterSaved( const MarkerTypeData& data, TypeParameters param )
@@ -662,6 +664,9 @@ TBOOL GW2MarkerEditor::HandleUberToolMessages( CWBMessage& message )
   case WBM_LEFTBUTTONDOWN:
   {
     if ( draggedElement != UberToolElement::none )
+      break;
+
+    if ( App->GetMouseItem() != App->GetRoot() )
       break;
 
     if ( editedMarker != GUID{} && hoverElement != UberToolElement::none )
@@ -1511,7 +1516,22 @@ void GW2MarkerEditor::SetEditedGUID( const GUID& guid )
     changetype->Hide( !marker );
   auto deleteMarker = FindChildByID( "deletemarker" );
   if ( deleteMarker )
-    deleteMarker->Hide( !marker );
+    deleteMarker->Hide( !marker && !trail );
+
+  bool allowExternals = Config::GetValue( "EnableExternalEditing" ) > 0;
+
+  if ( ( marker && !allowExternals && marker->external ) || ( trail && !allowExternals && trail->External ) )
+  {
+    editedMarker = GUID{};
+    if ( editedText )
+      editedText->SetText( "NO EDITED ITEM CURRENTLY!" );
+    HideEditorUI( true );
+    if ( changetype )
+      changetype->Hide( true );
+    if ( deleteMarker )
+      deleteMarker->Hide( true );
+    return;
+  }
 
   if ( !marker && !trail )
   {
@@ -1520,6 +1540,10 @@ void GW2MarkerEditor::SetEditedGUID( const GUID& guid )
       editedText->SetText( "NO EDITED ITEM CURRENTLY!" );
 
     HideEditorUI( true );
+    if ( changetype )
+      changetype->Hide( true );
+    if ( deleteMarker )
+      deleteMarker->Hide( true );
     return;
   }
 
@@ -1532,7 +1556,8 @@ void GW2MarkerEditor::SetEditedGUID( const GUID& guid )
   }
 
   editedMarker = guid;
-  HideEditorUI( false );
+  HideEditorUI( true );
+  ShowMarkerUI( marker, trail );
   UpdateEditorFromCategory( marker ? marker->typeData : trail->typeData );
 }
 
@@ -1603,6 +1628,21 @@ void UpdatePOICategoryParameter( GW2TacticalCategory* category, TypeParameters p
       {
         if ( !IsTypeParameterSaved( poi.category->data, param ) )
           SetTypeParameter( poi.typeData, param, floatValue, intValue, stringValue, boolValue );
+      }
+    }
+  }
+
+  for ( auto& set : trailSet )
+  {
+    for ( int x = 0; x < set.second.NumItems(); x++ )
+    {
+      auto& trail = set.second.GetByIndex( x );
+      if ( !trail || !trail->category )
+        continue;
+      if ( trail->category == category )
+      {
+        if ( !IsTypeParameterSaved( trail->category->data, param ) )
+          SetTypeParameter( trail->typeData, param, floatValue, intValue, stringValue, boolValue );
       }
     }
   }
@@ -1804,7 +1844,7 @@ void GW2MarkerEditor::ToggleTypeParameterSaved( TypeParameters param )
       SetTypeParameter( *data, param, floatValue, intValue, stringvalue, boolValue );
     }
 
-    auto trail = FindMarkerByGUID( editedMarker );
+    auto trail = FindTrailByGUID( editedMarker );
     if ( trail && trail->category )
     {
       bool boolValue{};
@@ -1886,6 +1926,40 @@ void GW2MarkerEditor::HideEditorUI( bool fade )
     label->Hide( fade );
 */
 
+}
+
+void GW2MarkerEditor::ShowMarkerUI( bool marker, bool trail )
+{
+  if ( !marker && !trail )
+    return;
+
+  for ( int x = 0; x < (int)TypeParameters::MAX; x++ )
+  {
+    if ( !( ( typeParameters[ x ].markerData && marker ) || ( typeParameters[ x ].trailData && trail ) ) )
+      continue;
+
+    auto* it = FindChildByID( typeParameters[ x ].targetName );
+    if ( it )
+      it = it->GetParent();
+    if ( it )
+      it->Hide( false );
+  }
+
+  CWBLabel* label = FindChildByID<CWBLabel>( "label1" );
+  if ( label )
+    label->Hide( false );
+  label = FindChildByID<CWBLabel>( "label2" );
+  if ( label )
+    label->Hide( false );
+  label = FindChildByID<CWBLabel>( "label3" );
+  if ( label )
+    label->Hide( false );
+  label = FindChildByID<CWBLabel>( "label4" );
+  if ( label )
+    label->Hide( false );
+  label = FindChildByID<CWBLabel>( "label5" );
+  if ( label )
+    label->Hide( false );
 }
 
 GUID GW2MarkerEditor::GetMouseTrail( int& idx, CVector3& hitPoint, bool& indexPlusOne )
@@ -2044,7 +2118,15 @@ TBOOL GW2MarkerEditor::MessageProc( CWBMessage& message )
 
     if ( b->GetID() == _T( "deletemarker" ) && editedMarker != GUID{} )
     {
-      DeletePOI( editedMarker );
+      auto marker = FindMarkerByGUID( editedMarker );
+      auto trail = FindTrailByGUID( editedMarker );
+
+      if ( marker )
+        DeletePOI( editedMarker );
+
+      if ( trail )
+        trail->DeleteVertex( selectedVertexIndex );
+
       SetEditedGUID( GUID{} );
     }
 

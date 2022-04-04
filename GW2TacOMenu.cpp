@@ -177,6 +177,9 @@ enum MainMenuItems
   Menu_ToggleAutomaticMarkerUpdates,
   Menu_ForceFestivals,
   Menu_NoCategoryHiding,
+  Menu_ToggleExternalEditing,
+  Menu_HideExternalMarkers,
+  Menu_ExportMyMapMarkers,
 
   Menu_OpacityIngame_Solid,
   Menu_OpacityIngame_Transparent,
@@ -522,8 +525,15 @@ void GW2TacO::OpenMainMenu( CWBContextMenu* ctx )
   auto markerEditor = AddTwoTextOption( ctx, Config::GetWindowOpenConfigValue( "MarkerEditor" ), GetKeybindString( TacOKeyAction::Toggle_marker_editor ) + DICT( "openmarkereditor" ), GetKeybindString( TacOKeyAction::Toggle_marker_editor ) + DICT( "closemarkereditor" ), Menu_ToggleMarkerEditor );
   if ( Config::IsWindowOpen( "MarkerEditor" ) )
   {
+    markerEditor->AddItem( DICT( "exportmymapmaprkers" ), Menu_ExportMyMapMarkers );
+    markerEditor->AddSeparator();
+
     //AddToggleOption( markerEditor, "AutoHideMarkerEditor", DICT( "autohidemarkereditor" ), Menu_ToggleAutoHideMarkerEditor );
-    //markerEditor->AddSeparator();
+    AddToggleOption( markerEditor, "EnableExternalEditing", DICT( "enableexternalediting" ), Menu_ToggleExternalEditing );
+    AddToggleOption( markerEditor, "HideExternalMarkers", DICT( "hideexternalmarkers" ), Menu_HideExternalMarkers );
+    // 
+    // Menu_ToggleExternalEditing
+    markerEditor->AddSeparator();
     int cnt = 1;
     for ( TS32 x = 1; x < sizeof( ActionNames ) / sizeof( CString ); x++ )
     {
@@ -1042,6 +1052,9 @@ TBOOL GW2TacO::MessageProc( CWBMessage& Message )
         tactical->RemoveUserMarkersFromMap();
       break;
     }
+    case Menu_ExportMyMapMarkers:
+      ExportMyMapMarkers();
+      break;
 
     case Menu_SupportTacO:
     {

@@ -36,6 +36,7 @@ void GlobalDoTrailLogging( TS32 mapID, CVector3 charPos )
 void GW2TrailDisplay::DrawProxy( CWBDrawAPI* API, bool miniMaprender )
 {
   TS32 fadeoutBubble = Config::GetValue( "FadeoutBubble" );
+  hideExternal = Config::GetValue( "HideExternalMarkers" );
 
   drawrect = GetClientRect();
 
@@ -76,6 +77,9 @@ void GW2TrailDisplay::DrawProxy( CWBDrawAPI* API, bool miniMaprender )
       {
         auto& trail = *trails.GetByIndex( y );
         if ( !trail.typeData.bits.inGameVisible && showIngameTrails != 2 )
+          continue;
+
+        if ( trail.External && hideExternal )
           continue;
 
         CCoreTexture* texture = nullptr;
@@ -171,6 +175,9 @@ void GW2TrailDisplay::DrawProxy( CWBDrawAPI* API, bool miniMaprender )
         if ( !trail.typeData.bits.miniMapVisible && showMinimapTrails != 2 )
           continue;
 
+        if ( trail.External && hideExternal )
+          continue;
+
         float trailWidth = trail.typeData.miniMapSize * 0.5f;
         if ( trail.typeData.bits.scaleWithZoom )
           trailWidth /= mumbleLink.miniMap.mapScale;
@@ -212,6 +219,9 @@ void GW2TrailDisplay::DrawProxy( CWBDrawAPI* API, bool miniMaprender )
       {
         auto& trail = *trails.GetByIndex( y );
         if ( !trail.typeData.bits.bigMapVisible && showBigmapTrails != 2 )
+          continue;
+
+        if ( trail.External && hideExternal )
           continue;
 
         float trailWidth = trail.typeData.miniMapSize * 0.5f;
@@ -688,7 +698,10 @@ TBOOL GW2Trail::SaveToFile( const CString& fname )
 
   CStreamWriterFile TrailLog;
   if ( !TrailLog.Open( fname.GetPointer() ) )
+  {
+    LOG_ERR( "[GW2TacO] Failed to open trail file %s for writing!", fname.GetPointer() );
     return false;
+  }
 
   TrailLog.WriteDWord( TRAILFILEVERSION );
 
@@ -1085,12 +1098,38 @@ CVector3 GW2Trail::GetVertex( int idx )
 
 void GW2Trail::SetVertex( int idx, const CVector3 pos )
 {
+  if ( positions[ idx ] == pos )
+    return;
+
   positions[ idx ] = pos;
   Update();
+  Export();
 }
 
 void GW2Trail::AddVertex( int idx, const CVector3 pos )
 {
   positions.Insert( idx, pos );
   Update();
+  Export();
+}
+
+void GW2Trail::DeleteVertex( int idx )
+{
+  if ( positions.NumItems() <= 2 )
+    return;
+
+  positions.DeleteByIndex( idx );
+  Update();
+  Export();
+}
+
+void GW2Trail::Export()
+{
+  if ( External )
+    return;
+
+  if ( !category )
+    return;
+  CString trailData = GetStringFromMap( category->data.trailData );
+  SaveToFile( trailData );
 }

@@ -200,6 +200,9 @@
   <token key="*add_default_marker_4" value="Add POI (Default Category 4)"/>
   <token key="*add_default_marker_5" value="Add POI (Default Category 5)"/>
   <token key="*delete_selected_marker" value="Delete Selected Marker"/>
+  <token key="enableexternalediting" value="Allow selection of external markers (edits won't be saved!)"/>
+  <token key="hideexternalmarkers" value="Hide all external markers (useful for editing)"/>
+  <token key="exportmymapmaprkers" value="Export my markers from this map"/>
 
   <token key="wurm_tunnel" value="Wurm Tunnel"/>
   <token key="airport" value="Airport"/>

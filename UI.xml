@@ -25,7 +25,7 @@
          <box id="markereditorheader">
            <button id="Editcategory" text="EDIT CATEGORY"/>
            <button id="changemarkertype" text="MARKER TYPE"/>
-           <button id="deletemarker" text="DELETE MARKER"/>
+           <button id="deletemarker" text="DELETE SELECTED"/>
          </box>
          <label id="label1" class="panellabel" text="VISUAL APPEARANCE"/>
          <box class="markereditorsetting">

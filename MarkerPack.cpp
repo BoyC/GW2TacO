@@ -3,15 +3,71 @@
 #include "OverlayConfig.h"
 #include "GW2API.h"
 #include "Bedrock/UtilLib/jsonxx.h"
+#include <commdlg.h>
 using namespace jsonxx;
 
 CDictionary<CString, mz_zip_archive*> zipDict;
 CArrayThreadSafe< CString > markerPackQueue;
 CString currentDownload;
 CArrayThreadSafe<MarkerPack> markerPacks;
+
+extern bool disableHooks;
+extern CWBApplication* App;
+
+
+void ExportMyMapMarkers()
+{
+  disableHooks = true;
+
+  TCHAR dir[ 1024 ];
+  if ( !GetCurrentDirectory( 1024, dir ) )
+    memset( dir, 0, sizeof( TCHAR ) * 1024 );
+  char Filestring[ 256 ];
+
+  OPENFILENAME opf;
+  opf.hwndOwner = (HWND)App->GetHandle();
+  opf.lpstrFilter = "GW2 Taco Markers\0*.xml\0\0";
+  opf.lpstrCustomFilter = 0;
+  opf.nMaxCustFilter = 0L;
+  opf.nFilterIndex = 1L;
+  opf.lpstrFile = Filestring;
+  opf.lpstrFile[ 0 ] = '\0';
+  opf.nMaxFile = 256;
+  opf.lpstrFileTitle = 0;
+  opf.nMaxFileTitle = 50;
+  opf.lpstrInitialDir = "Data";
+  opf.lpstrTitle = "Save My Map Markers";
+  opf.nFileOffset = 0;
+  opf.nFileExtension = 0;
+  opf.lpstrDefExt = "xml";
+  opf.lpfnHook = NULL;
+  opf.lCustData = 0;
+  opf.Flags = ( OFN_PATHMUSTEXIST | OFN_OVERWRITEPROMPT | OFN_NONETWORKBUTTON ) & ~OFN_ALLOWMULTISELECT;
+  opf.lStructSize = sizeof( OPENFILENAME );
+
+  opf.hInstance = GetModuleHandle( 0 );
+  opf.pvReserved = NULL;
+  opf.dwReserved = 0;
+  opf.FlagsEx = 0;
+
+  opf.lpstrInitialDir = dir;
+
+  if ( GetSaveFileName( &opf ) )
+  {
+    ExportPOIS( CString( opf.lpstrFile ), true );
+  }
+  else
+  {
+    DWORD error = CommDlgExtendedError();
+  }
+
+  SetCurrentDirectory( dir );
+
+  disableHooks = false;
+}
+
 bool markerPacksBeingFetched = false;
 std::thread markerPackFetcherThread;
-extern CWBApplication* App;
 
 LIGHTWEIGHT_CRITICALSECTION dlTextCritSec;
 LIGHTWEIGHT_CRITICALSECTION zipCritSec;
@@ -109,7 +165,7 @@ void ExportTrail( CXMLNode* n, GW2Trail& p )
   p.typeData.Write( t );
 }
 
-void ExportPOIS()
+void ExportPOIS( const CString& fileName, bool onlyCurrentMap )
 {
   CXMLDocument d;
   CXMLNode& root = d.GetDocumentNode();
@@ -120,6 +176,9 @@ void ExportPOIS()
   // build cat list
   for ( auto& POIs : POISet )
   {
+    if ( onlyCurrentMap && POIs.first != mumbleLink.mapID )
+      continue;
+
     for ( TS32 x = 0; x < POIs.second.NumItems(); x++ )
     {
       auto& p = POIs.second.GetByIndex( x );
@@ -131,6 +190,9 @@ void ExportPOIS()
 
   for ( auto& trails : trailSet )
   {
+    if ( onlyCurrentMap && trails.first != mumbleLink.mapID )
+      continue;
+
     for ( TS32 x = 0; x < trails.second.NumItems(); x++ )
     {
       auto& p = trails.second.GetByIndex( x );
@@ -164,6 +226,9 @@ void ExportPOIS()
 
   for ( auto& POIs : POISet )
   {
+    if ( onlyCurrentMap && POIs.first != mumbleLink.mapID )
+      continue;
+
     for ( TS32 x = 0; x < POIs.second.NumItems(); x++ )
     {
       auto& p = POIs.second.GetByIndex( x );
@@ -174,6 +239,9 @@ void ExportPOIS()
 
   for ( auto& trails : trailSet )
   {
+    if ( onlyCurrentMap && trails.first != mumbleLink.mapID )
+      continue;
+
     for ( TS32 x = 0; x < trails.second.NumItems(); x++ )
     {
       auto& p = trails.second.GetByIndex( x );
@@ -201,7 +269,7 @@ void ExportPOIS()
     }
   }
 
-  d.SaveToFile( "poidata.xml" );
+  d.SaveToFile( fileName.GetPointer() );
 }
 
 GUID LoadGUID( CXMLNode& n )
