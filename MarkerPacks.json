@@ -4,14 +4,12 @@
     {
       "name": "Tekkit's All-In-One (Festivals, JPs, Achievements, Gathering, Map Completion)",
       "id": "Tekkit",
+      "forcedversion" : "2022.03.30.",
       "filename": "tw_ALL_IN_ONE.taco",
-      "versionurl": "http://tekkitsworkshop.net/index.php/gw2-taco/download",
-      "versionsearchstring": "--- ALL-IN-ONE --- ",
-      "versionterminator": "<",
-      "downloadurl": "http://tekkitsworkshop.net/index.php/gw2-taco/download/send/2-taco-marker-packs/32-all-in-one",
+      "downloadurl": "https://www.tekkitsworkshop.net/downloads/tw_ALL_IN_ONE.taco",
       "backupurl": "https://github.com/BoyC/TekkitBackup/raw/main/tw_ALL_IN_ONE.taco",
       "backupversion": "2022.03.30.",
-      "enabledbydefault": false
+      "enabledbydefault": true
     },
     {
       "name": "ReActif English (Festivals, JPs, Achievements, Gathering)",
