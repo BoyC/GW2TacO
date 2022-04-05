@@ -1056,6 +1056,9 @@ bool GW2Trail::HitTest( CLine& line, float& hitZ, int& closestIndex, CVector3& c
   if ( map != mumbleLink.mapID )
     return false;
 
+  if ( External && Config::GetValue( "HideExternalMarkers" ) )
+    return false;
+
   if ( typeData.festivalMask )
   {
     bool hasActiveFestival = false;
