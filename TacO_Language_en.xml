@@ -215,6 +215,8 @@
   <token key="*delete_selected_segment" value="Delete selected trail vertex"/>
   <token key="*copy_selected_marker" value="Copy selected marker with a small offset"/>
 
+  <token key="TacOOnTaskBar" value="Show TacO on Windows task bar (requires restart)"/>
+
   <token key="wurm_tunnel" value="Wurm Tunnel"/>
   <token key="airport" value="Airport"/>
   <token key="thunder_hollow_reactor" value="Thunder Hollow Reactor"/>

@@ -182,6 +182,7 @@ enum MainMenuItems
   Menu_ToggleExternalEditing,
   Menu_HideExternalMarkers,
   Menu_ExportMyMapMarkers,
+  Menu_TacOOnTaskBar,
 
   Menu_OpacityIngame_Solid,
   Menu_OpacityIngame_Transparent,
@@ -623,6 +624,7 @@ void GW2TacO::OpenMainMenu( CWBContextMenu* ctx )
   AddToggleOption( settings, "InfoLineVisible", DICT( "toggleinfoline" ), Menu_ToggleInfoLine );
   AddToggleOption( settings, "ForceDPIAware", DICT( "toggleforcedpiaware" ), Menu_ToggleForceDPIAware );
   AddToggleOption( settings, "EnableTPNotificationIcon", DICT( "enabletpnotificationicon" ), Menu_ToggleShowNotificationIcon );
+  AddToggleOption( settings, "TacOOnTaskBar", DICT( "tacoontaskbar" ), Menu_TacOOnTaskBar );
   AddToggleOption( settings, "SendCrashDump", DICT( "togglecrashoptout" ), Menu_OptOutFromCrashReports );
 
   settings->AddSeparator();

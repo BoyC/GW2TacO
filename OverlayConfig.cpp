@@ -78,6 +78,7 @@ void Config::InitDefaults()
   SetDefaultValue( "NoCategoryHiding", 0 );
   SetDefaultValue( "EnableExternalEditing", 1 );
   SetDefaultValue( "HideExternalMarkers", 0 );
+  SetDefaultValue( "TacOOnTaskBar", 0 );
 }
 
 void Config::Load()

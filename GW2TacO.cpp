@@ -541,10 +541,13 @@ bool InitOverlayApp( HINSTANCE hInstance )
   int height = 1;
 
   CCoreWindowParameters p = CCoreWindowParameters( GetModuleHandle( NULL ), false, width, height, _T( "Guild Wars 2 Tactical Overlay" ), LoadIcon( hInstance, MAKEINTRESOURCE( IDI_ICON2 ) ) );
+
+  int toolex = Config::GetValue( "TacOOnTaskBar" ) ? 0 : WS_EX_TOOLWINDOW;
+
   p.OverrideWindowStyle = WS_POPUP;
-  p.OverrideWindowStyleEx = WS_EX_COMPOSITED | WS_EX_LAYERED | WS_EX_TRANSPARENT | WS_EX_TOOLWINDOW;// | WS_EX_TOPMOST;// | WS_EX_TOOLWINDOW;
+  p.OverrideWindowStyleEx = WS_EX_COMPOSITED | WS_EX_LAYERED | WS_EX_TRANSPARENT | toolex;// | WS_EX_TOPMOST;// | WS_EX_TOOLWINDOW;
   if ( dComp )
-    p.OverrideWindowStyleEx = WS_EX_TOPMOST | WS_EX_TRANSPARENT | WS_EX_TOOLWINDOW | WS_EX_LAYERED | WS_EX_NOREDIRECTIONBITMAP;
+    p.OverrideWindowStyleEx = WS_EX_TOPMOST | WS_EX_TRANSPARENT | toolex | WS_EX_LAYERED | WS_EX_NOREDIRECTIONBITMAP;
 
   if ( !App->Initialize( p ) )
   {
