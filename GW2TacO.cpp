@@ -604,7 +604,7 @@ void CheckForNewTacOBuild()
   }
 }
 
-void ValidateGW2ProcessIntegrity( DWORD gameProcessID )
+void ValidateGW2ProcessIntegrity( DWORD& gameProcessID )
 {
   GetWindowThreadProcessId( gameWindow, &gameProcessID );
 
