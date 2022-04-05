@@ -3,6 +3,7 @@
 #include "gw2tactical.h"
 #include "TS3Connection.h"
 #include <thread>
+#include "InputHooks.h"
 
 enum class TacOKeyAction : TS32
 {

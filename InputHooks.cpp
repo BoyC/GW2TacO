@@ -247,3 +247,21 @@ void ShutDownInputHooks()
   while ( mouseHookActive );
 }
 
+int GetTacOKeyCode( int key )
+{
+  return key + App->GetAltState() * TacO_ALT + App->GetCtrlState() * TacO_CTRL + App->GetShiftState() * TacO_SHIFT;
+}
+
+CString GetTacOKeyString( int key )
+{
+  CString result;
+  if ( key & TacO_SHIFT )
+    result += "SHIFT+";
+  if ( key & TacO_CTRL )
+    result += "CTRL+";
+  if ( key & TacO_ALT )
+    result += "ALT+";
+
+  return result + CString::Format( "%c", key & 0xfffff );
+}
+

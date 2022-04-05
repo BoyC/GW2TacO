@@ -281,7 +281,7 @@ CString GW2TacO::GetKeybindString( TacOKeyAction action )
   for ( TS32 x = 0; x < KeyBindings.NumItems(); x++ )
     if ( KeyBindings.GetByIndex( x ) == action )
     {
-      return CString::Format( "[%c] ", KeyBindings.GetKDPair( x )->Key );
+      return "[" + GetTacOKeyString( KeyBindings.GetKDPair( x )->Key ) + "] ";
       break;
     }
   return "";
@@ -546,7 +546,7 @@ void GW2TacO::OpenMainMenu( CWBContextMenu* ctx )
       for ( TS32 y = 0; y < KeyBindings.NumItems(); y++ )
         if ( (TS32)KeyBindings.GetByIndex( y ) == x )
         {
-          str = CString::Format( "[%c] ", KeyBindings.GetKDPair( y )->Key ) + DICT( ActionNames[ x ] );
+          str = "[" + GetTacOKeyString( KeyBindings.GetKDPair( y )->Key ) + "] " + DICT( ActionNames[ x ] );
           break;
         }
 
@@ -637,7 +637,7 @@ void GW2TacO::OpenMainMenu( CWBContextMenu* ctx )
     for ( TS32 y = 0; y < KeyBindings.NumItems(); y++ )
       if ( (TS32)KeyBindings.GetByIndex( y ) == x )
       {
-        str = DICT( ActionNames[ x ] ) + CString::Format( " [%c]", KeyBindings.GetKDPair( y )->Key );
+        str = DICT( ActionNames[ x ] ) + " [" + GetTacOKeyString( KeyBindings.GetKDPair( y )->Key ) + "]";
         break;
       }
 
@@ -1098,6 +1098,9 @@ TBOOL GW2TacO::MessageProc( CWBMessage& Message )
   case WBM_CHAR:
     if ( RebindMode )
     {
+      if ( !Message.Key )
+        return true;
+
       if ( !ScriptRebindMode )
       {
         for ( TS32 x = 0; x < KeyBindings.NumItems(); x++ )
@@ -1112,8 +1115,8 @@ TBOOL GW2TacO::MessageProc( CWBMessage& Message )
 
         if ( Message.Key != VK_ESCAPE )
         {
-          KeyBindings[ Message.Key ] = ActionToRebind;
-          Config::SetKeyBinding( ActionToRebind, Message.Key );
+          KeyBindings[ GetTacOKeyCode( Message.Key ) ] = ActionToRebind;
+          Config::SetKeyBinding( ActionToRebind, GetTacOKeyCode( Message.Key ) );
         }
       }
       else
@@ -1139,9 +1142,11 @@ TBOOL GW2TacO::MessageProc( CWBMessage& Message )
       return true;
     }
 
-    if ( Config::GetValue( "KeybindsEnabled" ) && KeyBindings.HasKey( Message.Key ) )
+    if ( Config::GetValue( "KeybindsEnabled" ) && KeyBindings.HasKey( GetTacOKeyCode( Message.Key ) ) )
     {
-      switch ( KeyBindings[ Message.Key ] )
+      int actualKey = GetTacOKeyCode( Message.Key );
+
+      switch ( KeyBindings[ actualKey ] )
       {
       case TacOKeyAction::AddPOI:
         AddPOI( App, 0 );
@@ -1150,7 +1155,7 @@ TBOOL GW2TacO::MessageProc( CWBMessage& Message )
       case TacOKeyAction::AddDefaultPOI_2:
       case TacOKeyAction::AddDefaultPOI_3:
       case TacOKeyAction::AddDefaultPOI_4:
-        AddPOI( App, (int)KeyBindings[ Message.Key ] - (int)TacOKeyAction::AddDefaultPOI_1 + 1 );
+        AddPOI( App, (int)KeyBindings[ actualKey ] - (int)TacOKeyAction::AddDefaultPOI_1 + 1 );
         return true;
       case TacOKeyAction::DeleteSelectedMarker:
       {
@@ -1282,8 +1287,8 @@ TBOOL GW2TacO::MessageProc( CWBMessage& Message )
       }
     }
 
-    if ( ScriptKeyBindings.HasKey( Message.Key ) )
-      TriggerScriptEngineKeyEvent( ScriptKeyBindings[ Message.Key ] );
+    if ( ScriptKeyBindings.HasKey( GetTacOKeyCode( Message.Key ) ) )
+      TriggerScriptEngineKeyEvent( ScriptKeyBindings[ GetTacOKeyCode( Message.Key ) ] );
 
     break;
   case WBM_FOCUSLOST:
@@ -1704,7 +1709,7 @@ void GW2TacO::OnDraw( CWBDrawAPI* API )
       }
       else
       {
-        line1 = DICT( "action" ) + " '" + DICT( ActionNames[ (TS32)ActionToRebind ] ) + "' " + DICT( "currently_bound" ) + CString::Format( " '%c'", key );
+        line1 = DICT( "action" ) + " '" + DICT( ActionNames[ (TS32)ActionToRebind ] ) + "' " + DICT( "currently_bound" ) + " [" + GetTacOKeyString( key ) + "]";
       }
     }
     else
