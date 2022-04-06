@@ -949,7 +949,7 @@ void GW2MarkerEditor::DrawUberTool( CWBDrawAPI* API, const CRect& drawrect )
 
   ConstBuffer bufferData;
   bufferData.cam.SetLookAtLH( eye, mumbleLink.camPosition + mumbleLink.camDir, CVector3( 0, 1, 0 ) );
-  bufferData.persp.SetPerspectiveFovLH( mumbleLink.fov, drawrect.Width() / (TF32)drawrect.Height(), 0.05f, 1000.0f );
+  bufferData.persp.SetPerspectiveFovLH( mumbleLink.fov, drawrect.Width() / (TF32)drawrect.Height(), 0.05f, 5000.0f );
 
   CMatrix4x4 matrix;
 
@@ -1528,6 +1528,8 @@ void GW2MarkerEditor::SetEditedGUID( const GUID& guid )
   editedCategory = CString();
 
   auto editedText = FindChildByID<CWBLabel>( "categorylabel" );
+  if ( editedText )
+    editedText->ApplyStyle( CString( "font-color" ), CString( "#ffffff" ), CStringArray() );
   auto marker = FindMarkerByGUID( guid );
   auto trail = FindTrailByGUID( guid );
 
@@ -1569,10 +1571,18 @@ void GW2MarkerEditor::SetEditedGUID( const GUID& guid )
 
   if ( editedText )
   {
+    CString guid = CString::EncodeToBase64( (TU8*)&( marker ? marker->guid : trail->guid ), sizeof( GUID ) );
+
     if ( marker )
-      editedText->SetText( "EDITED ITEM IS A MARKER!" );
+    {
+      editedText->SetText( CString::Format( marker->external ? "EXTERNAL MARKER: %s" : "EDITED MARKER: %s", guid.GetPointer() ) );
+      editedText->ApplyStyle( CString( "font-color" ), CString( marker->external ? "#ff8080" : "#80ff80" ), CStringArray() );
+    }
     else
-      editedText->SetText( "EDITED ITEM IS A TRAIL!" );
+    {
+      editedText->SetText( CString::Format( trail->External ? "EXTERNAL TRAIL: %s" : "EDITED TRAIL: %s", guid.GetPointer() ) );
+      editedText->ApplyStyle( CString( "font-color" ), CString( trail->External ? "#ff8080" : "#80ff80" ), CStringArray() );
+    }
   }
 
   editedMarker = guid;
@@ -1586,6 +1596,8 @@ void GW2MarkerEditor::SetEditedCategory( const CString& category )
   editedMarker = GUID{};
 
   auto editedText = FindChildByID<CWBLabel>( "categorylabel" );
+  if ( editedText )
+    editedText->ApplyStyle( CString( "font-color" ), CString( "#ffffff" ), CStringArray() );
   auto cat = GetCategory( category );
 
   auto changetype = FindChildByID( "changemarkertype" );
@@ -1606,7 +1618,9 @@ void GW2MarkerEditor::SetEditedCategory( const CString& category )
   }
 
   if ( editedText )
-    editedText->SetText( "Editing Category: " + cat->GetFullTypeName() );
+  {
+    editedText->SetText( "CATEGORY: " + cat->GetFullTypeName() );
+  }
 
   editedCategory = category;
   HideEditorUI( false );
@@ -1659,7 +1673,7 @@ CVector3 GW2MarkerEditor::GetSelectedVertexPosition()
 {
   auto* trail = FindTrailByGUID( editedMarker );
   if ( !trail )
-    return CVector3();
+    return CVector3{};
 
   return trail->GetVertex( selectedVertexIndex );
 }

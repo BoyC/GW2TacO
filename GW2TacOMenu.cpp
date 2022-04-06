@@ -1548,24 +1548,10 @@ void GW2TacO::OnDraw( CWBDrawAPI* API )
 
     if ( !lastInfoLine.Length() )
     {
-      int idx{};
-      CVector3 pos;
-
-      if ( Config::IsWindowOpen( "MarkerEditor" ) )
-      {
-        auto editor = App->GetRoot()->FindChildByID<GW2MarkerEditor>( "MarkerEditor" );
-        if ( editor && !editor->IsHidden() )
-        {
-          idx = editor->GetSelectedVertexIndex();
-          pos = editor->GetSelectedVertexPosition();
-        }
-      }
-
-
-      infoline = CString::Format( "map: %d world: %d shard: %d position: %f %f %f campos: %.2f %.2f %.2f game fps: %.2f overlay fps: %.2f map:%d compPos:%d compRot:%d cW:%d cH:%d cR:%f pX:%f pY:%f mcX:%f mcY:%f mS:%f idx: %d pos: %f %f %f",
+      infoline = CString::Format( "map: %d world: %d shard: %d position: %.2f %.2f %.2f campos: %.2f %.2f %.2f game fps: %.2f overlay fps: %.2f map:%d compPos:%d compRot:%d cW:%d cH:%d cR:%.2f pX:%.2f pY:%.2f mcX:%.2f mcY:%.2f mS:%.2f",
                                   mumbleLink.mapID, mumbleLink.worldID, mumbleLink.mapInstance, mumbleLink.charPosition.x, mumbleLink.charPosition.y, mumbleLink.charPosition.z, mumbleLink.camDir.x, mumbleLink.camDir.y, mumbleLink.camDir.z,
                                   mumbleLink.GetFrameRate(), App->GetFrameRate(), int( mumbleLink.isMapOpen ), int( mumbleLink.isMinimapTopRight ), int( mumbleLink.isMinimapRotating ), int( mumbleLink.miniMap.compassWidth ), int( mumbleLink.miniMap.compassHeight ), mumbleLink.miniMap.compassRotation, mumbleLink.miniMap.playerX, mumbleLink.miniMap.playerY,
-                                  mumbleLink.miniMap.mapCenterX, mumbleLink.miniMap.mapCenterY, mumbleLink.miniMap.mapScale, idx, pos.x, pos.y, pos.z );
+                                  mumbleLink.miniMap.mapCenterX, mumbleLink.miniMap.mapCenterY, mumbleLink.miniMap.mapScale );
 
       if ( Config::GetValue( "CircleCalc_enabled" ) )
       {
