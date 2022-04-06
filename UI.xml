@@ -23,9 +23,10 @@
       <box id="markereditormain">
         <box class="markereditorpanel">
          <box id="markereditorheader">
-           <button id="Editcategory" text="EDIT CATEGORY"/>
-           <button id="changemarkertype" text="MARKER TYPE"/>
-           <button id="deletemarker" text="DELETE SELECTED"/>
+           <button id="Editcategory"/>
+           <button id="nullbutton"/>
+           <button id="changemarkertype"/>
+           <button id="deletemarker"/>
          </box>
          <label id="label1" class="panellabel" text="VISUAL APPEARANCE"/>
          <box class="markereditorsetting">
@@ -207,15 +208,15 @@
          </box>
           <label id="label6" class="panellabel" text="TRAIL EDITING"/>
           <box id="traileditor">
-            <button id="starttrail" text="O"/>
-            <button id="pausetrail" text="||"/>
-            <button id="startnewsection" text="N" />
-            <button id="deletelastsegment" text="X" />
-            <button id="savetrail" text="\/"/>
-            <button id="loadtrail" text="/\"/>
+            <button id="starttrail"/>
+            <button id="pausetrail"/>
+            <button id="startnewsection"/>
+            <button id="deletelastsegment"/>
+            <button id="savetrail"/>
+            <button id="loadtrail"/>
             <!--button id="newtrail" text="+"/-->
-            <button id="prevsegment" text="&lt;&lt;"/>
-            <button id="nextsegment" text="&gt;&gt;"/>
+            <button id="prevsegment"/>
+            <button id="nextsegment"/>
           </box>
           <label class="panellabel" text="SELECT DEFAULT MARKER TYPES"/>
           <box id="defaultmarkers">

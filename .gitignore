@@ -6,6 +6,7 @@ syntax: glob
 *.*backup*
 **/Release*/*
 **/Debug*/*
+**/Skin*/*
 **/Release_MultiByte*/*
 **/Debug_MultiByte*/*
 *Release*/*

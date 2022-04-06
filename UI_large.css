@@ -253,108 +253,9 @@ markereditor
 {
 	margin:0px;
 	child-layout: vertical;
-	child-fill-x: false;
-	child-fill-y: false;
-	child-spacing: 1px;
-}
-
-markereditor label
-{
-	width:100%;
-	height:23px;
-	text-align:left;
-}
-
-markereditor button
-{
-	width:190px;
-	height:23px;
-        padding-bottom:4px;
-}
-
-#hpgrid
-{
-	width:283px;
-	height:15px;
-	left:50%-199px;
-	top:96px;
-}
-
-#notepadbox
-{
-	margin:0px;
-}
-
-notepad
-{
-	margin:0px;
-}
-
-notepad textbox
-{
-	background:rgba(0,0,0,0.7);
-	margin:1px;
-	padding:1px;
-	border:1px;
-}
-
-notepad textbox:selection:active
-{
-	background:rgba(64,64,64,1);
-}
-
-notepad textbox:selection:hover
-{
-	background:rgba(192,192,192,1);
-}
-
-tptracker
-{
-	margin:0px;
-}
-
-#APIkeyInput
-{
-	background:rgba(0,0,0,0.7);
-	padding:1px;
-	border:1px;
-	width:565px;
-	height:21px;
-	top:50%+20px;
-}
-
-#MenuHoverBox
-{
-	left:0px;
-	top:0px;
-	width:355px;
-	height:35px;
-	background-color:none;
-}
-
-#startnewsection
-{
-	visibility:hidden;
-}
-
-contextmenu:active
-{
-	font-color:#ffffcc77;
-}
-
-markereditor
-{
-	margin:0px;
-}
-
-#markereditorbox
-{
-	margin:0px;
-	child-layout: vertical;
 	child-fill-x: true;
 	child-fill-y: true;
 	child-spacing: 1px;
-	background-color:rgba(0,0,0,0.5);
 }
 
 #markereditorheader
@@ -363,6 +264,8 @@ markereditor
     child-spacing:2px;
     padding:2px;
     child-fill-x:true;
+    height:20px;
+    child-align-x:center;
 }
 
 #markereditormain
@@ -535,7 +438,8 @@ markereditor
 #markereditorheader button
 {
   width:none;
-  height:15px;
+  height:20px;
+  width:20px;
   padding-bottom:1px;
 }
 
@@ -552,4 +456,70 @@ markereditor
 #deletemarker
 {
    padding:2px;
+}
+
+#starttrail
+{
+  background: skin(record) center middle;
+  font-color:#ff0000;
+}
+
+#pausetrail
+{
+  background: skin(pause) center middle;
+}
+
+#startnewsection
+{
+  background: skin(newsegment) center middle;
+}
+
+#deletelastsegment
+{
+  background: skin(delete) center middle;
+}
+
+#savetrail
+{
+  background: skin(save) center middle;
+}
+
+#loadtrail
+{
+  background: skin(open) center middle;
+}
+
+#prevsegment
+{
+  background: skin(previous) center middle;
+}
+
+#nextsegment
+{
+  background: skin(next) center middle;
+}
+
+#Editcategory
+{
+  background: skin(edit) center middle;
+}
+
+#changemarkertype
+{
+  background: skin(type) center middle;
+}
+
+#deletemarker
+{
+  background: skin(trash) center middle;
+}
+
+#markereditorheader
+{
+  height:24px;
+}
+
+#nullbutton
+{
+  opacity:0;
 }

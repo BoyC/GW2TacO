@@ -369,6 +369,8 @@ markereditor
     child-spacing:2px;
     padding:2px;
     child-fill-x:true;
+    height:20px;
+    child-align-x:center;
 }
 
 #markereditormain
@@ -541,7 +543,8 @@ markereditor
 #markereditorheader button
 {
   width:none;
-  height:15px;
+  height:20px;
+  width:20px;
   padding-bottom:1px;
 }
 
@@ -558,4 +561,70 @@ markereditor
 #deletemarker
 {
    padding:2px;
+}
+
+#starttrail
+{
+  background: skin(record) center middle;
+  font-color:#ff0000;
+}
+
+#pausetrail
+{
+  background: skin(pause) center middle;
+}
+
+#startnewsection
+{
+  background: skin(newsegment) center middle;
+}
+
+#deletelastsegment
+{
+  background: skin(delete) center middle;
+}
+
+#savetrail
+{
+  background: skin(save) center middle;
+}
+
+#loadtrail
+{
+  background: skin(open) center middle;
+}
+
+#prevsegment
+{
+  background: skin(previous) center middle;
+}
+
+#nextsegment
+{
+  background: skin(next) center middle;
+}
+
+#Editcategory
+{
+  background: skin(edit) center middle;
+}
+
+#changemarkertype
+{
+  background: skin(type) center middle;
+}
+
+#deletemarker
+{
+  background: skin(trash) center middle;
+}
+
+#markereditorheader
+{
+  height:24px;
+}
+
+#nullbutton
+{
+  opacity:0;
 }

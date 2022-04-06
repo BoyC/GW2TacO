@@ -216,6 +216,9 @@
   <token key="*copy_selected_marker" value="Copy selected marker with a small offset"/>
 
   <token key="TacOOnTaskBar" value="Show TacO on Windows task bar (requires restart)"/>
+  <token key="selectcategorytoedit" value="Select Category to Edit"/>
+  <token key="setmarkercategory" value="Change Category of Edited Marker/Trail"/>
+  <token key="deletemarker" value="Delete Edited Marker/Trail"/>
 
   <token key="wurm_tunnel" value="Wurm Tunnel"/>
   <token key="airport" value="Airport"/>

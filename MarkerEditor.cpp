@@ -1203,6 +1203,13 @@ void GW2MarkerEditor::OnDraw( CWBDrawAPI* API )
 
   if ( mouseItem )
   {
+    if ( mouseItem->GetID() == "Editcategory" )
+      SetMouseToolTip( DICT( "selectcategorytoedit" ) );
+    if ( mouseItem->GetID() == "changemarkertype" )
+      SetMouseToolTip( DICT( "setmarkercategory" ) );
+    if ( mouseItem->GetID() == "deletemarker" )
+      SetMouseToolTip( DICT( "deletemarker" ) );
+
     if ( mouseItem->GetID() == "default1" )
       SetMouseToolTip( Config::GetString( "defaultcategory0" ) );
     if ( mouseItem->GetID() == "default2" )
