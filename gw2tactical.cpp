@@ -165,6 +165,9 @@ WBATLASHANDLE GetMapIcon( CWBApplication* App, CString& filename, const CString&
       if ( !categoryZip.Length() && x == 1 )
         continue;
 
+      extern LIGHTWEIGHT_CRITICALSECTION zipCritSec;
+      CLightweightCriticalSection fileRead( &zipCritSec );
+
       mz_zip_archive* zip = x == 0 ? OpenZipFile( zipFile ) : OpenZipFile( categoryZip );
 
       if ( zip )

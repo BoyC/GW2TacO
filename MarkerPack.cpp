@@ -560,7 +560,7 @@ void ImportPOIFile( CWBApplication* App, CString s, TBOOL External )
 {
   CXMLDocument d;
   {
-    CLightweightCriticalSection fileWrite( &zipCritSec );
+    CLightweightCriticalSection fileRead( &zipCritSec );
     if ( !d.LoadFromFile( s.GetPointer() ) )
       return;
   }

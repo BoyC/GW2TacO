@@ -351,6 +351,9 @@ CCoreTexture2D* GW2TrailDisplay::GetTexture( const CString& fname, const CString
       if ( !categoryZip.Length() && x == 1 )
         continue;
 
+      extern LIGHTWEIGHT_CRITICALSECTION zipCritSec;
+      CLightweightCriticalSection fileRead( &zipCritSec );
+
       mz_zip_archive* zip = x == 0 ? OpenZipFile( zipFile ) : OpenZipFile( categoryZip );
 
       if ( zip )
@@ -975,6 +978,9 @@ TBOOL GW2Trail::Import( CString& fileName, const CString& zipFile, TBOOL keepPoi
 {
   if ( zipFile.Length() )
   {
+    extern LIGHTWEIGHT_CRITICALSECTION zipCritSec;
+    CLightweightCriticalSection fileRead( &zipCritSec );
+
     mz_zip_archive* zip = OpenZipFile( zipFile );
 
     if ( zip )
