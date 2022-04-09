@@ -111,42 +111,12 @@ void MarkerActionData::Do()
   {
     auto marker = FindMarkerByGUID( guid );
     if ( marker )
-      marker->position = position;
-    break;
-  }
-/*
-  case MarkerAction::AddTrail:
-  {
-    GW2Trail* poi = new GW2Trail();
-
-    poi->guid = guid;
-
-    auto cat = GetCategory( GetStringFromMap( intData ) );
-
-    if ( cat )
-      poi->SetCategory( App, cat );
-
-    auto& POIs = GetMapTrails();
-
-    poi->typeData.trailData = stringID;
-    poi->typeData.saveBits.trailDataSaved = true;
-
-    POIs[ poi->guid ] = poi;
-
-    poi->Reload();
-
-    ExportPOIS();
-
-    if ( Config::IsWindowOpen( "MarkerEditor" ) )
     {
-      auto editor = App->GetRoot()->FindChildByID<GW2MarkerEditor>( "MarkerEditor" );
-      if ( editor && !editor->IsHidden() )
-        editor->SetEditedGUID( poi->guid );
+      marker->position = position;
+      ExportPOIS();
     }
-
     break;
   }
-*/
   case MarkerAction::AddTrailFull:
   {
     if ( !fullTrail )
@@ -214,6 +184,8 @@ void MarkerActionData::Do()
     //LOG_NFO( "Action: delete marker/trail %s", CString::EncodeToBase64( (TU8*)&( guid ), sizeof( GUID ) ).GetPointer() );
     RemoveMarkerByGUID( guid );
     RemoveTrailByGUID( guid );
+
+    ExportPOIS();
     break;
   }
   case MarkerAction::SetMarkerTrailCategory:
@@ -351,6 +323,7 @@ void MarkerActionData::Do()
         }
       }
 
+      ExportPOIS();
     }
     break;
   }
