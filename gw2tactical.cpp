@@ -242,6 +242,11 @@ CDictionaryEnumerable<GUID, POI>& GetMapPOIs()
   return POISet[ mumbleLink.mapID ];
 }
 
+CDictionaryEnumerable<GUID, POI>& GetPOIs( int mapId )
+{
+  return POISet[ mapId ];
+}
+
 CDictionaryEnumerable<POIActivationDataKey, POIActivationData> activationData;
 CArray<POIRoute> Routes;
 
@@ -1027,11 +1032,11 @@ void GW2TacticalDisplay::TriggerBigMessage( TS32 messageString )
   bigMessage = messageString;
 }
 
-POI* AddPOI( CWBApplication* App, int defaultCategory, bool testRange )
+bool CreateNewPOI( CWBApplication* App, POI& poi, int defaultCategory, bool testRange )
 {
   if ( !mumbleLink.IsValid() )
-    return nullptr;
-  POI poi;
+    return false;
+  poi = POI();
   poi.position = mumbleLink.charPosition;
   poi.mapID = mumbleLink.mapID;
   poi.icon = DefaultIconHandle;
@@ -1057,7 +1062,7 @@ POI* AddPOI( CWBApplication* App, int defaultCategory, bool testRange )
   }
 
   if ( poi.mapID == -1 )
-    return nullptr;
+    return false;
 
   auto& POIs = GetMapPOIs();
 
@@ -1068,13 +1073,14 @@ POI* AddPOI( CWBApplication* App, int defaultCategory, bool testRange )
       if ( POIs.GetByIndex( x ).mapID != poi.mapID ) continue;
       CVector3 v = POIs.GetByIndex( x ).position - poi.position;
       if ( v.Length() < POIs.GetByIndex( x ).typeData.triggerRange && cat == POIs.GetByIndex( x ).category )
-        return nullptr;
+        return false;
     }
   }
 
   if ( cat )
     poi.SetCategory( App, cat );
 
+/*
   POIs[ poi.guid ] = poi;
   ExportPOIS();
 
@@ -1084,14 +1090,16 @@ POI* AddPOI( CWBApplication* App, int defaultCategory, bool testRange )
     if ( editor && !editor->IsHidden() )
       editor->SetEditedGUID( poi.guid );
   }
+*/
 
-  return &POIs[ poi.guid ];
+  return true;// &POIs[ poi.guid ];
 }
 
-void AddTrail( CWBApplication* App, const CString& fileName )
+bool CreateNewTrail( CWBApplication* App, const CString& fileName, GW2Trail*& poi )
 {
-  if ( !mumbleLink.IsValid() ) return;
-  GW2Trail* poi = new GW2Trail();
+  if ( !mumbleLink.IsValid() ) 
+    return false;
+  poi = new GW2Trail();
 
   CoCreateGuid( &poi->guid );
   auto cat = GetCategory( Config::GetString( "defaultcategory4" ) );
@@ -1102,11 +1110,16 @@ void AddTrail( CWBApplication* App, const CString& fileName )
 
   poi->typeData.trailData = AddStringToMap( fileName );
   poi->typeData.saveBits.trailDataSaved = true;
-
-  POIs[ poi->guid ] = poi;
-
+  poi->typeData.fadeNear = 5000;
+  poi->typeData.fadeFar = 5100;
   poi->Reload();
 
+/*
+  POIs[ poi->guid ] = poi;
+
+*/
+
+/*
   ExportPOIS();
 
   if ( Config::IsWindowOpen( "MarkerEditor" ) )
@@ -1115,6 +1128,9 @@ void AddTrail( CWBApplication* App, const CString& fileName )
     if ( editor && !editor->IsHidden() )
       editor->SetEditedGUID( poi->guid );
   }
+*/
+
+  return true;
 }
 
 void DeletePOI()
@@ -1158,8 +1174,11 @@ void DeletePOI( const GUID& guid )
   auto& POIs = GetMapPOIs();
   if ( POIs.HasKey( guid ) )
   {
+    MarkerDOM::DeleteMarkerTrail( guid );
+/*
     POIs.Delete( guid );
     ExportPOIS();
+*/
   }
 
   if ( Config::IsWindowOpen( "MarkerEditor" ) )
@@ -1176,8 +1195,11 @@ void DeleteTrail( const GUID& guid )
   auto& POIs = GetMapTrails();
   if ( POIs.HasKey( guid ) )
   {
+    MarkerDOM::DeleteMarkerTrail( guid );
+/*
     POIs.Delete( guid );
     ExportPOIS();
+*/
   }
 
   if ( Config::IsWindowOpen( "MarkerEditor" ) )

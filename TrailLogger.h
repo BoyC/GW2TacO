@@ -122,3 +122,4 @@ public:
 
 extern std::unordered_map<int, CDictionaryEnumerable<GUID, GW2Trail*>> trailSet;
 CDictionaryEnumerable<GUID, GW2Trail*>& GetMapTrails();
+CDictionaryEnumerable<GUID, GW2Trail*>& GetTrails( int mapID );

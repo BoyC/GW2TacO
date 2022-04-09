@@ -37,6 +37,8 @@ enum class TacOKeyAction : TS32
   DeleteSelectedMarker,
   DeleteSelectedTrailSegment,
   CopySelectedMarker,
+  UndoEdit,
+  RedoEdit
 
   //if you add one here, add it to the ActionNames array in the .cpp as well!
 };

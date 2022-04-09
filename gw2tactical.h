@@ -78,8 +78,8 @@ struct MarkerTypeData
 
   TF32 size = 1.0;
   TF32 alpha = 1.0f;
-  TF32 fadeNear = 5000;
-  TF32 fadeFar = 5100;
+  TF32 fadeNear = -1;
+  TF32 fadeFar = -1;
   TF32 height = 1.5f;
   TF32 triggerRange = 2.0f;
   TF32 animSpeed = 1;
@@ -190,6 +190,7 @@ extern GW2TacticalCategory CategoryRoot;
 extern CDictionaryEnumerable<CString, GW2TacticalCategory*> CategoryMap;
 
 CDictionaryEnumerable<GUID, POI>& GetMapPOIs();
+CDictionaryEnumerable<GUID, POI>& GetPOIs( int mapId );
 
 class GW2TacticalDisplay : public CWBItem
 {
@@ -274,8 +275,8 @@ public:
   }
 };
 
-POI* AddPOI( CWBApplication* App, int defaultCat, bool testRange = true );
-void AddTrail( CWBApplication* App, const CString& fileName );
+bool CreateNewPOI( CWBApplication* App, POI& poi, int defaultCategory, bool testRange = true );
+bool CreateNewTrail( CWBApplication* App, const CString& fileName, class GW2Trail*& poi );
 void DeletePOI();
 void DeletePOI( const GUID& guid );
 void UpdatePOI( CWBApplication* App );

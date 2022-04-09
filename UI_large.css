@@ -282,8 +282,6 @@ markereditor
 {
 	child-layout: vertical;
 	child-fill-x: true;
-	//child-fill-y: true;
-//	child-spacing: 1px;
 }
 
 #markereditorbox *
@@ -312,9 +310,7 @@ markereditor
     height:20px;
 	child-layout: horizontal;
 	child-fill-x: true;
-	//child-fill-y: true;
     child-align-y:center;
-    horizontal-align:center;
 	child-spacing: 3px;
 }
 

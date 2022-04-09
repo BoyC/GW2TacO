@@ -8,6 +8,549 @@
 
 extern CWBApplication* App;
 
+//////////////////////////////////////////////////////////////////////////
+// Marker DOM
+
+POI* FindMarkerByGUID( const GUID& guid )
+{
+  for ( auto& map : POISet )
+  {
+    if ( map.second.HasKey( guid ) )
+      return &map.second[ guid ];
+  }
+  return nullptr;
+}
+
+GW2Trail* FindTrailByGUID( const GUID& guid )
+{
+  for ( auto& map : trailSet )
+  {
+    if ( map.second.HasKey( guid ) )
+      return map.second[ guid ];
+  }
+  return nullptr;
+}
+
+void RemoveMarkerByGUID( const GUID& guid )
+{
+  for ( auto& map : POISet )
+  {
+/*
+    if ( map.second.HasKey( guid ) )
+      LOG_NFO( "Remove marker: marker guid found on map %d: %s", map.first, CString::EncodeToBase64( (TU8*)&( guid ), sizeof( GUID ) ).GetPointer() );
+*/
+
+    map.second.Delete( guid );
+  }
+}
+
+void RemoveTrailByGUID( const GUID& guid )
+{
+  for ( auto& map : trailSet )
+    map.second.Delete( guid );
+}
+
+int MarkerDOM::bufferIndex = 0;
+CArray<MarkerActionData> MarkerDOM::actionBuffer;
+CArray<MarkerActionData> MarkerDOM::undoBuffer;
+
+MarkerActionData::MarkerActionData( MarkerAction action, const GUID& guid, const int intData, const CVector3& pos, const int stringData )
+  : action( action )
+  , guid( guid )
+  , position( pos )
+  , intData( intData )
+  , stringID( stringData )
+{}
+
+MarkerActionData::MarkerActionData( MarkerAction action, const POI& fullMarker )
+  : action( action )
+  , fullMarker( fullMarker )
+{}
+
+MarkerActionData::MarkerActionData( MarkerAction action, GW2Trail* fullTrail )
+  : action( action )
+  , fullTrail( fullTrail )
+{}
+
+MarkerActionData::MarkerActionData( MarkerAction action, const GUID& guid, const MarkerTypeData& data, int stringData )
+  : action( action )
+  , guid( guid )
+  , typeData( data )
+  , stringID( stringData )
+{}
+
+MarkerActionData::MarkerActionData( MarkerAction action, const GUID& guid, const int intData, const int stringData )
+  : action( action )
+  , guid( guid )
+  , intData( intData )
+  , stringID( stringData )
+{
+
+}
+
+void MarkerActionData::Do()
+{
+  switch ( action )
+  {
+  case MarkerAction::AddMarkerFull:
+  {
+    //LOG_NFO( "Action: add marker full to map %d: %s", fullMarker.mapID, CString::EncodeToBase64( (TU8*)&( fullMarker.guid ), sizeof( GUID ) ).GetPointer() );
+    auto& POIs = GetPOIs( fullMarker.mapID );
+    POIs[ fullMarker.guid ] = fullMarker;
+    ExportPOIS();
+
+    if ( Config::IsWindowOpen( "MarkerEditor" ) )
+    {
+      auto editor = App->GetRoot()->FindChildByID<GW2MarkerEditor>( "MarkerEditor" );
+      if ( editor && !editor->IsHidden() )
+        editor->SetEditedGUID( guid );
+    }
+    break;
+  }
+  case MarkerAction::MoveMarker:
+  {
+    auto marker = FindMarkerByGUID( guid );
+    if ( marker )
+      marker->position = position;
+    break;
+  }
+/*
+  case MarkerAction::AddTrail:
+  {
+    GW2Trail* poi = new GW2Trail();
+
+    poi->guid = guid;
+
+    auto cat = GetCategory( GetStringFromMap( intData ) );
+
+    if ( cat )
+      poi->SetCategory( App, cat );
+
+    auto& POIs = GetMapTrails();
+
+    poi->typeData.trailData = stringID;
+    poi->typeData.saveBits.trailDataSaved = true;
+
+    POIs[ poi->guid ] = poi;
+
+    poi->Reload();
+
+    ExportPOIS();
+
+    if ( Config::IsWindowOpen( "MarkerEditor" ) )
+    {
+      auto editor = App->GetRoot()->FindChildByID<GW2MarkerEditor>( "MarkerEditor" );
+      if ( editor && !editor->IsHidden() )
+        editor->SetEditedGUID( poi->guid );
+    }
+
+    break;
+  }
+*/
+  case MarkerAction::AddTrailFull:
+  {
+    if ( !fullTrail )
+      break;
+    auto& POIs = GetTrails( fullTrail->map );
+    POIs[ fullTrail->guid ] = fullTrail;
+    ExportPOIS();
+
+    if ( Config::IsWindowOpen( "MarkerEditor" ) )
+    {
+      auto editor = App->GetRoot()->FindChildByID<GW2MarkerEditor>( "MarkerEditor" );
+      if ( editor && !editor->IsHidden() )
+        editor->SetEditedGUID( fullTrail->guid );
+    }
+    break;
+  }
+  case MarkerAction::MoveTrailVertex:
+  {
+    auto trail = FindTrailByGUID( guid );
+    if ( !trail )
+      break;
+    trail->SetVertex( intData, position );
+
+    if ( Config::IsWindowOpen( "MarkerEditor" ) )
+    {
+      auto editor = App->GetRoot()->FindChildByID<GW2MarkerEditor>( "MarkerEditor" );
+      if ( editor && !editor->IsHidden() )
+      {
+        editor->SetEditedGUID( guid );
+        editor->SetSelectedVertexIndex( intData );
+      }
+    }
+
+    break;
+  }
+  case MarkerAction::AddTrailVertex:
+  {
+    auto trail = FindTrailByGUID( guid );
+    if ( !trail )
+      break;
+    trail->AddVertex( intData, position );
+
+    //selectedVertexIndex
+    if ( Config::IsWindowOpen( "MarkerEditor" ) )
+    {
+      auto editor = App->GetRoot()->FindChildByID<GW2MarkerEditor>( "MarkerEditor" );
+      if ( editor && !editor->IsHidden() )
+      {
+        editor->SetEditedGUID( guid );
+        editor->SetSelectedVertexIndex( intData );
+      }
+    }
+    break;
+  }
+  case MarkerAction::DeleteTrailVertex:
+  {
+    auto trail = FindTrailByGUID( guid );
+    if ( !trail )
+      break;
+    trail->DeleteVertex( intData );
+    break;
+  }
+  case MarkerAction::DeleteMarkerTrail:
+  {
+    //LOG_NFO( "Action: delete marker/trail %s", CString::EncodeToBase64( (TU8*)&( guid ), sizeof( GUID ) ).GetPointer() );
+    RemoveMarkerByGUID( guid );
+    RemoveTrailByGUID( guid );
+    break;
+  }
+  case MarkerAction::SetMarkerTrailCategory:
+  {
+    auto marker = FindMarkerByGUID( guid );
+    auto trail = FindTrailByGUID( guid );
+
+    if ( marker )
+      marker->SetCategory( App, GetCategory( GetStringFromMap( intData ) ) );
+
+    if ( trail )
+      trail->SetCategory( App, GetCategory( GetStringFromMap( intData ) ) );
+
+    ExportPOIS();
+
+    break;
+  }
+  case MarkerAction::ChangeMarkerTrailAttrib:
+  {
+    //LOG_NFO( "Change markerr trail attrib" );
+
+    auto marker = FindMarkerByGUID( guid );
+    auto trail = FindTrailByGUID( guid );
+
+    MarkerTypeData backup;
+    GW2TacticalCategory* cat = nullptr;
+
+    if ( marker )
+    {
+      backup = marker->typeData;
+      marker->typeData = typeData;
+      cat = marker->category;
+    }
+
+    if ( trail )
+    {
+      backup = trail->typeData;
+      trail->typeData = typeData;
+      cat = trail->category;
+    }
+
+    if ( marker || trail )
+    {
+      for ( int x = 0; x < (int)TypeParameters::MAX; x++ )
+      {
+
+        CString stringA, stringB;
+        int intA{}, intB{};
+        bool boolA{}, boolB{};
+        float floatA{}, floatB{};
+
+        bool savedA = IsTypeParameterSaved( backup, (TypeParameters)x );
+        bool savedB = IsTypeParameterSaved( typeData, (TypeParameters)x );
+
+        GetTypeParameter( backup, (TypeParameters)x, floatA, intA, stringA, boolA );
+        GetTypeParameter( typeData, (TypeParameters)x, floatB, intB, stringB, boolB );
+
+        bool saveChanged = savedA != savedB;
+        bool changed = ( floatA != floatB ) || ( intA != intB ) || ( stringA != stringB ) || ( boolA != boolB );
+
+        if ( saveChanged || changed )
+        {
+          //LOG_NFO( "Attrib %d changed", x );
+
+          if ( saveChanged )
+          {
+            //LOG_NFO( "Attrib %d save changed", x );
+
+            SetTypeParameterSaved( marker ? marker->typeData : trail->typeData, (TypeParameters)x, savedB );
+            if ( !savedB && cat ) // reset to default
+            {
+              CString stringValue;
+              int intValue{};
+              bool boolValue{};
+              float floatValue{};
+              GetTypeParameter( cat->data, (TypeParameters)x, floatValue, intValue, stringValue, boolValue );
+              SetTypeParameter( marker ? marker->typeData : trail->typeData, (TypeParameters)x, floatValue, intValue, stringValue, boolValue );
+            }
+          }
+
+          if ( changed )
+          {
+            //LOG_NFO( "Attrib %d value changed", x );
+            SetTypeParameter( marker ? marker->typeData : trail->typeData, (TypeParameters)x, floatB, intB, stringB, boolB );
+          }
+
+          if ( Config::IsWindowOpen( "MarkerEditor" ) )
+          {
+            auto editor = App->GetRoot()->FindChildByID<GW2MarkerEditor>( "MarkerEditor" );
+            if ( editor && !editor->IsHidden() )
+              editor->UpdateEditorContent();
+          }
+        }
+      }
+    }
+
+    ExportPOIS();
+
+    break;
+  }
+  case MarkerAction::ChangeCategoryAttrib:
+  {
+    auto cat = GetCategory( GetStringFromMap( stringID ) );
+    if ( cat )
+    {
+      //cat->data = typeData;
+      for ( int x = 0; x < (int)TypeParameters::MAX; x++ )
+      {
+        CString stringA, stringB;
+        int intA{}, intB{};
+        bool boolA{}, boolB{};
+        float floatA{}, floatB{};
+
+        bool savedA = IsTypeParameterSaved( cat->data, (TypeParameters)x );
+        bool savedB = IsTypeParameterSaved( typeData, (TypeParameters)x );
+
+        GetTypeParameter( cat->data, (TypeParameters)x, floatA, intA, stringA, boolA );
+        GetTypeParameter( typeData, (TypeParameters)x, floatB, intB, stringB, boolB );
+
+        bool saveChanged = savedA != savedB;
+        bool changed = ( floatA != floatB ) || ( intA != intB ) || ( stringA != stringB ) || ( boolA != boolB );
+
+        if ( saveChanged || changed )
+        {
+          SetTypeParameterSaved( cat->data, (TypeParameters)x, false );
+          PropagateCategoryParameter( cat, (TypeParameters)x, boolB, intB, floatB, stringB );
+          SetTypeParameterSaved( cat->data, (TypeParameters)x, savedB );
+
+          if ( Config::IsWindowOpen( "MarkerEditor" ) )
+          {
+            auto editor = App->GetRoot()->FindChildByID<GW2MarkerEditor>( "MarkerEditor" );
+            if ( editor && !editor->IsHidden() )
+              editor->UpdateEditorContent();
+          }
+        }
+      }
+
+    }
+    break;
+  }
+/*
+  case MarkerAction::AddCategory:
+    break;
+  case MarkerAction::DeleteCategory:
+    break;
+*/
+  }
+}
+
+void MarkerDOM::CropBuffers()
+{
+  int count = actionBuffer.NumItems();
+
+  for ( int x = bufferIndex; x < count; x++ )
+  {
+    actionBuffer.DeleteByIndex( actionBuffer.NumItems() - 1 );
+    undoBuffer.DeleteByIndex( undoBuffer.NumItems() - 1 );
+  }
+}
+
+void MarkerDOM::AddMarkerFull( const POI& poi )
+{
+  //LOG_NFO( "Adding marker" );
+
+  CropBuffers();
+
+  MarkerActionData addAction( MarkerAction::AddMarkerFull, poi );
+  MarkerActionData deleteAction( MarkerAction::DeleteMarkerTrail, poi.guid );
+  actionBuffer += addAction;
+  undoBuffer += deleteAction;
+
+  Redo();
+}
+
+void MarkerDOM::DeleteMarkerTrail( const GUID& guid )
+{
+  MarkerActionData deleteAction( MarkerAction::DeleteMarkerTrail, guid );
+
+  auto* marker = FindMarkerByGUID( guid );
+  if ( marker )
+  {
+    CropBuffers();
+
+    actionBuffer += deleteAction;
+    undoBuffer += MarkerActionData( MarkerAction::AddMarkerFull, *marker );
+    Redo();
+    return;
+  }
+
+  auto* trail = FindTrailByGUID( guid );
+  if ( !trail )
+    return;
+
+  CropBuffers();
+
+  actionBuffer += deleteAction;
+  undoBuffer += MarkerActionData( MarkerAction::AddTrailFull, trail );
+  Redo();
+}
+
+void MarkerDOM::MoveMarker( const GUID& guid, const CVector3& pos )
+{
+  auto* marker = FindMarkerByGUID( guid );
+  if ( !marker )
+    return;
+
+  CropBuffers();
+
+  actionBuffer += MarkerActionData( MarkerAction::MoveMarker, guid, 0, pos );
+  undoBuffer += MarkerActionData( MarkerAction::MoveMarker, guid, 0, marker->position );
+  Redo();
+}
+
+void MarkerDOM::AddTrailFull( GW2Trail* trail )
+{
+  CropBuffers();
+
+  MarkerActionData addAction( MarkerAction::AddTrailFull, trail );
+  MarkerActionData deleteAction( MarkerAction::DeleteMarkerTrail, trail->guid );
+  actionBuffer += addAction;
+  undoBuffer += deleteAction;
+
+  Redo();
+}
+
+void MarkerDOM::MoveTrailVertex( const GUID& guid, int vertexID, const CVector3& pos )
+{
+  auto* trail = FindTrailByGUID( guid );
+  if ( !trail )
+    return;
+
+  CropBuffers();
+
+  actionBuffer += MarkerActionData( MarkerAction::MoveTrailVertex, guid, vertexID, pos );
+  undoBuffer += MarkerActionData( MarkerAction::MoveTrailVertex, guid, vertexID, trail->GetVertex( vertexID ) );
+  Redo();
+}
+
+void MarkerDOM::AddTrailVertex( const GUID& guid, int vertexID, const CVector3& pos )
+{
+  auto* trail = FindTrailByGUID( guid );
+  if ( !trail )
+    return;
+
+  CropBuffers();
+
+  actionBuffer += MarkerActionData( MarkerAction::AddTrailVertex, guid, vertexID, pos );
+  undoBuffer += MarkerActionData( MarkerAction::DeleteTrailVertex, guid, vertexID );
+  Redo();
+}
+
+void MarkerDOM::DeleteTrailVertex( const GUID& guid, int vertexID )
+{
+  auto* trail = FindTrailByGUID( guid );
+  if ( !trail )
+    return;
+
+  CropBuffers();
+
+  actionBuffer += MarkerActionData( MarkerAction::DeleteTrailVertex, guid, vertexID );
+  undoBuffer += MarkerActionData( MarkerAction::AddTrailVertex, guid, vertexID, trail->GetVertex( vertexID ) );
+  Redo();
+}
+
+void MarkerDOM::SetMarkerTrailCategory( const GUID& guid, const CString& category )
+{
+  auto* marker = FindMarkerByGUID( guid );
+  auto* trail = FindTrailByGUID( guid );
+  if ( !marker && !trail )
+    return;
+
+  CropBuffers();
+
+  actionBuffer += MarkerActionData( MarkerAction::SetMarkerTrailCategory, guid, AddStringToMap( category ) );
+
+  if ( marker )
+    undoBuffer += MarkerActionData( MarkerAction::SetMarkerTrailCategory, guid, AddStringToMap( marker->category ? marker->category->GetFullTypeName() : "" ) );
+
+  if ( trail )
+    undoBuffer += MarkerActionData( MarkerAction::SetMarkerTrailCategory, guid, AddStringToMap( trail->category ? trail->category->GetFullTypeName() : "" ) );
+  Redo();
+}
+
+void MarkerDOM::ChangeMarkerTrailAttrib( const GUID& guid, const MarkerTypeData& typeData )
+{
+  //LOG_NFO( "ChangeMarkerTrailAttrib" );
+
+  auto* marker = FindMarkerByGUID( guid );
+  auto* trail = FindTrailByGUID( guid );
+  if ( !marker && !trail )
+    return;
+
+  CropBuffers();
+
+  actionBuffer += MarkerActionData( MarkerAction::ChangeMarkerTrailAttrib, guid, typeData );
+  undoBuffer += MarkerActionData( MarkerAction::ChangeMarkerTrailAttrib, guid, marker ? marker->typeData : trail->typeData );
+  Redo();
+}
+
+void MarkerDOM::ChangeCategoryAttrib( const CString& category, const MarkerTypeData& typeData )
+{
+  auto* cat = GetCategory( category );
+  if ( !cat )
+    return;
+
+  CropBuffers();
+
+  actionBuffer += MarkerActionData( MarkerAction::ChangeCategoryAttrib, GUID{}, typeData, AddStringToMap( category ) );
+  undoBuffer += MarkerActionData( MarkerAction::ChangeCategoryAttrib, GUID{}, cat->data, AddStringToMap( category ) );
+  Redo();
+}
+
+void MarkerDOM::Undo()
+{
+  if ( bufferIndex > 0 )
+  {
+    bufferIndex--;
+    undoBuffer[ bufferIndex ].Do();
+  }
+}
+
+void MarkerDOM::Redo()
+{
+  if ( bufferIndex < actionBuffer.NumItems() )
+  {
+    actionBuffer[ bufferIndex ].Do();
+    bufferIndex++;
+  }
+}
+
+void MarkerDOM::ResetUndoBuffer()
+{
+  bufferIndex = 0;
+  actionBuffer.FlushFast();
+  undoBuffer.FlushFast();
+}
+
 enum TypeParameterTypes
 {
   Boolean,
@@ -554,110 +1097,6 @@ void DrawRangeDisplay( CWBDrawAPI* API, const CRect& drawrect, CMatrix4x4& cam, 
 */
 }
 
-//////////////////////////////////////////////////////////////////////////
-// Marker DOM
-
-POI* FindMarkerByGUID( const GUID& guid )
-{
-  for ( auto& map : POISet )
-  {
-    if ( map.second.HasKey( guid ) )
-      return &map.second[ guid ];
-  }
-  return nullptr;
-}
-
-GW2Trail* FindTrailByGUID( const GUID& guid )
-{
-  for ( auto& map : trailSet )
-  {
-    if ( map.second.HasKey( guid ) )
-      return map.second[ guid ];
-  }
-  return nullptr;
-}
-
-int MarkerDOM::bufferIndex = 0;
-CArray<MarkerActionData> MarkerDOM::actionBuffer;
-CArray<MarkerActionData> MarkerDOM::undoBuffer;
-
-MarkerActionData::MarkerActionData( MarkerAction action, const GUID& guid, const CVector3& pos /*= CVector3()*/, const int intData /*= 0 */ )
-  : action( action )
-  , guid( guid )
-  , position( pos )
-  , intData( intData )
-{}
-
-
-MarkerActionData::MarkerActionData( MarkerAction action, const int stringId, const MarkerTypeData& typeData )
-  : action( action )
-  , intData( stringId )
-  , typeData( typeData )
-{}
-
-MarkerActionData::MarkerActionData( MarkerAction action, const GUID& guid, const MarkerTypeData& typeData, const CVector3& pos /*= CVector3()*/, const CVector3& rot /*= CVector3()*/, int intData /*= 0*/, int stringId /*= -1 */ )
-  : action( action )
-  , guid( guid )
-  , typeData( typeData )
-  , position( pos )
-  , rotation( rot )
-  , intData( intData )
-  , stringID( stringId )
-{}
-
-void MarkerActionData::Do()
-{}
-
-void MarkerDOM::AddMarker( const GUID& guid, const CVector3& pos, const int mapID )
-{
-  actionBuffer += MarkerActionData( MarkerAction::AddMarker, guid, pos, mapID );
-  undoBuffer += MarkerActionData( MarkerAction::DeleteMarker, guid );
-  Redo();
-}
-
-void MarkerDOM::DeleteMarker( const GUID& guid )
-{
-  auto* marker = FindMarkerByGUID( guid );
-  if ( !marker )
-    return;
-
-  actionBuffer += MarkerActionData( MarkerAction::DeleteMarker, guid );
-  undoBuffer += MarkerActionData( MarkerAction::AddMarker, guid, marker->typeData, marker->position, marker->rotation, marker->mapID, marker->Type );
-  Redo();
-}
-
-void MarkerDOM::SetMarketPosition( const GUID& guid, const CVector3& pos )
-{
-  auto* marker = FindMarkerByGUID( guid );
-  if ( !marker )
-    return;
-
-  actionBuffer += MarkerActionData( MarkerAction::MoveMarker, guid, pos );
-  undoBuffer += MarkerActionData( MarkerAction::MoveMarker, guid, marker->position );
-  Redo();
-}
-
-void MarkerDOM::SetTrailVertexPosition( const GUID& guid, int vertex, const CVector3& pos )
-{}
-
-void MarkerDOM::Undo()
-{
-  if ( bufferIndex > 0 )
-  {
-    bufferIndex--;
-    undoBuffer[ bufferIndex ].Do();
-  }
-}
-
-void MarkerDOM::Redo()
-{
-  if ( bufferIndex < actionBuffer.NumItems() )
-  {
-    actionBuffer[ bufferIndex ].Do();
-    bufferIndex++;
-  }
-}
-
 TBOOL GW2MarkerEditor::HandleUberToolMessages( CWBMessage& message )
 {
   switch ( message.GetMessage() )
@@ -753,8 +1192,10 @@ TBOOL GW2MarkerEditor::HandleUberToolMessages( CWBMessage& message )
           if ( !trail )
             break;
 
-          trail->AddVertex( indexPlusOne ? currIdx : currIdx + 1, currHitPoint );
-          selectedVertexIndex = indexPlusOne ? currIdx : currIdx + 1;
+          MarkerDOM::AddTrailVertex( editedMarker, indexPlusOne ? currIdx : currIdx + 1, currHitPoint );
+
+          //trail->AddVertex( indexPlusOne ? currIdx : currIdx + 1, currHitPoint );
+          //selectedVertexIndex = indexPlusOne ? currIdx : currIdx + 1;
           originalPosition = currHitPoint;
 
           return true;
@@ -776,6 +1217,25 @@ TBOOL GW2MarkerEditor::HandleUberToolMessages( CWBMessage& message )
   case WBM_LEFTBUTTONUP:
     if ( draggedElement != UberToolElement::none )
     {
+      auto marker = FindMarkerByGUID( editedMarker );
+      auto trail = FindTrailByGUID( editedMarker );
+
+      if ( marker )
+      {
+        CVector3 pos = marker->position;
+        marker->position = originalPosition;
+        if ( pos != originalPosition )
+          MarkerDOM::MoveMarker( editedMarker, pos );
+      }
+
+      if ( trail )
+      {
+        CVector3 pos = trail->GetVertex( selectedVertexIndex );
+        trail->SetVertex( selectedVertexIndex, originalPosition );
+        if ( pos != originalPosition )
+          MarkerDOM::MoveTrailVertex( editedMarker, selectedVertexIndex, pos );
+      }
+
       draggedElement = UberToolElement::none;
       ExportPOIS();
       return true;
@@ -1598,6 +2058,14 @@ void GW2MarkerEditor::SetEditedGUID( const GUID& guid )
   UpdateEditorFromCategory( marker ? marker->typeData : trail->typeData );
 }
 
+void GW2MarkerEditor::SetSelectedVertexIndex( int idx )
+{
+  selectedVertexIndex = idx;
+  auto trail = FindTrailByGUID( editedMarker );
+  if ( trail )
+    originalPosition = trail->GetVertex( idx );
+}
+
 void GW2MarkerEditor::SetEditedCategory( const CString& category )
 {
   editedMarker = GUID{};
@@ -1645,7 +2113,8 @@ void GW2MarkerEditor::DeleteSelectedTrailSegment()
   if ( !trail )
     return;
 
-  trail->DeleteVertex( selectedVertexIndex );
+  MarkerDOM::DeleteTrailVertex( editedMarker, selectedVertexIndex );
+  //trail->DeleteVertex( selectedVertexIndex );
 }
 
 void GW2MarkerEditor::CopySelectedMarker()
@@ -1654,16 +2123,19 @@ void GW2MarkerEditor::CopySelectedMarker()
   if ( !marker )
     return;
 
-  auto newPoi = AddPOI( App, 0, false );
-  if ( !newPoi )
+  POI poi;
+
+  if ( !CreateNewPOI( App, poi, 0, false ) )
     return;
 
-  newPoi->SetCategory( App, marker->category );
-  newPoi->position = marker->position + CVector3( 0, 1, 0 );
-  newPoi->mapID = marker->mapID;
-  newPoi->rotation = marker->rotation;
-  newPoi->Type = marker->Type;
-  newPoi->typeData = marker->typeData;
+  poi.SetCategory( App, marker->category );
+  poi.position = marker->position + CVector3( 0, 1, 0 );
+  poi.mapID = marker->mapID;
+  poi.rotation = marker->rotation;
+  poi.Type = marker->Type;
+  poi.typeData = marker->typeData;
+
+  MarkerDOM::AddMarkerFull( poi );
 }
 
 GUID GW2MarkerEditor::GetEditedGUID()
@@ -1740,6 +2212,8 @@ void GW2MarkerEditor::UpdateTypeParameterValue( TypeParameters param )
   MarkerTypeData* data = GetEditedTypeParameters();
   if ( !data )
     return;
+
+  MarkerTypeData backup = *data;
 
   bool originalBoolValue{};
   int originalIntValue{};
@@ -1847,6 +2321,7 @@ void GW2MarkerEditor::UpdateTypeParameterValue( TypeParameters param )
   }
   }
 
+/*
   if ( editedCategory.Length() && changed )
   {
     auto cat = GetCategory( editedCategory );
@@ -1864,6 +2339,7 @@ void GW2MarkerEditor::UpdateTypeParameterValue( TypeParameters param )
       PropagateCategoryParameter( cat, param, boolValue, intValue, floatValue, stringvalue );
     }
   }
+*/
 
   if ( editedMarker != GUID{} )
   {
@@ -1873,7 +2349,17 @@ void GW2MarkerEditor::UpdateTypeParameterValue( TypeParameters param )
   }
 
   if ( changed )
+  {
     SetTypeParameterSaved( *data, param, true );
+
+    MarkerTypeData newData = *data;
+    UpdateEditedTypeParameters( backup );
+
+    if ( editedMarker != GUID{} )
+      MarkerDOM::ChangeMarkerTrailAttrib( editedMarker, newData );
+    if ( editedCategory.Length() )
+      MarkerDOM::ChangeCategoryAttrib( editedCategory, newData );
+  }
 }
 
 void GW2MarkerEditor::ToggleTypeParameterSaved( TypeParameters param )
@@ -1883,8 +2369,20 @@ void GW2MarkerEditor::ToggleTypeParameterSaved( TypeParameters param )
     return;
 
   bool saved = !IsTypeParameterSaved( *data, param );
-  SetTypeParameterSaved( *data, param, saved );
 
+  auto changed = *data;
+
+  SetTypeParameterSaved( changed, param, saved );
+
+  //LOG_NFO( "Toggle type parameter saved" );
+
+  if ( editedMarker != GUID{} )
+    MarkerDOM::ChangeMarkerTrailAttrib( editedMarker, changed );
+  if ( editedCategory.Length() )
+    MarkerDOM::ChangeCategoryAttrib( editedCategory, changed );
+
+
+/*
   if ( saved )
     return; // we just stored the previous value, no change needed
 
@@ -1935,6 +2433,7 @@ void GW2MarkerEditor::ToggleTypeParameterSaved( TypeParameters param )
       SetTypeParameter( *data, param, floatValue, intValue, stringvalue, boolValue );
     }
   }
+*/
 }
 
 bool GW2MarkerEditor::GetTypeParameterSaved( TypeParameters param )
@@ -1971,6 +2470,33 @@ MarkerTypeData* GW2MarkerEditor::GetEditedTypeParameters()
     return &category->data;
 
   return nullptr;
+}
+
+void GW2MarkerEditor::UpdateEditedTypeParameters( const MarkerTypeData& data )
+{
+  if ( editedCategory == "" && editedMarker == GUID{} )
+    return;
+
+  auto marker = FindMarkerByGUID( editedMarker );
+  if ( marker )
+  {
+    marker->typeData = data;
+    return;
+  }
+
+  auto trail = FindTrailByGUID( editedMarker );
+  if ( trail )
+  {
+    trail->typeData = data;
+    return;
+  }
+
+  auto category = GetCategory( editedCategory );
+  if ( category )
+  {
+    category->data = data;
+    return;
+  }
 }
 
 void GW2MarkerEditor::HideEditorUI( bool fade )
@@ -2254,7 +2780,10 @@ TBOOL GW2MarkerEditor::MessageProc( CWBMessage& message )
     {
       auto trail = FindTrailByGUID( editedMarker );
       if ( trail )
-        trail->DeleteVertex( selectedVertexIndex );
+      {
+        MarkerDOM::DeleteTrailVertex( editedMarker, selectedVertexIndex );
+        //trail->DeleteVertex( selectedVertexIndex );
+      }
       else
         trails->DeleteLastTrailSegment();
     }
@@ -2312,12 +2841,18 @@ TBOOL GW2MarkerEditor::MessageProc( CWBMessage& message )
 
     if ( b->GetID() == _T( "newtrail" ) )
     {
-      AddTrail( App, "" );
+      GW2Trail* trail = nullptr;
+      if ( CreateNewTrail( App, "", trail ) )
+        MarkerDOM::AddTrailFull( trail );
     }
   }
   break;
 
   case WBM_CONTEXTMESSAGE:
+
+    if ( message.GetTargetID() == "behavior" )
+      break;
+
     if ( message.Data >= 0 && message.Data < categoryList.NumItems() )
     {
       if ( changeDefault )

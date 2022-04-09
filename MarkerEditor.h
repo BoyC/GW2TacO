@@ -1,16 +1,27 @@
 #pragma once
 #include "Bedrock/WhiteBoard/WhiteBoard.h"
 #include "gw2tactical.h"
+#include "TrailLogger.h"
 
 enum class MarkerAction
 {
-  AddMarker,
-  DeleteMarker,
+  AddMarkerFull, // done
+  MoveMarker, // done
+
+  AddTrailFull, // done
+  MoveTrailVertex, // done
+  AddTrailVertex, // done
+  DeleteTrailVertex, // done
+
+  DeleteMarkerTrail, // done
+  SetMarkerTrailCategory,
+  ChangeMarkerTrailAttrib,
+
+  ChangeCategoryAttrib,
+
+  // todo
   AddCategory,
   DeleteCategory,
-  SetMarkerCategory,
-  UpdateCategory,
-  MoveMarker,
 };
 
 enum class TypeParameters
@@ -65,12 +76,17 @@ class MarkerActionData
   CVector3 rotation{}; // rotation
   TS32 stringID = -1;
 
+  POI fullMarker;
+  GW2Trail* fullTrail = nullptr;
+
 public:
 
   MarkerActionData() = default;
-  MarkerActionData( MarkerAction action, const GUID& guid, const CVector3& pos = CVector3(), const int intData = 0 );
-  MarkerActionData( MarkerAction action, const GUID& guid, const MarkerTypeData& typeData, const CVector3& pos = CVector3(), const CVector3& rot = CVector3(), int intData = 0, int stringId = -1 );
-  MarkerActionData( MarkerAction action, const int stringId, const MarkerTypeData& typeData );
+  MarkerActionData( MarkerAction action, const GUID& guid, const int intData = 0, const CVector3& pos = CVector3{}, const int stringData = 0 );
+  MarkerActionData( MarkerAction action, const GUID& guid, const int intData, const int stringData );
+  MarkerActionData( MarkerAction action, const POI& fullMarker );
+  MarkerActionData( MarkerAction action, GW2Trail* fullTrail );
+  MarkerActionData( MarkerAction action, const GUID& guid, const MarkerTypeData& data, int stringData = -1 );
 
   void Do();
 };
@@ -83,13 +99,23 @@ class MarkerDOM
 
 public:
 
-  static void AddMarker( const GUID& guid, const CVector3& pos, const int mapID );
-  static void DeleteMarker( const GUID& guid );
-  static void SetMarketPosition( const GUID& guid, const CVector3& pos );
-  static void SetTrailVertexPosition( const GUID& guid, int vertex, const CVector3& pos );
+  static void CropBuffers();
+
+  static void AddMarkerFull( const POI& poi );
+  static void DeleteMarkerTrail( const GUID& guid );
+  static void MoveMarker( const GUID& guid, const CVector3& pos );
+  static void AddTrailFull( GW2Trail* trail );
+  static void MoveTrailVertex( const GUID& guid, int vertexID, const CVector3& pos );
+  static void AddTrailVertex( const GUID& guid, int vertexID, const CVector3& pos );
+  static void DeleteTrailVertex( const GUID& guid, int vertexID );
+  static void SetMarkerTrailCategory( const GUID& guid, const CString& category );
+  static void ChangeMarkerTrailAttrib( const GUID& guid, const MarkerTypeData& typeData );
+  static void ChangeCategoryAttrib( const CString& category, const MarkerTypeData& typeData );
 
   static void Undo();
   static void Redo();
+
+  static void ResetUndoBuffer();
 };
 
 struct UberToolPart
@@ -170,7 +196,6 @@ class GW2MarkerEditor : public CWBItem
   void InitUberTool();
 
   void UpdateEditorFromCategory( const MarkerTypeData& data );
-  void UpdateEditorContent();
 
   void UpdateTypeParameterValue( TypeParameters param );
   void ToggleTypeParameterSaved( TypeParameters param );
@@ -178,6 +203,7 @@ class GW2MarkerEditor : public CWBItem
   void GetTypeParameterValue( TypeParameters param, bool& boolValue, int& intValue, float& floatValue, CString& stringValue );
 
   MarkerTypeData* GetEditedTypeParameters();
+  void UpdateEditedTypeParameters( const MarkerTypeData& data );
 
   void HideEditorUI( bool fade );
   void ShowMarkerUI( bool marker, bool trail );
@@ -200,6 +226,7 @@ public:
   bool ShouldPassMouseEvent();
 
   void SetEditedGUID( const GUID& guid );
+  void SetSelectedVertexIndex( int idx );
   void SetEditedCategory( const CString& category );
   void DeleteSelectedMarker();
   void DeleteSelectedTrailSegment();
@@ -207,4 +234,13 @@ public:
   GUID GetEditedGUID();
   int GetSelectedVertexIndex();
   CVector3 GetSelectedVertexPosition();
+  void UpdateEditorContent();
 };
+
+bool IsTypeParameterSaved( const MarkerTypeData& data, TypeParameters param );
+void GetTypeParameter( const MarkerTypeData& data, TypeParameters param, float& floatResult, int& intResult, CString& stringResult, bool& boolResult );
+void SetTypeParameter( MarkerTypeData& data, TypeParameters param, const float floatResult, const int intResult, const CString& stringResult, const bool boolResult );
+void SetTypeParameterSaved( MarkerTypeData& data, TypeParameters param, bool saved );
+void PropagateCategoryParameter( GW2TacticalCategory* category, TypeParameters param, const bool boolValue, const int intValue, const float floatValue, const CString& stringValue );
+
+

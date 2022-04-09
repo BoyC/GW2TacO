@@ -64,6 +64,8 @@ CString ActionNames[] =
   "*delete_selected_marker",
   "*delete_selected_segment",
   "*copy_selected_marker",
+  "*undo_edit",
+  "*redo_edit",
 };
 
 CString APIKeyNames[] =
@@ -1149,14 +1151,22 @@ TBOOL GW2TacO::MessageProc( CWBMessage& Message )
       switch ( KeyBindings[ actualKey ] )
       {
       case TacOKeyAction::AddPOI:
-        AddPOI( App, 0 );
+      {
+        POI poi;
+        if ( CreateNewPOI( App, poi, 0 ) )
+          MarkerDOM::AddMarkerFull( poi );
         return true;
+      }
       case TacOKeyAction::AddDefaultPOI_1:
       case TacOKeyAction::AddDefaultPOI_2:
       case TacOKeyAction::AddDefaultPOI_3:
       case TacOKeyAction::AddDefaultPOI_4:
-        AddPOI( App, (int)KeyBindings[ actualKey ] - (int)TacOKeyAction::AddDefaultPOI_1 + 1 );
+      {
+        POI poi;
+        if ( CreateNewPOI( App, poi, (int)KeyBindings[ actualKey ] - (int)TacOKeyAction::AddDefaultPOI_1 + 1 ) )
+          MarkerDOM::AddMarkerFull( poi );
         return true;
+      }
       case TacOKeyAction::DeleteSelectedMarker:
       {
         if ( Config::IsWindowOpen( "MarkerEditor" ) )
@@ -1282,6 +1292,12 @@ TBOOL GW2TacO::MessageProc( CWBMessage& Message )
         return true;
       case TacOKeyAction::Toggle_window_edit_mode:
         Config::ToggleValue( "EditMode" );
+        return true;
+      case TacOKeyAction::UndoEdit:
+        MarkerDOM::Undo();
+        return true;
+      case TacOKeyAction::RedoEdit:
+        MarkerDOM::Redo();
         return true;
 
       }

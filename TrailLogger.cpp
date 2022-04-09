@@ -3,6 +3,7 @@
 #include <commdlg.h>
 #include "GW2API.h"
 #include "shlwapi.h"
+#include "MarkerEditor.h"
 #pragma comment(lib,"Shlwapi.lib")
 
 #define TRAILFILEVERSION 0
@@ -16,6 +17,11 @@ std::unordered_map<int, CDictionaryEnumerable<GUID, GW2Trail*>> trailSet;
 CDictionaryEnumerable<GUID, GW2Trail*>& GetMapTrails()
 {
   return trailSet[ mumbleLink.mapID ];
+}
+
+CDictionaryEnumerable<GUID, GW2Trail*>& GetTrails( int mapID )
+{
+  return trailSet[ mapID ];
 }
 
 extern CWBApplication* App;
@@ -615,7 +621,11 @@ void GW2TrailDisplay::ExportTrail()
     PathRelativePathTo( path, dir, FILE_ATTRIBUTE_DIRECTORY, opf.lpstrFile, 0 );
     SetCurrentDirectory( dir );
 
-    AddTrail( App, CString( path ) );
+    GW2Trail* trail = nullptr;
+
+
+    if ( CreateNewTrail( App, CString( path ), trail ) )
+      MarkerDOM::AddTrailFull( trail );
   }
   else
   {

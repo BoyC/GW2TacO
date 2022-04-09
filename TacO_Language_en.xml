@@ -219,6 +219,8 @@
   <token key="selectcategorytoedit" value="Select Category to Edit"/>
   <token key="setmarkercategory" value="Change Category of Edited Marker/Trail"/>
   <token key="deletemarker" value="Delete Edited Marker/Trail"/>
+  <token key="*undo_edit" value="Undo last edit"/>
+  <token key="*redo_edit" value="Redo last edit"/>
 
   <token key="wurm_tunnel" value="Wurm Tunnel"/>
   <token key="airport" value="Airport"/>
