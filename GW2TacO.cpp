@@ -29,6 +29,7 @@
 #include <imm.h>
 #include "ThirdParty/BugSplat/inc/BugSplat.h"
 #include "MarkerPack.h"
+#include "MarkerEditor.h"
 
 #define MINIZ_HEADER_FILE_ONLY
 #include "Bedrock/UtilLib/miniz.c"
@@ -763,7 +764,13 @@ INT WINAPI WinMain( _In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 #endif
 
     LoadQueuedMarkerPacks();
+
+    int lastMumbleMap = mumbleLink.mapID;
+
     WaitForMumble( frameThrottling );
+
+    if ( lastMumbleMap != mumbleLink.mapID )
+      MarkerDOM::ResetUndoBuffer();
 
     if ( !App->DeviceOK() )
     {
