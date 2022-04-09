@@ -756,6 +756,8 @@ INT WINAPI WinMain( _In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
   
   InitInputHooks();
 
+  bool needsUIScaleSet = true;
+
   while ( App->HandleMessages() )
   {
 #ifdef _DEBUG
@@ -807,6 +809,11 @@ INT WINAPI WinMain( _In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
     foundGameWindow = true;
 
     HandleGW2WindowPositionChange( tacoWindowPos, tacoHWND );
+    if ( needsUIScaleSet && mumbleLink.IsValid() )
+    {
+      ChangeUIScale( mumbleLink.uiSize );
+      needsUIScaleSet = false;
+    }
 
     auto foregroundWindow = GetForegroundWindow();
 

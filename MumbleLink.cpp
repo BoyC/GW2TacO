@@ -5,8 +5,6 @@
 CMumbleLink mumbleLink;
 extern CWBApplication* App;
 
-void ChangeUIScale( int size );
-
 float GetUIScale()
 {
   float scale = 1.0;

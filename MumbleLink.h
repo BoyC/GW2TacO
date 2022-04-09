@@ -131,3 +131,4 @@ public:
 
 extern CMumbleLink mumbleLink;
 CRect GetMinimapRectangle();
+void ChangeUIScale( int size );
