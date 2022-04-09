@@ -456,15 +456,19 @@ void CWBContextItem::AddSeparator()
 void CWBContextItem::SetText( const CString& text )
 {
   Text = text;
+/*
   if ( CopyOf )
     CopyOf->SetText( text );
+*/
 }
 
 void CWBContextItem::SetHighlight( TBOOL highlighted )
 {
   Highlighted = highlighted;
+/*
   if ( CopyOf )
     CopyOf->SetHighlight( highlighted );
+*/
 }
 
 TBOOL CWBContextMenu::ApplyStyle( CString & prop, CString & value, CStringArray &pseudo )
