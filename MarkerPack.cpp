@@ -119,7 +119,7 @@ TBOOL FindSavedCategory( GW2TacticalCategory* t )
   if ( t->keepSaveState || t->needsExport )
     return true;
   for ( TS32 x = 0; x < t->children.NumItems(); x++ )
-    if ( FindSavedCategory( t->children[ x ] ) ) 
+    if ( FindSavedCategory( t->children[ x ] ) )
       return true;
   return false;
 }
@@ -389,10 +389,10 @@ void RecursiveImportPOIType( CXMLNode& root, GW2TacticalCategory* Root, CString 
 void ImportPOITypes()
 {
   CXMLDocument d;
-  if ( !d.LoadFromFile( "categorydata.xml" ) ) 
+  if ( !d.LoadFromFile( "categorydata.xml" ) )
     return;
 
-  if ( !d.GetDocumentNode().GetChildCount( "OverlayData" ) ) 
+  if ( !d.GetDocumentNode().GetChildCount( "OverlayData" ) )
     return;
   CXMLNode root = d.GetDocumentNode().GetChild( "OverlayData" );
 
@@ -474,7 +474,7 @@ TBOOL ImportTrail( CWBApplication* App, CXMLNode& t, GW2Trail& p, const CString&
 
 void ImportPOIDocument( CWBApplication* App, CXMLDocument& d, TBOOL External, const CString& zipFile )
 {
-  if ( !d.GetDocumentNode().GetChildCount( "OverlayData" ) ) 
+  if ( !d.GetDocumentNode().GetChildCount( "OverlayData" ) )
     return;
   CXMLNode root = d.GetDocumentNode().GetChild( "OverlayData" );
 
@@ -570,13 +570,15 @@ void ImportPOIFile( CWBApplication* App, CString s, TBOOL External )
 void ImportPOIString( CWBApplication* App, const CString& data, const CString& zipFile )
 {
   CXMLDocument d;
-  if ( !d.LoadFromString( data ) ) 
+  if ( !d.LoadFromString( data ) )
     return;
   ImportPOIDocument( App, d, true, zipFile );
 }
 
 void ImportMarkerPack( CWBApplication* App, const CString& zipFile )
 {
+  CLightweightCriticalSection fileRead( &zipCritSec );
+
   mz_zip_archive* zip = OpenZipFile( zipFile );
   if ( !zip )
     return;
@@ -615,7 +617,10 @@ void ImportMarkerPack( CWBApplication* App, const CString& zipFile )
 
 void ImportPOIS( CWBApplication* App )
 {
-  FlushZipDict();
+  {
+    CLightweightCriticalSection fileWrite( &zipCritSec );
+    FlushZipDict();
+  }
   ImportPOITypes();
 
   POISet.clear();
@@ -653,7 +658,7 @@ void ImportPOIS( CWBApplication* App )
 void ImportPOIActivationData()
 {
   CXMLDocument d;
-  if ( !d.LoadFromFile( "activationdata.xml" ) ) 
+  if ( !d.LoadFromFile( "activationdata.xml" ) )
     return;
 
   if ( !d.GetDocumentNode().GetChildCount( "OverlayData" ) ) return;
@@ -977,13 +982,12 @@ bool MarkerPack::UpdateFromWeb()
   CreateDirectory( "POIs", 0 );
   CreateDirectory( "POIs/Online", 0 );
 
-  FlushZipDict();
-
-  CString fn = "POIs/Online/" + fileName;
-  FILE* f = nullptr;
-
   {
     CLightweightCriticalSection fileWrite( &zipCritSec );
+    FlushZipDict();
+
+    CString fn = "POIs/Online/" + fileName;
+    FILE* f = nullptr;
 
     fopen_s( &f, fn.GetPointer(), "wb" );
     if ( !f )
@@ -1001,19 +1005,19 @@ bool MarkerPack::UpdateFromWeb()
     if ( fwrite( markerPack.GetPointer(), 1, markerPack.Length(), f ) != markerPack.Length() )
       failed = true;
     fclose( f );
-  }
 
-  if ( !failed )
-  {
-    CString versionConfigValue = "MarkerPack_" + id + "_version\0";
-    Config::SetString( versionConfigValue.GetPointer(), versionString );
-
-    markerPackQueue.Add( fn );
-    beingDownloaded = false;
-    downloadFinished = true;
+    if ( !failed )
     {
-      CLightweightCriticalSection cs( &dlTextCritSec );
-      currentDownload = "";
+      CString versionConfigValue = "MarkerPack_" + id + "_version\0";
+      Config::SetString( versionConfigValue.GetPointer(), versionString );
+
+      markerPackQueue.Add( fn );
+      beingDownloaded = false;
+      downloadFinished = true;
+      {
+        CLightweightCriticalSection cs( &dlTextCritSec );
+        currentDownload = "";
+      }
     }
   }
   outdated = false;

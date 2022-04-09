@@ -858,7 +858,12 @@ INT WINAPI WinMain( _In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 
   ShowWindow( tacoHWND, SW_HIDE );
 
-  FlushZipDict();
+  {
+    extern LIGHTWEIGHT_CRITICALSECTION zipCritSec;
+    CLightweightCriticalSection fileWrite( &zipCritSec );
+    FlushZipDict();
+  }
+
   ShutDownInputHooks();
   Config::Save();
   ShutDownWvWChecking();
