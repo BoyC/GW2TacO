@@ -4,7 +4,9 @@
     {
       "name": "Tekkit's All-In-One (Festivals, JPs, Achievements, Gathering, Map Completion)",
       "id": "Tekkit",
-      "forcedversion" : "3.1.0",
+      "versionurl": "https://www.tekkitsworkshop.net/index.php/download",
+      "versionsearchstring": "ALL-IN-ONE MARKER PACK - ",
+      "versionterminator": "<",
       "filename": "tw_ALL_IN_ONE.taco",
       "downloadurl": "https://www.tekkitsworkshop.net/downloads/tw_ALL_IN_ONE.taco",
       "backupurl": "https://github.com/BoyC/TekkitBackup/raw/main/tw_ALL_IN_ONE.taco",
