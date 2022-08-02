@@ -6,6 +6,43 @@
 
 using namespace jsonxx;
 
+void TriggerWaypointCopyPaste( CWBApplication* App, CString copy )
+{
+  if ( !Config::GetValue( "CanWriteToClipboard" ) )
+    return;
+
+  // copy to clipboard here
+
+  if ( OpenClipboard( (HWND)App->GetHandle() ) )
+  {
+    EmptyClipboard();
+
+    CString out = copy;
+
+    HGLOBAL clipbuffer = GlobalAlloc( GMEM_DDESHARE | GHND, ( out.Length() + 1 ) * sizeof( TCHAR ) );
+
+    if ( clipbuffer )
+    {
+      TCHAR* buffer = (TCHAR*)GlobalLock( clipbuffer );
+      if ( buffer )
+      {
+        memcpy( buffer, out.GetPointer(), sizeof( TCHAR ) * out.Length() );
+        buffer[ out.Length() ] = 0;
+      }
+
+      GlobalUnlock( clipbuffer );
+
+#ifndef  UNICODE
+      SetClipboardData( CF_TEXT, clipbuffer );
+#else
+      SetClipboardData( CF_UNICODETEXT, clipbuffer );
+#endif
+    }
+
+    CloseClipboard();
+  }
+}
+
 void GW2MapTimer::OnDraw( CWBDrawAPI* API )
 {
   if ( !Config::GetValue( "MapTimerVisible" ) )
@@ -161,6 +198,20 @@ void GW2MapTimer::OnDraw( CWBDrawAPI* API )
         API->SetCropRect( ClientToScreen( r ) );
 
         CString text = maps[ x ].events[ currevent ].name;
+        
+        CString CopyWPText = "";
+        TBOOL StartTimeNegativ = FALSE;
+        TS32 timestart = currtime * 60 - ptm.tm_sec - timeWindow * 30;
+        CString StartTime = CString::Format( "%d:%.2d", timestart / 60, timestart % 60 );
+
+        if ( timestart >= 0 )
+        {
+          StartTimeNegativ = FALSE;
+        }
+        else
+        {
+          StartTimeNegativ = TRUE;
+        }
 
         //if ( minutes >= currtime && minutes < currtime + maps[x].events[currevent].length)
         {
@@ -172,6 +223,19 @@ void GW2MapTimer::OnDraw( CWBDrawAPI* API )
         if ( ClientToScreen( r ).Contains( GetApplication()->GetMousePos() ) )
         {
           mouseToolTip = text;
+          if ( GetApplication()->GetLeftButtonState()  )
+          {
+            if ( StartTimeNegativ )
+            {
+              CopyWPText = ( maps[ x ].events[ currevent ].name + " WP: " + maps[ x ].events[ currevent ].waypoint );
+            }
+            else
+            {
+              CopyWPText = ( maps[ x ].events[ currevent ].name + " in " + StartTime + " WP: " + maps[ x ].events[ currevent ].waypoint );
+            }
+            
+            TriggerWaypointCopyPaste( GetApplication(), CopyWPText );
+          }
         }
 
         CPoint p = f->GetCenter( text, r, TextTransform );
