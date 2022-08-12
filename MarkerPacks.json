@@ -74,7 +74,7 @@
       "enabledbydefault": false
     },
     {
-      "name": "Metal Marker Myriad (EoD Content)",
+      "name": "Metal Marker Myriad",
       "id": "MMM",
       "filename": "metal_marker_myriad.taco",
       "versionurl": "https://github.com/Metallis/Metal-Marker-Myriad/releases/latest",
@@ -99,6 +99,46 @@
       "versionsearchstring": "releases/tag/",
       "versionterminator": "\"",
       "downloadurl": "https://github.com/QuitarHero/Heros-Marker-Pack/releases/download/%s/Hero.Blish.Pack.zip",
+      "enabledbydefault": false
+    },
+    {
+      "name": "Zippy (Ziplines)",
+      "id": "zippy",
+      "filename": "Zippy.taco",
+      "versionurl": "https://github.com/Girbilcannon/zippy/releases/latest",
+      "versionsearchstring": "releases/tag/",
+      "versionterminator": "\"",
+      "downloadurl": "https://github.com/Girbilcannon/zippy/releases/latest/download/Zippy.taco",
+      "enabledbydefault": false
+    },
+    {
+      "name": "Pewpew's Power Paths",
+      "id": "Pewpew",
+      "filename": "Pewpews_Power_Paths.taco",
+      "versionurl": "https://github.com/Girbilcannon/Pewpews_Power_Paths/releases/latest",
+      "versionsearchstring": "releases/tag/",
+      "versionterminator": "\"",
+      "downloadurl": "https://github.com/Girbilcannon/Pewpews_Power_Paths/releases/latest/download/Pewpews_Power_Paths.taco",
+      "enabledbydefault": false
+    },
+    {
+      "name": "Tyria [DRFT]",
+      "id": "DRFT",
+      "filename": "DRFT_Main.taco",
+      "versionurl": "https://github.com/n1nj44r91/Tyria-Drift-DRFT-GW2-TacO-Racetracks/releases/latest",
+      "versionsearchstring": "releases/tag/",
+      "versionterminator": "\"",
+      "downloadurl": "https://github.com/n1nj44r91/Tyria-Drift-DRFT-GW2-TacO-Racetracks/releases/latest/download/DRFT_Main.taco",
+      "enabledbydefault": false
+    },
+    {
+      "name": "Tyria [DRFT] Grand Prix",
+      "id": "DRFT_GP",
+      "filename": "DRFT_GP.taco",
+      "versionurl": "https://github.com/n1nj44r91/Tyria-Drift-DRFT-GW2-TacO-Grand-Prix-Tracks/releases/latest",
+      "versionsearchstring": "releases/tag/",
+      "versionterminator": "\"",
+      "downloadurl": "https://github.com/n1nj44r91/Tyria-Drift-DRFT-GW2-TacO-Grand-Prix-Tracks/releases/latest/download/DRFT_GP.taco",
       "enabledbydefault": false
     }
   ]
