@@ -140,6 +140,26 @@
       "versionterminator": "\"",
       "downloadurl": "https://github.com/n1nj44r91/Tyria-Drift-DRFT-GW2-TacO-Grand-Prix-Tracks/releases/latest/download/DRFT_GP.taco",
       "enabledbydefault": false
+    },
+    {
+      "name": "[MOAR] Meta and HP Trains",
+      "id": "MOAR",
+      "filename": "moar.taco",
+      "versionurl": "https://moar-loot.web.app/releases/",
+      "versionsearchstring": "releases/",
+      "versionterminator": "\"",
+      "downloadurl": "https://moar-loot.web.app/releases/moar.taco",
+      "enabledbydefault": false
+    },
+    {
+      "name": "GW2 Twisted Castle",
+      "id": "TwistedCastle",
+      "filename": "TwistedCastle.taco",
+      "versionurl": "https://github.com/SZG5/gw2-twisted-castle/releases/",
+      "versionsearchstring": "releases/tag/",
+      "versionterminator": "\"",
+      "downloadurl": "https://github.com/SZG5/gw2-twisted-castle/releases/latest/download/TwistedCastle.taco",
+      "enabledbydefault": false
     }
   ]
 }
