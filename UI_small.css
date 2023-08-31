@@ -98,8 +98,8 @@ maptimer
 {
 	width:29px;
 	height:29px;
-	left:260px;
-	top:0px;
+	left:0px;
+	top:29px;
 	opacity:0.5;
 	background-color:none;
 	background: skin(taco_small_dark) top left;
@@ -328,7 +328,7 @@ tptracker
 	left:0px;
 	top:0px;
 	width:391px;
-	height:39px;
+	height:78px;
 	background-color:none;
 }
 
