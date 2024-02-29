@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="UI">
+      <UniqueIdentifier>{920c2207-a445-40a3-9cea-0d126e9d49a3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GW2TacO.cpp">
@@ -203,14 +206,30 @@
   </ItemGroup>
   <ItemGroup>
     <Xml Include="poidata.xml" />
-    <Xml Include="UI.xml" />
     <Xml Include="maptimer.xml" />
     <Xml Include="TacO_Language_cn.xml">
       <Filter>Resource Files</Filter>
     </Xml>
+    <Xml Include="UI.xml">
+      <Filter>UI</Filter>
+    </Xml>
   </ItemGroup>
   <ItemGroup>
-    <None Include="UI.css" />
+    <None Include="UI_large.css">
+      <Filter>UI</Filter>
+    </None>
+    <None Include="UI_larger.css">
+      <Filter>UI</Filter>
+    </None>
+    <None Include="UI_normal.css">
+      <Filter>UI</Filter>
+    </None>
+    <None Include="UI_small.css">
+      <Filter>UI</Filter>
+    </None>
+    <None Include="UI.css">
+      <Filter>UI</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="GW2TacO.rc">

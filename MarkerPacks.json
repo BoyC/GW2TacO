@@ -50,7 +50,7 @@
       "versionurl": "https://github.com/Kresky/gw2-blish-markers/releases/latest",
       "versionsearchstring": "releases/tag/",
       "versionterminator": "\"",
-      "downloadurl": "https://github.com/Kresky/gw2-blish-markers/releases/download/%s/kreskysmarkers.zip",
+      "downloadurl": "https://github.com/Kresky/gw2-blish-markers/releases/latest/download/kreskysmarkers.zip",
       "enabledbydefault": false
     },
     {
@@ -60,7 +60,7 @@
       "versionurl": "https://github.com/Sutcenes/MovementOnTheWorld_TacoSupport/releases/latest",
       "versionsearchstring": "releases/tag/",
       "versionterminator": "\"",
-      "downloadurl": "https://github.com/Sutcenes/MovementOnTheWorld_TacoSupport/releases/download/%s/MoW.taco",
+      "downloadurl": "https://github.com/Sutcenes/MovementOnTheWorld_TacoSupport/releases/latest/download/MoW.taco",
       "enabledbydefault": false
     },
     {
@@ -70,7 +70,7 @@
       "versionurl": "https://github.com/Nexrym/Nexploration/releases/latest",
       "versionsearchstring": "releases/tag/",
       "versionterminator": "\"",
-      "downloadurl": "https://github.com/Nexrym/Nexploration/releases/download/%s/Nexploration.taco",
+      "downloadurl": "https://github.com/Nexrym/Nexploration/releases/latest/download/Nexploration.taco",
       "enabledbydefault": false
     },
     {
@@ -80,7 +80,7 @@
       "versionurl": "https://github.com/Metallis/Metal-Marker-Myriad/releases/latest",
       "versionsearchstring": "releases/tag/",
       "versionterminator": "\"",
-      "downloadurl": "https://github.com/Metallis/Metal-Marker-Myriad/releases/download/%s/Metal-Marker-Myriad.taco",
+      "downloadurl": "https://github.com/Metallis/Metal-Marker-Myriad/releases/latest/download/Metal-Marker-Myriad.taco",
       "enabledbydefault": false
     },
     {
@@ -98,7 +98,7 @@
       "versionurl": "https://github.com/QuitarHero/Heros-Marker-Pack/releases/latest",
       "versionsearchstring": "releases/tag/",
       "versionterminator": "\"",
-      "downloadurl": "https://github.com/QuitarHero/Heros-Marker-Pack/releases/download/%s/Hero.Blish.Pack.zip",
+      "downloadurl": "https://github.com/QuitarHero/Heros-Marker-Pack/releases/latest/download/Hero.Blish.Pack.zip",
       "enabledbydefault": false
     },
     {
