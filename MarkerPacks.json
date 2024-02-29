@@ -80,7 +80,7 @@
       "versionurl": "https://github.com/Metallis/Metal-Marker-Myriad/releases/latest",
       "versionsearchstring": "releases/tag/",
       "versionterminator": "\"",
-      "downloadurl": "https://github.com/Metallis/Metal-Marker-Myriad/releases/download/%s/Metal_Marker_Myriad.taco",
+      "downloadurl": "https://github.com/Metallis/Metal-Marker-Myriad/releases/download/%s/Metal-Marker-Myriad.taco",
       "enabledbydefault": false
     },
     {
