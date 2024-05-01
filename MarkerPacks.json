@@ -2,6 +2,16 @@
   "markerpacks": 
   [
     {
+      "name": "Lady Elyssa's Guides",
+      "id": "LadyElyssa",
+      "filename": "LadyElyssa.taco",
+      "versionurl": "https://github.com/LadyElyssa/LadyElyssaTacoTrails/releases/latest",
+      "versionsearchstring": "releases/tag/",
+      "versionterminator": "\"",
+      "downloadurl": "https://github.com/LadyElyssa/LadyElyssaTacoTrails/raw/main/LadyElyssa.taco",
+      "enabledbydefault": true
+    },
+    {
       "name": "Tekkit's All-In-One (Festivals, JPs, Achievements, Gathering, Map Completion)",
       "id": "Tekkit",
       "versionurl": "https://www.tekkitsworkshop.net/index.php/download",
