@@ -9,7 +9,7 @@
       "versionsearchstring": "releases/tag/",
       "versionterminator": "\"",
       "downloadurl": "https://github.com/LadyElyssa/LadyElyssaTacoTrails/raw/main/LadyElyssa.taco",
-      "enabledbydefault": true
+      "enabledbydefault": false
     },
     {
       "name": "Tekkit's All-In-One (Festivals, JPs, Achievements, Gathering, Map Completion)",
