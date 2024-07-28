@@ -12,6 +12,16 @@
       "enabledbydefault": false
     },
     {
+      "name": "Lady Elyssa's Achievements",
+      "id": "LadyElyssaAP",
+      "filename": "LadyElyssa.taco",
+      "versionurl": "https://github.com/LadyElyssa/LadyElyssaAchievementGuides/releases/latest",
+      "versionsearchstring": "releases/tag/",
+      "versionterminator": "\"",
+      "downloadurl": "https://github.com/LadyElyssa/LadyElyssaAchievementGuides/releases/latest/download/LadyElyssaAP.taco",
+      "enabledbydefault": false
+    },
+    {
       "name": "Tekkit's All-In-One (Festivals, JPs, Achievements, Gathering, Map Completion)",
       "id": "Tekkit",
       "versionurl": "https://www.tekkitsworkshop.net/index.php/download",
