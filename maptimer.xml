@@ -260,4 +260,17 @@
     <Event Name="Preparations" Length="60" Color="808AEAF4"/>
     <Event Name="Battle for the Jade Sea" Length="60" Color="8042C8D7"/>
   </Map>
+  
+    <Map Name="Sykwatch Archipelago" Length="120" Start="60" id="utwt">
+	  <Event Name="Unlocking the Wizard's Tower" Length="25" Color="80ffcc00"/>
+	  <Event Name="" Length="95" Color="008AEAF4"/>
+  </Map>
+  <Map Name="Amnytas" Length="120" Start="0" id="doa">
+	  <Event Name="Defense of Amnytas" Length="25" Color="80ffcc00"/>
+	  <Event Name="" Length="95" Color="008AEAF4"/>
+  </Map>
+  <Map Name="Wizard's Tower" Length="180" Start="90" id="wt">
+ 	  <Event Name="Convergences" Length="10" Color="80ffcc00"/>
+	  <Event Name="" Length="170" Color="008AEAF4"/>
+  </Map>
 </GW2MapTimer>
