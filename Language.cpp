@@ -146,6 +146,10 @@ CString Localization::Localize( const char* token, const CString& fallback )
       dumpedStrings += tokenString;
     }
 
+    // English is always imported first: an incomplete translation shows English instead of [token]
+    if ( activeLanguageIdx != 0 && languages[ 0 ].dict.HasKey( tokenString ) )
+      return languages[ 0 ].dict[ tokenString ];
+
     return rawToken;
   }
 

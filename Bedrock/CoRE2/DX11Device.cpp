@@ -17,6 +17,7 @@ typedef HRESULT( __stdcall* DCompositionCreateDeviceCallback )(
   _Outptr_ void** dcompositionDevice
   );
 DCompositionCreateDeviceCallback DCompositionCreateDeviceFunc = nullptr;
+TBOOL ForceClassicSwapChain = false;
 
 #ifdef CORE_API_DX11
 
@@ -410,7 +411,7 @@ TBOOL CCoreDX11Device::InitAPI( const TU32 hWnd, const TBOOL FullScreen, const T
     DCompositionCreateDeviceFunc = DCompositionCreateDeviceCallback( GetProcAddress( dcomp, "DCompositionCreateDevice" ) );
   }
 
-  if ( !dcomp || !DCompositionCreateDeviceFunc )
+  if ( ForceClassicSwapChain || !dcomp || !DCompositionCreateDeviceFunc )
     return CreateClassicSwapChain( hWnd, FullScreen, XRes, YRes, AALevel, RefreshRate );
   else
     return CreateDirectCompositionSwapchain( hWnd, FullScreen, XRes, YRes, AALevel, RefreshRate );

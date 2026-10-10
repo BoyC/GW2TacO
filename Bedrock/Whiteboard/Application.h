@@ -19,6 +19,15 @@ enum WBMOUSECLICKREPEATMODE
 
 typedef CWBItem* ( __cdecl *WBFACTORYCALLBACK )( CWBItem *Root, CXMLNode &node, CRect &Pos );
 
+typedef CString( __cdecl *WBLOCALIZERCALLBACK )( const CString &Token );
+
+struct WBFONTFALLBACK // see CWBFontDescription::AddSystemFontGlyphs()
+{
+  const wchar_t *FaceName;
+  TU16 FirstChar, LastChar;
+  TS32 MinBodyHeight;
+};
+
 class CWBApplication : public CCoreWindowHandlerWin
 {
   friend class CWBItem;
@@ -37,12 +46,15 @@ class CWBApplication : public CCoreWindowHandlerWin
   CWBSkin *Skin;
   CDictionaryEnumerable<CString, CWBFont*> Fonts;
   CWBFont *DefaultFont;
+  CArray<WBFONTFALLBACK> FontFallbacks;
+  WBLOCALIZERCALLBACK Localizer = nullptr;
 
   TBOOL Alt, Ctrl, Shift, Left, Middle, Right;
 
   TBOOL Vsync;
 
   CString ScreenShotName;
+  CString PendingScreenshot;
 
   TBOOL SendMessageToItem( CWBMessage &Message, CWBItem *Target );
   void ProcessMessage( CWBMessage &Message );
@@ -131,7 +143,11 @@ public:
   CWBItem *GetMouseCaptureItem();
 
   TBOOL CreateFont( CString FontName, CWBFontDescription *Font );
+  // characters of [FirstChar,LastChar] missing from fonts created afterwards get rasterized from this system font
+  void AddFontFallback( const wchar_t *FaceName, TU16 FirstChar, TU16 LastChar, TS32 MinBodyHeight );
   CWBFont *GetFont( CString FontName );
+  void SetLocalizer( WBLOCALIZERCALLBACK Callback ) { Localizer = Callback; }
+  CString LocalizeText( const CString &Text ); // layout texts starting with '@' are tokens handed to the localizer
   CWBFont *GetDefaultFont();
   TBOOL SetDefaultFont( CString FontName );
   void AddToTrash( CWBItem *item );
@@ -165,6 +181,7 @@ public:
 
   virtual void TakeScreenshot();
   void SetScreenshotName( CString s ) { ScreenShotName = s; }
+  void RequestScreenshot( CString FileName ) { PendingScreenshot = FileName; } // saves the next rendered frame as a png
 
   void SetVSync( TBOOL vs ) { Vsync = vs; }
   void SetClearColor( CColor color ) { ClearColor = color; }

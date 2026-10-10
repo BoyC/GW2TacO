@@ -75,6 +75,9 @@
     <ClCompile Include="Notepad.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="SettingsWindow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="GW2API.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -168,6 +171,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Notepad.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SettingsWindow.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GW2API.h">

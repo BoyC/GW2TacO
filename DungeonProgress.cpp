@@ -52,6 +52,8 @@ void DungeonProgress::OnDraw( CWBDrawAPI* API )
                                          auto wings = dungeonJson.get<Array>( "paths" ).values();
                                          for ( unsigned y = 0; y < wings.size(); y++ )
                                          {
+                                           if ( !wings[ y ]->is<Object>() )
+                                             continue;
                                            auto dungeonPath = wings[ y ]->get<Object>();
                                            DungeonPath p;
                                            if ( dungeonPath.has<String>( "id" ) )
@@ -90,7 +92,7 @@ void DungeonProgress::OnDraw( CWBDrawAPI* API )
                                      }
                                    }
 
-                                   hasFullDungeonInfo = true;
+                                   hasFullDungeonInfo = dungeons.NumItems() > 0; // retry on the next fetch if the api failed
                                  }
 
                                  CString lastDungeonStatus = CString( "{\"dungeons\":" ) + key->QueryAPI( "v2/account/dungeons" ) + "}";
@@ -103,6 +105,11 @@ void DungeonProgress::OnDraw( CWBDrawAPI* API )
                                  if ( json.has<Array>( "dungeons" ) )
                                  {
                                    auto dungeonData = json.get<Array>( "dungeons" ).values();
+
+                                   // the api lists today's paths only, so earlier ones must go after the daily reset
+                                   for ( TS32 a = 0; a < dungeons.NumItems(); a++ )
+                                     for ( TS32 b = 0; b < dungeons[ a ].paths.NumItems(); b++ )
+                                       dungeons[ a ].paths[ b ].finished = false;
 
                                    for ( unsigned int x = 0; x < dungeonData.size(); x++ )
                                    {
@@ -218,7 +225,7 @@ void DungeonProgress::OnDraw( CWBDrawAPI* API )
       posy += f->GetLineHeight();
     }
   }
-  else
+  else if ( status == GW2::APIKeyManager::Status::OK ) // otherwise the status text is already drawn there
     f->Write( API, DICT( "waitingforapi" ), CPoint( 0, 0 ), 0xffffffff );
 
   DrawBorder( API );

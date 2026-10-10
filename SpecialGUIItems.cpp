@@ -19,7 +19,7 @@ CWBItem* ClickThroughButton::Factory( CWBItem* Root, CXMLNode& node, CRect& Pos 
 {
   ClickThroughButton* button = new ClickThroughButton( Root, Pos );
   if ( node.HasAttribute( _T( "text" ) ) )
-    button->SetText( node.GetAttribute( _T( "text" ) ) );
+    button->SetText( button->GetApplication()->LocalizeText( node.GetAttribute( _T( "text" ) ) ) );
 
   if ( node.HasAttribute( _T( "hidden" ) ) )
   {

@@ -227,14 +227,15 @@ contextmenu
 {
 	text-transform:none;
 	border:1px;
-	border-color:#808080;
-	background:#000000;
-	opacity:0.7;
+	border-color:#606060;
+	background:#1c1c1d;
+	opacity:0.9;
+	font-color:#dddddd;
 }
 
 contextmenu:hover
 {
-	background:#808080;
+	background:rgba(255,255,255,0.25);
 }
 
 ts3control

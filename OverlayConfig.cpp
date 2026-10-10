@@ -79,6 +79,9 @@ void Config::InitDefaults()
   SetDefaultValue( "EnableExternalEditing", 1 );
   SetDefaultValue( "HideExternalMarkers", 0 );
   SetDefaultValue( "TacOOnTaskBar", 0 );
+  SetDefaultValue( "MarkerFadeDistance", 0 );
+  SetDefaultValue( "CollectedMarkers", 0 );
+  SetDefaultValue( "TrailWidth", 100 );
 }
 
 void Config::Load()
@@ -307,6 +310,8 @@ void Config::DeleteKeyBinding( TS32 keyToDelete )
 
     if ( key == keyToDelete )
     {
+      configChanged = true;
+      lastConfigChangeTime = globalTimer.GetTime();
       configValues.Delete( kdp->Key );
       x--;
     }
@@ -362,6 +367,14 @@ void Config::LoadMarkerCategoryVisibilityInfo()
   for ( TS32 x = 0; x < configValues.NumItems(); x++ )
   {
     auto kdp = configValues.GetKDPair( x );
+    if ( kdp->Key.Find( "CategoryKey_" ) == 0 )
+    {
+      auto cat = GetCategory( kdp->Key.Substring( 12 ) );
+      if ( cat )
+        cat->hotkey = kdp->Data;
+      continue;
+    }
+
     if ( kdp->Key.Find( "CategoryVisible_" ) != 0 )
       continue;
 
@@ -388,6 +401,8 @@ void Config::AutoSaveConfig()
 
 void Config::RemoveValue( TCHAR* name )
 {
+  configChanged = true;
+  lastConfigChangeTime = globalTimer.GetTime();
   configStrings.Delete( name );
   configValues.Delete( name );
 }

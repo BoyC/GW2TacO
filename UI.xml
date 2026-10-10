@@ -11,15 +11,15 @@
       <clickthroughbutton id="RedCircle" hidden="1"/>
       <box id="MenuHoverBox" clickthrough="1" >
         <clickthroughbutton id="TPButton"/>
-        <button id="MenuButton"/>
       </box>
+      <button id="MenuButton"/>
       <MouseHighlight id="mousehighlight"/>
       <HPGrid id="hpgrid"/>
     </GW2TacO>
   </gui>
   <guitemplate id="markereditor" class="template">
     <box id="markereditorbox" clickthrough="1" >
-      <label id="categorylabel" text="Edited item:"/>
+      <label id="categorylabel" text="@me_editeditem"/>
       <box id="markereditormain">
         <box class="markereditorpanel">
          <box id="markereditorheader">
@@ -28,185 +28,185 @@
            <button id="changemarkertype"/>
            <button id="deletemarker"/>
          </box>
-         <label id="label1" class="panellabel" text="VISUAL APPEARANCE"/>
+         <label id="label1" class="panellabel" text="@me_visualappearance"/>
          <box class="markereditorsetting">
            <button class="checkbox" id="cb_size"/>
-           <label class="optionlabel" text="SIZE:"/>
+           <label class="optionlabel" text="@me_size"/>
            <textbox class="optiontextbox" id="size" singleline="1"/>
          </box>
          <box class="markereditorsetting">
            <button class="checkbox" id="cb_minimapsize"/>
-           <label class="optionlabel" text="MINIMAP SIZE:"/>
+           <label class="optionlabel" text="@me_minimapsize"/>
            <textbox class="optiontextbox" id="miniMapSize"  singleline="1"/>
          </box>
          <box class="markereditorsetting">
            <button class="checkbox" id="cb_minimapfadeout"/>
-           <label class="optionlabel" text="MINIMAP FADEOUT:"/>
+           <label class="optionlabel" text="@me_minimapfadeout"/>
            <textbox class="optiontextbox" id="miniMapFadeOut" singleline="1"/>
          </box>
          <box class="markereditorsetting">
            <button class="checkbox" id="cb_minsize"/>
-           <label class="optionlabel" text="MINIMUM SIZE:"/>
+           <label class="optionlabel" text="@me_minsize"/>
            <textbox class="optiontextbox" id="minSize" singleline="1"/>
          </box>
          <box class="markereditorsetting">
            <button class="checkbox" id="cb_maxsize"/>
-           <label class="optionlabel" text="MAXIMUM SIZE:"/>
+           <label class="optionlabel" text="@me_maxsize"/>
            <textbox class="optiontextbox" id="maxSize" singleline="1"/>
          </box>
          <box class="markereditorsetting">
            <button class="checkbox" id="cb_icon"/>
-           <label class="optionlabel" text="ICON:"/>
+           <label class="optionlabel" text="@me_icon"/>
            <textbox class="optiontextbox" id="icon" singleline="1"/>
          </box>
          <box class="markereditorsetting">
            <button class="checkbox" id="cb_scalewithzoom"/>
-           <button class="optiontoggle" id="scalewithzoom" TEXT="SCALE ON MINIMAP"/>
+           <button class="optiontoggle" id="scalewithzoom" TEXT="@me_scaleonminimap"/>
          </box>
          <box class="markereditorsetting">
            <button class="checkbox" id="cb_color"/>
-           <label class="optionlabel" text="Color:"/>
+           <label class="optionlabel" text="@me_color"/>
            <textbox class="colorselect" id="color" singleline="1"/>
            <button class="colorpreview" id="colorpreview"/>
          </box>
          <box class="markereditorsetting">
            <button class="checkbox" id="cb_alpha"/>
-           <label class="optionlabel" text="ALPHA:"/>
+           <label class="optionlabel" text="@me_alpha"/>
            <textbox class="optiontextbox" id="alpha" singleline="1"/>
          </box>
          <box class="markereditorsetting">
            <button class="checkbox" id="cb_fadenear"/>
-           <label class="optionlabel" text="FADE NEAR:"/>
+           <label class="optionlabel" text="@me_fadenear"/>
            <textbox class="optiontextbox" id="fadeNear" singleline="1"/>
          </box>
          <box class="markereditorsetting">
            <button class="checkbox" id="cb_fadefar"/>
-           <label class="optionlabel" text="FADE FAR:"/>
+           <label class="optionlabel" text="@me_fadefar"/>
            <textbox class="optiontextbox" id="fadeFar" singleline="1"/>
          </box>
          <box class="markereditorsetting">
            <button class="checkbox" id="cb_height"/>
-           <label class="optionlabel" text="HEIGHT:"/>
+           <label class="optionlabel" text="@me_height"/>
            <textbox class="optiontextbox" id="height" singleline="1"/>
          </box>
         </box>
         <box class="markereditorpanel">
-         <label id="label2" class="panellabel" text="BEHAVIOR"/>
+         <label id="label2" class="panellabel" text="@me_behaviorheader"/>
          <box class="markereditorsetting">
            <button class="checkbox" id="cb_behavior"/>
-           <label class="optionlabel" text="BEHAVIOR:"/>
+           <label class="optionlabel" text="@me_behavior"/>
            <dropdown class="optiontextbox" id="behavior" singleline="1">
-             <listitem name="ALWAYS VISIBLE"/>
-             <listitem name="REAPPEAR ON MAP CHANGE"/>
-             <listitem name="REAPPEAR ON DAILY RESET"/>
-             <listitem name="ONLY VISIBLE BEFORE ACTIVATION"/>
-             <listitem name="REAPPEAR AFTER TIMER"/>
-             <listitem name="REAPPEAR ON MAP RESET"/>
-             <listitem name="ACTIVATE ONCE PER INSTANCE"/>
-             <listitem name="ACTIVATE DAILY PER CHAR"/>
-             <listitem name="ACTIVATE ONCE PER INSTANCE PER CHAR"/>
-             <listitem name="WVW OBJECTIVE"/>
+             <listitem name="@me_bh_alwaysvisible"/>
+             <listitem name="@me_bh_mapchange"/>
+             <listitem name="@me_bh_dailyreset"/>
+             <listitem name="@me_bh_beforeactivation"/>
+             <listitem name="@me_bh_aftertimer"/>
+             <listitem name="@me_bh_mapreset"/>
+             <listitem name="@me_bh_onceperinstance"/>
+             <listitem name="@me_bh_dailyperchar"/>
+             <listitem name="@me_bh_onceperinstanceperchar"/>
+             <listitem name="@me_bh_wvwobjective"/>
            </dropdown>
          </box>
          <box class="markereditorsetting">
            <button class="checkbox" id="cb_achievementid"/>
-           <label class="optionlabel" text="ACHIEVEMENT ID:"/>
+           <label class="optionlabel" text="@me_achievementid"/>
            <textbox class="optiontextbox" id="achievementid" singleline="1"/>
          </box>
          <box class="markereditorsetting">
            <button class="checkbox" id="cb_achievementbit"/>
-           <label class="optionlabel" text="ACHIEVEMENT BIT:"/>
+           <label class="optionlabel" text="@me_achievementbit"/>
            <textbox class="optiontextbox" id="achievementbit" singleline="1"/>
          </box>
          <box class="markereditorsetting">
            <button class="checkbox" id="cb_resetlength"/>
-           <label class="optionlabel" text="RESET LENGTH:"/>
+           <label class="optionlabel" text="@me_resetlength"/>
            <textbox class="optiontextbox" id="resetlength" singleline="1"/>
          </box>
          <box class="markereditorsetting">
            <button class="checkbox" id="cb_defaulttoggle"/>
-           <button class="optiontoggle" id="defaulttoggle" TEXT="DEFAULT TOGGLE"/>
+           <button class="optiontoggle" id="defaulttoggle" TEXT="@me_defaulttoggle"/>
          </box>
          <box class="markereditorsetting">
            <button class="checkbox" id="cb_hascountdown"/>
-           <button class="optiontoggle" id="hascountdown" TEXT="HAS COUNTDOWN"/>
+           <button class="optiontoggle" id="hascountdown" TEXT="@me_hascountdown"/>
          </box>
          <box class="markereditorsetting">
            <button class="checkbox" id="cb_togglecategory"/>
-           <label class="optionlabel" text="TOGGLE CATEGORY:"/>
+           <label class="optionlabel" text="@me_togglecategory"/>
            <textbox class="optiontextbox" id="togglecategory" singleline="1"/>
          </box>
-         <label id="label3" class="panellabel" text="RANGED BEHAVIOR"/>
+         <label id="label3" class="panellabel" text="@me_rangedbehavior"/>
          <box class="markereditorsetting">
            <button class="checkbox" id="cb_autotrigger"/>
-           <button class="optiontoggle" id="autotrigger" TEXT="AUTO TRIGGER"/>
+           <button class="optiontoggle" id="autotrigger" TEXT="@me_autotrigger"/>
          </box>
          <box class="markereditorsetting">
            <button class="checkbox" id="cb_triggerrange"/>
-           <label class="optionlabel" text="TRIGGER RANGE:"/>
+           <label class="optionlabel" text="@me_triggerrange"/>
            <textbox class="optiontextbox" id="triggerrange" singleline="1"/>
          </box>
          <box class="markereditorsetting">
            <button class="checkbox" id="cb_inforange"/>
-           <label class="optionlabel" text="INFO RANGE:"/>
+           <label class="optionlabel" text="@me_inforange"/>
            <textbox class="optiontextbox" id="inforange" singleline="1"/>
          </box>
          <box class="markereditorsetting">
            <button class="checkbox" id="cb_infotext"/>
-           <label class="optionlabel" text="INFO TEXT:"/>
+           <label class="optionlabel" text="@me_infotext"/>
            <textbox class="optiontextbox" id="infotext"/>
          </box>
          <box class="markereditorsetting">
            <button class="checkbox" id="cb_copytext"/>
-           <label class="optionlabel" text="COPIED TEXT:"/>
+           <label class="optionlabel" text="@me_copiedtext"/>
            <textbox class="optiontextbox" id="copytext"/>
          </box>
          <box class="markereditorsetting">
            <button class="checkbox" id="cb_copymessage"/>
-           <label class="optionlabel" text="COPY MESSAGE:"/>
+           <label class="optionlabel" text="@me_copymessage"/>
            <textbox class="optiontextbox" id="copymessage"/>
          </box>
         </box>
         <box class="markereditorpanel">
-         <label id="label4" class="panellabel" text="VISIBILITY"/>
+         <label id="label4" class="panellabel" text="@me_visibility"/>
          <box class="markereditorsetting">
            <button class="checkbox" id="cb_minimapvisible"/>
-           <button class="optiontoggle" id="minimapvisible" text="VISIBLE ON MINIMAP"/>
+           <button class="optiontoggle" id="minimapvisible" text="@me_visibleminimap"/>
          </box>
          <box class="markereditorsetting">
            <button class="checkbox" id="cb_bigmapvisible"/>
-           <button class="optiontoggle" id="bigmapvisible" text="VISIBLE ON FULL MAP"/>
+           <button class="optiontoggle" id="bigmapvisible" text="@me_visiblebigmap"/>
          </box>
          <box class="markereditorsetting">
            <button class="checkbox" id="cb_ingamevisible"/>
-           <button class="optiontoggle" id="ingamevisible" text="VISIBLE IN GAME"/>
+           <button class="optiontoggle" id="ingamevisible" text="@me_visibleingame"/>
          </box>
          <box class="markereditorsetting">
            <button class="checkbox" id="cb_keeponmapedge"/>
-           <button class="optiontoggle" id="keeponmapedge" text="KEEP ON MAP EDGE"/>
+           <button class="optiontoggle" id="keeponmapedge" text="@me_keeponmapedge"/>
          </box>
-         <label id="label5" class="panellabel" text="TRAILS"/>
+         <label id="label5" class="panellabel" text="@me_trails"/>
          <box class="markereditorsetting">
            <button class="checkbox" id="cb_trailanimspeed"/>
-           <label class="optionlabel" text="ANIM SPEED:"/>
+           <label class="optionlabel" text="@me_animspeed"/>
            <textbox class="optiontextbox" id="trailanimspeed" singleline="1"/>
          </box>
          <box class="markereditorsetting">
            <button class="checkbox" id="cb_trailscale"/>
-           <label class="optionlabel" text="TRAIL SCALE:"/>
+           <label class="optionlabel" text="@me_trailscale"/>
            <textbox class="optiontextbox" id="trailscale" singleline="1"/>
          </box>
          <box class="markereditorsetting">
            <button class="checkbox" id="cb_trailfile"/>
-           <label class="optionlabel" text="TRAIL FILE:"/>
+           <label class="optionlabel" text="@me_trailfile"/>
            <textbox class="optiontextbox" id="trailfile" singleline="1"/>
          </box>
          <box class="markereditorsetting">
            <button class="checkbox" id="cb_trailtexture"/>
-           <label class="optionlabel" text="TRAIL TEXTURE:"/>
+           <label class="optionlabel" text="@me_trailtexture"/>
            <textbox class="optiontextbox" id="trailtexture" singleline="1"/>
          </box>
-          <label id="label6" class="panellabel" text="TRAIL EDITING"/>
+          <label id="label6" class="panellabel" text="@me_trailediting"/>
           <box id="traileditor">
             <button id="starttrail"/>
             <button id="pausetrail"/>
@@ -218,7 +218,7 @@
             <button id="prevsegment"/>
             <button id="nextsegment"/>
           </box>
-          <label class="panellabel" text="SELECT DEFAULT MARKER TYPES"/>
+          <label class="panellabel" text="@me_selectdefaultmarkertypes"/>
           <box id="defaultmarkers">
             <button id="default1" text="1"/>
             <button id="default2" text="2"/>

@@ -1,4 +1,5 @@
 #include "OverlayApplication.h"
+#include "InputHooks.h"
 
 COverlayApp::COverlayApp()
 {
@@ -75,6 +76,9 @@ void FetchMarkerPackOnline( CString& ourl );
 
 LRESULT COverlayApp::WindowProc( UINT uMsg, WPARAM wParam, LPARAM lParam )
 {
+  if ( uMsg == WM_TACO_HOTKEY )
+    uMsg = WM_CHAR;
+
   switch ( uMsg )
   {
   case WM_COPYDATA:

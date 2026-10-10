@@ -31,6 +31,15 @@ struct WBSYMBOLINPUT
   TS32 Advance;
 };
 
+struct WBEXTRAGLYPH // glyph rasterized at runtime from a system font instead of coming from the BMFont image
+{
+  TU16 Char;
+  TS32 XRes, YRes;
+  TU8 *Image; // XRes*YRes*4, owned by the CWBFontDescription
+  CPoint Offset;
+  TS32 Advance;
+};
+
 struct WBSYMBOL
 {
   WBATLASHANDLE Handle;
@@ -71,10 +80,13 @@ class CWBFontDescription
   TS32 XRes, YRes;
 
   CArray<WBSYMBOLINPUT> Alphabet;
+  CArray<WBEXTRAGLYPH> ExtraGlyphs;
   CArray<WBKERNINGDATA> KerningData;
 
   TS32 LineHeight;
   TS32 Base;
+
+  TBOOL HasChar( TU16 Char );
 
 public:
 
@@ -83,6 +95,10 @@ public:
 
   TBOOL LoadBMFontBinary( TU8 *Binary, TS32 BinarySize, TU8 *Image, TS32 XRes, TS32 YRes, CArray<int>& enabledGlyphs = CArray<int>() ); //32 bit raw image data
   TBOOL LoadBMFontText( TU8 *Binary, TS32 BinarySize, TU8 *Image, TS32 XRes, TS32 YRes, CArray<int>& enabledGlyphs = CArray<int>() ); //32 bit raw image data
+
+  // rasterizes the characters of [FirstChar,LastChar] this font lacks from an installed TrueType font, sized so that
+  // FirstChar's height matches this font's 'x' (but at least MinBodyHeight pixels) and outlined like the BMFont glyphs
+  TBOOL AddSystemFontGlyphs( const wchar_t *FaceName, TU16 FirstChar, TU16 LastChar, TS32 MinBodyHeight );
 };
 
 class CWBFont
@@ -101,8 +117,13 @@ class CWBFont
 
   TCHAR MissingChar;
 
+  TS32 ThaiToneRaise = 0; // see GetThaiMarkOffset()
+  TS32 ThaiTallShift = 0;
+
   void AddSymbol( TU16 Char, WBATLASHANDLE Handle, CSize &Size, CPoint &Offset, TS32 Advance, CRect contentRect );
   void AddKerningPair( TU16 First, TU16 Second, TS16 Amount );
+  TBOOL HasSymbol( TU16 Char );
+  CPoint GetThaiMarkOffset( TU16 Prev, TU16 Char, TU16 Next, TU16 Base );
 
 public:
 

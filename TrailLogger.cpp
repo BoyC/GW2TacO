@@ -68,6 +68,7 @@ void GW2TrailDisplay::DrawProxy( CWBDrawAPI* API, bool miniMaprender )
 
   float one = 1;
   float data[ 8 ];
+  float trailWidthScale = max( 10, Config::GetValue( "TrailWidth" ) ) / 100.0f;
 
   auto& trails = GetMapTrails();
 
@@ -107,7 +108,8 @@ void GW2TrailDisplay::DrawProxy( CWBDrawAPI* API, bool miniMaprender )
 
         float width = GameToWorldCoords( 20 );
 
-        trail.SetupAndDraw( constBuffer, texture, cam, persp, one, x == 0, fadeoutBubble, data, GetMapFade() * globalOpacity, width, width, 1.0f );
+        // the texture scales with the width so its arrows keep their shape
+        trail.SetupAndDraw( constBuffer, texture, cam, persp, one, x == 0, fadeoutBubble, data, GetMapFade() * globalOpacity, width * trailWidthScale, width / trailWidthScale, 1.0f );
       }
 
       if ( editedTrail )

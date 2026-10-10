@@ -342,6 +342,7 @@
     <ClCompile Include="OverlayConfig.cpp" />
     <ClCompile Include="OverlayWindow.cpp" />
     <ClCompile Include="ProFont.cpp" />
+    <ClCompile Include="SettingsWindow.cpp" />
     <ClCompile Include="RaidProgress.cpp" />
     <ClCompile Include="RangeDisplay.cpp" />
     <ClCompile Include="TPTracker.cpp" />
@@ -374,6 +375,7 @@
     <ClInclude Include="OverlayConfig.h" />
     <ClInclude Include="OverlayWindow.h" />
     <ClInclude Include="ProFont.h" />
+    <ClInclude Include="SettingsWindow.h" />
     <ClInclude Include="RaidProgress.h" />
     <ClInclude Include="RangeDisplay.h" />
     <ClInclude Include="resource.h" />

@@ -3,6 +3,29 @@
 #include "ContextMenu.h"
 #include "Button.h"
 
+// entries are spaced out and toggles get drawn check boxes, like the TacO settings window
+static const TS32 EntryPaddingY = 6;
+static const TS32 EntryMarginX = 6;
+
+static TS32 GetCheckBoxSize( CWBFont *Font )
+{
+  return max( 10, Font->GetLineHeight() * 5 / 8 );
+}
+
+TS32 CWBContextMenu::GetEntryHeight( CWBFont *Font )
+{
+  return Font->GetLineHeight() + entryPadding;
+}
+
+// the check boxes get a column of their own when any entry has one, so the texts stay aligned
+TS32 CWBContextMenu::GetCheckColumnWidth( CWBFont *Font )
+{
+  for ( TS32 x = 0; x < Items.NumItems(); x++ )
+    if ( !Items[ x ]->Separator && Items[ x ]->Check >= 0 )
+      return GetCheckBoxSize( Font ) + 8;
+  return 0;
+}
+
 void CWBContextMenu::OnDraw( CWBDrawAPI *API )
 {
   WBITEMSTATE i = GetState();
@@ -15,6 +38,7 @@ void CWBContextMenu::OnDraw( CWBDrawAPI *API )
   CRect padding = CSSProperties.PositionDescriptor.GetPadding( Client.Size(), CRect( 0, 0, 0, 0 ) );
 
   CPoint Offset = CPoint( padding.x1, padding.y1 );
+  TS32 checkColumn = Font ? GetCheckColumnWidth( Font ) : 0;
 
   for ( TS32 x = 0; x < Items.NumItems(); x++ )
   {
@@ -64,7 +88,21 @@ void CWBContextMenu::OnDraw( CWBDrawAPI *API )
           textColor = CSSProperties.DisplayDescriptor.GetColor( WB_STATE_HOVER, WB_ITEM_FONTCOLOR );
         }
 
-        TS32 width = Font->Write( API, Items[ x ]->Text, Offset, textColor, TextTransform );
+        TS32 entryHeight = GetEntryHeight( Font );
+        CPoint textPos = Offset + CPoint( EntryMarginX + checkColumn, entryPadding / 2 );
+
+        if ( Items[ x ]->Check >= 0 )
+        {
+          TS32 size = GetCheckBoxSize( Font );
+          CPoint boxPos = Offset + CPoint( EntryMarginX, ( entryHeight - size ) / 2 );
+          CRect box( boxPos, boxPos + CPoint( size, size ) );
+          API->DrawRect( box, CColor::FromARGB( 0x80000000 ) );
+          API->DrawRectBorder( box, CSSProperties.DisplayDescriptor.GetColor( WB_STATE_NORMAL, WB_ITEM_FONTCOLOR ) );
+          if ( Items[ x ]->Check )
+            API->DrawRect( CRect( box.x1 + 2, box.y1 + 2, box.x2 - 2, box.y2 - 2 ), CSSProperties.DisplayDescriptor.GetColor( WB_STATE_ACTIVE, WB_ITEM_FONTCOLOR ) );
+        }
+
+        TS32 width = Font->Write( API, Items[ x ]->Text, textPos, textColor, TextTransform );
 
         if ( Items[ x ]->Children.NumItems() ) //draw sub arrow
         {
@@ -75,11 +113,11 @@ void CWBContextMenu::OnDraw( CWBDrawAPI *API )
           else
           {
             TS32 wi = Font->GetWidth( _T( ">" ) );
-            Font->Write( API, _T( ">" ), CPoint( GetWindowRect().x2 - wi - CSSProperties.BorderSizes.x2 - ( Client.x2 - padding.x2 ), Offset.y ), textColor );
+            Font->Write( API, _T( ">" ), CPoint( GetWindowRect().x2 - wi - EntryMarginX - CSSProperties.BorderSizes.x2 - ( Client.x2 - padding.x2 ), textPos.y ), textColor );
           }
         }
 
-        Offset.y += Font->GetLineHeight();
+        Offset.y += entryHeight;
       }
   }
 
@@ -126,6 +164,9 @@ void CWBContextMenu::ResizeToContentSize()
   padding = CSSProperties.PositionDescriptor.GetPadding( Client.Size(), CRect( 0, 0, 0, 0 ) );
 
   ContentSize.y = padding.y1;
+  TS32 checkColumn = Font ? GetCheckColumnWidth( Font ) : 0;
+  TS32 entries = 0;
+  entryPadding = EntryPaddingY;
 
   for ( TS32 x = 0; x < Items.NumItems(); x++ )
   {
@@ -136,6 +177,7 @@ void CWBContextMenu::ResizeToContentSize()
     else
       if ( Font )
       {
+        entries++;
         TS32 arrowPadding = 0;
 
         if ( Items[ x ]->Children.NumItems() ) //account for sub arrow
@@ -146,12 +188,12 @@ void CWBContextMenu::ResizeToContentSize()
           }
           else
           {
-            arrowPadding = Font->GetWidth( _T( ">" ) );
+            arrowPadding = Font->GetWidth( _T( ">" ) ) + EntryMarginX;
           }
         }
 
-        ContentSize.x = max( ContentSize.x, padding.x1 + Client.x2 - padding.x2 + arrowPadding + Font->GetWidth( Items[ x ]->Text, true, TextTransform ) );
-        ContentSize.y += Font->GetLineHeight();
+        ContentSize.x = max( ContentSize.x, padding.x1 + Client.x2 - padding.x2 + EntryMarginX * 2 + checkColumn + arrowPadding + Font->GetWidth( Items[ x ]->Text, true, TextTransform ) );
+        ContentSize.y += GetEntryHeight( Font );
       }
   }
 
@@ -159,6 +201,14 @@ void CWBContextMenu::ResizeToContentSize()
 
   CRect r = GetPosition();
   CSize Size = ContentSize + GetClientWindowSizeDifference();
+
+  // long menus go back to compact entries so every entry stays on the screen
+  if ( GetParent() && Size.y > GetParent()->GetClientRect().Height() )
+  {
+    Size.y -= entries * entryPadding;
+    entryPadding = 0;
+  }
+
   SetPosition( CRect( r.TopLeft(), r.TopLeft() + Size ) );
 }
 
@@ -179,26 +229,29 @@ TBOOL CWBContextMenu::Initialize( CWBItem *Parent, const CRect &Position, WBGUID
   //CSSProperties.PositionDescriptor.SetValue(WB_PADDING_RIGHT, 30, 1);
 
 
-  SeparatorElements.PositionDescriptor.SetValue( WB_PADDING_TOP, 0, 1 );
+  SeparatorElements.PositionDescriptor.SetValue( WB_PADDING_LEFT, 0, EntryMarginX );
+  SeparatorElements.PositionDescriptor.SetValue( WB_PADDING_TOP, 0, 3 );
   SeparatorElements.PositionDescriptor.SetValue( WB_HEIGHT, 0, 1 );
-  SeparatorElements.PositionDescriptor.SetValue( WB_PADDING_BOTTOM, 0, 1 );
+  SeparatorElements.PositionDescriptor.SetValue( WB_PADDING_RIGHT, 0, EntryMarginX );
+  SeparatorElements.PositionDescriptor.SetValue( WB_PADDING_BOTTOM, 0, 3 );
 
   App->SetCapture( this );
   return true;
 }
 
-CWBContextItem *CWBContextMenu::AddItem( const TCHAR *Text, TS32 ID, TBOOL Highlighted, TBOOL closesContext )
+CWBContextItem *CWBContextMenu::AddItem( const TCHAR *Text, TS32 ID, TBOOL Highlighted, TBOOL closesContext, TS32 Check )
 {
-  return AddItem( CString( Text ), ID, Highlighted, closesContext );
+  return AddItem( CString( Text ), ID, Highlighted, closesContext, Check );
 }
 
-CWBContextItem * CWBContextMenu::AddItem( const CString &Text, TS32 ID, TBOOL Highlighted, TBOOL closesContext )
+CWBContextItem * CWBContextMenu::AddItem( const CString &Text, TS32 ID, TBOOL Highlighted, TBOOL closesContext, TS32 Check )
 {
   CWBContextItem *Item = new CWBContextItem();
   Item->Text = Text;
   Item->ReturnID = ID;
   Item->Highlighted = Highlighted;
   Item->closesContext = closesContext;
+  Item->Check = Check;
   Items += Item;
   ResizeToContentSize();
 
@@ -213,6 +266,11 @@ void CWBContextMenu::AddSeparator()
 
 void CWBContextMenu::FlushItems()
 {
+  // items of open submenus are copies pointing back at the items freed here
+  for ( CWBContextMenu* menu = SubMenu; menu; menu = menu->SubMenu )
+    for ( TS32 x = 0; x < menu->Items.NumItems(); x++ )
+      menu->Items[ x ]->ClearCopyLinks();
+
   Items.FreeArray();
 }
 
@@ -343,6 +401,7 @@ void CWBContextMenu::SpawnSubMenu( TS32 itemidx )
     newitm->Separator = olditm->Separator;
     newitm->Highlighted = olditm->Highlighted;
     newitm->closesContext = olditm->closesContext;
+    newitm->Check = olditm->Check;
     newitm->CopyChildrenFrom( olditm );
   }
 
@@ -374,9 +433,9 @@ CRect CWBContextMenu::GetItemRect( TS32 idx )
     else
       if ( Font )
       {
-        CRect EntryPos = CRect( GetWindowRect().x1, Offset.y, GetWindowRect().x2, Offset.y + Font->GetLineHeight() );
+        CRect EntryPos = CRect( GetWindowRect().x1, Offset.y, GetWindowRect().x2, Offset.y + GetEntryHeight( Font ) );
         if ( x == idx ) return EntryPos;
-        Offset.y += Font->GetLineHeight();
+        Offset.y += GetEntryHeight( Font );
       }
   }
 
@@ -425,25 +484,27 @@ void CWBContextItem::CopyChildrenFrom( CWBContextItem *itm )
     newitm->Separator = olditm->Separator;
     newitm->Highlighted = olditm->Highlighted;
     newitm->closesContext = olditm->closesContext;
+    newitm->Check = olditm->Check;
     newitm->CopyChildrenFrom( olditm );
     newitm->CopyOf = olditm;
   }
 }
 
-CWBContextItem * CWBContextItem::AddItem( const TCHAR *Text, TS32 ID, TBOOL Highlighted, TBOOL closesContext )
+CWBContextItem * CWBContextItem::AddItem( const TCHAR *Text, TS32 ID, TBOOL Highlighted, TBOOL closesContext, TS32 Check )
 {
   CWBContextItem *Item = new CWBContextItem();
   Item->Text = Text;
   Item->ReturnID = ID;
   Item->Highlighted = Highlighted;
   Item->closesContext = closesContext;
+  Item->Check = Check;
   Children += Item;
   return Item;
 }
 
-CWBContextItem * CWBContextItem::AddItem( const CString& Text, TS32 ID, TBOOL Highlighted, TBOOL closesContext )
+CWBContextItem * CWBContextItem::AddItem( const CString& Text, TS32 ID, TBOOL Highlighted, TBOOL closesContext, TS32 Check )
 {
-  return AddItem( Text.GetPointer(), ID, Highlighted, closesContext );
+  return AddItem( Text.GetPointer(), ID, Highlighted, closesContext, Check );
 }
 
 void CWBContextItem::AddSeparator()
@@ -453,22 +514,34 @@ void CWBContextItem::AddSeparator()
   Children.Last()->Separator = true;
 }
 
+// a submenu shows copies of its parent item's children and is rebuilt from the originals every time it opens again,
+// so changes have to reach the originals too or reopening the submenu shows the old state
 void CWBContextItem::SetText( const CString& text )
 {
   Text = text;
-/*
   if ( CopyOf )
     CopyOf->SetText( text );
-*/
 }
 
 void CWBContextItem::SetHighlight( TBOOL highlighted )
 {
   Highlighted = highlighted;
-/*
   if ( CopyOf )
     CopyOf->SetHighlight( highlighted );
-*/
+}
+
+void CWBContextItem::SetCheck( TS32 check )
+{
+  Check = check;
+  if ( CopyOf )
+    CopyOf->SetCheck( check );
+}
+
+void CWBContextItem::ClearCopyLinks()
+{
+  CopyOf = nullptr;
+  for ( TS32 x = 0; x < Children.NumItems(); x++ )
+    Children[ x ]->ClearCopyLinks();
 }
 
 TBOOL CWBContextMenu::ApplyStyle( CString & prop, CString & value, CStringArray &pseudo )

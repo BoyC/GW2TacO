@@ -219,8 +219,8 @@ TS3Connection::CommandResponse TS3Connection::SendCommand( CString& message )
       if ( msg.NumItems() >= 3 )
         response.Message = msg[ 2 ].Substring( 4 );
 
-      if ( response.ErrorCode )
-        LOG_DBG( "[GW2TacO] command %s response: %d %s", message.GetPointer(), response.ErrorCode, response.Message.GetPointer() );
+      if ( response.ErrorCode ) // the auth command carries the API key, keep it out of the log and crash reports
+        LOG_DBG( "[GW2TacO] command %s response: %d %s", message.Find( "auth " ) == 0 ? "auth <hidden>" : message.GetPointer(), response.ErrorCode, response.Message.GetPointer() );
       break;
     }
   }

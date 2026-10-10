@@ -344,4 +344,103 @@
   <token key="dustwhisper_well" value="Dustwhisper Well"/>
   <token key="lastgasp_well" value="Lastgasp Well"/>
   <token key="smashedhope_well" value="Smashedhope Well"/>
+  <token key="me_editeditem" value="Edited item:"/>
+  <token key="me_visualappearance" value="VISUAL APPEARANCE"/>
+  <token key="me_size" value="SIZE:"/>
+  <token key="me_minimapsize" value="MINIMAP SIZE:"/>
+  <token key="me_minimapfadeout" value="MINIMAP FADEOUT:"/>
+  <token key="me_minsize" value="MINIMUM SIZE:"/>
+  <token key="me_maxsize" value="MAXIMUM SIZE:"/>
+  <token key="me_scaleonminimap" value="SCALE ON MINIMAP"/>
+  <token key="me_icon" value="ICON:"/>
+  <token key="me_color" value="Color:"/>
+  <token key="me_alpha" value="ALPHA:"/>
+  <token key="me_fadenear" value="FADE NEAR:"/>
+  <token key="me_fadefar" value="FADE FAR:"/>
+  <token key="me_height" value="HEIGHT:"/>
+  <token key="me_behaviorheader" value="BEHAVIOR"/>
+  <token key="me_behavior" value="BEHAVIOR:"/>
+  <token key="me_bh_alwaysvisible" value="ALWAYS VISIBLE"/>
+  <token key="me_bh_mapchange" value="REAPPEAR ON MAP CHANGE"/>
+  <token key="me_bh_dailyreset" value="REAPPEAR ON DAILY RESET"/>
+  <token key="me_bh_beforeactivation" value="ONLY VISIBLE BEFORE ACTIVATION"/>
+  <token key="me_bh_aftertimer" value="REAPPEAR AFTER TIMER"/>
+  <token key="me_bh_mapreset" value="REAPPEAR ON MAP RESET"/>
+  <token key="me_bh_onceperinstance" value="ACTIVATE ONCE PER INSTANCE"/>
+  <token key="me_bh_dailyperchar" value="ACTIVATE DAILY PER CHAR"/>
+  <token key="me_bh_onceperinstanceperchar" value="ACTIVATE ONCE PER INSTANCE PER CHAR"/>
+  <token key="me_bh_wvwobjective" value="WVW OBJECTIVE"/>
+  <token key="me_achievementid" value="ACHIEVEMENT ID:"/>
+  <token key="me_achievementbit" value="ACHIEVEMENT BIT:"/>
+  <token key="me_resetlength" value="RESET LENGTH:"/>
+  <token key="me_defaulttoggle" value="DEFAULT TOGGLE"/>
+  <token key="me_hascountdown" value="HAS COUNTDOWN"/>
+  <token key="me_togglecategory" value="TOGGLE CATEGORY:"/>
+  <token key="me_rangedbehavior" value="RANGED BEHAVIOR"/>
+  <token key="me_autotrigger" value="AUTO TRIGGER"/>
+  <token key="me_triggerrange" value="TRIGGER RANGE:"/>
+  <token key="me_inforange" value="INFO RANGE:"/>
+  <token key="me_infotext" value="INFO TEXT:"/>
+  <token key="me_copiedtext" value="COPIED TEXT:"/>
+  <token key="me_copymessage" value="COPY MESSAGE:"/>
+  <token key="me_visibility" value="VISIBILITY"/>
+  <token key="me_visibleminimap" value="VISIBLE ON MINIMAP"/>
+  <token key="me_visiblebigmap" value="VISIBLE ON FULL MAP"/>
+  <token key="me_visibleingame" value="VISIBLE IN GAME"/>
+  <token key="me_keeponmapedge" value="KEEP ON MAP EDGE"/>
+  <token key="me_trails" value="TRAILS"/>
+  <token key="me_animspeed" value="ANIM SPEED:"/>
+  <token key="me_trailscale" value="TRAIL SCALE:"/>
+  <token key="me_trailfile" value="TRAIL FILE:"/>
+  <token key="me_trailtexture" value="TRAIL TEXTURE:"/>
+  <token key="me_trailediting" value="TRAIL EDITING"/>
+  <token key="me_selectdefaultmarkertypes" value="SELECT DEFAULT MARKER TYPES"/>
+  <token key="me_noediteditem" value="NO EDITED ITEM CURRENTLY!"/>
+  <token key="me_category" value="CATEGORY: "/>
+  <token key="me_editedmarker" value="EDITED MARKER: "/>
+  <token key="me_externalmarker" value="EXTERNAL MARKER: "/>
+  <token key="me_editedtrail" value="EDITED TRAIL: "/>
+  <token key="me_externaltrail" value="EXTERNAL TRAIL: "/>
+  <token key="me_type" value="Type: "/>
+  <token key="me_typeundefined" value="Type: undefined"/>
+  <token key="me_markertype" value="Marker Type: "/>
+  <token key="showallcategories" value="Show all"/>
+  <token key="hideallcategories" value="Hide all"/>
+  <token key="showonlycategory" value="Show only this"/>
+  <token key="categoryhotkey" value="Hotkey"/>
+  <token key="bindcategoryhotkey" value="Bind hotkey..."/>
+  <token key="categoryshown" value="shown"/>
+  <token key="categoryhidden" value="hidden"/>
+  <token key="markercategory" value="Marker category"/>
+  <token key="toggle_settings_window" value="Open/Close TacO Settings"/>
+  <token key="opensettings" value="TacO Settings..."/>
+  <token key="settings_markers" value="Markers"/>
+  <token key="settings_trails" value="Trails"/>
+  <token key="settings_display" value="Display"/>
+  <token key="settings_windows" value="Windows"/>
+  <token key="settings_hotkeys" value="Hotkeys"/>
+  <token key="settings_menu" value="TacO menu"/>
+  <token key="settings_general" value="General"/>
+  <token key="settings_showmarkers" value="Show markers"/>
+  <token key="markerfadedistance" value="Fade out beyond"/>
+  <token key="fadeoff" value="Off"/>
+  <token key="collectedmarkers" value="Collected markers"/>
+  <token key="collectedhide" value="Hide"/>
+  <token key="collectedfaded" value="Faded"/>
+  <token key="collectedshow" value="Show"/>
+  <token key="settings_markersshow" value="Where markers show"/>
+  <token key="settings_markerdisplay" value="Display"/>
+  <token key="trailwidth" value="Trail width"/>
+  <token key="settings_trailsshow" value="Where trails show"/>
+  <token key="settings_editmodehint" value="Turn on edit mode to move and resize these windows."/>
+  <token key="settings_hotkeyhint" value="Click a key to change it. Esc while binding removes it."/>
+  <token key="settings_editorkeys" value="Marker editor"/>
+  <token key="settings_categorykeys" value="Marker categories"/>
+  <token key="settings_nocategorykeys" value="Bind one from a category in the marker filter menu."/>
+  <token key="settings_tacobutton" value="TacO button"/>
+  <token key="settings_tacobuttonhint" value="With edit mode on, drag the TacO button to move it."/>
+  <token key="settings_resetbutton" value="Reset button position"/>
+  <token key="settings_showinmenu" value="Show in the TacO menu"/>
+  <token key="settings_editkey" value="Edit"/>
+  <token key="settings_setts3key" value="Set API key"/>
 </TacOLanguageData>

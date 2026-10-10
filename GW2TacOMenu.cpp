@@ -20,6 +20,7 @@
 #include "BuildCount.h"
 #include "ThirdParty/BugSplat/inc/BugSplat.h"
 #include "MarkerPack.h"
+#include "SettingsWindow.h"
 using namespace jsonxx;
 
 CString UIFileNames[] =
@@ -66,6 +67,7 @@ CString ActionNames[] =
   "*copy_selected_marker",
   "*undo_edit",
   "*redo_edit",
+  "toggle_settings_window",
 };
 
 CString APIKeyNames[] =
@@ -193,6 +195,8 @@ enum MainMenuItems
   Menu_OpacityMap_Transparent,
   Menu_OpacityMap_Faded,
   Menu_KeyBindsEnabled,
+  Menu_ShowAllCategories,
+  Menu_HideAllCategories,
 
   Menu_RaidToggles = 0x1000,
   Menu_RaidToggles_End = 0x2000,
@@ -289,20 +293,21 @@ CString GW2TacO::GetKeybindString( TacOKeyAction action )
   return "";
 }
 
-CString GetConfigActiveString( const char* cfg, int active = -1 )
+// the check box state of a menu entry
+TS32 GetConfigCheck( const char* cfg, int active = -1 )
 {
   if ( active == -1 )
-    return Config::GetValue( cfg ) ? "[x] " : "[ ] ";
-  return Config::GetValue( cfg ) == active ? "[x] " : "[ ] ";
+    return Config::GetValue( cfg ) ? 1 : 0;
+  return Config::GetValue( cfg ) == active ? 1 : 0;
 }
 
 struct ToggleOption
 {
   CString text;
   CString configOption;
-  CString activeText;
   int menuItem;
   bool toggle = true;
+  bool window = false; // the config value is the window's open state, the menu action opens or closes the window
   int value = -1;
   bool doHighlight = false;
   bool rebuildMenu = false;
@@ -319,7 +324,7 @@ CWBContextItem* AddToggleOption( CWBContextMenu* root, const CString config, con
   option.rebuildMenu = rebuildMenu;
   toggleOptions[ menuItem ] = option;
 
-  return root->AddItem( ( GetConfigActiveString( config.GetPointer() ) + text ).GetPointer(), menuItem, highlighted, false );
+  return root->AddItem( text, menuItem, highlighted, false, GetConfigCheck( config.GetPointer() ) );
 }
 
 CWBContextItem* AddSetValueOption( CWBContextItem* root, const CString config, const CString& text, int menuItem, int value, bool highlighted = false )
@@ -333,7 +338,7 @@ CWBContextItem* AddSetValueOption( CWBContextItem* root, const CString config, c
   option.doHighlight = highlighted;
   toggleOptions[ menuItem ] = option;
 
-  return root->AddItem( ( GetConfigActiveString( config.GetPointer(), value ) + text ).GetPointer(), menuItem, highlighted ? ( value == Config::GetValue( config.GetPointer() ) ) : false, false );
+  return root->AddItem( text, menuItem, highlighted ? ( value == Config::GetValue( config.GetPointer() ) ) : false, false, GetConfigCheck( config.GetPointer(), value ) );
 }
 
 CWBContextItem* AddToggleOption( CWBContextItem* root, const CString config, const CString& text, int menuItem, bool highlighted = false, bool rebuildMenu = false )
@@ -345,93 +350,59 @@ CWBContextItem* AddToggleOption( CWBContextItem* root, const CString config, con
   option.rebuildMenu = rebuildMenu;
   toggleOptions[ menuItem ] = option;
 
-  return root->AddItem( ( GetConfigActiveString( config.GetPointer() ) + text ).GetPointer(), menuItem, highlighted, false );
+  return root->AddItem( text, menuItem, highlighted, false, GetConfigCheck( config.GetPointer() ) );
 }
 
-CWBContextItem* AddTwoTextOption( CWBContextMenu* root, const CString config, const CString& text, const CString& textActive, int menuItem, bool highlighted = false )
+// checked while the window is open, like the Windows tab of the settings window
+CWBContextItem* AddWindowOption( CWBContextMenu* root, const CString& window, const CString& text, int menuItem )
 {
   ToggleOption option;
   option.text = text;
-  option.configOption = config;
+  option.configOption = Config::GetWindowOpenConfigValue( window.GetPointer() );
   option.menuItem = menuItem;
-  option.activeText = textActive;
+  option.window = true;
   option.rebuildMenu = true;
   toggleOptions[ menuItem ] = option;
 
-  return root->AddItem( Config::GetValue( config.GetPointer() ) ? textActive : text, menuItem, highlighted, false );
+  return root->AddItem( text, menuItem, false, false, GetConfigCheck( option.configOption.GetPointer() ) );
+}
+
+// entries can be hidden from the menu in the settings window
+bool IsMenuItemShown( const char* id )
+{
+  return !Config::GetValue( ( CString( "MenuHidden_" ) + id ).GetPointer() );
 }
 
 void GW2TacO::OpenMainMenu( CWBContextMenu* ctx )
 {
   ctx->SetID( "TacOMenu" );
 
+  // separators only go between groups that have items, so hidden entries don't leave empty groups behind
+  TBOOL groupHasItems = false;
+  auto separator = [ & ]()
+  {
+    if ( groupHasItems )
+      ctx->AddSeparator();
+    groupHasItems = false;
+  };
+
   if ( Config::GetValue( "TacticalLayerVisible" ) )
   {
     auto flt = ctx->AddItem( DICT( "filtermarkers" ), 0, false, false );
+    flt->AddItem( DICT( "showallcategories", "Show all" ), Menu_ShowAllCategories );
+    flt->AddItem( DICT( "hideallcategories", "Hide all" ), Menu_HideAllCategories );
+    flt->AddSeparator();
     {
       CLightweightCriticalSection cs( &Achievements::critSec );
       OpenTypeContextMenu( flt, CategoryList, true, Menu_MarkerFilter_Base, false, Achievements::achievements );
     }
-    auto options = ctx->AddItem( DICT( "tacticalsettings" ), 0, false, false );
 
-    AddToggleOption( options, "TacticalDrawDistance", DICT( "togglepoidistance" ), Menu_ToggleDrawDistance );
-    AddToggleOption( options, "TacticalIconsOnEdge", DICT( "toggleherdicons" ), Menu_ToggleTacticalsOnEdge );
-    AddToggleOption( options, "DrawWvWNames", DICT( "toggledrawwvwnames" ), Menu_DrawWvWNames );
-    AddToggleOption( options, "FadeoutBubble", DICT( "togglefadeoutbubble" ), Menu_ToggleFadeoutBubble );
-    AddToggleOption( options, "UseMetricDisplay", DICT( "togglemetricsystem" ), Menu_ToggleMetricSystem );
-    AddToggleOption( options, "TacticalInfoTextVisible", DICT( "toggletacticalinfotext" ), Menu_TogglePOIInfoText );
-    AddToggleOption( options, "CanWriteToClipboard", DICT( "toggleclipboardaccess" ), Menu_ToggleClipboardAccess );
-    AddToggleOption( options, "ForceFestivals", DICT( "forcefestivals" ), Menu_ForceFestivals );
-    AddToggleOption( options, "NoCategoryHiding", DICT( "nocategoryhiding" ), Menu_NoCategoryHiding, false, true );
-
-    auto opacityMenu = options->AddItem( DICT( "markeropacity" ), 0, false, false );
-    auto opacityInGame = opacityMenu->AddItem( DICT( "ingameopacity" ), 0, false, false );
-    AddSetValueOption( opacityInGame, "OpacityIngame", DICT( "opacitysolid" ), Menu_OpacityIngame_Solid, 0 );
-    AddSetValueOption( opacityInGame, "OpacityIngame", DICT( "opacityfaded" ), Menu_OpacityIngame_Faded, 1 );
-    AddSetValueOption( opacityInGame, "OpacityIngame", DICT( "opacitytransparent" ), Menu_OpacityIngame_Transparent, 2 );
-
-    auto opacityMiniMap = opacityMenu->AddItem( DICT( "mapopacity" ), 0, false, false );
-    AddSetValueOption( opacityMiniMap, "OpacityMap", DICT( "opacitysolid" ), Menu_OpacityMap_Solid, 0 );
-    AddSetValueOption( opacityMiniMap, "OpacityMap", DICT( "opacityfaded" ), Menu_OpacityMap_Faded, 1 );
-    AddSetValueOption( opacityMiniMap, "OpacityMap", DICT( "opacitytransparent" ), Menu_OpacityMap_Transparent, 2 );
-
-    auto visibilityMenu = options->AddItem( DICT( "visibilitymenu" ), 0, false, false );
-    auto markerSubMenu = visibilityMenu->AddItem( DICT( "markervisibilitymenu" ), 0, false, false );
-    auto markerInGameSubMenu = markerSubMenu->AddItem( DICT( "ingamevisibility" ), 0, false, false );
-    AddSetValueOption( markerInGameSubMenu, "ShowInGameMarkers", DICT( "defaultvisibility" ), Menu_MarkerVisibility_InGameMap_Default, 1 );
-    AddSetValueOption( markerInGameSubMenu, "ShowInGameMarkers", DICT( "forceonvisibility" ), Menu_MarkerVisibility_InGameMap_Force, 2 );
-    AddSetValueOption( markerInGameSubMenu, "ShowInGameMarkers", DICT( "forceoffvisibility" ), Menu_MarkerVisibility_InGameMap_Off, 0 );
-    auto markerMiniMapSubMenu = markerSubMenu->AddItem( DICT( "minimapvisibility" ), 0, false, false );
-    AddSetValueOption( markerMiniMapSubMenu, "ShowMinimapMarkers", DICT( "defaultvisibility" ), Menu_MarkerVisibility_MiniMap_Default, 1 );
-    AddSetValueOption( markerMiniMapSubMenu, "ShowMinimapMarkers", DICT( "forceonvisibility" ), Menu_MarkerVisibility_MiniMap_Force, 2 );
-    AddSetValueOption( markerMiniMapSubMenu, "ShowMinimapMarkers", DICT( "forceoffvisibility" ), Menu_MarkerVisibility_MiniMap_Off, 0 );
-    auto markerMapSubMenu = markerSubMenu->AddItem( DICT( "mapvisibility" ), 0, false, false );
-    AddSetValueOption( markerMapSubMenu, "ShowBigmapMarkers", DICT( "defaultvisibility" ), Menu_MarkerVisibility_BigMap_Default, 1 );
-    AddSetValueOption( markerMapSubMenu, "ShowBigmapMarkers", DICT( "forceonvisibility" ), Menu_MarkerVisibility_BigMap_Force, 2 );
-    AddSetValueOption( markerMapSubMenu, "ShowBigmapMarkers", DICT( "forceoffvisibility" ), Menu_MarkerVisibility_BigMap_Off, 0 );
-    auto trailSubMenu = visibilityMenu->AddItem( DICT( "trailvisibilitymenu" ), 0, false, false );
-    auto trailInGameSubMenu = trailSubMenu->AddItem( DICT( "ingamevisibility" ), 0, false, false );
-    AddSetValueOption( trailInGameSubMenu, "ShowInGameTrails", DICT( "defaultvisibility" ), Menu_TrailVisibility_InGameMap_Default, 1 );
-    AddSetValueOption( trailInGameSubMenu, "ShowInGameTrails", DICT( "forceonvisibility" ), Menu_TrailVisibility_InGameMap_Force, 2 );
-    AddSetValueOption( trailInGameSubMenu, "ShowInGameTrails", DICT( "forceoffvisibility" ), Menu_TrailVisibility_InGameMap_Off, 0 );
-    auto trailMiniMapSubMenu = trailSubMenu->AddItem( DICT( "minimapvisibility" ), 0, false, false );
-    AddSetValueOption( trailMiniMapSubMenu, "ShowMinimapTrails", DICT( "defaultvisibility" ), Menu_TrailVisibility_MiniMap_Default, 1 );
-    AddSetValueOption( trailMiniMapSubMenu, "ShowMinimapTrails", DICT( "forceonvisibility" ), Menu_TrailVisibility_MiniMap_Force, 2 );
-    AddSetValueOption( trailMiniMapSubMenu, "ShowMinimapTrails", DICT( "forceoffvisibility" ), Menu_TrailVisibility_MiniMap_Off, 0 );
-    auto trailMapSubMenu = trailSubMenu->AddItem( DICT( "mapvisibility" ), 0, false, false );
-    AddSetValueOption( trailMapSubMenu, "ShowBigmapTrails", DICT( "defaultvisibility" ), Menu_TrailVisibility_BigMap_Default, 1 );
-    AddSetValueOption( trailMapSubMenu, "ShowBigmapTrails", DICT( "forceonvisibility" ), Menu_TrailVisibility_BigMap_Force, 2 );
-    AddSetValueOption( trailMapSubMenu, "ShowBigmapTrails", DICT( "forceoffvisibility" ), Menu_TrailVisibility_BigMap_Off, 0 );
-
-    auto utils = ctx->AddItem( DICT( "tacticalutilities" ), 0, false, false );
-    utils->AddItem( DICT( "reloadmarkers" ), Menu_ReloadMarkers, false, false );
-    utils->AddItem( DICT( "removemymarkers" ), 0, false, false )->AddItem( DICT( "reallyremovemarkers" ), Menu_DeleteMyMarkers );
-
-    auto onlineMarkers = ctx->AddItem( DICT( "onlinemarkers" ), 0, false, false );
-    AddToggleOption( onlineMarkers, "FetchMarkerPacks", DICT( "downloadmarkers" ), Menu_ToggleAutomaticMarkerUpdates );
-    onlineMarkers->AddSeparator();
-
+    if ( IsMenuItemShown( "onlinemarkers" ) )
     {
+      auto onlineMarkers = ctx->AddItem( DICT( "onlinemarkers" ), 0, false, false );
+      AddToggleOption( onlineMarkers, "FetchMarkerPacks", DICT( "downloadmarkers" ), Menu_ToggleAutomaticMarkerUpdates );
+      onlineMarkers->AddSeparator();
+
       CLightweightCriticalSection cs( &dlTextCritSec );
       for ( int x = 0; x < markerPacks.NumItems(); x++ )
       {
@@ -452,265 +423,270 @@ void GW2TacO::OpenMainMenu( CWBContextMenu* ctx )
         AddToggleOption( onlineMarkers, "MarkerPack_" + markerPacks[ x ].id + "_autoupdate", state + markerPacks[ x ].name, Menu_MarkerPacks_Base + x, false );
       }
     }
-
   }
   AddToggleOption( ctx, "TacticalLayerVisible", GetKeybindString( TacOKeyAction::Toggle_tactical_layer ) + DICT( "toggletactical" ), Menu_ToggleTactical, false, true );
+  groupHasItems = true;
+  separator();
 
-  ctx->AddSeparator();
-
-  if ( mumbleLink.isPvp )
+  if ( IsMenuItemShown( "rangecircles" ) )
   {
-    ctx->AddItem( DICT( "rangecirclesnotavailable" ), 0, false, false );
+    if ( mumbleLink.isPvp )
+      ctx->AddItem( DICT( "rangecirclesnotavailable" ), 0, false, false );
+    else
+      AddToggleOption( ctx, "RangeCirclesVisible", GetKeybindString( TacOKeyAction::Toggle_range_circles ) + DICT( "togglerangecircles" ), Menu_ToggleRangeCircles );
+    groupHasItems = true;
   }
-  else
+  if ( IsMenuItemShown( "compass" ) )
   {
-    AddToggleOption( ctx, "RangeCirclesVisible", GetKeybindString( TacOKeyAction::Toggle_range_circles ) + DICT( "togglerangecircles" ), Menu_ToggleRangeCircles );
-    if ( Config::GetValue( "RangeCirclesVisible" ) )
-    {
-      auto trns = ctx->AddItem( DICT( "rangevisibility" ), 0, false, false );
-      AddSetValueOption( trns, "RangeCircleTransparency", "40%", Menu_RangeCircleTransparency40, 40 );
-      AddSetValueOption( trns, "RangeCircleTransparency", "60%", Menu_RangeCircleTransparency60, 60 );
-      AddSetValueOption( trns, "RangeCircleTransparency", "100%", Menu_RangeCircleTransparency100, 100 );
+    AddToggleOption( ctx, "TacticalCompassVisible", GetKeybindString( TacOKeyAction::Toggle_tactical_compass ) + DICT( "togglecompass" ), Menu_ToggleTacticalCompass );
+    groupHasItems = true;
+  }
+  if ( IsMenuItemShown( "loctimers" ) )
+  {
+    AddToggleOption( ctx, "LocationalTimersVisible", GetKeybindString( TacOKeyAction::Toggle_locational_timers ) + DICT( "toggleloctimers" ), Menu_ToggleLocationalTimers );
+    groupHasItems = true;
+  }
+  if ( IsMenuItemShown( "hpgrid" ) )
+  {
+    AddToggleOption( ctx, "HPGridVisible", GetKeybindString( TacOKeyAction::Toggle_hp_grids ) + DICT( "togglehpgrid" ), Menu_ToggleHPGrid );
+    groupHasItems = true;
+  }
+  if ( IsMenuItemShown( "mousehighlight" ) )
+  {
+    AddToggleOption( ctx, "MouseHighlightVisible", GetKeybindString( TacOKeyAction::Toggle_mouse_highlight ) + DICT( "togglemousehighlight" ), Menu_ToggleHighLight );
+    groupHasItems = true;
+  }
+  separator();
 
-      auto ranges = ctx->AddItem( DICT( "toggleranges" ), 0, false, false );
-      AddToggleOption( ranges, "RangeCircle90", "90", Menu_ToggleRangeCircle90 );
-      AddToggleOption( ranges, "RangeCircle120", "120", Menu_ToggleRangeCircle120 );
-      AddToggleOption( ranges, "RangeCircle180", "180", Menu_ToggleRangeCircle180 );
-      AddToggleOption( ranges, "RangeCircle240", "240", Menu_ToggleRangeCircle240 );
-      AddToggleOption( ranges, "RangeCircle300", "300", Menu_ToggleRangeCircle300 );
-      AddToggleOption( ranges, "RangeCircle400", "400", Menu_ToggleRangeCircle400 );
-      AddToggleOption( ranges, "RangeCircle600", "600", Menu_ToggleRangeCircle600 );
-      AddToggleOption( ranges, "RangeCircle900", "900", Menu_ToggleRangeCircle900 );
-      AddToggleOption( ranges, "RangeCircle1200", "1200", Menu_ToggleRangeCircle1200 );
-      AddToggleOption( ranges, "RangeCircle1500", "1500", Menu_ToggleRangeCircle1500 );
-      AddToggleOption( ranges, "RangeCircle1600", "1600", Menu_ToggleRangeCircle1600 );
+  if ( IsMenuItemShown( "maptimer" ) )
+  {
+    AddWindowOption( ctx, "MapTimer", GetKeybindString( TacOKeyAction::Toggle_map_timer ) + DICT( "openmaptimer" ), Menu_ToggleMapTimer );
+    if ( Config::IsWindowOpen( "MapTimer" ) )
+    {
+      AddToggleOption( ctx, "MapTimerCompact", DICT( "compactmaptimer" ), Menu_ToggleCompactMapTimer );
+
+      GW2MapTimer* timer = (GW2MapTimer*)App->GetRoot()->FindChildByID( "MapTimer", "maptimer" );
+
+      if ( timer )
+      {
+        auto itm = ctx->AddItem( DICT( "configmaptimer" ), 0, false, false );
+
+        for ( TS32 x = 0; x < timer->maps.NumItems(); x++ )
+          AddToggleOption( itm, CString( "maptimer_mapopen_" ) + timer->maps[ x ].id, timer->maps[ x ].name, Menu_ToggleMapTimerMap + x );
+      }
     }
+    groupHasItems = true;
   }
+  separator();
 
-  ctx->AddSeparator();
-
-  AddToggleOption( ctx, "TacticalCompassVisible", GetKeybindString( TacOKeyAction::Toggle_tactical_compass ) + DICT( "togglecompass" ), Menu_ToggleTacticalCompass );
-  AddToggleOption( ctx, "LocationalTimersVisible", GetKeybindString( TacOKeyAction::Toggle_locational_timers ) + DICT( "toggleloctimers" ), Menu_ToggleLocationalTimers );
-  AddToggleOption( ctx, "HPGridVisible", GetKeybindString( TacOKeyAction::Toggle_hp_grids ) + DICT( "togglehpgrid" ), Menu_ToggleHPGrid );
-
-  //ctx->AddItem( GetConfigValue( "Vsync" ) ? "Toggle TacO Vsync [x]" : "Toggle TacO Vsync [ ]", Menu_ToggleVsync );
-
-  ctx->AddSeparator();
-  AddToggleOption( ctx, "MouseHighlightVisible", GetKeybindString( TacOKeyAction::Toggle_mouse_highlight ) + DICT( "togglemousehighlight" ), Menu_ToggleHighLight );
-  if ( Config::GetValue( "MouseHighlightVisible" ) )
+  if ( IsMenuItemShown( "ts3" ) )
   {
-    AddToggleOption( ctx, "MouseHighlightOutline", DICT( "togglemouseoutline" ), Menu_ToggleMouseHighlightOutline );
-
-    extern CString CGAPaletteNames[];
-    auto cols = ctx->AddItem( DICT( "mousecolor" ), 0, false, false );
-
-    for ( int x = 0; x < 16; x++ )
-      AddSetValueOption( cols, "MouseHighlightColor", DICT( CGAPaletteNames[ x ] ), Menu_MouseHighlightColor0 + x, x, true );
+    AddWindowOption( ctx, "TS3Control", GetKeybindString( TacOKeyAction::Toggle_ts3_window ) + DICT( "opentswindow" ), Menu_ToggleTS3Control );
+    groupHasItems = true;
   }
-  ctx->AddSeparator();
-
-  AddTwoTextOption( ctx, Config::GetWindowOpenConfigValue( "MapTimer" ), GetKeybindString( TacOKeyAction::Toggle_map_timer ) + DICT( "openmaptimer" ), GetKeybindString( TacOKeyAction::Toggle_map_timer ) + DICT( "closemaptimer" ), Menu_ToggleMapTimer );
-  if ( Config::IsWindowOpen( "MapTimer" ) )
+  if ( IsMenuItemShown( "markereditor" ) )
   {
-    AddToggleOption( ctx, "MapTimerCompact", DICT( "compactmaptimer" ), Menu_ToggleCompactMapTimer );
-
-    GW2MapTimer* timer = (GW2MapTimer*)App->GetRoot()->FindChildByID( "MapTimer", "maptimer" );
-
-    if ( timer )
+    auto markerEditor = AddWindowOption( ctx, "MarkerEditor", GetKeybindString( TacOKeyAction::Toggle_marker_editor ) + DICT( "openmarkereditor" ), Menu_ToggleMarkerEditor );
+    if ( Config::IsWindowOpen( "MarkerEditor" ) )
     {
-      auto itm = ctx->AddItem( DICT( "configmaptimer" ), 0, false, false );
+      markerEditor->AddItem( DICT( "exportmymapmaprkers" ), Menu_ExportMyMapMarkers );
+      markerEditor->AddSeparator();
 
-      for ( TS32 x = 0; x < timer->maps.NumItems(); x++ )
-        AddToggleOption( itm, CString( "maptimer_mapopen_" ) + timer->maps[ x ].id, timer->maps[ x ].name, Menu_ToggleMapTimerMap + x );
+      AddToggleOption( markerEditor, "EnableExternalEditing", DICT( "enableexternalediting" ), Menu_ToggleExternalEditing );
+      AddToggleOption( markerEditor, "HideExternalMarkers", DICT( "hideexternalmarkers" ), Menu_HideExternalMarkers );
+      markerEditor->AddSeparator();
+      auto rebinds = markerEditor->AddItem( DICT( "rebindkeys" ), 0, false, false );
+
+      for ( TS32 x = 1; x < sizeof( ActionNames ) / sizeof( CString ); x++ )
+      {
+        CString str = DICT( ActionNames[ x ] ) + " " + DICT( "action_no_key_bound" );
+        for ( TS32 y = 0; y < KeyBindings.NumItems(); y++ )
+          if ( (TS32)KeyBindings.GetByIndex( y ) == x )
+          {
+            str = "[" + GetTacOKeyString( KeyBindings.GetKDPair( y )->Key ) + "] " + DICT( ActionNames[ x ] );
+            break;
+          }
+
+        if ( ActionNames[ x ][ 0 ] == '*' )
+          rebinds->AddItem( str.GetPointer(), Menu_RebindKey_Base + x );
+      }
     }
-
+    groupHasItems = true;
   }
-  ctx->AddSeparator();
-  AddTwoTextOption( ctx, Config::GetWindowOpenConfigValue( "TS3Control" ), GetKeybindString( TacOKeyAction::Toggle_ts3_window ) + DICT( "opentswindow" ), GetKeybindString( TacOKeyAction::Toggle_ts3_window ) + DICT( "closetswindow" ), Menu_ToggleTS3Control );
-  auto markerEditor = AddTwoTextOption( ctx, Config::GetWindowOpenConfigValue( "MarkerEditor" ), GetKeybindString( TacOKeyAction::Toggle_marker_editor ) + DICT( "openmarkereditor" ), GetKeybindString( TacOKeyAction::Toggle_marker_editor ) + DICT( "closemarkereditor" ), Menu_ToggleMarkerEditor );
-  if ( Config::IsWindowOpen( "MarkerEditor" ) )
+  if ( IsMenuItemShown( "notepad" ) )
   {
-    markerEditor->AddItem( DICT( "exportmymapmaprkers" ), Menu_ExportMyMapMarkers );
-    markerEditor->AddSeparator();
+    AddWindowOption( ctx, "Notepad", GetKeybindString( TacOKeyAction::Toggle_notepad ) + DICT( "opennotepad" ), Menu_ToggleNotepad );
+    groupHasItems = true;
+  }
+  separator();
 
-    //AddToggleOption( markerEditor, "AutoHideMarkerEditor", DICT( "autohidemarkereditor" ), Menu_ToggleAutoHideMarkerEditor );
-    AddToggleOption( markerEditor, "EnableExternalEditing", DICT( "enableexternalediting" ), Menu_ToggleExternalEditing );
-    AddToggleOption( markerEditor, "HideExternalMarkers", DICT( "hideexternalmarkers" ), Menu_HideExternalMarkers );
-    // 
-    // Menu_ToggleExternalEditing
-    markerEditor->AddSeparator();
-    int cnt = 1;
-    auto rebinds = markerEditor->AddItem( DICT( "rebindkeys" ), 0, false, false );
+  if ( IsMenuItemShown( "raidprogress" ) )
+  {
+    auto raid = AddWindowOption( ctx, "RaidProgress", GetKeybindString( TacOKeyAction::Toggle_raid_progress ) + DICT( "openraidprogress" ), Menu_ToggleRaidProgress );
 
-    for ( TS32 x = 1; x < sizeof( ActionNames ) / sizeof( CString ); x++ )
+    if ( Config::IsWindowOpen( "RaidProgress" ) )
     {
-      CString str = DICT( ActionNames[ x ] ) + " " + DICT( "action_no_key_bound" );
-      for ( TS32 y = 0; y < KeyBindings.NumItems(); y++ )
-        if ( (TS32)KeyBindings.GetByIndex( y ) == x )
+      AddToggleOption( raid, "CompactRaidWindow", DICT( "raidwindow_compact" ), Menu_ToggleCompactRaids );
+      auto* rp = FindChildByID<RaidProgress>( "RaidProgressView" );
+      if ( rp )
+      {
+        auto& raids = rp->GetRaids();
+        if ( raids.NumItems() )
+          raid->AddSeparator();
+        for ( TS32 x = 0; x < raids.NumItems(); x++ )
         {
-          str = "[" + GetTacOKeyString( KeyBindings.GetKDPair( y )->Key ) + "] " + DICT( ActionNames[ x ] );
-          break;
+          if ( !Config::HasValue( raids[ x ].configName.GetPointer() ) )
+            Config::SetValue( raids[ x ].configName.GetPointer(), 1 );
+
+          AddToggleOption( raid, raids[ x ].configName, DICT( raids[ x ].configName, raids[ x ].name ), Menu_RaidToggles + x, false );
         }
-
-      if ( ActionNames[ x ][ 0 ] == '*' )
-        rebinds->AddItem( str.GetPointer(), Menu_RebindKey_Base + x );
-      cnt++;
+      }
     }
+    groupHasItems = true;
   }
-
-  AddTwoTextOption( ctx, Config::GetWindowOpenConfigValue( "Notepad" ), GetKeybindString( TacOKeyAction::Toggle_notepad ) + DICT( "opennotepad" ), GetKeybindString( TacOKeyAction::Toggle_notepad ) + DICT( "closenotepad" ), Menu_ToggleNotepad );
-  ctx->AddSeparator();
-
-  //if (teamSpeakConnection.IsConnected() && teamSpeakConnection.handlers.NumItems())
-  //{
-  //	TS32 connectednum = 0;
-  //	for (TS32 x = 0; x < teamSpeakConnection.handlers.NumItems(); x++)
-  //		if (teamSpeakConnection.handlers[x].Connected)
-  //			connectednum++;
-
-  //	if (connectednum)
-  //	{
-  //		auto chn = ctx->AddItem("Switch Teamspeak channel", 0);
-  //		for (TS32 x = 0; x < teamSpeakConnection.handlers.NumItems(); x++)
-  //			if (teamSpeakConnection.handlers[x].Connected)
-  //			{
-  //				auto hndlr = chn->AddItem(teamSpeakConnection.handlers[x].name.GetPointer(), 0);
-  //				BuildChannelTree(teamSpeakConnection.handlers[x], hndlr, 0);
-  //			}
-
-  //		ctx->AddSeparator();
-  //	}
-  //}
-
-  auto raid = AddTwoTextOption( ctx, Config::GetWindowOpenConfigValue( "RaidProgress" ), GetKeybindString( TacOKeyAction::Toggle_raid_progress ) + DICT( "openraidprogress" ), GetKeybindString( TacOKeyAction::Toggle_raid_progress ) + DICT( "closeraidprogress" ), Menu_ToggleRaidProgress );
-
-  if ( Config::IsWindowOpen( "RaidProgress" ) )
+  if ( IsMenuItemShown( "dungeonprogress" ) )
   {
-    AddToggleOption( raid, "CompactRaidWindow", DICT( "raidwindow_compact" ), Menu_ToggleCompactRaids );
-    auto* rp = FindChildByID<RaidProgress>( "RaidProgressView" );
-    if ( rp )
+    AddWindowOption( ctx, "DungeonProgress", GetKeybindString( TacOKeyAction::Toggle_dungeon_progress ) + DICT( "opendungeonprogress" ), Menu_ToggleDungeonProgress );
+    groupHasItems = true;
+  }
+  if ( IsMenuItemShown( "tptracker" ) )
+  {
+    auto tpTracker = AddWindowOption( ctx, "TPTracker", GetKeybindString( TacOKeyAction::Toggle_tp_tracker ) + DICT( "opentptracker" ), Menu_ToggleTPTracker );
+    if ( Config::IsWindowOpen( "TPTracker" ) )
     {
-      auto& raids = rp->GetRaids();
-      if ( raids.NumItems() )
-        raid->AddSeparator();
-      for ( TS32 x = 0; x < raids.NumItems(); x++ )
-      {
-        if ( !Config::HasValue( raids[ x ].configName.GetPointer() ) )
-          Config::SetValue( raids[ x ].configName.GetPointer(), 1 );
-
-        AddToggleOption( raid, raids[ x ].configName, DICT( raids[ x ].configName, raids[ x ].name ), Menu_RaidToggles + x, false );
-      }
+      AddToggleOption( tpTracker, "TPTrackerOnlyShowOutbid", DICT( "tptracker_onlyoutbid" ), Menu_ToggleTPTracker_OnlyOutbid );
+      AddToggleOption( tpTracker, "TPTrackerShowBuys", DICT( "tptracker_showbuys" ), Menu_ToggleTPTracker_ShowBuys );
+      AddToggleOption( tpTracker, "TPTrackerShowSells", DICT( "tptracker_showsells" ), Menu_ToggleTPTracker_ShowSells );
+      AddToggleOption( tpTracker, "TPTrackerNextSellOnly", DICT( "tptracker_nextsellonly" ), Menu_ToggleTPTracker_OnlyNextFulfilled );
     }
+    groupHasItems = true;
   }
+  separator();
 
-  AddTwoTextOption( ctx, Config::GetWindowOpenConfigValue( "DungeonProgress" ), GetKeybindString( TacOKeyAction::Toggle_dungeon_progress ) + DICT( "opendungeonprogress" ), GetKeybindString( TacOKeyAction::Toggle_dungeon_progress ) + DICT( "closedungeonprogress" ), Menu_ToggleDungeonProgress );
-  auto tpTracker = AddTwoTextOption( ctx, Config::GetWindowOpenConfigValue( "TPTracker" ), GetKeybindString( TacOKeyAction::Toggle_tp_tracker ) + DICT( "opentptracker" ), GetKeybindString( TacOKeyAction::Toggle_tp_tracker ) + DICT( "closetptracker" ), Menu_ToggleTPTracker );
-  if ( Config::IsWindowOpen( "TPTracker" ) )
-  {
-    AddToggleOption( tpTracker, "TPTrackerOnlyShowOutbid", DICT( "tptracker_onlyoutbid" ), Menu_ToggleTPTracker_OnlyOutbid );
-    AddToggleOption( tpTracker, "TPTrackerShowBuys", DICT( "tptracker_showbuys" ), Menu_ToggleTPTracker_ShowBuys );
-    AddToggleOption( tpTracker, "TPTrackerShowSells", DICT( "tptracker_showsells" ), Menu_ToggleTPTracker_ShowSells );
-    AddToggleOption( tpTracker, "TPTrackerNextSellOnly", DICT( "tptracker_nextsellonly" ), Menu_ToggleTPTracker_OnlyNextFulfilled );
-  }
+  // everything else lives in the settings window
+  AddToggleOption( ctx, "EditMode", GetKeybindString( TacOKeyAction::Toggle_window_edit_mode ) + DICT( "togglewindoweditmode" ), Menu_ToggleEditMode );
+  ctx->AddItem( GetKeybindString( TacOKeyAction::Toggle_settings_window ) + DICT( "opensettings", "TacO Settings..." ), Menu_TacOSettings );
+  groupHasItems = true;
+  separator();
 
-  ctx->AddSeparator();
   extern TBOOL isTacOUptoDate;
-
-  auto settings = ctx->AddItem( DICT( "tacosettings" ), Menu_TacOSettings, false, false );
-  AddToggleOption( settings, "EditMode", GetKeybindString( TacOKeyAction::Toggle_window_edit_mode ) + DICT( "togglewindoweditmode" ), Menu_ToggleEditMode );
-  settings->AddSeparator();
-
-  AddToggleOption( settings, "CheckForUpdates", DICT( "toggleupdatecheck" ), Menu_ToggleVersionCheck );
-  AddToggleOption( settings, "HideOnLoadingScreens", DICT( "hideonload" ), Menu_HideOnLoadingScreens );
-  AddToggleOption( settings, "CloseWithGW2", DICT( "closewithgw2" ), Menu_ToggleGW2ExitMode );
-  AddToggleOption( settings, "InfoLineVisible", DICT( "toggleinfoline" ), Menu_ToggleInfoLine );
-  AddToggleOption( settings, "ForceDPIAware", DICT( "toggleforcedpiaware" ), Menu_ToggleForceDPIAware );
-  AddToggleOption( settings, "EnableTPNotificationIcon", DICT( "enabletpnotificationicon" ), Menu_ToggleShowNotificationIcon );
-  AddToggleOption( settings, "TacOOnTaskBar", DICT( "tacoontaskbar" ), Menu_TacOOnTaskBar );
-  AddToggleOption( settings, "SendCrashDump", DICT( "togglecrashoptout" ), Menu_OptOutFromCrashReports );
-
-  settings->AddSeparator();
-  AddToggleOption( settings, "KeybindsEnabled", DICT( "togglekeybinds" ), Menu_KeyBindsEnabled );
-  auto bind = settings->AddItem( DICT( "rebindkeys" ), 0, false, false );
-  int cnt = 1;
-  for ( TS32 x = 1; x < sizeof( ActionNames ) / sizeof( CString ); x++ )
+  if ( IsMenuItemShown( "about" ) )
   {
-    CString str = DICT( ActionNames[ x ] ) + " " + DICT( "action_no_key_bound" );
-    for ( TS32 y = 0; y < KeyBindings.NumItems(); y++ )
-      if ( (TS32)KeyBindings.GetByIndex( y ) == x )
-      {
-        str = DICT( ActionNames[ x ] ) + " [" + GetTacOKeyString( KeyBindings.GetKDPair( y )->Key ) + "]";
-        break;
-      }
-
-    if ( ActionNames[ x ][ 0 ] != '*' )
-      bind->AddItem( str.GetPointer(), Menu_RebindKey_Base + x );
-    cnt++;
+    ctx->AddItem( DICT( "abouttaco" ), Menu_About );
+    groupHasItems = true;
   }
-  /*
-  if ( scriptKeyBinds.NumItems() )
-  bind->AddSeparator();
-  for ( TS32 x = 0; x < scriptKeyBinds.NumItems(); x++ )
-  {
-  CString str = scriptKeyBinds[ x ].eventDescription + " [no key bound]";
-  for ( TS32 y = 0; y < ScriptKeyBindings.NumItems(); y++ )
-  if ( ScriptKeyBindings.GetKDPair( y )->Data == scriptKeyBinds[ x ].eventName )
-  {
-  str = scriptKeyBinds[ x ].eventDescription + CString::Format( " [%c]", ScriptKeyBindings.GetKDPair( y )->Key );
-  break;
-  }
-
-  bind->AddItem( str.GetPointer(), Menu_RebindKey_Base + x + cnt );
-  }
-  */
-  settings->AddSeparator();
-
-  //auto interfaceSize = ctx->AddItem( "Interface Size", 0 );
-  //interfaceSize->AddItem( "Small", Menu_Interface_Small );
-  //interfaceSize->AddItem( "Normal", Menu_Interface_Normal );
-  //interfaceSize->AddItem( "Large", Menu_Interface_Large );
-  //interfaceSize->AddItem( "Larger", Menu_Interface_Larger );
-  //ctx->AddSeparator();
-  auto apiKeys = settings->AddItem( DICT( "apikeys" ), 0, false, false );
-  auto gw2keys = apiKeys->AddItem( DICT( "gw2apikey" ), 0, false, false );
-
-  auto currKey = GW2::apiKeyManager.GetIdentifiedAPIKey();
-
-  for ( TS32 x = 0; x < GW2::apiKeyManager.keys.NumItems(); x++ )
-  {
-    auto key = GW2::apiKeyManager.keys[ x ];
-    auto keyMenu = gw2keys->AddItem( key->accountName.Length() ? key->accountName : key->apiKey, Menu_GW2APIKey_Base + x, key == currKey );
-    keyMenu->AddItem( DICT( "deletekey" ), Menu_DeleteGW2APIKey_Base + x );
-  }
-
-  if ( GW2::apiKeyManager.keys.NumItems() )
-    gw2keys->AddSeparator();
-
-  gw2keys->AddItem( DICT( "addgw2apikey" ), Menu_AddGW2ApiKey );
-
-  apiKeys->AddItem( DICT( "ts3controlplugin" ), Menu_TS3APIKey );
-
-  settings->AddSeparator();
-
-  auto languages = Localization::GetLanguages();
-  auto langs = settings->AddItem( DICT( "language" ), Menu_Language, false, false );
-  for ( int x = 0; x < languages.NumItems(); x++ )
-    langs->AddItem( ( x == Localization::GetActiveLanguageIndex() ? CString( "[x] " ) : CString( "[ ] " ) ) + languages[ x ], Menu_Language_Base + x, x == Localization::GetActiveLanguageIndex() );
-
-
-  ctx->AddSeparator();
-  ctx->AddItem( DICT( "abouttaco" ), Menu_About );
   if ( !isTacOUptoDate )
+  {
     ctx->AddItem( DICT( "getnewbuild" ), Menu_DownloadNewBuild );
-  ctx->AddItem( DICT( "supporttaco" ), Menu_SupportTacO, true );
-  ctx->AddSeparator();
-  ctx->AddSeparator();
+    groupHasItems = true;
+  }
+  if ( IsMenuItemShown( "supporttaco" ) )
+  {
+    ctx->AddItem( DICT( "supporttaco" ), Menu_SupportTacO, true );
+    groupHasItems = true;
+  }
+  separator();
   ctx->AddItem( DICT( "exittaco" ), Menu_Exit );
 
-  ctx->AddSeparator();
   if ( Config::GetValue( "EnableCrashMenu" ) )
+  {
+    ctx->AddSeparator();
     ctx->AddItem( "CRASH", Menu_Crash );
+  }
 }
+
+void GW2TacO::OpenTacOMenu( CWBButton* button )
+{
+  toggleOptions.Flush();
+  auto ctx = button->OpenContextMenu( App->GetMousePos() );
+  OpenMainMenu( ctx );
+}
+
+// with window edit mode on the TacO button can be dragged anywhere, a click without moving still opens the menu
+TBOOL GW2TacO::HandleTacOButtonDrag( CWBMessage& Message )
+{
+  CWBButton* b = (CWBButton*)FindChildByID( _T( "MenuButton" ), _T( "button" ) );
+  if ( !b )
+    return false;
+
+  CPoint mouse = ScreenToClient( App->GetMousePos() );
+
+  switch ( Message.GetMessage() )
+  {
+  case WBM_LEFTBUTTONDOWN:
+    if ( !Config::GetValue( "EditMode" ) || App->GetMouseItem() != b )
+      return false;
+    draggingTacOButton = true;
+    tacoButtonDragStart = mouse;
+    tacoButtonDragOffset = mouse - b->GetPosition().TopLeft();
+    App->SetCapture( this );
+    return true;
+
+  case WBM_MOUSEMOVE:
+    if ( !draggingTacOButton )
+      return false;
+    {
+      CRect pos = b->GetPosition();
+      CPoint topLeft = mouse - tacoButtonDragOffset;
+      topLeft.x = max( 0, min( GetClientRect().Width() - pos.Width(), topLeft.x ) );
+      topLeft.y = max( 0, min( GetClientRect().Height() - pos.Height(), topLeft.y ) );
+      b->SetPosition( CRect( topLeft, topLeft + pos.Size() ) );
+    }
+    return true;
+
+  case WBM_LEFTBUTTONUP:
+    if ( !draggingTacOButton )
+      return false;
+    draggingTacOButton = false;
+    App->ReleaseCapture();
+
+    if ( abs( mouse.x - tacoButtonDragStart.x ) + abs( mouse.y - tacoButtonDragStart.y ) < 4 )
+    {
+      OpenTacOMenu( b );
+      return true;
+    }
+
+    Config::SetValue( "TacOButtonX", b->GetPosition().x1 );
+    Config::SetValue( "TacOButtonY", b->GetPosition().y1 );
+    AdjustMenuForWindowTooSmallScale( lastScaleValue );
+    return true;
+  }
+
+  return false;
+}
+
+void GW2TacO::ResetTacOButtonPosition()
+{
+  Config::RemoveValue( "TacOButtonX" );
+  Config::RemoveValue( "TacOButtonY" );
+  AdjustMenuForWindowTooSmallScale( lastScaleValue );
+}
+
+// numpad and function keys arrive as TacO_VKEY codes; numpad keys used to arrive as the characters they type, so
+// bindings made that way (like the default '+' and '-') still work
+TS32 GW2TacO::GetBindingKey( TS32 key )
+{
+  TS32 code = GetTacOKeyCode( key );
+  if ( ( key & TacO_VKEY ) && !KeyBindings.HasKey( code ) )
+    return GetTacOKeyCode( MapVirtualKey( key & 0xff, MAPVK_VK_TO_CHAR ) );
+  return code;
+}
+
+#ifdef _DEBUG
+// dev aid: opens the menu (and optionally one of its submenus) without mouse input, see TACO_TEST_MENU in GW2TacO.cpp
+void GW2TacO::OpenMainMenuForTesting( TS32 subMenu )
+{
+  CWBButton* b = (CWBButton*)FindChildByID( _T( "MenuButton" ), _T( "button" ) );
+  if ( !b )
+    return;
+
+  toggleOptions.Flush();
+  auto ctx = b->OpenContextMenu( b->GetScreenRect().BottomLeft() );
+  OpenMainMenu( ctx );
+  if ( subMenu >= 0 )
+    ctx->SpawnSubMenu( subMenu );
+}
+#endif
 
 void GW2TacO::RebuildMainMenu( CWBContextMenu* ctx )
 {
@@ -720,6 +696,9 @@ void GW2TacO::RebuildMainMenu( CWBContextMenu* ctx )
 
 TBOOL GW2TacO::MessageProc( CWBMessage& Message )
 {
+  if ( HandleTacOButtonDrag( Message ) )
+    return true;
+
   if ( Config::IsWindowOpen( "MarkerEditor" ) )
   {
     auto editor = App->GetRoot()->FindChildByID<GW2MarkerEditor>( "MarkerEditor" );
@@ -745,11 +724,7 @@ TBOOL GW2TacO::MessageProc( CWBMessage& Message )
 
     if ( b->GetID() == _T( "MenuButton" ) )
     {
-      toggleOptions.Flush();
-
-      auto ctx = b->OpenContextMenu( App->GetMousePos() );
-      OpenMainMenu( ctx );
-
+      OpenTacOMenu( b );
       return true;
     }
     if ( b->GetID() == _T( "GoToWebsite" ) )
@@ -776,12 +751,7 @@ TBOOL GW2TacO::MessageProc( CWBMessage& Message )
         {
           auto itm = ctxMenu->GetItem( Message.Data );
           if ( itm )
-          {
-            if ( option.activeText.Length() )
-              itm->SetText( Config::GetValue( option.configOption.GetPointer() ) ? option.activeText : option.text );
-            else
-              itm->SetText( GetConfigActiveString( option.configOption.GetPointer() ) + option.text );
-          }
+            itm->SetCheck( GetConfigCheck( option.configOption.GetPointer() ) );
         }
         else
         {
@@ -793,7 +763,7 @@ TBOOL GW2TacO::MessageProc( CWBMessage& Message )
               auto itm = ctxMenu->GetItem( other.menuItem );
               if ( itm )
               {
-                itm->SetText( ( GetConfigActiveString( option.configOption.GetPointer(), other.value ) + other.text ).GetPointer() );
+                itm->SetCheck( GetConfigCheck( option.configOption.GetPointer(), other.value ) );
                 if ( option.doHighlight )
                   itm->SetHighlight( Config::GetValue( option.configOption.GetPointer() ) == other.value );
               }
@@ -812,6 +782,15 @@ TBOOL GW2TacO::MessageProc( CWBMessage& Message )
       {
         SetAllCategoriesToVisibleInContext( category );
         ctxMenu->FlushItems();
+        // the flush also removed the entries above the categories, put them back
+        if ( category == &CategoryRoot )
+        {
+          ctxMenu->AddItem( DICT( "showallcategories", "Show all" ), Menu_ShowAllCategories );
+          ctxMenu->AddItem( DICT( "hideallcategories", "Hide all" ), Menu_HideAllCategories );
+          ctxMenu->AddSeparator();
+        }
+        else if ( CategoryList.Find( category ) >= 0 )
+          AddCategoryFilterItems( ctxMenu, category, CategoryList.Find( category ) + Menu_MarkerFilter_Base );
         AddTypeContextMenu( ctxMenu, CategoryList, category, true, Menu_MarkerFilter_Base, false );
         break;
       }
@@ -830,7 +809,7 @@ TBOOL GW2TacO::MessageProc( CWBMessage& Message )
           CWBContextMenu* ctxMenu = (CWBContextMenu*)App->FindItemByGuid( Message.Position[ 1 ] );
           auto itm = ctxMenu->GetItem( Message.Data );
 
-          itm->SetText( ( ( Config::HasValue( raids[ raidToggle ].configName.GetPointer() ) && !Config::GetValue( raids[ raidToggle ].configName.GetPointer() ) ) ? "[ ] " : "[x] " ) + DICT( raids[ raidToggle ].configName, raids[ raidToggle ].name ) );
+          itm->SetCheck( ( Config::HasValue( raids[ raidToggle ].configName.GetPointer() ) && !Config::GetValue( raids[ raidToggle ].configName.GetPointer() ) ) ? 0 : 1 );
         }
       }
     }
@@ -846,13 +825,7 @@ TBOOL GW2TacO::MessageProc( CWBMessage& Message )
 
         if ( !dta->isOnlySeparator )
         {
-          CString txt = "[" + CString( dta->isDisplayed ? "x" : " " ) + "] ";
-          if ( dta->displayName.Length() )
-            txt += dta->displayName;
-          else
-            txt += dta->name;
-
-          itm->SetText( txt );
+          itm->SetCheck( dta->isDisplayed );
           itm->SetHighlight( dta->isDisplayed );
         }
 
@@ -941,6 +914,18 @@ TBOOL GW2TacO::MessageProc( CWBMessage& Message )
       }
     }
 
+    if ( Message.Data >= Menu_MarkerFilter_Base + CATEGORY_SHOWONLY_ID && Message.Data < Menu_MarkerFilter_Base + CATEGORY_SHOWONLY_ID + CategoryList.NumItems() )
+    {
+      ShowOnlyCategory( CategoryList[ Message.Data - Menu_MarkerFilter_Base - CATEGORY_SHOWONLY_ID ] );
+      break;
+    }
+
+    if ( Message.Data >= Menu_MarkerFilter_Base + CATEGORY_BINDKEY_ID && Message.Data < Menu_MarkerFilter_Base + CATEGORY_BINDKEY_ID + CategoryList.NumItems() )
+    {
+      RebindCategory( CategoryList[ Message.Data - Menu_MarkerFilter_Base - CATEGORY_BINDKEY_ID ] );
+      break;
+    }
+
     if ( Message.Data >= Menu_MarkerFilter_Base && Message.Data < Menu_MarkerFilter_Base + CategoryList.NumItems() )
     {
       TBOOL displayed = !CategoryList[ Message.Data - Menu_MarkerFilter_Base ]->isDisplayed;
@@ -973,7 +958,7 @@ TBOOL GW2TacO::MessageProc( CWBMessage& Message )
     if ( toggleOptions.HasKey( Message.Data ) )
     {
       auto& opts = toggleOptions[ Message.Data ];
-      if ( !opts.activeText.Length() )
+      if ( !opts.window )
       {
         if ( opts.toggle )
           Config::ToggleValue( opts.configOption );
@@ -1063,6 +1048,15 @@ TBOOL GW2TacO::MessageProc( CWBMessage& Message )
     case Menu_ExportMyMapMarkers:
       ExportMyMapMarkers();
       break;
+    case Menu_TacOSettings:
+      OpenWindow( "Settings" );
+      break;
+    case Menu_ShowAllCategories:
+      SetAllCategoriesDisplayed( true );
+      break;
+    case Menu_HideAllCategories:
+      SetAllCategoriesDisplayed( false );
+      break;
 
     case Menu_SupportTacO:
     {
@@ -1103,7 +1097,20 @@ TBOOL GW2TacO::MessageProc( CWBMessage& Message )
       if ( !Message.Key )
         return true;
 
-      if ( !ScriptRebindMode )
+      if ( CategoryToRebind.Length() )
+      {
+        auto cat = GetCategory( CategoryToRebind );
+        TS32 code = Message.Key != VK_ESCAPE ? GetTacOKeyCode( Message.Key ) : 0;
+        if ( cat && code && KeyBindings.HasKey( code ) ) // a key runs one thing, the category takes it over from the action
+        {
+          Config::DeleteKeyBinding( code );
+          KeyBindings.Delete( code );
+        }
+        if ( cat )
+          SetCategoryHotkey( cat, code );
+        CategoryToRebind = "";
+      }
+      else if ( !ScriptRebindMode )
       {
         for ( TS32 x = 0; x < KeyBindings.NumItems(); x++ )
         {
@@ -1119,6 +1126,7 @@ TBOOL GW2TacO::MessageProc( CWBMessage& Message )
         {
           KeyBindings[ GetTacOKeyCode( Message.Key ) ] = ActionToRebind;
           Config::SetKeyBinding( ActionToRebind, GetTacOKeyCode( Message.Key ) );
+          ClearCategoryHotkeys( GetTacOKeyCode( Message.Key ) ); // and the action takes it over from the categories
         }
       }
       else
@@ -1144,9 +1152,23 @@ TBOOL GW2TacO::MessageProc( CWBMessage& Message )
       return true;
     }
 
-    if ( Config::GetValue( "KeybindsEnabled" ) && KeyBindings.HasKey( GetTacOKeyCode( Message.Key ) ) )
+    // categories are checked before GetBindingKey() turns a numpad key into its character, so a category bound to
+    // NUM- can't run the RemovePOI bound to '-'
+    if ( Config::GetValue( "KeybindsEnabled" ) && !KeyBindings.HasKey( GetTacOKeyCode( Message.Key ) ) )
     {
-      int actualKey = GetTacOKeyCode( Message.Key );
+      auto cat = ToggleCategoriesWithHotkey( GetTacOKeyCode( Message.Key ) );
+      if ( cat )
+      {
+        GW2TacticalDisplay* tactical = (GW2TacticalDisplay*)GetApplication()->GetRoot()->FindChildByID( "tactical", "gw2tactical" );
+        if ( tactical )
+          tactical->TriggerBigMessage( AddStringToMap( ( cat->displayName.Length() ? cat->displayName : cat->name ) + ": " + ( cat->isDisplayed ? DICT( "categoryshown", "shown" ) : DICT( "categoryhidden", "hidden" ) ) ) );
+        return true;
+      }
+    }
+
+    if ( Config::GetValue( "KeybindsEnabled" ) && KeyBindings.HasKey( GetBindingKey( Message.Key ) ) )
+    {
+      int actualKey = GetBindingKey( Message.Key );
 
       switch ( KeyBindings[ actualKey ] )
       {
@@ -1195,6 +1217,7 @@ TBOOL GW2TacO::MessageProc( CWBMessage& Message )
           if ( editor && !editor->IsHidden() )
             editor->CopySelectedMarker();
         }
+        return true;
       }
       case TacOKeyAction::RemovePOI:
         DeletePOI();
@@ -1293,6 +1316,9 @@ TBOOL GW2TacO::MessageProc( CWBMessage& Message )
       case TacOKeyAction::Toggle_window_edit_mode:
         Config::ToggleValue( "EditMode" );
         return true;
+      case TacOKeyAction::Toggle_settings_window:
+        OpenWindow( "Settings" );
+        return true;
       case TacOKeyAction::UndoEdit:
         MarkerDOM::Undo();
         return true;
@@ -1312,6 +1338,7 @@ TBOOL GW2TacO::MessageProc( CWBMessage& Message )
     {
       RebindMode = false;
       ScriptRebindMode = false;
+      CategoryToRebind = "";
     }
     if ( APIKeyInput && Message.GetTarget() == APIKeyInput->GetGuid() )
     {
@@ -1464,11 +1491,13 @@ void GW2TacO::OnDraw( CWBDrawAPI* API )
   mouseToolTip = "";
 
   float windowTooSmallScale = GetWindowTooSmallScale();
-  if ( windowTooSmallScale != lastScaleValue || scaleCountDownHack == 0 )
+  CRect clientRect = App->GetRoot()->GetClientRect();
+  if ( windowTooSmallScale != lastScaleValue || scaleCountDownHack == 0 || clientRect != lastClientRect )
   {
     StoreIconSizes();
     AdjustMenuForWindowTooSmallScale( windowTooSmallScale );
     lastScaleValue = windowTooSmallScale;
+    lastClientRect = clientRect;
   }
   scaleCountDownHack--;
 
@@ -1496,6 +1525,10 @@ void GW2TacO::OnDraw( CWBDrawAPI* API )
   //	}
   //}
 
+  auto settings = FindChildByID( _T( "Settings" ) );
+  if ( settings )
+    settings->Hide( !Config::IsWindowOpen( "Settings" ) || RebindMode || ApiKeyInputMode );
+
   auto it = FindChildByID( _T( "MenuHoverBox" ) );
   if ( it )
   {
@@ -1508,6 +1541,14 @@ void GW2TacO::OnDraw( CWBDrawAPI* API )
       TF32 delta = max( 0, min( 1, ( currTime - lastMenuHoverTransitionTime ) / speed ) );
 
       TBOOL hover = ClientToScreen( it->GetClientRect() ).Contains( App->GetMousePos() );
+      if ( Config::HasValue( "TacOButtonX" ) ) // moved away from the game's menu icons
+        hover = taco->GetScreenRect().Contains( App->GetMousePos() );
+      if ( Config::GetValue( "EditMode" ) )
+      {
+        hover = true;
+        CRect r = ScreenToClient( taco->GetScreenRect() );
+        API->DrawRectBorder( CRect( r.x1 - 2, r.y1 - 2, r.x2 + 2, r.y2 + 2 ), CColor( 0xffffcc77 ) );
+      }
 
       if ( App->GetRoot()->FindChildByID( "TacOMenu", "contextmenu" ) )
       {
@@ -1695,7 +1736,17 @@ void GW2TacO::OnDraw( CWBDrawAPI* API )
 
     CString line1;
 
-    if ( !ScriptRebindMode )
+    if ( CategoryToRebind.Length() )
+    {
+      auto cat = GetCategory( CategoryToRebind );
+      CString name = cat ? ( cat->displayName.Length() ? cat->displayName : cat->name ) : CategoryToRebind;
+      line1 = DICT( "markercategory", "Marker category" ) + " '" + name + "' ";
+      if ( cat && cat->hotkey )
+        line1 += DICT( "currently_bound" ) + " [" + GetTacOKeyString( cat->hotkey ) + "]";
+      else
+        line1 += DICT( "currently_not_bound" );
+    }
+    else if ( !ScriptRebindMode )
     {
       TS32 key = -1;
       for ( TS32 x = 0; x < KeyBindings.NumItems(); x++ )
@@ -1849,6 +1900,20 @@ void GW2TacO::OpenWindow( CString s )
     return;
   }
 
+  if ( s == "Settings" )
+  {
+    // fixed size, only the position is remembered
+    CRect r = CRect( -320, -260, 320, 260 ) + GetClientRect().Center();
+    if ( Config::HasWindowData( s.GetPointer() ) )
+      r = r + ( pos.TopLeft() - r.TopLeft() );
+    // kept inside the game window (which may have shrunk since), most settings can't be reached any other way
+    CRect client = GetClientRect();
+    CPoint topLeft( max( client.x1, min( client.x2 - r.Width(), r.x1 ) ), max( client.y1, min( client.y2 - r.Height(), r.y1 ) ) );
+    r = r + ( topLeft - r.TopLeft() );
+    Config::SetWindowOpenState( s.GetPointer(), true );
+    new GW2SettingsWindow( this, r, this );
+  }
+
   if ( s == "MapTimer" )
   {
     OverlayWindow* w = new OverlayWindow( this, pos );
@@ -1934,6 +1999,14 @@ void GW2TacO::RebindAction( TacOKeyAction Action )
   RebindMode = true;
   ScriptRebindMode = false;
   ActionToRebind = Action;
+  SetFocus();
+}
+
+void GW2TacO::RebindCategory( GW2TacticalCategory* cat )
+{
+  RebindMode = true;
+  ScriptRebindMode = false;
+  CategoryToRebind = cat->GetFullTypeName();
   SetFocus();
 }
 
@@ -2091,7 +2164,15 @@ void GW2TacO::AdjustMenuForWindowTooSmallScale( float scale )
   CString str;
   if ( v1 )
   {
-    str = CString::Format( "#MenuButton{ left:%dpx; top:%dpx; width:%dpx; height:%dpx; background:skin(taco_stretch_dark) top left; } #MenuButton:hover{background:skin(taco_stretch_light) top left;} #MenuButton:active{background:skin(taco_stretch_light) top left;}", int( tacoIconRect.x1 * scale ), int( tacoIconRect.y1 * scale ), int( tacoIconRect.Width() * scale ), int( tacoIconRect.Height() * scale ) );
+    CSize size( int( tacoIconRect.Width() * scale ), int( tacoIconRect.Height() * scale ) );
+    CPoint pos( int( tacoIconRect.x1 * scale ), int( tacoIconRect.y1 * scale ) );
+    if ( Config::HasValue( "TacOButtonX" ) && Config::HasValue( "TacOButtonY" ) ) // dragged in edit mode
+    {
+      CRect client = App->GetRoot()->GetClientRect();
+      pos.x = max( 0, min( client.Width() - size.x, Config::GetValue( "TacOButtonX" ) ) );
+      pos.y = max( 0, min( client.Height() - size.y, Config::GetValue( "TacOButtonY" ) ) );
+    }
+    str = CString::Format( "#MenuButton{ left:%dpx; top:%dpx; width:%dpx; height:%dpx; background:skin(taco_stretch_dark) top left; } #MenuButton:hover{background:skin(taco_stretch_light) top left;} #MenuButton:active{background:skin(taco_stretch_light) top left;}", pos.x, pos.y, size.x, size.y );
     App->LoadCSS( str, false );
   }
 

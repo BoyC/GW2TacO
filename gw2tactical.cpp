@@ -29,6 +29,8 @@ float GetUIScale();
 
 float globalOpacity = 1.0f;
 float minimapOpacity = 1.0f;
+float collectedOpacity = 0.0f; // markers the player already collected are drawn with this opacity, 0 hides them
+TF32 userFadeFar = -1; // in game units, -1 when the user has not set a marker fade distance
 
 TS32 AddStringToMap( const CString& string )
 {
@@ -390,6 +392,22 @@ float GetMapFade()
   return mapFade;
 }
 
+// the pack's fade range, pulled in to the user's fade distance when that is nearer
+bool GetFadeRange( const POI& poi, TF32& fadeNear, TF32& fadeFar )
+{
+  fadeNear = poi.typeData.fadeNear;
+  fadeFar = poi.typeData.fadeFar;
+  bool packFade = fadeNear >= 0 && fadeFar >= 0;
+
+  if ( userFadeFar < 0 )
+    return packFade;
+
+  TF32 userFadeNear = userFadeFar * 0.75f;
+  fadeNear = packFade ? min( fadeNear, userFadeNear ) : userFadeNear;
+  fadeFar = packFade ? min( fadeFar, userFadeFar ) : userFadeFar;
+  return true;
+}
+
 void GW2TacticalDisplay::InsertPOI( POI& poi )
 {
 /*
@@ -421,10 +439,11 @@ void GW2TacticalDisplay::InsertPOI( POI& poi )
 
   minimapPOIs.Add( &poi );
 
-  if ( poi.typeData.fadeFar >= 0 && poi.typeData.fadeNear >= 0 )
+  TF32 fadeNear, fadeFar;
+  if ( GetFadeRange( poi, fadeNear, fadeFar ) )
   {
     TF32 dist = WorldToGameCoords( poi.cameraSpacePosition.Length() );
-    if ( dist > poi.typeData.fadeFar )
+    if ( dist > fadeFar )
       return;
   }
 
@@ -436,12 +455,18 @@ void GW2TacticalDisplay::DrawPOI( CWBDrawAPI* API, const tm& ptm, const time_t& 
   TBOOL drawCountdown = false;
   TS32 timeLeft;
   float alphaMultiplier = 1;
+  float opacity = globalOpacity;
 
   if ( poi.external && hideExternal )
     return;
 
-  if ( !poi.IsVisible( ptm, currtime ) )
-    return;
+  bool collected = false;
+  if ( !poi.IsVisible( ptm, currtime, &collected ) )
+  {
+    if ( !collected || collectedOpacity <= 0 )
+      return;
+    opacity *= collectedOpacity; // drawn faded, without triggering anything below
+  }
 
   if ( poi.typeData.behavior == POIBehavior::WvWObjective )
   {
@@ -453,7 +478,7 @@ void GW2TacticalDisplay::DrawPOI( CWBDrawAPI* API, const tm& ptm, const time_t& 
     }
   }
 
-  if ( poi.typeData.behavior == POIBehavior::ReappearAfterTimer )
+  if ( !collected && poi.typeData.behavior == POIBehavior::ReappearAfterTimer )
   {
     time_t elapsedtime = currtime - poi.lastUpdateTime;
     if ( elapsedtime < poi.typeData.resetLength )
@@ -489,7 +514,7 @@ void GW2TacticalDisplay::DrawPOI( CWBDrawAPI* API, const tm& ptm, const time_t& 
     }
   }
 
-  if ( poi.typeData.copy != -1 && poi.typeData.bits.autoTrigger && triggeredPOI != &poi )
+  if ( !collected && poi.typeData.copy != -1 && poi.typeData.bits.autoTrigger && triggeredPOI != &poi )
   {
     TF32 dist = ( poi.position - mumbleLink.charPosition ).Length();
 
@@ -497,7 +522,7 @@ void GW2TacticalDisplay::DrawPOI( CWBDrawAPI* API, const tm& ptm, const time_t& 
       triggeredPOI = &poi;
   }
 
-  if ( poi.typeData.info >= 0 )
+  if ( !collected && poi.typeData.info >= 0 )
   {
     if ( ( poi.position - mumbleLink.charPosition ).Length() <= poi.typeData.infoRange )
     {
@@ -506,7 +531,7 @@ void GW2TacticalDisplay::DrawPOI( CWBDrawAPI* API, const tm& ptm, const time_t& 
   }
 
 
-  if ( poi.routeMember && ( ( poi.position - mumbleLink.charPosition ).Length() <= poi.typeData.triggerRange ) )
+  if ( !collected && poi.routeMember && ( ( poi.position - mumbleLink.charPosition ).Length() <= poi.typeData.triggerRange ) )
   {
     for ( TS32 y = 0; y < Routes.NumItems(); y++ )
     {
@@ -562,14 +587,15 @@ void GW2TacticalDisplay::DrawPOI( CWBDrawAPI* API, const tm& ptm, const time_t& 
   if ( !tacticalIconsOnEdge && camspace.z <= 0 ) return;
 
   TF32 dist = WorldToGameCoords( camspace.Length() );
-  if ( poi.typeData.fadeNear >= 0 && poi.typeData.fadeFar >= 0 )
+  TF32 fadeNear, fadeFar;
+  if ( GetFadeRange( poi, fadeNear, fadeFar ) )
   {
     TF32 fadeAlpha = 1;
 
-    if ( dist > poi.typeData.fadeFar )
+    if ( dist > fadeFar )
       return;
-    if ( dist > poi.typeData.fadeNear )
-      fadeAlpha = 1 - ( dist - poi.typeData.fadeNear ) / ( poi.typeData.fadeFar - poi.typeData.fadeNear );
+    if ( dist > fadeNear )
+      fadeAlpha = 1 - ( dist - fadeNear ) / ( fadeFar - fadeNear );
 
     Alpha *= fadeAlpha;
   }
@@ -625,9 +651,9 @@ void GW2TacticalDisplay::DrawPOI( CWBDrawAPI* API, const tm& ptm, const time_t& 
   {
     CColor col = poi.typeData.color;
     if ( icon != DefaultIconHandle )
-      col.A() = TU8( col.A() * Alpha * alphaMultiplier * mapFade * globalOpacity );
+      col.A() = TU8( col.A() * Alpha * alphaMultiplier * mapFade * opacity );
     else
-      col.A() = TU8( col.A() * mapFade * globalOpacity );
+      col.A() = TU8( col.A() * mapFade * opacity );
     API->DrawAtlasElement( icon, rect, false, false, true, true, col );
   }
 
@@ -643,7 +669,7 @@ void GW2TacticalDisplay::DrawPOI( CWBDrawAPI* API, const tm& ptm, const time_t& 
     if ( wvwObjectiveName.Length() )
     {
       p = f->GetTextPosition( wvwObjectiveName.GetPointer(), rect, WBTA_CENTERX, WBTA_TOP, WBTT_UPPERCASE, false ) - CPoint( 0, f->GetLineHeight() );
-      f->Write( API, wvwObjectiveName, p, CColor( 255, 255, 0, TU8( 255 * alphaMultiplier * mapFade * globalOpacity ) ), WBTT_UPPERCASE, false );
+      f->Write( API, wvwObjectiveName, p, CColor( 255, 255, 0, TU8( 255 * alphaMultiplier * mapFade * opacity ) ), WBTT_UPPERCASE, false );
     }
   }
 
@@ -680,20 +706,20 @@ void GW2TacticalDisplay::DrawPOI( CWBDrawAPI* API, const tm& ptm, const time_t& 
       {
         CColor col = 0xffffffff;
         if ( icon != DefaultIconHandle )
-          col.A() = TU8( col.A() * Alpha * alphaMultiplier * mapFade * globalOpacity );
+          col.A() = TU8( col.A() * Alpha * alphaMultiplier * mapFade * opacity );
         else
-          col.A() = TU8( col.A() * mapFade * globalOpacity );
+          col.A() = TU8( col.A() * mapFade * opacity );
         API->DrawAtlasElement( forbiddenIconHandle, rect, false, false, true, true, col );
       }
 
       p = f->GetTextPosition( txt.GetPointer(), rect, WBTA_CENTERX, WBTA_BOTTOM, WBTT_NONE, false ) + CPoint( 0, f->GetLineHeight() + offset );
-      f->Write( API, txt, p, CColor( 255, 255, 0, TU8( 255 * alphaMultiplier * mapFade * globalOpacity ) ), WBTT_NONE, false );
+      f->Write( API, txt, p, CColor( 255, 255, 0, TU8( 255 * alphaMultiplier * mapFade * opacity ) ), WBTT_NONE, false );
     }
     else
     {
       p = f->GetTextPosition( txt.GetPointer(), rect, WBTA_CENTERX, WBTA_CENTERY, WBTT_NONE, false );
       p.y += offset;
-      f->Write( API, txt, p, CColor( 255, 255, 0, TU8( 255 * mapFade * globalOpacity ) ), WBTT_NONE, false );
+      f->Write( API, txt, p, CColor( 255, 255, 0, TU8( 255 * mapFade * opacity ) ), WBTT_NONE, false );
     }
   }
 
@@ -720,7 +746,7 @@ void GW2TacticalDisplay::DrawPOI( CWBDrawAPI* API, const tm& ptm, const time_t& 
       }
 
       p = f->GetTextPosition( text, rect, WBTA_CENTERX, WBTA_BOTTOM, WBTT_NONE, false ) + CPoint( 0, f->GetLineHeight() );
-      f->Write( API, text, p, CColor( 255, 255, 255, TU8( 255 * Alpha * alphaMultiplier * mapFade * globalOpacity ) ), WBTT_NONE, false );
+      f->Write( API, text, p, CColor( 255, 255, 255, TU8( 255 * Alpha * alphaMultiplier * mapFade * opacity ) ), WBTT_NONE, false );
     }
   }
 }
@@ -733,8 +759,14 @@ void GW2TacticalDisplay::DrawPOIMinimap( CWBDrawAPI* API, const CRect& miniRect,
     return;
   if ( poi.external && hideExternal )
     return;
-  if ( !poi.IsVisible( ptm, currtime ) )
-    return;
+
+  bool collected = false;
+  if ( !poi.IsVisible( ptm, currtime, &collected ) )
+  {
+    if ( !collected || collectedOpacity <= 0 )
+      return;
+    alpha *= collectedOpacity;
+  }
 
   if ( !poi.typeData.bits.keepOnMapEdge && !miniRect.Contains( CPoint( TS32( pos.x ), TS32( pos.y ) ) ) )
     return;
@@ -791,6 +823,12 @@ void GW2TacticalDisplay::OnDraw( CWBDrawAPI* API )
     minimapOpacity = 2 / 3.0f;
   if ( opac == 2 )
     minimapOpacity = 1 / 3.0f;
+
+  int collectedMode = Config::GetValue( "CollectedMarkers" ); // 0: hide, 1: faded, 2: show
+  collectedOpacity = collectedMode == 2 ? 1.0f : collectedMode == 1 ? 0.3f : 0.0f;
+
+  int fadeDistance = Config::GetValue( "MarkerFadeDistance" ); // meters, 0 is off
+  userFadeFar = fadeDistance > 0 ? WorldToGameCoords( TF32( fadeDistance ) ) : -1;
 
   useMetricDisplay = Config::GetValue( "UseMetricDisplay" );
 
@@ -929,8 +967,6 @@ void GW2TacticalDisplay::OnDraw( CWBDrawAPI* API )
     {
       if ( !minimapPOIs[ x ]->typeData.bits.miniMapVisible && showMinimapMarkers != 2 )
         continue;
-      if ( !minimapPOIs[ x ]->IsVisible( ptm, currtime ) )
-        continue;
 
       CVector3 poiPos = minimapPOIs[ x ]->position * miniMapTrafo;
       DrawPOIMinimap( API, miniRect, CVector2( poiPos.x, poiPos.y ), ptm, currtime, *minimapPOIs[ x ], mapFade, mumbleLink.miniMap.mapScale );
@@ -951,8 +987,6 @@ void GW2TacticalDisplay::OnDraw( CWBDrawAPI* API )
     for ( int x = 0; x < minimapPOIs.NumItems(); x++ )
     {
       if ( !minimapPOIs[ x ]->typeData.bits.bigMapVisible && showBigmapMarkers != 2 )
-        continue;
-      if ( !minimapPOIs[ x ]->IsVisible( ptm, currtime ) )
         continue;
 
       CVector3 poiPos = minimapPOIs[ x ]->position * miniMapTrafo;
@@ -1408,13 +1442,13 @@ void MarkerTypeData::Read( CXMLNode& n, TBOOL StoreSaveState )
     n.GetAttributeAsFloat( "heightOffset", &height );
   if ( _behaviorSaved )
   {
-    TS32 x;
+    TS32 x = (TS32)behavior; // kept when the attribute isn't a number
     n.GetAttributeAsInteger( "behavior", &x );
     behavior = (POIBehavior)x;
   }
   if ( _resetLengthSaved )
   {
-    TS32 val;
+    TS32 val = resetLength;
     n.GetAttributeAsInteger( "resetLength", &val );
     resetLength = val;
   }
@@ -1422,20 +1456,20 @@ void MarkerTypeData::Read( CXMLNode& n, TBOOL StoreSaveState )
   //  n.GetAttributeAsInteger( "resetOffset", &resetOffset );
   if ( _autoTriggerSaved )
   {
-    TS32 val;
+    TS32 val = bits.autoTrigger;
     n.GetAttributeAsInteger( "autoTrigger", &val );
     bits.autoTrigger = val != 0;
   }
   if ( _defaultToggleSaved )
   {
-    TS32 val;
+    TS32 val = bits.defaultToggle;
     n.GetAttributeAsInteger( "defaulttoggle", &val );
     bits.defaultToggle = val != 0;
     bits.defaultToggleLoaded = true;
   }
   if ( _hasCountdownSaved )
   {
-    TS32 val;
+    TS32 val = bits.hasCountdown;
     n.GetAttributeAsInteger( "hasCountdown", &val );
     bits.hasCountdown = val != 0;
   }
@@ -1443,13 +1477,13 @@ void MarkerTypeData::Read( CXMLNode& n, TBOOL StoreSaveState )
     n.GetAttributeAsFloat( "triggerRange", &triggerRange );
   if ( _minSizeSaved )
   {
-    TS32 val;
+    TS32 val = minSize;
     n.GetAttributeAsInteger( "minSize", &val );
     minSize = val;
   }
   if ( _maxSizeSaved )
   {
-    TS32 val;
+    TS32 val = maxSize;
     n.GetAttributeAsInteger( "maxSize", &val );
     maxSize = val;
   }
@@ -1472,37 +1506,37 @@ void MarkerTypeData::Read( CXMLNode& n, TBOOL StoreSaveState )
     toggleCategory = AddStringToMap( n.GetAttribute( "toggleCategory" ) );
   if ( _achievementIdSaved )
   {
-    TS32 val;
+    TS32 val = achievementId;
     n.GetAttributeAsInteger( "achievementId", &val );
     achievementId = val;
   }
   if ( _achievementBitSaved )
   {
-    TS32 val;
+    TS32 val = achievementBit;
     n.GetAttributeAsInteger( "achievementBit", &val );
     achievementBit = val;
   }
   if ( _miniMapVisibleSaved )
   {
-    TS32 val;
+    TS32 val = bits.miniMapVisible;
     n.GetAttributeAsInteger( "miniMapVisibility", &val );
     bits.miniMapVisible = val != 0;
   }
   if ( _bigMapVisibleSaved )
   {
-    TS32 val;
+    TS32 val = bits.bigMapVisible;
     n.GetAttributeAsInteger( "mapVisibility", &val );
     bits.bigMapVisible = val != 0;
   }
   if ( _inGameVisibleSaved )
   {
-    TS32 val;
+    TS32 val = bits.inGameVisible;
     n.GetAttributeAsInteger( "inGameVisibility", &val );
     bits.inGameVisible = val != 0;
   }
   if ( _scaleWithZoomSaved )
   {
-    TS32 val;
+    TS32 val = bits.scaleWithZoom;
     n.GetAttributeAsInteger( "scaleOnMapWithZoom", &val );
     bits.scaleWithZoom = val != 0;
   }
@@ -1511,13 +1545,13 @@ void MarkerTypeData::Read( CXMLNode& n, TBOOL StoreSaveState )
 
   if ( _miniMapSizeSaved )
   {
-    TS32 x;
+    TS32 x = miniMapSize;
     n.GetAttributeAsInteger( "mapDisplaySize", &x );
     miniMapSize = x;
   }
   if ( _keepOnMapEdgeSaved )
   {
-    TS32 val;
+    TS32 val = bits.keepOnMapEdge;
     n.GetAttributeAsInteger( "keepOnMapEdge", &val );
     bits.keepOnMapEdge = val != 0;
   }
@@ -1730,6 +1764,109 @@ GW2TacticalCategory* FindInCategoryTree( GW2TacticalCategory* cat )
   return FindInCategoryTree( cat, &CategoryRoot );
 }
 
+static void SetCategoryDisplayed( GW2TacticalCategory* cat, TBOOL displayed )
+{
+  cat->isDisplayed = displayed;
+  Config::SetValue( ( CString( "CategoryVisible_" ) + cat->GetFullTypeName() ).GetPointer(), displayed );
+}
+
+// shows cat and its parents and hides everything else, leaving the categories inside cat as they were
+void ShowOnlyCategory( GW2TacticalCategory* cat )
+{
+  for ( ; cat && cat->parent; cat = cat->parent )
+  {
+    for ( TS32 x = 0; x < cat->parent->children.NumItems(); x++ )
+      SetCategoryDisplayed( cat->parent->children[ x ], cat->parent->children[ x ] == cat );
+  }
+
+  CategoryRoot.CalculateVisibilityCache();
+}
+
+static void SetSubtreeDisplayed( GW2TacticalCategory* cat, TBOOL displayed )
+{
+  for ( TS32 x = 0; x < cat->children.NumItems(); x++ )
+  {
+    SetCategoryDisplayed( cat->children[ x ], displayed );
+    SetSubtreeDisplayed( cat->children[ x ], displayed );
+  }
+}
+
+// hiding only switches off the top level, so turning one of those back on restores what was inside it
+void SetAllCategoriesDisplayed( TBOOL displayed )
+{
+  if ( displayed )
+    SetSubtreeDisplayed( &CategoryRoot, true );
+  else
+  {
+    for ( TS32 x = 0; x < CategoryRoot.children.NumItems(); x++ )
+      SetCategoryDisplayed( CategoryRoot.children[ x ], false );
+  }
+
+  CategoryRoot.CalculateVisibilityCache();
+}
+
+void SetCategoryHotkey( GW2TacticalCategory* cat, TS32 key )
+{
+  cat->hotkey = key;
+  CString cfg = CString( "CategoryKey_" ) + cat->GetFullTypeName();
+  if ( key )
+    Config::SetValue( cfg.GetPointer(), key );
+  else
+    Config::RemoveValue( cfg.GetPointer() );
+}
+
+// a key runs one thing: binding it to an action takes it away from the categories
+void ClearCategoryHotkeys( TS32 key )
+{
+  for ( TS32 x = 0; x < CategoryMap.NumItems(); x++ )
+  {
+    auto cat = CategoryMap.GetByIndex( x );
+    if ( cat->hotkey == key )
+      SetCategoryHotkey( cat, 0 );
+  }
+}
+
+// returns one of the toggled categories, or nullptr when the key isn't bound to any
+GW2TacticalCategory* ToggleCategoriesWithHotkey( TS32 key )
+{
+  GW2TacticalCategory* toggled = nullptr;
+  if ( !key ) // 0 is the hotkey of every unbound category
+    return toggled;
+
+  for ( TS32 x = 0; x < CategoryMap.NumItems(); x++ )
+  {
+    auto cat = CategoryMap.GetByIndex( x );
+    if ( cat->hotkey != key )
+      continue;
+    SetCategoryDisplayed( cat, !cat->isDisplayed );
+    toggled = cat;
+  }
+
+  if ( toggled )
+    CategoryRoot.CalculateVisibilityCache();
+
+  return toggled;
+}
+
+// the entries at the top of a category's submenu in the marker filter: added to the menu item while the menu is
+// built, and to the open submenu when it is rebuilt
+template <typename Menu>
+static void AddFilterItems( Menu* n, GW2TacticalCategory* cat, TS32 id )
+{
+  n->AddItem( DICT( "showonlycategory", "Show only this" ), id + CATEGORY_SHOWONLY_ID );
+  if ( cat->hotkey )
+    n->AddItem( DICT( "categoryhotkey", "Hotkey" ) + " [" + GetTacOKeyString( cat->hotkey ) + "]", id + CATEGORY_BINDKEY_ID );
+  else
+    n->AddItem( DICT( "bindcategoryhotkey", "Bind hotkey..." ), id + CATEGORY_BINDKEY_ID );
+  if ( cat->children.NumItems() )
+    n->AddSeparator();
+}
+
+void AddCategoryFilterItems( CWBContextMenu* ctx, GW2TacticalCategory* cat, TS32 id )
+{
+  AddFilterItems( ctx, cat, id );
+}
+
 void AddTypeContextMenu( CWBContextItem* ctx, CArray<GW2TacticalCategory*>& CategoryList, GW2TacticalCategory* Parent, TBOOL AddVisibilityMarkers, TS32 BaseID, TBOOL closeOnClick )
 {
   int hiddenCount = 0;
@@ -1746,28 +1883,20 @@ void AddTypeContextMenu( CWBContextItem* ctx, CArray<GW2TacticalCategory*>& Cate
       continue;
     }
 
-    CString txt;
-    if ( AddVisibilityMarkers )
-      txt += "[" + CString( dta->isDisplayed ? "x" : " " ) + "] ";
-    if ( dta->displayName.Length() )
-      txt += dta->displayName;
-    else
-      txt += dta->name;
+    CString txt = dta->displayName.Length() ? dta->displayName : dta->name;
 
     if ( dta->isOnlySeparator )
     {
       ctx->AddSeparator();
-      if ( dta->displayName.Length() )
-        txt = dta->displayName;
-      else
-        txt = dta->name;
       ctx->AddItem( txt.GetPointer(), CategoryList.NumItems() + BaseID, false, closeOnClick );
       CategoryList += dta;
       ctx->AddSeparator();
     }
     else
     {
-      auto n = ctx->AddItem( txt.GetPointer(), CategoryList.NumItems() + BaseID, AddVisibilityMarkers && dta->isDisplayed, closeOnClick );
+      auto n = ctx->AddItem( txt.GetPointer(), CategoryList.NumItems() + BaseID, AddVisibilityMarkers && dta->isDisplayed, closeOnClick, AddVisibilityMarkers ? dta->isDisplayed : -1 );
+      if ( AddVisibilityMarkers )
+        AddFilterItems( n, dta, CategoryList.NumItems() + BaseID );
       CategoryList += dta;
       AddTypeContextMenu( n, CategoryList, dta, AddVisibilityMarkers, BaseID, closeOnClick );
     }
@@ -1793,28 +1922,20 @@ void AddTypeContextMenu( CWBContextMenu* ctx, CArray<GW2TacticalCategory*>& Cate
       continue;
     }
 
-    CString txt;
-    if ( AddVisibilityMarkers )
-      txt += "[" + CString( dta->isDisplayed ? "x" : " " ) + "] ";
-    if ( dta->displayName.Length() )
-      txt += dta->displayName;
-    else
-      txt += dta->name;
+    CString txt = dta->displayName.Length() ? dta->displayName : dta->name;
 
     if ( dta->isOnlySeparator )
     {
       ctx->AddSeparator();
-      if ( dta->displayName.Length() )
-        txt = dta->displayName;
-      else
-        txt = dta->name;
       ctx->AddItem( txt.GetPointer(), CategoryList.NumItems() + BaseID, false, closeOnClick );
       CategoryList += dta;
       ctx->AddSeparator();
     }
     else
     {
-      auto n = ctx->AddItem( txt.GetPointer(), CategoryList.NumItems() + BaseID, AddVisibilityMarkers && dta->isDisplayed, closeOnClick );
+      auto n = ctx->AddItem( txt.GetPointer(), CategoryList.NumItems() + BaseID, AddVisibilityMarkers && dta->isDisplayed, closeOnClick, AddVisibilityMarkers ? dta->isDisplayed : -1 );
+      if ( AddVisibilityMarkers )
+        AddFilterItems( n, dta, CategoryList.NumItems() + BaseID );
       CategoryList += dta;
       AddTypeContextMenu( n, CategoryList, dta, AddVisibilityMarkers, BaseID, closeOnClick );
     }
@@ -1942,7 +2063,15 @@ void POI::SetCategory( CWBApplication* App, GW2TacticalCategory* t )
   //iconSize = App->GetAtlas()->GetSize( icon );
 }
 
-bool POI::IsVisible( const tm& ptm, const time_t& currtime )
+// marks a marker as hidden because the player already collected it
+static bool Collected( bool* collected )
+{
+  if ( collected )
+    *collected = true;
+  return false;
+}
+
+bool POI::IsVisible( const tm& ptm, const time_t& currtime, bool* collected )
 {
   if ( category && !category->IsVisible() )
     return false;
@@ -1952,7 +2081,7 @@ bool POI::IsVisible( const tm& ptm, const time_t& currtime )
     struct tm lasttime;
     gmtime_s( &lasttime, &lastUpdateTime );
     if ( lasttime.tm_mday == ptm.tm_mday && lasttime.tm_mon == ptm.tm_mon && lasttime.tm_year == ptm.tm_year )
-      return false;
+      return Collected( collected );
   }
 
   if ( typeData.behavior == POIBehavior::ReappearAfterTimer )
@@ -1961,26 +2090,26 @@ bool POI::IsVisible( const tm& ptm, const time_t& currtime )
     if ( elapsedtime < typeData.resetLength )
     {
       if ( !typeData.bits.hasCountdown )
-        return false;
+        return Collected( collected );
     }
   }
 
   if ( typeData.behavior == POIBehavior::OnlyVisibleBeforeActivation )
   {
     if ( lastUpdateTime != time_t( 0 ) )
-      return false;
+      return Collected( collected );
   }
 
   if ( typeData.behavior == POIBehavior::OncePerInstance )
   {
     if ( activationData.HasKey( POIActivationDataKey( guid, mumbleLink.mapInstance ) ) )
-      return false;
+      return Collected( collected );
   }
 
   if ( typeData.behavior == POIBehavior::OncePerInstancePerChar )
   {
     if ( activationData.HasKey( POIActivationDataKey( guid, mumbleLink.mapInstance ^ mumbleLink.charIDHash ) ) )
-      return false;
+      return Collected( collected );
   }
 
   if ( typeData.behavior == POIBehavior::DailyPerChar )
@@ -1991,7 +2120,7 @@ bool POI::IsVisible( const tm& ptm, const time_t& currtime )
       gmtime_s( &lasttime, &activationData[ POIActivationDataKey( guid, mumbleLink.charIDHash ) ].lastUpdateTime );
 
       if ( lasttime.tm_mday == ptm.tm_mday && lasttime.tm_mon == ptm.tm_mon && lasttime.tm_year == ptm.tm_year )
-        return false;
+        return Collected( collected );
     }
   }
 
@@ -2012,10 +2141,10 @@ bool POI::IsVisible( const tm& ptm, const time_t& currtime )
     if ( Achievements::achievements.HasKey( typeData.achievementId ) )
     {
 
-      if ( typeData.achievementBit == -1 )
-        return !Achievements::achievements[ typeData.achievementId ].done;
-
-      return !Achievements::achievements[ typeData.achievementId ].done && Achievements::achievements[ typeData.achievementId ].bits.Find( typeData.achievementBit ) < 0;
+      auto& achievement = Achievements::achievements[ typeData.achievementId ];
+      if ( achievement.done || ( typeData.achievementBit != -1 && achievement.bits.Find( typeData.achievementBit ) >= 0 ) )
+        return Collected( collected );
+      return true;
     }
   }
 

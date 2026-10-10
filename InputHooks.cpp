@@ -6,11 +6,10 @@
 bool ShiftState = false;
 bool HooksInitialized = false;
 DWORD hookThreadID = 0;
+HANDLE hookThread = nullptr;
 bool disableHooks = false;
 extern HWND gameWindow;
 extern CWBApplication* App;
-TBOOL keyboardHookActive = false;
-TBOOL mouseHookActive = false;
 
 LRESULT __stdcall MyKeyboardProc( int ccode, WPARAM wParam, LPARAM lParam )
 {
@@ -80,6 +79,15 @@ LRESULT __stdcall MyKeyboardProc( int ccode, WPARAM wParam, LPARAM lParam )
   return ( CallNextHookEx( 0, ccode, wParam, lParam ) );
 }
 
+// numpad keys map to the same characters as the main keyboard (numpad 1 would also fire on skill key 1) and the
+// function keys to none, so these get their own codes
+TS32 GetHotkeyCode( DWORD vkCode, UINT mappedChar )
+{
+  if ( ( vkCode >= VK_NUMPAD0 && vkCode <= VK_DIVIDE ) || ( vkCode >= VK_F1 && vkCode <= VK_F24 ) )
+    return TacO_VKEY | vkCode;
+  return mappedChar;
+}
+
 LRESULT __stdcall KeyboardHook( int code, WPARAM wParam, LPARAM lParam )
 {
   if ( disableHooks || mumbleLink.textboxHasFocus )
@@ -117,14 +125,22 @@ LRESULT __stdcall KeyboardHook( int code, WPARAM wParam, LPARAM lParam )
   {
     if ( wParam == WM_KEYDOWN )
     {
-      //(*(void(__thiscall**)(_DWORD*, signed int, UINT, _DWORD))(*app + 68))(app, 258, mapped, 0);
-      App->InjectMessage( WM_CHAR, mapped, 0 );
+      // posted, not injected: hotkeys add and remove markers, which must not happen on this thread while the main
+      // thread is drawing them
+      TS32 hotkey = GetHotkeyCode( kbdat->vkCode, mapped );
+      if ( hotkey )
+        PostMessage( (HWND)App->GetHandle(), WM_TACO_HOTKEY, hotkey, 0 );
       return CallNextHookEx( 0, 0, WM_KEYDOWN, (LPARAM)lParam );
     }
     return CallNextHookEx( 0, 0, wParam, (LPARAM)lParam );
   }
 
   PostMessage( (HWND)App->GetHandle(), wParam, kbdat->vkCode, 1 | ( kbdat->scanCode << 16 ) + ( kbdat->flags << 24 ) );
+
+  // modifiers also go on to the system, else GetAsyncKeyState() doesn't see them and Ctrl+V can't paste
+  if ( kbdat->vkCode == VK_LCONTROL || kbdat->vkCode == VK_RCONTROL || kbdat->vkCode == VK_LSHIFT || kbdat->vkCode == VK_RSHIFT )
+    return CallNextHookEx( 0, code, wParam, lParam );
+
   return 1;
 
   //if ( inFocus )
@@ -208,15 +224,12 @@ void InitInputHooks()
   if ( IsDebuggerPresent() )
     return;
 
-  auto hookThread = CreateThread( NULL, 0,
+  hookThread = CreateThread( NULL, 0,
                                   []( LPVOID data )
                                   {
                                     auto keyboardHook = SetWindowsHookEx( WH_KEYBOARD_LL, KeyboardHook, NULL, 0 );
                                     auto mouseHook = SetWindowsHookEx( WH_MOUSE_LL, MouseHook, NULL, 0 );
                                     MSG msg;
-
-                                    keyboardHookActive = true;
-                                    mouseHookActive = true;
 
                                     while ( GetMessage( &msg, 0, 0, 0 ) > 0 )
                                     {
@@ -229,9 +242,6 @@ void InitInputHooks()
                                     UnhookWindowsHookEx( keyboardHook );
                                     UnhookWindowsHookEx( mouseHook );
 
-                                    keyboardHookActive = false;
-                                    mouseHookActive = false;
-
                                     return (DWORD)0;
                                   },
                                   0, 0, &hookThreadID );
@@ -243,8 +253,13 @@ void ShutDownInputHooks()
   if ( hookThreadID )
     PostThreadMessage( hookThreadID, WM_QUIT, 0, 0 );
 
-  while ( keyboardHookActive );
-  while ( mouseHookActive );
+  // used to busy-wait on plain bool flags set by the thread, which an optimizing compiler may never re-read
+  if ( hookThread )
+  {
+    WaitForSingleObject( hookThread, 1000 );
+    CloseHandle( hookThread );
+    hookThread = nullptr;
+  }
 }
 
 int GetTacOKeyCode( int key )
@@ -261,6 +276,16 @@ CString GetTacOKeyString( int key )
     result += "CTRL+";
   if ( key & TacO_ALT )
     result += "ALT+";
+
+  if ( key & TacO_VKEY )
+  {
+    int vk = key & 0xff;
+    if ( vk >= VK_F1 && vk <= VK_F24 )
+      return result + CString::Format( "F%d", vk - VK_F1 + 1 );
+    if ( vk >= VK_NUMPAD0 && vk <= VK_NUMPAD9 )
+      return result + CString::Format( "NUM%d", vk - VK_NUMPAD0 );
+    return result + CString::Format( "NUM%c", MapVirtualKey( vk, MAPVK_VK_TO_CHAR ) );
+  }
 
   return result + CString::Format( "%c", key & 0xfffff );
 }

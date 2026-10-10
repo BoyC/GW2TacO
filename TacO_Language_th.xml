@@ -1,0 +1,446 @@
+<TacOLanguageData language="Thai">
+  <token key="filtermarkers" value="กรองมาร์กเกอร์ที่แสดง"/>
+  <token key="togglepoidistance" value="แสดงระยะ POI"/>
+  <token key="toggleherdicons" value="แสดงไอคอนนอกจอที่ขอบจอ"/>
+  <token key="toggledrawwvwnames" value="แสดงชื่อ WvW Objective"/>
+  <token key="togglefadeoutbubble" value="เส้นทางจางลงรอบตัวละคร"/>
+  <token key="toggletactical" value="เปิด/ปิดมาร์กเกอร์"/>
+  <token key="togglerangecircles" value="เปิด/ปิดวงระยะ"/>
+  <token key="rangevisibility" value="ความทึบวงระยะ"/>
+  <token key="toggleranges" value="เลือกวงระยะที่แสดง"/>
+  <token key="toggleinfoline" value="เปิด/ปิดข้อความดีบัก"/>
+  <token key="togglecompass" value="เปิด/ปิดเข็มทิศ"/>
+  <token key="toggleloctimers" value="เปิด/ปิดตัวจับเวลาตามพื้นที่"/>
+  <token key="togglehpgrid" value="เปิด/ปิดเส้นกริด HP"/>
+  <token key="toggleupdatecheck" value="ตรวจหาอัปเดตเมื่อเปิดโปรแกรม"/>
+  <token key="togglemousehighlight" value="เปิด/ปิดไฮไลต์เมาส์"/>
+  <token key="togglemouseoutline" value="เปิด/ปิดขอบไฮไลต์เมาส์"/>
+  <token key="mousecolor" value="สีไฮไลต์เมาส์"/>
+  <token key="red" value="แดง"/>
+  <token key="lightred" value="แดงอ่อน"/>
+  <token key="black" value="ดำ"/>
+  <token key="gray" value="เทา"/>
+  <token key="blue" value="น้ำเงิน"/>
+  <token key="lightblue" value="น้ำเงินอ่อน"/>
+  <token key="green" value="เขียว"/>
+  <token key="lightgreen" value="เขียวอ่อน"/>
+  <token key="cyan" value="ไซแอน"/>
+  <token key="lightcyan" value="ไซแอนอ่อน"/>
+  <token key="magenta" value="แมเจนตา"/>
+  <token key="lightmagenta" value="แมเจนตาอ่อน"/>
+  <token key="brown" value="น้ำตาล"/>
+  <token key="yellow" value="เหลือง"/>
+  <token key="lightgray" value="เทาอ่อน"/>
+  <token key="white" value="ขาว"/>
+  <token key="openmaptimer" value="เปิดหน้าต่างตัวจับเวลาแผนที่"/>
+  <token key="closemaptimer" value="ปิดหน้าต่างตัวจับเวลาแผนที่"/>
+  <token key="compactmaptimer" value="ตัวจับเวลาแผนที่แบบย่อ"/>
+  <token key="configmaptimer" value="ตั้งค่าตัวจับเวลาแผนที่"/>
+  <token key="opentswindow" value="เปิดหน้าต่าง TeamSpeak"/>
+  <token key="closetswindow" value="ปิดหน้าต่าง TeamSpeak"/>
+  <token key="openmarkereditor" value="เปิดตัวแก้ไขมาร์กเกอร์"/>
+  <token key="closemarkereditor" value="ปิดตัวแก้ไขมาร์กเกอร์"/>
+  <token key="autohidemarkereditor" value="ซ่อนตัวแก้ไขมาร์กเกอร์อัตโนมัติ"/>
+  <token key="opennotepad" value="เปิดสมุดโน้ต"/>
+  <token key="closenotepad" value="ปิดสมุดโน้ต"/>
+  <token key="togglewindoweditmode" value="โหมดแก้ไขหน้าต่าง"/>
+  <token key="hideonload" value="ซ่อน TacO ในหน้าจอโหลด"/>
+  <token key="closewithgw2" value="ปิดเมื่อ GW2 ปิด"/>
+  <token key="rebindkeys" value="เปลี่ยนปุ่มลัด"/>
+  <token key="action_no_key_bound" value="[ยังไม่กำหนดปุ่ม]"/>
+  <token key="no_action" value="ไม่มีคำสั่ง"/>
+  <token key="add_marker" value="เพิ่มมาร์กเกอร์ใหม่ (หมวดหมู่เริ่มต้น 1)"/>
+  <token key="remove_marker" value="ลบมาร์กเกอร์"/>
+  <token key="action_key" value="ปุ่มแอ็กชัน"/>
+  <token key="edit_notepad" value="แก้ไขสมุดโน้ต"/>
+  <token key="*toggle_trail_recording" value="เริ่ม/หยุดบันทึกเส้นทาง"/>
+  <token key="*pause_trail_recording" value="พัก/บันทึกเส้นทางต่อ"/>
+  <token key="*remove_last_trail" value="ลบจุดสุดท้ายของเส้นทาง"/>
+  <token key="*resume_trail" value="บันทึกเส้นทางต่อโดยสร้างส่วนใหม่"/>
+  <token key="apikeys" value="API key"/>
+  <token key="gw2apikey" value="API key ของ Guild Wars 2"/>
+  <token key="ts3controlplugin" value="ปลั๊กอินควบคุม TeamSpeak 3"/>
+  <token key="openraidprogress" value="เปิดหน้าต่างความคืบหน้า Raid"/>
+  <token key="closeraidprogress" value="ปิดหน้าต่างความคืบหน้า Raid"/>
+  <token key="opendungeonprogress" value="เปิดหน้าต่างความคืบหน้า Dungeon"/>
+  <token key="closedungeonprogress" value="ปิดหน้าต่างความคืบหน้า Dungeon"/>
+  <token key="abouttaco" value="ข้อมูลติดต่อ (เกี่ยวกับ)"/>
+  <token key="getnewbuild" value="ดาวน์โหลดเวอร์ชันใหม่จาก DevBlog"/>
+  <token key="exittaco" value="ออกจาก GW2 TacO"/>
+  <token key="waitingforapi" value="กำลังรอ GW2 API..."/>
+  <token key="apierror1" value="GW2 API ผิดพลาด"/>
+  <token key="apierror2" value="API key ไม่ถูกต้อง หรือ API มีปัญหา"/>
+  <token key="apierror3_progression" value="GW2 API key ของคุณไม่มี"/>
+  <token key="apierror4_progression" value="สิทธิ์เข้าถึง 'progression'"/>
+  <token key="apikeynotset1" value="ต้องตั้งค่า GW2 API key"/>
+  <token key="apikeynotset2" value="ในเมนู TacO"/>
+  <token key="ts3_clientquery_plugin" value="TS3 ClientQuery Plugin"/>
+  <token key="guild_wars_2" value="Guild Wars 2"/>
+  <token key="new_build_txt1" value="มี"/>
+  <token key="new_build_txt2" value="เวอร์ชันใหม่ของ GW2 TacO ที่ออกมาตั้งแต่คุณอัปเดตครั้งล่าสุด"/>
+  <token key="press_to_bind" value="กดปุ่มที่ต้องการใช้"/>
+  <token key="enter_api" value="ใส่ API key ของ"/>
+  <token key="below_and_press" value="ด้านล่าง แล้วกด Enter:"/>
+  <token key="ts3_help_1" value="หา API key ได้ใน TeamSpeak 3 ที่เมนู"/>
+  <token key="ts3_help_2" value="Tools -&gt; Options -&gt; Addons -&gt; ClientQuery -&gt; Settings"/>
+  <token key="gw2_api_help_1" value="สร้าง API key ได้ที่"/>
+  <token key="compassnorth" value="N"/>
+  <token key="compasseast" value="E"/>
+  <token key="compasssouth" value="S"/>
+  <token key="compasswest" value="W"/>
+  <token key="ts3authfail1" value="ยืนยันตัวตน TS3 ล้มเหลว"/>
+  <token key="ts3authfail2" value="TS3 API key ที่ใส่ไว้ไม่ถูกต้อง"/>
+  <token key="ts3authfail3" value="โปรดตั้งค่า API key ที่ถูกต้อง"/>
+  <token key="ts3authfail4" value="ในเมนู TacO"/>
+  <token key="ts3nokeyset1" value="ยืนยันตัวตน TS3 ล้มเหลว"/>
+  <token key="ts3nokeyset2" value="ต้องตั้งค่า TS3 API key"/>
+  <token key="ts3nokeyset3" value="ในเมนู TacO"/>
+  <token key="action" value="คำสั่ง"/>
+  <token key="currently_bound" value="ตอนนี้กำหนดไว้ที่ปุ่ม"/>
+  <token key="tacosettings" value="ตั้งค่า GW2 TacO"/>
+  <token key="language" value="ภาษา"/>
+  <token key="multiclientwarning" value="GW2 TacO ไม่รองรับการเปิด GW2 หลายหน้าต่าง"/>
+  <token key="buylist" value="คำสั่งซื้อ:"/>
+  <token key="selllist" value="รายการขาย:"/>
+  <token key="outbidbuys" value="คำสั่งซื้อที่ถูกแซง:"/>
+  <token key="outbidsells" value="รายการขายที่ถูกตัดราคา:"/>
+  <token key="opentptracker" value="เปิดหน้าต่างตัวติดตาม Trading Post"/>
+  <token key="closetptracker" value="ปิดหน้าต่างตัวติดตาม Trading Post"/>
+  <token key="tptracker_onlyoutbid" value="แสดงเฉพาะรายการที่ถูกแซง/ตัดราคา"/>
+  <token key="tptracker_showbuys" value="แสดงคำสั่งซื้อ"/>
+  <token key="tptracker_showsells" value="แสดงรายการขาย"/>
+  <token key="tptracker_nextsellonly" value="แสดงแค่รายการเดียวต่อไอเทม"/>
+  <token key="apierror3_tradingpost" value="GW2 API key ของคุณไม่มี"/>
+  <token key="apierror4_tradingpost" value="สิทธิ์เข้าถึง 'tradingpost'"/>
+  <token key="raidwindow_compact" value="มุมมองแบบย่อ"/>
+  <token key="gold" value="g"/>
+  <token key="silver" value="s"/>
+  <token key="copper" value="c"/>
+
+  <token key="raid_wing" value="W"/>
+  <token key="raid_event" value="E"/>
+  <token key="raid_boss" value="B"/>
+
+  <token key="showraid_forsaken_thicket" value="Forsaken Thicket"/>
+  <token key="showraid_bastion_of_the_penitent" value="Bastion of the Penitent"/>
+  <token key="showraid_hall_of_chains" value="Hall of Chains"/>
+  <token key="showraid_mythwright_gambit" value="Mythwright Gambit"/>
+  <token key="showraid_the_key_of_ahdashim" value="The Key of Ahdashim"/>
+
+  <token key="visibilitymenu" value="ปรับการมองเห็น"/>
+  <token key="markervisibilitymenu" value="มาร์กเกอร์"/>
+  <token key="ingamevisibility" value="แสดงในเกม"/>
+  <token key="defaultvisibility" value="ค่าเริ่มต้น"/>
+  <token key="forceonvisibility" value="บังคับเปิด"/>
+  <token key="forceoffvisibility" value="บังคับปิด"/>
+  <token key="minimapvisibility" value="แสดงบนมินิแมป"/>
+  <token key="mapvisibility" value="แสดงบนแผนที่"/>
+  <token key="trailvisibilitymenu" value="เส้นทาง"/>
+  <token key="togglemetricsystem" value="แสดงระยะเป็นเมตร"/>
+  <token key="toggleforcedpiaware" value="ไม่ปรับขนาดตาม DPI (ต้องรีสตาร์ต)"/>
+
+  <token key="rangecirclesnotavailable" value="วงระยะถูกปิดใช้งานใน PvP"/>
+  <token key="toggletacticalinfotext" value="เปิด/ปิดข้อความข้อมูลมาร์กเกอร์"/>
+  <token key="supporttaco" value="สนับสนุนการพัฒนา GW2 TacO"/>
+  <token key="tacticalsettings" value="ตั้งค่าการแสดงมาร์กเกอร์"/>
+  <token key="tacticalutilities" value="เครื่องมือมาร์กเกอร์"/>
+  <token key="removemymarkers" value="ลบมาร์กเกอร์ของฉันในแผนที่นี้"/>
+  <token key="reallyremovemarkers" value="ยืนยันลบมาร์กเกอร์ของฉันในแผนที่นี้"/>
+  <token key="reloadmarkers" value="โหลดข้อมูลมาร์กเกอร์ทั้งหมดใหม่"/>
+  <token key="markeropacity" value="ความทึบมาร์กเกอร์ทั้งหมด"/>
+  <token key="ingameopacity" value="มาร์กเกอร์ในเกม"/>
+  <token key="mapopacity" value="มาร์กเกอร์บนแผนที่"/>
+  <token key="opacitysolid" value="ทึบ"/>
+  <token key="opacitytransparent" value="โปร่งใส"/>
+  <token key="opacityfaded" value="จาง"/>
+  <token key="togglekeybinds" value="เปิดใช้ปุ่มลัด"/>
+  <token key="escape_to_unbind" value="กด Escape เพื่อลบปุ่มลัดของคำสั่งนี้"/>
+  <token key="currently_not_bound" value="ตอนนี้ยังไม่ได้กำหนดปุ่ม"/>
+
+  <token key="toggle_tactical_layer" value="เปิด/ปิดมาร์กเกอร์"/>
+  <token key="toggle_range_circles" value="เปิด/ปิดวงระยะ"/>
+  <token key="toggle_tactical_compass" value="เปิด/ปิดเข็มทิศ"/>
+  <token key="toggle_locational_timers" value="เปิด/ปิดตัวจับเวลาตามพื้นที่"/>
+  <token key="toggle_hp_grids" value="เปิด/ปิดเส้นกริด HP"/>
+  <token key="toggle_mouse_highlight" value="เปิด/ปิดไฮไลต์เมาส์"/>
+  <token key="toggle_map_timer" value="เปิด/ปิดหน้าต่างตัวจับเวลาแผนที่"/>
+  <token key="toggle_ts3_window" value="เปิด/ปิดหน้าต่าง TS3"/>
+  <token key="toggle_marker_editor" value="เปิด/ปิดหน้าต่างตัวแก้ไขมาร์กเกอร์"/>
+  <token key="toggle_notepad" value="เปิด/ปิดหน้าต่างสมุดโน้ต"/>
+  <token key="toggle_raid_progress" value="เปิด/ปิดหน้าต่างความคืบหน้า Raid"/>
+  <token key="toggle_dungeon_progress" value="เปิด/ปิดหน้าต่างความคืบหน้า Dungeon"/>
+  <token key="toggle_tp_tracker" value="เปิด/ปิดหน้าต่างตัวติดตาม TP"/>
+  <token key="toggle_window_edit_mode" value="เปิด/ปิดโหมดแก้ไขหน้าต่าง"/>
+  <token key="enabletpnotificationicon" value="เปิด/ปิดไฮไลต์ไอคอน Trading Post"/>
+
+  <token key="deletekey" value="ลบ API key"/>
+  <token key="addgw2apikey" value="เพิ่ม GW2 API key ใหม่"/>
+  <token key="couldntidentifyaccount1" value="ไม่พบ API key ที่ตรงกับ"/>
+  <token key="couldntidentifyaccount2" value="บัญชีปัจจุบัน โปรดเพิ่ม API key"/>
+  <token key="waitingforcharactername1" value="กำลังรอเลือกตัวละคร"/>
+
+  <token key="HiddenCategorySingular" value="ซ่อนอยู่ %d หมวดหมู่"/>
+  <token key="HiddenCategoryPlural" value="ซ่อนอยู่ %d หมวดหมู่"/>
+  <token key="togglecrashoptout" value="ส่งรายงานแครชอัตโนมัติ"/>
+  <token key="toggleclipboardaccess" value="เปิดใช้การคัดลอกข้อความลงคลิปบอร์ด"/>
+
+  <token key="downloadingmarkerpack" value="กำลังดาวน์โหลดแพ็กมาร์กเกอร์เวอร์ชันใหม่:"/>
+  <token key="onlinemarkers" value="แพ็กมาร์กเกอร์ออนไลน์"/>
+  <token key="downloadmarkers" value="อัปเดตแพ็กมาร์กเกอร์อัตโนมัติ"/>
+  <token key="downloadmarkers" value="อัปเดตแพ็กมาร์กเกอร์อัตโนมัติ"/>
+  <token key="forcefestivals" value="แสดงมาร์กเกอร์เทศกาลแม้ไม่อยู่ในช่วงเทศกาล"/>
+
+  <token key="nocategoryhiding" value="แสดงหมวดหมู่ทั้งหมดเสมอ"/>
+  <token key="downloadpackfail" value="ดาวน์โหลดล้มเหลว: "/>
+  <token key="downloadingpack" value="(กำลังดาวน์โหลด) "/>
+  <token key="packdownloaded" value="(อัปเดตแล้ว) "/>
+  <token key="packversioncheckfail" value="ตรวจสอบเวอร์ชันล้มเหลว: "/>
+  <token key="*add_default_marker_2" value="เพิ่ม POI (หมวดหมู่เริ่มต้น 2)"/>
+  <token key="*add_default_marker_3" value="เพิ่ม POI (หมวดหมู่เริ่มต้น 3)"/>
+  <token key="*add_default_marker_4" value="เพิ่ม POI (หมวดหมู่เริ่มต้น 4)"/>
+  <token key="*add_default_marker_5" value="เพิ่ม POI (หมวดหมู่เริ่มต้น 5 คือหมวดหมู่เส้นทางเริ่มต้น)"/>
+  <token key="*delete_selected_marker" value="ลบมาร์กเกอร์ที่เลือก"/>
+  <token key="enableexternalediting" value="อนุญาตให้เลือกมาร์กเกอร์ภายนอก (จะไม่บันทึกการแก้ไข)"/>
+  <token key="hideexternalmarkers" value="ซ่อนมาร์กเกอร์ภายนอกทั้งหมด (สะดวกตอนแก้ไข)"/>
+  <token key="exportmymapmaprkers" value="ส่งออกมาร์กเกอร์ของฉันจากแผนที่นี้"/>
+  <token key="prevsegment" value="เลือกจุดก่อนหน้าของเส้นทาง"/>
+  <token key="nextsegment" value="เลือกจุดถัดไปของเส้นทาง"/>
+  <token key="starttrail" value="เริ่มบันทึกเส้นทางชั่วคราวใหม่"/>
+  <token key="pausetrail" value="พักการบันทึกเส้นทางชั่วคราว"/>
+  <token key="startnewsection" value="เริ่มส่วนใหม่ของเส้นทางชั่วคราว"/>
+  <token key="deletelastsegment" value="ลบจุดที่เลือกหรือจุดสุดท้ายของเส้นทางชั่วคราว"/>
+  <token key="savetrail" value="บันทึกเส้นทางชั่วคราวเป็นไฟล์ .trl"/>
+  <token key="loadtrail" value="โหลดเส้นทางชั่วคราวจากไฟล์ .trl"/>
+  <token key="newtrail" value="เพิ่มมาร์กเกอร์เส้นทางใหม่"/>
+  <token key="*delete_selected_segment" value="ลบจุดเส้นทางที่เลือก"/>
+  <token key="*copy_selected_marker" value="คัดลอกมาร์กเกอร์ที่เลือกพร้อมเลื่อนตำแหน่งเล็กน้อย"/>
+
+  <token key="TacOOnTaskBar" value="แสดง TacO บนแถบงาน Windows (ต้องรีสตาร์ต)"/>
+  <token key="selectcategorytoedit" value="เลือกหมวดหมู่ที่จะแก้ไข"/>
+  <token key="setmarkercategory" value="เปลี่ยนหมวดหมู่ของมาร์กเกอร์/เส้นทางที่กำลังแก้ไข"/>
+  <token key="deletemarker" value="ลบมาร์กเกอร์/เส้นทางที่กำลังแก้ไข"/>
+  <token key="*undo_edit" value="เลิกทำการแก้ไขล่าสุด"/>
+  <token key="*redo_edit" value="ทำซ้ำการแก้ไขล่าสุด"/>
+
+  <token key="wurm_tunnel" value="Wurm Tunnel"/>
+  <token key="airport" value="Airport"/>
+  <token key="thunder_hollow_reactor" value="Thunder Hollow Reactor"/>
+  <token key="forge" value="Forge"/>
+  <token key="overgrown_fane_reactor" value="Overgrown Fane Reactor"/>
+  <token key="shrine" value="Shrine"/>
+  <token key="altar" value="Altar"/>
+  <token key="workshop" value="Workshop"/>
+  <token key="arid_fortress_reactor" value="Arid Fortress Reactor"/>
+  <token key="stonegaze_spire_reactor" value="Stonegaze Spire Reactor"/>
+  <token key="bell_tower" value="Bell Tower"/>
+  <token key="observatory" value="Observatory"/>
+  <token key="overgrown_fane" value="Overgrown Fane"/>
+  <token key="arid_fortress" value="Arid Fortress"/>
+  <token key="tytone_perch" value="Tytone Perch"/>
+  <token key="thunder_hollow" value="Thunder Hollow"/>
+  <token key="tytone_perch_reactor" value="Tytone Perch Reactor"/>
+  <token key="inferno_s_needle" value="Inferno's Needle"/>
+  <token key="stonegaze_spire" value="Stonegaze Spire"/>
+  <token key="inferno_s_needle_reactor" value="Inferno's Needle Reactor"/>
+  <token key="statuary" value="Statuary"/>
+  <token key="aldon_s_ledge" value="Aldon's Ledge"/>
+  <token key="overlook" value="Overlook"/>
+  <token key="langor_gulch" value="Langor Gulch"/>
+  <token key="lowlands" value="Lowlands"/>
+  <token key="mendon_s_gap" value="Mendon's Gap"/>
+  <token key="danelon_passage" value="Danelon Passage"/>
+  <token key="stonemist_castle" value="Stonemist Castle"/>
+  <token key="pangloss_rise" value="Pangloss Rise"/>
+  <token key="durios_gulch" value="Durios Gulch"/>
+  <token key="veloka_slope" value="Veloka Slope"/>
+  <token key="klovan_gully" value="Klovan Gully"/>
+  <token key="jerrifer_s_slough" value="Jerrifer's Slough"/>
+  <token key="speldan_clearcut" value="Speldan Clearcut"/>
+  <token key="valley" value="Valley"/>
+  <token key="wildcreek_run" value="Wildcreek Run"/>
+  <token key="quentin_lake" value="Quentin Lake"/>
+  <token key="bravost_escarpment" value="Bravost Escarpment"/>
+  <token key="ogrewatch_cut" value="Ogrewatch Cut"/>
+  <token key="golanta_clearing" value="Golanta Clearing"/>
+  <token key="umberglade_woods" value="Umberglade Woods"/>
+  <token key="rogue_s_quarry" value="Rogue's Quarry"/>
+  <token key="anzalias_pass" value="Anzalias Pass"/>
+  <token key="temple_of_lost_prayers" value="Temple of Lost Prayers"/>
+  <token key="temple_of_the_fallen" value="Temple of the Fallen"/>
+  <token key="redbriar" value="Redbriar"/>
+  <token key="bluebriar" value="Bluebriar"/>
+  <token key="askalion_hills" value="Askalion Hills"/>
+  <token key="shadaran_hills" value="Shadaran Hills"/>
+  <token key="ascension_bay" value="Ascension Bay"/>
+  <token key="dreadfall_bay" value="Dreadfall Bay"/>
+  <token key="orchard_overlook" value="Orchard Overlook"/>
+  <token key="cohen_s_overlook" value="Cohen's Overlook"/>
+  <token key="woodhaven" value="Woodhaven"/>
+  <token key="sunnyhill" value="Sunnyhill"/>
+  <token key="the_spiritholme" value="The Spiritholme"/>
+  <token key="the_titanpaw" value="The Titanpaw"/>
+  <token key="bauer_s_estate" value="Bauer's Estate"/>
+  <token key="gertzz_s_estate" value="Gertzz's Estate"/>
+  <token key="garrison" value="Garrison"/>
+  <token key="redvale_refuge" value="Redvale refuge"/>
+  <token key="bluevale_refuge" value="Bluevale refuge"/>
+  <token key="godslore" value="Godslore"/>
+  <token key="faithleap" value="Faithleap"/>
+  <token key="stargrove" value="Stargrove"/>
+  <token key="foghaven" value="Foghaven"/>
+  <token key="carver_s_ascent" value="Carver's Ascent"/>
+  <token key="patrick_s_ascent" value="patrick's Ascent"/>
+  <token key="champion_s_demesne" value="Champion's Demesne"/>
+  <token key="hero_s_lodge" value="Hero's Lodge"/>
+  <token key="greenlake" value="Greenlake"/>
+  <token key="redlake" value="Redlake"/>
+  <token key="greenwater_lowlands" value="Greenwater Lowlands"/>
+  <token key="redwater_lowlands" value="Redwater Lowlands"/>
+  <token key="battle_s_hollow" value="Battle's Hollow"/>
+  <token key="norfolk_s_hollow" value="Norfolk's Hollow"/>
+  <token key="dawn_s_eyrie" value="Dawn's Eyrie"/>
+  <token key="cragtop" value="Cragtop"/>
+  <token key="hamm_s_lab" value="Hamm's Lab"/>
+  <token key="zakk_s_lab" value="Zakk's Lab"/>
+  <token key="lesh_s_lab" value="Lesh's Lab"/>
+  <token key="bauer_farmstead" value="Bauer Farmstead"/>
+  <token key="gee_farmstead" value="Gee Farmstead"/>
+  <token key="barrett_farmstead" value="Barrett Farmstead"/>
+  <token key="mclain_s_encampment" value="Mclain's Encampment"/>
+  <token key="habib_s_encampment" value="Habib's Encampment"/>
+  <token key="patrick_s_encampment" value="Patrick's Encampment"/>
+  <token key="o_del_academy" value="O'del Academy"/>
+  <token key="kay_li_academy" value="Kay'li Academy"/>
+  <token key="y_lan_academy" value="Y'lan Academy"/>
+  <token key="eternal_necropolis" value="Eternal Necropolis"/>
+  <token key="undying_necropolis" value="Undying Necropolis"/>
+  <token key="deathless_necropolis" value="Deathless Necropolis"/>
+  <token key="crankshaft_depot" value="Crankshaft Depot"/>
+  <token key="flywheel_depot" value="Flywheel Depot"/>
+  <token key="sparkplug_depot" value="Sparkplug Depot"/>
+  <token key="blistering_undercroft" value="Blistering Undercroft"/>
+  <token key="torrid_undercroft" value="Torrid Undercroft"/>
+  <token key="scorching_undercroft" value="Scorching Undercroft"/>
+  <token key="higgins_s_ascent" value="Higgins's Ascent"/>
+  <token key="bearce_s_dwelling" value="Bearce's Dwelling"/>
+  <token key="roy_s_refuge" value="Roy's Refuge"/>
+  <token key="olivier_s_refuge" value="Olivier's Refuge"/>
+  <token key="norfolk_s_refuge" value="Norfolk's Refuge"/>
+  <token key="zak_s_overlook" value="Zak's Overlook"/>
+  <token key="parched_outpost" value="Parched Outpost"/>
+  <token key="barren_outpost" value="Barren Outpost"/>
+  <token key="withered_outpost" value="Withered Outpost"/>
+  <token key="stoic_rampart" value="Stoic Rampart"/>
+  <token key="hardened_rampart" value="Hardened Rampart"/>
+  <token key="impassive_rampart" value="Impassive Rampart"/>
+  <token key="osprey_s_palace" value="Osprey's Palace"/>
+  <token key="shrike_s_palace" value="Shrike's Palace"/>
+  <token key="harrier_s_palace" value="Harrier's Palace"/>
+  <token key="darra_s_maze" value="Darra's Maze"/>
+  <token key="boettiger_s_hideaway" value="Boettiger's Hideaway"/>
+  <token key="berdrow_s_hideaway" value="Berdrow's Hideaway"/>
+  <token key="hughe_s_hideaway" value="Hughe's Hideaway"/>
+  <token key="tilly_s_encampment" value="Tilly's Encampment"/>
+  <token key="dustwhisper_well" value="Dustwhisper Well"/>
+  <token key="lastgasp_well" value="Lastgasp Well"/>
+  <token key="smashedhope_well" value="Smashedhope Well"/>
+  <token key="me_editeditem" value="รายการที่กำลังแก้ไข:"/>
+  <token key="me_visualappearance" value="รูปลักษณ์"/>
+  <token key="me_size" value="ขนาด:"/>
+  <token key="me_minimapsize" value="ขนาดบนมินิแมป:"/>
+  <token key="me_minimapfadeout" value="จางบนมินิแมป:"/>
+  <token key="me_minsize" value="ขนาดเล็กสุด:"/>
+  <token key="me_maxsize" value="ขนาดใหญ่สุด:"/>
+  <token key="me_scaleonminimap" value="ย่อขยายตามมินิแมป"/>
+  <token key="me_icon" value="ไอคอน:"/>
+  <token key="me_color" value="สี:"/>
+  <token key="me_alpha" value="ความทึบ:"/>
+  <token key="me_fadenear" value="เริ่มจางที่:"/>
+  <token key="me_fadefar" value="หายไปที่:"/>
+  <token key="me_height" value="ความสูง:"/>
+  <token key="me_behaviorheader" value="พฤติกรรม"/>
+  <token key="me_behavior" value="พฤติกรรม:"/>
+  <token key="me_bh_alwaysvisible" value="แสดงตลอด"/>
+  <token key="me_bh_mapchange" value="กลับมาเมื่อเปลี่ยนแผนที่"/>
+  <token key="me_bh_dailyreset" value="กลับมาเมื่อรีเซ็ตรายวัน"/>
+  <token key="me_bh_beforeactivation" value="แสดงจนกว่าจะกดใช้"/>
+  <token key="me_bh_aftertimer" value="กลับมาเมื่อครบเวลา"/>
+  <token key="me_bh_mapreset" value="กลับมาเมื่อแผนที่รีเซ็ต"/>
+  <token key="me_bh_onceperinstance" value="ใช้ได้ครั้งเดียวต่อ instance"/>
+  <token key="me_bh_dailyperchar" value="ใช้ได้วันละครั้งต่อตัวละคร"/>
+  <token key="me_bh_onceperinstanceperchar" value="ใช้ได้ครั้งเดียวต่อ instance ต่อตัวละคร"/>
+  <token key="me_bh_wvwobjective" value="WvW Objective"/>
+  <token key="me_achievementid" value="รหัส Achievement:"/>
+  <token key="me_achievementbit" value="บิต Achievement:"/>
+  <token key="me_resetlength" value="ระยะเวลารีเซ็ต:"/>
+  <token key="me_defaulttoggle" value="ค่าเปิด/ปิดเริ่มต้น"/>
+  <token key="me_hascountdown" value="แสดงนับถอยหลัง"/>
+  <token key="me_togglecategory" value="เปิด/ปิดหมวดหมู่:"/>
+  <token key="me_rangedbehavior" value="พฤติกรรมตามระยะ"/>
+  <token key="me_autotrigger" value="ทำงานอัตโนมัติ"/>
+  <token key="me_triggerrange" value="ระยะทำงาน:"/>
+  <token key="me_inforange" value="ระยะแสดงข้อมูล:"/>
+  <token key="me_infotext" value="ข้อความข้อมูล:"/>
+  <token key="me_copiedtext" value="ข้อความที่คัดลอก:"/>
+  <token key="me_copymessage" value="ข้อความแจ้งเมื่อคัดลอก:"/>
+  <token key="me_visibility" value="การมองเห็น"/>
+  <token key="me_visibleminimap" value="แสดงบนมินิแมป"/>
+  <token key="me_visiblebigmap" value="แสดงบนแผนที่ใหญ่"/>
+  <token key="me_visibleingame" value="แสดงในเกม"/>
+  <token key="me_keeponmapedge" value="ค้างไว้ที่ขอบแผนที่"/>
+  <token key="me_trails" value="เส้นทาง"/>
+  <token key="me_animspeed" value="ความเร็วแอนิเมชัน:"/>
+  <token key="me_trailscale" value="ขนาดเส้นทาง:"/>
+  <token key="me_trailfile" value="ไฟล์เส้นทาง:"/>
+  <token key="me_trailtexture" value="เท็กซ์เจอร์เส้นทาง:"/>
+  <token key="me_trailediting" value="แก้ไขเส้นทาง"/>
+  <token key="me_selectdefaultmarkertypes" value="เลือกประเภทมาร์กเกอร์เริ่มต้น"/>
+  <token key="me_noediteditem" value="ยังไม่ได้เลือกรายการที่จะแก้ไข"/>
+  <token key="me_category" value="หมวดหมู่: "/>
+  <token key="me_editedmarker" value="มาร์กเกอร์ที่แก้ไข: "/>
+  <token key="me_externalmarker" value="มาร์กเกอร์ภายนอก: "/>
+  <token key="me_editedtrail" value="เส้นทางที่แก้ไข: "/>
+  <token key="me_externaltrail" value="เส้นทางภายนอก: "/>
+  <token key="me_type" value="ประเภท: "/>
+  <token key="me_typeundefined" value="ประเภท: ไม่ได้กำหนด"/>
+  <token key="me_markertype" value="ประเภทมาร์กเกอร์: "/>
+  <token key="showallcategories" value="แสดงทั้งหมด"/>
+  <token key="hideallcategories" value="ซ่อนทั้งหมด"/>
+  <token key="showonlycategory" value="แสดงแค่หมวดนี้"/>
+  <token key="categoryhotkey" value="ปุ่มลัด"/>
+  <token key="bindcategoryhotkey" value="ตั้งปุ่มลัด..."/>
+  <token key="categoryshown" value="แสดง"/>
+  <token key="categoryhidden" value="ซ่อน"/>
+  <token key="markercategory" value="หมวดมาร์กเกอร์"/>
+  <token key="toggle_settings_window" value="เปิด/ปิดหน้าตั้งค่า TacO"/>
+  <token key="opensettings" value="ตั้งค่า TacO..."/>
+  <token key="settings_markers" value="มาร์กเกอร์"/>
+  <token key="settings_trails" value="เส้นทาง"/>
+  <token key="settings_display" value="การแสดงผล"/>
+  <token key="settings_windows" value="หน้าต่าง"/>
+  <token key="settings_hotkeys" value="ปุ่มลัด"/>
+  <token key="settings_menu" value="เมนู TacO"/>
+  <token key="settings_general" value="ทั่วไป"/>
+  <token key="settings_showmarkers" value="แสดงมาร์กเกอร์"/>
+  <token key="markerfadedistance" value="จางหายเมื่อไกลเกิน"/>
+  <token key="fadeoff" value="ปิด"/>
+  <token key="collectedmarkers" value="มาร์กเกอร์ที่เก็บแล้ว"/>
+  <token key="collectedhide" value="ซ่อน"/>
+  <token key="collectedfaded" value="จาง"/>
+  <token key="collectedshow" value="แสดง"/>
+  <token key="settings_markersshow" value="มาร์กเกอร์แสดงที่ไหน"/>
+  <token key="settings_markerdisplay" value="การแสดงผล"/>
+  <token key="trailwidth" value="ความกว้างเส้นทาง"/>
+  <token key="settings_trailsshow" value="เส้นทางแสดงที่ไหน"/>
+  <token key="settings_editmodehint" value="เปิดโหมดแก้ไขหน้าต่างก่อน ถึงจะย้ายหรือปรับขนาดหน้าต่างพวกนี้ได้"/>
+  <token key="settings_hotkeyhint" value="คลิกที่ปุ่มเพื่อเปลี่ยน ตอนรอกดปุ่ม กด Esc เพื่อลบปุ่มลัด"/>
+  <token key="settings_editorkeys" value="ตัวแก้ไขมาร์กเกอร์"/>
+  <token key="settings_categorykeys" value="หมวดมาร์กเกอร์"/>
+  <token key="settings_nocategorykeys" value="ตั้งปุ่มลัดได้จากหมวดในเมนูกรองมาร์กเกอร์"/>
+  <token key="settings_tacobutton" value="ปุ่ม TacO"/>
+  <token key="settings_tacobuttonhint" value="เปิดโหมดแก้ไขหน้าต่าง แล้วลากปุ่ม TacO ไปวางตรงไหนก็ได้"/>
+  <token key="settings_resetbutton" value="คืนปุ่มไปตำแหน่งเดิม"/>
+  <token key="settings_showinmenu" value="แสดงในเมนู TacO"/>
+  <token key="settings_editkey" value="แก้ไข"/>
+  <token key="settings_setts3key" value="ตั้ง API key"/>
+</TacOLanguageData>

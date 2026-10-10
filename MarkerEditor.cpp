@@ -1603,9 +1603,9 @@ void GW2MarkerEditor::OnDraw( CWBDrawAPI* API )
           if ( cpoi.category )
             typeName = cpoi.category->GetFullTypeName();
 
-          type->SetText( "Type: " + typeName );
+          type->SetText( DICT( "me_type" ) + typeName );
           if ( !typeName.Length() )
-            type->SetText( "Type: undefined" );
+            type->SetText( DICT( "me_typeundefined" ) );
         }
       }
 
@@ -1986,7 +1986,7 @@ void GW2MarkerEditor::SetEditedGUID( const GUID& guid )
   {
     editedMarker = GUID{};
     if ( editedText )
-      editedText->SetText( "NO EDITED ITEM CURRENTLY!" );
+      editedText->SetText( DICT( "me_noediteditem" ) );
     HideEditorUI( true );
     if ( changetype )
       changetype->Hide( true );
@@ -1999,7 +1999,7 @@ void GW2MarkerEditor::SetEditedGUID( const GUID& guid )
   {
     editedMarker = GUID{};
     if ( editedText )
-      editedText->SetText( "NO EDITED ITEM CURRENTLY!" );
+      editedText->SetText( DICT( "me_noediteditem" ) );
 
     HideEditorUI( true );
     if ( changetype )
@@ -2015,12 +2015,12 @@ void GW2MarkerEditor::SetEditedGUID( const GUID& guid )
 
     if ( marker )
     {
-      editedText->SetText( CString::Format( marker->external ? "EXTERNAL MARKER: %s" : "EDITED MARKER: %s", guid.GetPointer() ) );
+      editedText->SetText( DICT( marker->external ? "me_externalmarker" : "me_editedmarker" ) + guid );
       editedText->ApplyStyle( CString( "font-color" ), CString( marker->external ? "#ff8080" : "#80ff80" ), CStringArray() );
     }
     else
     {
-      editedText->SetText( CString::Format( trail->External ? "EXTERNAL TRAIL: %s" : "EDITED TRAIL: %s", guid.GetPointer() ) );
+      editedText->SetText( DICT( trail->External ? "me_externaltrail" : "me_editedtrail" ) + guid );
       editedText->ApplyStyle( CString( "font-color" ), CString( trail->External ? "#ff8080" : "#80ff80" ), CStringArray() );
     }
   }
@@ -2059,7 +2059,7 @@ void GW2MarkerEditor::SetEditedCategory( const CString& category )
   {
     editedCategory = CString();
     if ( editedText )
-      editedText->SetText( "NO EDITED ITEM CURRENTLY!" );
+      editedText->SetText( DICT( "me_noediteditem" ) );
 
     HideEditorUI( true );
     return;
@@ -2067,7 +2067,7 @@ void GW2MarkerEditor::SetEditedCategory( const CString& category )
 
   if ( editedText )
   {
-    editedText->SetText( "CATEGORY: " + cat->GetFullTypeName() );
+    editedText->SetText( DICT( "me_category" ) + cat->GetFullTypeName() );
   }
 
   editedCategory = category;
@@ -2869,7 +2869,7 @@ TBOOL GW2MarkerEditor::MessageProc( CWBMessage& message )
       ExportPOIS();
       CWBLabel* type = (CWBLabel*)FindChildByID( "markertype", "label" );
       if ( type )
-        type->SetText( "Marker Type: " + categoryList[ message.Data ]->GetFullTypeName() );
+        type->SetText( DICT( "me_markertype" ) + categoryList[ message.Data ]->GetFullTypeName() );
     }
 
     break;

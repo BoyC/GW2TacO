@@ -31,6 +31,145 @@ CWBFontDescription::CWBFontDescription()
 CWBFontDescription::~CWBFontDescription()
 {
   SAFEDELETE( Image );
+  for ( TS32 x = 0; x < ExtraGlyphs.NumItems(); x++ )
+    SAFEDELETEA( ExtraGlyphs[ x ].Image );
+}
+
+TBOOL CWBFontDescription::HasChar( TU16 Char )
+{
+  for ( TS32 x = 0; x < Alphabet.NumItems(); x++ )
+    if ( Alphabet[ x ].Char == Char )
+      return true;
+  for ( TS32 x = 0; x < ExtraGlyphs.NumItems(); x++ )
+    if ( ExtraGlyphs[ x ].Char == Char )
+      return true;
+  return false;
+}
+
+TBOOL CWBFontDescription::AddSystemFontGlyphs( const wchar_t *FaceName, TU16 FirstChar, TU16 LastChar, TS32 MinBodyHeight )
+{
+  if ( !Image ) return false;
+
+  // measure the body height of 'x' and whether the glyphs carry a dark outline (all TacO fonts do)
+  TS32 xHeight = 0;
+  TBOOL outlined = false;
+  for ( TS32 x = 0; x < Alphabet.NumItems(); x++ )
+  {
+    if ( Alphabet[ x ].Char != 'x' ) continue;
+
+    CRect uv = Alphabet[ x ].UV;
+    TS32 top = uv.y2, bottom = uv.y1, opaque = 0, dark = 0;
+    for ( TS32 j = uv.y1; j < uv.y2; j++ )
+      for ( TS32 i = uv.x1; i < uv.x2; i++ )
+      {
+        TU8 *c = Image + ( j*XRes + i ) * 4;
+        if ( c[ 3 ] <= 10 ) continue;
+        top = min( top, j );
+        bottom = max( bottom, j + 1 );
+        if ( c[ 3 ] > 200 )
+        {
+          opaque++;
+          if ( c[ 0 ] + c[ 1 ] + c[ 2 ] < 300 ) dark++;
+        }
+      }
+
+    outlined = dark * 100 > opaque * 15;
+    xHeight = bottom - top - ( outlined ? 2 : 0 );
+    break;
+  }
+
+  HDC dc = CreateCompatibleDC( NULL );
+  if ( !dc ) return false;
+
+  MAT2 identity = { { 0, 1 }, { 0, 0 }, { 0, 0 }, { 0, 1 } };
+  GLYPHMETRICS gm = {};
+
+  // measure FirstChar at a reference size, then pick the size at which it is as tall as our 'x'
+  HFONT font = CreateFontW( -100, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE, DEFAULT_CHARSET, OUT_TT_ONLY_PRECIS, CLIP_DEFAULT_PRECIS, ANTIALIASED_QUALITY, DEFAULT_PITCH, FaceName );
+  HGDIOBJ oldFont = SelectObject( dc, font );
+
+  wchar_t usedFace[ LF_FACESIZE ] = {};
+  GetTextFaceW( dc, LF_FACESIZE, usedFace );
+  TBOOL found = !wcscmp( usedFace, FaceName ) && GetGlyphOutlineW( dc, FirstChar, GGO_METRICS, &gm, 0, NULL, &identity ) != GDI_ERROR && gm.gmBlackBoxY > 0;
+  TS32 referenceHeight = gm.gmBlackBoxY;
+
+  SelectObject( dc, oldFont );
+  DeleteObject( font );
+
+  if ( !found )
+  {
+    LOG( LOG_WARNING, _T( "[gui] System font '%S' not found, can't add glyphs %x-%x to font" ), FaceName, FirstChar, LastChar );
+    DeleteDC( dc );
+    return false;
+  }
+
+  TS32 emSize = max( 1, (TS32)( 100.0f * max( xHeight, MinBodyHeight ) / referenceHeight + 0.5f ) );
+  font = CreateFontW( -emSize, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE, DEFAULT_CHARSET, OUT_TT_ONLY_PRECIS, CLIP_DEFAULT_PRECIS, ANTIALIASED_QUALITY, DEFAULT_PITCH, FaceName );
+  oldFont = SelectObject( dc, font );
+
+  TS32 border = outlined ? 1 : 0;
+
+  for ( TS32 c = FirstChar; c <= LastChar; c++ )
+  {
+    if ( HasChar( c ) ) continue;
+
+    wchar_t wc = (wchar_t)c;
+    WORD glyphIndex = 0xffff;
+    if ( GetGlyphIndicesW( dc, &wc, 1, &glyphIndex, GGI_MARK_NONEXISTING_GLYPHS ) == GDI_ERROR || glyphIndex == 0xffff )
+      continue; // unassigned code point
+
+    DWORD size = GetGlyphOutlineW( dc, c, GGO_GRAY8_BITMAP, &gm, 0, NULL, &identity );
+    if ( size == GDI_ERROR || !size ) continue;
+
+    TU8 *coverage = new TU8[ size ];
+    if ( GetGlyphOutlineW( dc, c, GGO_GRAY8_BITMAP, &gm, size, coverage, &identity ) == GDI_ERROR )
+    {
+      SAFEDELETEA( coverage );
+      continue;
+    }
+
+    TS32 pitch = ( gm.gmBlackBoxX + 3 ) & ~3;
+    auto alphaAt = [&]( TS32 x, TS32 y ) -> TS32 // coverage 0..255 at output pixel x,y
+    {
+      x -= border;
+      y -= border;
+      if ( x < 0 || y < 0 || x >= (TS32)gm.gmBlackBoxX || y >= (TS32)gm.gmBlackBoxY ) return 0;
+      return min( 255, coverage[ y*pitch + x ] * 255 / 64 );
+    };
+
+    WBEXTRAGLYPH g;
+    g.Char = c;
+    g.XRes = gm.gmBlackBoxX + border * 2;
+    g.YRes = gm.gmBlackBoxY + border * 2;
+    g.Image = new TU8[ g.XRes*g.YRes * 4 ];
+    g.Offset = CPoint( gm.gmptGlyphOrigin.x - border, Base - gm.gmptGlyphOrigin.y - border );
+    g.Advance = gm.gmCellIncX;
+
+    for ( TS32 y = 0; y < g.YRes; y++ )
+      for ( TS32 x = 0; x < g.XRes; x++ )
+      {
+        TS32 a = alphaAt( x, y );
+        TS32 outline = 0;
+        for ( TS32 j = -border; j <= border && border; j++ )
+          for ( TS32 i = -border; i <= border; i++ )
+            outline = max( outline, alphaAt( x + i, y + j ) );
+
+        // white glyph over a black outline
+        TS32 alpha = a + outline * ( 255 - a ) / 255;
+        TU8 *p = g.Image + ( y*g.XRes + x ) * 4;
+        p[ 0 ] = p[ 1 ] = p[ 2 ] = alpha ? a * 255 / alpha : 0;
+        p[ 3 ] = alpha;
+      }
+
+    SAFEDELETEA( coverage );
+    ExtraGlyphs += g;
+  }
+
+  SelectObject( dc, oldFont );
+  DeleteObject( font );
+  DeleteDC( dc );
+
+  return true;
 }
 
 TBOOL CWBFontDescription::LoadBMFontBinary( TU8 *Binary, TS32 BinarySize, TU8 *img, TS32 xr, TS32 yr, CArray<int>& enabledGlyphs )
@@ -426,7 +565,8 @@ TU32 ReadUTF8Char( _TUCHAR* &Text )
 
 TS32 CWBFont::WriteChar(CWBDrawAPI *DrawApi, int Char, TS32 x, TS32 y, CColor Color)
 {
-  if ( Char >= AlphabetSize || Alphabet[ (TU16)Char ].Char != Char ) //missing character replaced by a simple rectangle
+  // Char is negative for bytes >= 0x80 of a signed char string (the textbox passes raw bytes)
+  if ( Char < 0 || Char >= AlphabetSize || Alphabet[ (TU16)Char ].Char != Char ) //missing character replaced by a simple rectangle
   {
     if ( Alphabet[ (TU16)MissingChar ].Char != MissingChar )
     {
@@ -444,12 +584,11 @@ TS32 CWBFont::WriteChar(CWBDrawAPI *DrawApi, int Char, TS32 x, TS32 y, CColor Co
     return width;
   }
 
+  // zero advance glyphs (combining marks) are drawn too, over the previous character
   WBSYMBOL &Symbol = Alphabet[ (TU16)Char ];
-  TS32 width = Symbol.Advance;
-  if ( !width ) return 0;
   //DrawApi->DrawRect(CRect(x + Symbol.OffsetX, y + Symbol.OffsetY, x + Symbol.OffsetX + Symbol.SizeX, y + Symbol.OffsetY + Symbol.SizeY), 0x80808080);
   DrawApi->DrawAtlasElement( Symbol.Handle, x + Symbol.OffsetX, y + Symbol.OffsetY, Color );
-  return width;
+  return Symbol.Advance;
 }
 
 TS32 CWBFont::Write( CWBDrawAPI *DrawApi, TCHAR *String, TS32 x, TS32 y, CColor Color, WBTEXTTRANSFORM Transform, TBOOL DoKerning )
@@ -458,6 +597,8 @@ TS32 CWBFont::Write( CWBDrawAPI *DrawApi, TCHAR *String, TS32 x, TS32 y, CColor 
   if ( !Text ) return 0;
   TS32 xp = x;
   TS32 yp = y;
+  TU16 Prev = 0;
+  TU16 Base = 0; // last character that advanced the pen
 
   while ( *Text )
   {
@@ -467,15 +608,22 @@ TS32 CWBFont::Write( CWBDrawAPI *DrawApi, TCHAR *String, TS32 x, TS32 y, CColor 
     {
       xp = x;
       yp += GetLineHeight();
+      Prev = Base = 0;
       continue;
     }
 
-    xp += WriteChar( DrawApi, Char, xp, yp, Color );
+    _TUCHAR* next = Text;
+    TU16 NextChar = *Text ? ApplyTextTransformUtf8( (_TUCHAR*)String, next, Transform ) : 0;
 
-    if ( DoKerning && *Text && Kerning.NumItems() )
+    CPoint markOffset = GetThaiMarkOffset( Prev, Char, NextChar, Base );
+    TS32 advance = WriteChar( DrawApi, Char, xp + markOffset.x, yp + markOffset.y, Color );
+    xp += advance;
+    if ( advance )
+      Base = Char;
+    Prev = Char;
+
+    if ( DoKerning && NextChar && Kerning.NumItems() )
     {
-      _TUCHAR* next = Text;
-      TU16 NextChar = ApplyTextTransformUtf8( (_TUCHAR*)String, next, Transform );
       CWBKerningPair k = CWBKerningPair( Char, NextChar );
       if ( Kerning.HasKey( k ) )
         xp += Kerning[ k ];
@@ -483,6 +631,37 @@ TS32 CWBFont::Write( CWBDrawAPI *DrawApi, TCHAR *String, TS32 x, TS32 y, CColor 
   }
 
   return xp - x;
+}
+
+TBOOL CWBFont::HasSymbol( TU16 Char )
+{
+  return Char < AlphabetSize && Alphabet[ Char ].Char == Char;
+}
+
+static TBOOL IsThaiAboveMark( TU16 c ) // upper vowels, tone marks and other diacritics drawn above the consonant
+{
+  return c == 0x0E31 || ( c >= 0x0E34 && c <= 0x0E37 ) || ( c >= 0x0E47 && c <= 0x0E4E );
+}
+
+// Thai vowels and tone marks above the line are zero advance glyphs drawn over the preceding consonant. Without
+// OpenType shaping a tone mark collides with an upper vowel (or the nikhahit of sara am) below it, and marks cover
+// the ascender of the tall consonants, so nudge them roughly the way a shaping engine would.
+CPoint CWBFont::GetThaiMarkOffset( TU16 Prev, TU16 Char, TU16 Next, TU16 Base )
+{
+  CPoint offset( 0, 0 );
+
+  if ( !IsThaiAboveMark( Char ) )
+    return offset;
+
+  TBOOL toneMark = Char >= 0x0E48 && Char <= 0x0E4C;
+  TBOOL upperVowelBelow = Prev == 0x0E31 || ( Prev >= 0x0E34 && Prev <= 0x0E37 ) || Prev == 0x0E47 || Prev == 0x0E4D || Next == 0x0E33;
+  if ( toneMark && upperVowelBelow )
+    offset.y = ThaiToneRaise;
+
+  if ( Base == 0x0E1B || Base == 0x0E1D || Base == 0x0E1F || Base == 0x0E2C ) // po pla, fo fa, fo fan, lo chula
+    offset.x = -ThaiTallShift;
+
+  return offset;
 }
 
 TS32 CWBFont::Write( CWBDrawAPI *DrawApi, CString &String, TS32 x, TS32 y, CColor Color, WBTEXTTRANSFORM Transform, TBOOL DoKerning )
@@ -577,6 +756,33 @@ void CWBFont::AddKerningPair( TU16 First, TU16 Second, TS16 Amount )
   Kerning[ CWBKerningPair( First, Second ) ] = Amount;
 }
 
+// bounding box of the visible pixels of the UV area of an image, relative to the UV area
+static CRect GetGlyphContentRect( TU8 *Image, TS32 XRes, const CRect &UV )
+{
+  CRect content = CRect( UV.x2, UV.y2, UV.x1, UV.y1 );
+  bool hadContent = false;
+
+  for ( int j = UV.y1; j < UV.y2; j++ )
+    for ( int i = UV.x1; i < UV.x2; i++ )
+    {
+      TU8* c = Image + ( j*XRes + i ) * 4;
+
+      if ( c[ 3 ] > 10 )
+      {
+        hadContent = true;
+        content.x1 = min( content.x1, i );
+        content.x2 = max( content.x2, i );
+        content.y1 = min( content.y1, j );
+        content.y2 = max( content.y2, j );
+      }
+    }
+
+  if ( hadContent )
+    return content - UV.TopLeft();
+
+  return CRect( 0, 0, UV.Width(), UV.Height() );
+}
+
 TBOOL CWBFont::Initialize( CWBFontDescription *Description, TCHAR mc )
 {
   MissingChar = mc;
@@ -587,6 +793,8 @@ TBOOL CWBFont::Initialize( CWBFontDescription *Description, TCHAR mc )
   AlphabetSize = 0;
   for ( int x = 0; x < Description->Alphabet.NumItems(); x++ )
     AlphabetSize = max( AlphabetSize, Description->Alphabet[ x ].Char ) + 1;
+  for ( int x = 0; x < Description->ExtraGlyphs.NumItems(); x++ )
+    AlphabetSize = max( AlphabetSize, Description->ExtraGlyphs[ x ].Char + 1 );
 
   Alphabet = new WBSYMBOL[ AlphabetSize ];
   memset( Alphabet, 0, AlphabetSize * sizeof( WBSYMBOL ) );
@@ -604,31 +812,47 @@ TBOOL CWBFont::Initialize( CWBFontDescription *Description, TCHAR mc )
         return false;
       };
 
-      CRect content = CRect( Description->Alphabet[ x ].UV.x2, Description->Alphabet[ x ].UV.y2, Description->Alphabet[ x ].UV.x1, Description->Alphabet[ x ].UV.y1 );
-      bool hadContent = false;
-
-      for ( int j = Description->Alphabet[ x ].UV.y1; j < Description->Alphabet[ x ].UV.y2; j++ )
-        for ( int i = Description->Alphabet[ x ].UV.x1; i < Description->Alphabet[ x ].UV.x2; i++ )
-        {
-          TU8* c = Description->Image + ( j*Description->XRes + i ) * 4;
-
-          if ( c[ 3 ] > 10 )
-          {
-            hadContent = true;
-            content.x1 = min( content.x1, i );
-            content.x2 = max( content.x2, i );
-            content.y1 = min( content.y1, j );
-            content.y2 = max( content.y2, j );
-          }
-        }
-
-      if ( hadContent )
-        content -= Description->Alphabet[ x ].UV.TopLeft();
-      else
-        content = CRect( 0, 0, Description->Alphabet[ x ].UV.Width(), Description->Alphabet[ x ].UV.Height() );
-
+      CRect content = GetGlyphContentRect( Description->Image, Description->XRes, Description->Alphabet[ x ].UV );
       AddSymbol( Description->Alphabet[ x ].Char, h, Description->Alphabet[ x ].UV.Size(), Description->Alphabet[ x ].Offset, Description->Alphabet[ x ].Advance, content );
     }
+
+  for ( TS32 x = 0; x < Description->ExtraGlyphs.NumItems(); x++ )
+  {
+    WBEXTRAGLYPH &g = Description->ExtraGlyphs[ x ];
+    CRect uv( 0, 0, g.XRes, g.YRes );
+    WBATLASHANDLE h = Atlas->AddImage( g.Image, g.XRes, g.YRes, uv );
+    if ( !h )
+      continue;
+
+    AddSymbol( g.Char, h, uv.Size(), g.Offset, g.Advance, GetGlyphContentRect( g.Image, g.XRes, uv ) );
+  }
+
+  // see GetThaiMarkOffset()
+  if ( HasSymbol( 0x0E34 ) && HasSymbol( 0x0E48 ) )
+  {
+    WBSYMBOL &upperVowel = Alphabet[ 0x0E34 ]; // sara i
+    WBSYMBOL &toneMark = Alphabet[ 0x0E48 ]; // mai ek
+    ThaiToneRaise = min( 0, ( upperVowel.OffsetY + upperVowel.calculatedContentRect.y1 ) - ( toneMark.OffsetY + toneMark.calculatedContentRect.y2 ) );
+  }
+  for ( TS32 x = 0; x < Description->ExtraGlyphs.NumItems(); x++ )
+  {
+    // shift marks left until they clear the ascender of po pla: its left edge is the first pixel of its top row
+    WBEXTRAGLYPH &g = Description->ExtraGlyphs[ x ];
+    if ( g.Char != 0x0E1B || !HasSymbol( g.Char ) )
+      continue;
+
+    TS32 ascenderLeft = g.Offset.x;
+    for ( TS32 i = 0; i < g.XRes * g.YRes; i++ )
+      if ( g.Image[ i * 4 + 3 ] > 10 )
+      {
+        ascenderLeft += i % g.XRes;
+        break;
+      }
+
+    for ( TU16 m = 0x0E31; m <= 0x0E4E; m++ )
+      if ( IsThaiAboveMark( m ) && HasSymbol( m ) )
+        ThaiTallShift = max( ThaiTallShift, g.Advance + Alphabet[ m ].OffsetX + Alphabet[ m ].calculatedContentRect.x2 - ascenderLeft );
+  }
 
   for ( TS32 x = 0; x < Description->KerningData.NumItems(); x++ )
   {
@@ -653,7 +877,7 @@ TS32 CWBFont::GetBase()
 
 TS32 CWBFont::GetOffsetX( TCHAR Char )
 {
-  if ( Char >= AlphabetSize || Alphabet[ (TU16)Char ].Char != Char ) Char = MissingChar;
+  if ( Char < 0 || Char >= AlphabetSize || Alphabet[ (TU16)Char ].Char != Char ) Char = MissingChar;
   if ( Char >= AlphabetSize || Alphabet[ (TU16)Char ].Char != Char ) return 0;
 
   return Alphabet[ (TU16)Char ].OffsetX;
@@ -661,7 +885,7 @@ TS32 CWBFont::GetOffsetX( TCHAR Char )
 
 TS32 CWBFont::GetOffsetY( TCHAR Char )
 {
-  if ( Char >= AlphabetSize || Alphabet[ (TU16)Char ].Char != Char ) Char = MissingChar;
+  if ( Char < 0 || Char >= AlphabetSize || Alphabet[ (TU16)Char ].Char != Char ) Char = MissingChar;
   if ( Char >= AlphabetSize || Alphabet[ (TU16)Char ].Char != Char ) return 0;
 
   return Alphabet[ (TU16)Char ].OffsetY;

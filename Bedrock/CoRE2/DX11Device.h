@@ -8,6 +8,8 @@
 
 #ifdef CORE_API_DX11
 
+extern TBOOL ForceClassicSwapChain; // skips DirectComposition, the window must then have a redirection bitmap
+
 class CCoreDX11Device : public CCoreDevice
 {
 	IDXGISwapChain1 *SwapChain;

@@ -91,7 +91,7 @@ struct MarkerTypeData
   POIBehavior behavior = POIBehavior::AlwaysVisible;
   CColor color = CColor( 0xffffffff );
 
-  TS16 resetLength = 0;
+  TS32 resetLength = 0; // seconds, daily timers don't fit 16 bits
   TS16 minSize = 5;
   TS16 maxSize = 2048;
 
@@ -137,7 +137,8 @@ struct POI
   GW2TacticalCategory* category = nullptr;
   void SetCategory( CWBApplication* App, GW2TacticalCategory* t );
 
-  bool IsVisible( const tm& ptm, const time_t& currtime );
+  // collected is set when the marker is hidden only because the player already collected it
+  bool IsVisible( const tm& ptm, const time_t& currtime, bool* collected = nullptr );
 };
 
 struct POIActivationDataKey
@@ -263,6 +264,7 @@ public:
 
   bool hiddenFromContextMenu = false;
   int markerCount = 0;
+  TS32 hotkey = 0; // toggles this category, 0 when not bound
 
   bool needsExport = false;
 
@@ -287,6 +289,17 @@ void OpenTypeContextMenu( CWBContextItem* ctx, CArray<GW2TacticalCategory*>& Cat
 void AddTypeContextMenu( CWBContextMenu* ctx, CArray<GW2TacticalCategory*>& CategoryList, GW2TacticalCategory* Parent, TBOOL AddVisibilityMarkers, TS32 BaseID, TBOOL closeOnClick );
 GW2TacticalCategory* FindInCategoryTree( GW2TacticalCategory* cat );
 void SetAllCategoriesToVisibleInContext( GW2TacticalCategory* Parent );
+
+// filter menu item ids next to each category toggle, relative to the toggle's base id
+#define CATEGORY_SHOWONLY_ID 0x100000
+#define CATEGORY_BINDKEY_ID 0x200000
+
+void ShowOnlyCategory( GW2TacticalCategory* cat );
+void SetAllCategoriesDisplayed( TBOOL displayed );
+void SetCategoryHotkey( GW2TacticalCategory* cat, TS32 key );
+void ClearCategoryHotkeys( TS32 key );
+GW2TacticalCategory* ToggleCategoriesWithHotkey( TS32 key );
+void AddCategoryFilterItems( CWBContextMenu* ctx, GW2TacticalCategory* cat, TS32 id );
 
 float WorldToGameCoords( float world );
 float GameToWorldCoords( float game );

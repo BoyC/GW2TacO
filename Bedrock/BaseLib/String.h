@@ -179,6 +179,7 @@ public:
   void ToUpper();
   void RemoveNewLines();
   void URLEncode();
+  void Swap( CString &str ); // keeps binary data intact, copying and assigning recount the length up to the first NUL
 
 #ifdef HASHED_STRINGS
   //////////////////////////////////////////////////////////////////////////

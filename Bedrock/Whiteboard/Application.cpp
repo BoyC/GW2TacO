@@ -477,6 +477,13 @@ void CWBApplication::Display( CWBDrawAPI *API )
   Root->DrawTree( API );
 
   DrawAPI->RenderDisplayList();
+
+  if ( PendingScreenshot.Length() ) // has to happen before the flip discards the back buffer
+  {
+    Device->TakeScreenShot( PendingScreenshot );
+    PendingScreenshot = "";
+  }
+
   Device->EndScene();
   Device->Flip( Vsync );
 
@@ -571,9 +578,29 @@ CWBItem *CWBApplication::GetMouseCaptureItem()
   return MouseCaptureItem;
 }
 
+CString CWBApplication::LocalizeText( const CString &Text )
+{
+  if ( !Localizer || !Text.Length() || Text.GetPointer()[ 0 ] != '@' )
+    return Text;
+  return Localizer( Text.Substring( 1 ) );
+}
+
+void CWBApplication::AddFontFallback( const wchar_t *FaceName, TU16 FirstChar, TU16 LastChar, TS32 MinBodyHeight )
+{
+  WBFONTFALLBACK f;
+  f.FaceName = FaceName;
+  f.FirstChar = FirstChar;
+  f.LastChar = LastChar;
+  f.MinBodyHeight = MinBodyHeight;
+  FontFallbacks += f;
+}
+
 TBOOL CWBApplication::CreateFont( CString FontName, CWBFontDescription *Font )
 {
   if ( !Font ) return false;
+
+  for ( TS32 x = 0; x < FontFallbacks.NumItems(); x++ )
+    Font->AddSystemFontGlyphs( FontFallbacks[ x ].FaceName, FontFallbacks[ x ].FirstChar, FontFallbacks[ x ].LastChar, FontFallbacks[ x ].MinBodyHeight );
 
   CWBFont *f = new CWBFont( Atlas );
 
@@ -1029,7 +1056,7 @@ CWBItem * CWBApplication::GenerateUIItem( CWBItem *Root, CXMLNode &node, CRect &
     }
 
     CWBItemSelector* l = (CWBItemSelector*)Root;
-    l->AddItem( s );
+    l->AddItem( LocalizeText( s ) );
 
     return Root;
   }

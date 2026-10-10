@@ -46,7 +46,7 @@ CWBItem * CWBLabel::Factory( CWBItem *Root, CXMLNode &node, CRect &Pos )
 {
   CWBLabel * label = new CWBLabel( Root, Pos );
   if ( node.HasAttribute( _T( "text" ) ) )
-    label->SetText( node.GetAttribute( _T( "text" ) ) );
+    label->SetText( label->GetApplication()->LocalizeText( node.GetAttribute( _T( "text" ) ) ) );
   return label;
 }
 

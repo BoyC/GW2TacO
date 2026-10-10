@@ -38,7 +38,10 @@ enum class TacOKeyAction : TS32
   DeleteSelectedTrailSegment,
   CopySelectedMarker,
   UndoEdit,
-  RedoEdit
+  RedoEdit,
+  Toggle_settings_window,
+
+  Count // not an action, keep it last
 
   //if you add one here, add it to the ActionNames array in the .cpp as well!
 };
@@ -54,6 +57,8 @@ extern CString ActionNames[];
 
 class GW2TacO : public CWBItem
 {
+  friend class GW2SettingsPanel;
+
   CString lastInfoLine;
   TBOOL RebindMode = false;
   TBOOL ScriptRebindMode = false;
@@ -71,6 +76,8 @@ class GW2TacO : public CWBItem
   CDictionary<TS32, CString> ScriptKeyBindings;
 
   void RebindAction( TacOKeyAction Action );
+  CString CategoryToRebind; // full name of the marker category waiting for a hotkey
+  void RebindCategory( GW2TacticalCategory* cat );
   void RebindScriptKey( TS32 evendIDX );
   CArray<GW2TacticalCategory*> CategoryList;
   //CArray<AngelWrapper*> scriptEngines;
@@ -92,14 +99,21 @@ class GW2TacO : public CWBItem
   TS32 lastPickupFetchTime = 0;
   TBOOL showPickupHighlight = false;
   float lastScaleValue = 1.0f;
+  CRect lastClientRect; // a dragged TacO button is clamped again when the window size changes
 
   void StoreIconSizes();
   void AdjustMenuForWindowTooSmallScale( float scale );
 
   CString mouseToolTip;
   CString GetKeybindString( TacOKeyAction action );
+  TS32 GetBindingKey( TS32 key );
 
   void OpenMainMenu( CWBContextMenu* ctx );
+  void OpenTacOMenu( CWBButton* button );
+  TBOOL HandleTacOButtonDrag( CWBMessage& Message );
+  TBOOL draggingTacOButton = false;
+  CPoint tacoButtonDragStart;
+  CPoint tacoButtonDragOffset;
   void RebuildMainMenu( CWBContextMenu* ctx );
 
 public:
@@ -113,6 +127,7 @@ public:
   static CWBItem* Factory( CWBItem* Root, CXMLNode& node, CRect& Pos );
   WB_DECLARE_GUIITEM( _T( "GW2TacO" ), CWBItem );
   void OpenWindow( CString s );
+  void ResetTacOButtonPosition();
 
   virtual TBOOL MessageProc( CWBMessage& Message ); //return true if this item handled the message
 
@@ -123,8 +138,14 @@ public:
   void TickScriptEngines();
   void TriggerScriptEngineAction( GUID& guid );
   void TriggerScriptEngineKeyEvent( const CString& eventID );
+
+#ifdef _DEBUG
+  void OpenMainMenuForTesting( TS32 subMenu );
+#endif
 };
 
 extern CString UIFileNames[];
+
+bool IsMenuItemShown( const char* id );
 
 void SetMouseToolTip( const CString& toolTip );

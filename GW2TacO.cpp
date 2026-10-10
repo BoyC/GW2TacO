@@ -48,8 +48,19 @@ TBOOL isTacOUptoDate = true;
 int newTacOVersion = RELEASECOUNT;
 int gw2WindowCount = 0;
 
+CString LocalizeLayoutText( const CString& token )
+{
+  return DICT( token );
+}
+
 TBOOL InitGUI( CWBApplication* App )
 {
+  App->SetLocalizer( LocalizeLayoutText ); // UI.xml texts written as @token
+
+  // the baked fonts have no Thai glyphs, rasterize them from the Windows Thai UI font (Tahoma before Windows 8)
+  App->AddFontFallback( L"Leelawadee UI", 0x0E01, 0x0E5B, 6 );
+  App->AddFontFallback( L"Tahoma", 0x0E01, 0x0E5B, 6 );
+
   CreateUniFontOutlined( App, "UniFontOutlined" ); // default font
   CreateProFontOutlined( App, "ProFontOutlined" );
   CreateUniFont( App, "UniFont" );
@@ -523,6 +534,32 @@ INT ProcessCommandLine()
   return 1;
 }
 
+// a DirectComposition swap chain needs a window without a redirection bitmap, the classic swap chain one with it
+bool CreateOverlayApp( HINSTANCE hInstance, bool directComposition )
+{
+  App = new COverlayApp();
+
+  int width = 1;
+  int height = 1;
+
+  CCoreWindowParameters p = CCoreWindowParameters( GetModuleHandle( NULL ), false, width, height, _T( "Guild Wars 2 Tactical Overlay" ), LoadIcon( hInstance, MAKEINTRESOURCE( IDI_ICON2 ) ) );
+
+  int toolex = Config::GetValue( "TacOOnTaskBar" ) ? 0 : WS_EX_TOOLWINDOW;
+
+  p.OverrideWindowStyle = WS_POPUP;
+  p.OverrideWindowStyleEx = WS_EX_COMPOSITED | WS_EX_LAYERED | WS_EX_TRANSPARENT | toolex;// | WS_EX_TOPMOST;// | WS_EX_TOOLWINDOW;
+  if ( directComposition )
+    p.OverrideWindowStyleEx = WS_EX_TOPMOST | WS_EX_TRANSPARENT | toolex | WS_EX_LAYERED | WS_EX_NOREDIRECTIONBITMAP;
+  ForceClassicSwapChain = !directComposition;
+
+  if ( App->Initialize( p ) )
+    return true;
+
+  App->Destroy();
+  SAFEDELETE( App );
+  return false;
+}
+
 bool InitOverlayApp( HINSTANCE hInstance )
 {
   if ( !SetupTacoProtocolHandling() )
@@ -536,24 +573,16 @@ bool InitOverlayApp( HINSTANCE hInstance )
     FreeLibrary( dComp );
   }
 
-  App = new COverlayApp();
+  bool created = CreateOverlayApp( hInstance, hasDComp );
+  if ( !created && hasDComp ) // DirectComposition swap chains aren't available everywhere (e.g. Wine)
+  {
+    LOG_ERR( "[GW2TacO] DirectComposition initialization failed, retrying with a classic swap chain." );
+    created = CreateOverlayApp( hInstance, false );
+  }
 
-  int width = 1;
-  int height = 1;
-
-  CCoreWindowParameters p = CCoreWindowParameters( GetModuleHandle( NULL ), false, width, height, _T( "Guild Wars 2 Tactical Overlay" ), LoadIcon( hInstance, MAKEINTRESOURCE( IDI_ICON2 ) ) );
-
-  int toolex = Config::GetValue( "TacOOnTaskBar" ) ? 0 : WS_EX_TOOLWINDOW;
-
-  p.OverrideWindowStyle = WS_POPUP;
-  p.OverrideWindowStyleEx = WS_EX_COMPOSITED | WS_EX_LAYERED | WS_EX_TRANSPARENT | toolex;// | WS_EX_TOPMOST;// | WS_EX_TOOLWINDOW;
-  if ( dComp )
-    p.OverrideWindowStyleEx = WS_EX_TOPMOST | WS_EX_TRANSPARENT | toolex | WS_EX_LAYERED | WS_EX_NOREDIRECTIONBITMAP;
-
-  if ( !App->Initialize( p ) )
+  if ( !created )
   {
     MessageBox( NULL, "Failed to initialize GW2 TacO!\nIf you want this error fixed,\nplease send the generated GW2TacO.log and a dxdiag log to boyc@scene.hu", "Fail.", MB_ICONERROR );
-    SAFEDELETE( App );
     return false;
   }
 
@@ -625,7 +654,8 @@ void HandleGW2WindowPositionChange( CRect& tacoWindowPos, HWND hwnd )
 {
   RECT gameClientRect;
   POINT topLeft{};
-  GetClientRect( gameWindow, &gameClientRect );
+  if ( !GetClientRect( gameWindow, &gameClientRect ) ) // the game window is already gone
+    return;
   ClientToScreen( gameWindow, &topLeft );
 
   if ( gameClientRect.right - gameClientRect.left != tacoWindowPos.Width() ||
@@ -659,6 +689,7 @@ void LoadQueuedMarkerPacks()
     CString file = markerPackQueue[ 0 ];
     markerPackQueue.DeleteByIndex( 0 );
     ImportMarkerPack( App, file );
+    Config::LoadMarkerCategoryVisibilityInfo(); // the pack may have brought categories with saved visibility or hotkeys
   }
 }
 
@@ -689,6 +720,22 @@ void WaitForMumble( bool frameThrottling )
     if ( frameThrottling )
       Sleep( 1 );
   }
+}
+
+// Windows ignores SetForegroundWindow() from a background process and GW2 owns the input, so typing into a TacO
+// textbox would only go through the keyboard hook, which loses Ctrl/Shift (no pasting API keys, no capitals).
+// Sharing the input state with the foreground thread for the call lets it through.
+void ForceForegroundWindow( HWND hwnd )
+{
+  DWORD foregroundThread = GetWindowThreadProcessId( GetForegroundWindow(), nullptr );
+  DWORD ourThread = GetCurrentThreadId();
+  bool attached = foregroundThread != ourThread && AttachThreadInput( foregroundThread, ourThread, TRUE );
+
+  SetForegroundWindow( hwnd );
+  SetFocus( hwnd );
+
+  if ( attached )
+    AttachThreadInput( foregroundThread, ourThread, FALSE );
 }
 
 void EnumGW2Windows()
@@ -790,6 +837,13 @@ INT WINAPI WinMain( _In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
       hideOnLoadingScreens = Config::GetValue( "HideOnLoadingScreens" ) != 0;
       EnumGW2Windows();
 
+#ifdef _DEBUG
+      // dev aid: with TACO_SCREENSHOT=<file.png> set, the overlay is saved every second, even when it's covered
+      char screenshotFile[ MAX_PATH ];
+      if ( GetEnvironmentVariableA( "TACO_SCREENSHOT", screenshotFile, MAX_PATH ) )
+        App->RequestScreenshot( CString( screenshotFile ) );
+#endif
+
       oncePerSecondEvent = globalTimer.GetTime();
     }
 
@@ -815,12 +869,32 @@ INT WINAPI WinMain( _In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
       needsUIScaleSet = false;
     }
 
+#ifdef _DEBUG
+    // dev aid: TACO_TEST_MENU=<n> opens the TacO menu once, plus its n-th submenu when n >= 0
+    static bool testMenuOpened = false;
+    char testMenu[ 16 ];
+    if ( !testMenuOpened && globalTimer.GetTime() > 8000 && GetEnvironmentVariableA( "TACO_TEST_MENU", testMenu, sizeof( testMenu ) ) ) // after the ui scale css got applied
+    {
+      taco->OpenMainMenuForTesting( atoi( testMenu ) );
+      testMenuOpened = true;
+    }
+
+    // dev aid: TACO_TEST_SETTINGS=<tab> opens the settings window once, on that tab
+    static bool testSettingsOpened = false;
+    char testSettings[ 16 ];
+    if ( !testSettingsOpened && globalTimer.GetTime() > 5000 && GetEnvironmentVariableA( "TACO_TEST_SETTINGS", testSettings, sizeof( testSettings ) ) )
+    {
+      Config::SetValue( "SettingsTab", atoi( testSettings ) );
+      taco->OpenWindow( "Settings" );
+      testSettingsOpened = true;
+    }
+#endif
+
     auto foregroundWindow = GetForegroundWindow();
 
     if ( foregroundWindow == gameWindow && App->GetFocusItem() && App->GetFocusItem()->InstanceOf( "textbox" ) )
     {
-      SetForegroundWindow( tacoHWND );
-      SetFocus( tacoHWND );
+      ForceForegroundWindow( tacoHWND );
       ::SetWindowPos( tacoHWND, HWND_TOPMOST, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE );
     }
 

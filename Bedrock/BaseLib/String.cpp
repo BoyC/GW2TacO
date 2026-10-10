@@ -94,6 +94,16 @@ void CString::WriteAsWideChar( wchar_t *Copy, TU32 SizeInChars ) const
 //////////////////////////////////////////////////////////////////////////
 //string functions
 
+void CString::Swap( CString &str )
+{
+  std::swap( String, str.String );
+  std::swap( LengthCached, str.LengthCached );
+#ifdef HASHED_STRINGS
+  std::swap( Hash, str.Hash );
+  std::swap( LowercaseHash, str.LowercaseHash );
+#endif
+}
+
 const CString &CString::operator=( const CString &str )
 {
   SAFEDELETEA( String );

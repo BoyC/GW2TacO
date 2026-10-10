@@ -183,8 +183,9 @@
     <Event Name="" Length="100" Color="00000000"/>
   </Map>
   <Map Name="Elon Riverlands" Length="120" Start="90" id="erl" ChestAPIID="elon_riverlands_heros_choice_chest">
-    <Event Name="Ascension" Length="30" Color="80dae3b4"/>
-    <Event Name="" Length="90" Color="00000000"/>
+    <Event Name="Ascension" Length="25" Color="80dae3b4"/>
+    <Event Name="Doppelganger" Length="20" Color="80c4d68c"/>
+    <Event Name="" Length="75" Color="00000000"/>
   </Map>
   <Map Name="The Desolation" Length="120" Start="30" id="des" ChestAPIID="the_desolation_heros_choice_chest">
     <Event Name="Junundu" Length="20" Color="80cebca2"/>
@@ -216,19 +217,23 @@
     <Event Name="" Length="40" Color="00000000"/>
   </Map>
   <Map Name="Grothmar Valley" Length="120" Start="10" id="gv">
-    <Event Name="Effigy" Length="28" Color="80f0380e"/>
-    <Event Name="Doomlore Shrine" Length="27" Color="80f55b38"/>
-    <Event Name="Oooze Pits" Length="34" Color="80f0380e"/>
-    <Event Name="Metal Concert" Length="31" Color="80f55b38"/>
+    <Event Name="Effigy" Length="15" Color="80f0380e"/>
+    <Event Name="" Length="13" Color="00000000"/>
+    <Event Name="Doomlore Shrine" Length="22" Color="80f55b38"/>
+    <Event Name="" Length="5" Color="00000000"/>
+    <Event Name="Ooze Pits" Length="20" Color="80f0380e"/>
+    <Event Name="" Length="15" Color="00000000"/>
+    <Event Name="Metal Concert" Length="15" Color="80f55b38"/>
+    <Event Name="" Length="15" Color="00000000"/>
   </Map>
-  <Map Name="Bjora Marches" Length="120" Start="0" id="s5e2bm">
+  <Map Name="Bjora Marches" Length="120" Start="5" id="s5e2bm">
     <Event Name="Icebrood Champions" Length="15" Color="8065b0e8"/>
     <Event Name="" Length="45" Color="00000000"/>
-    <Event Name="Drakkar" Length="30" Color="8079afff"/>
+    <Event Name="Drakkar" Length="35" Color="8079afff" WorldBossAPIID="drakkar"/>
     <Event Name="" Length="5" Color="00000000"/>
     <Event Name="Prep" Length="5" Color="8065b0e8"/>
     <Event Name="Raven Shrines" Length="10" Color="8065b0e8"/>
-    <Event Name="Shards and Construct" Length="10" Color="804199d8"/>
+    <Event Name="Shards and Construct" Length="5" Color="804199d8"/>
   </Map>
 
   <Map Name="Dragonstorm" Length="120" Start="60" id="s5e5ds">
@@ -242,22 +247,86 @@
     <Event Name=""  Length="5"  Color="8066696f"/>
     <Event Name="Cantha Night" Length="55" Color="80587792"/>
   </Map>
-  <Map Name="Seitung Province" Length="120" Start="90" id="csp">
-    <Event Name="Aetherblade Assult" Length="30" Color="8042C8D7"/>
+  <Map Name="Seitung Province" Length="120" Start="90" id="csp" ChestAPIID="seitung_province_heros_choice_chest">
+    <Event Name="Aetherblade Assault" Length="30" Color="8042C8D7"/>
     <Event Name="" Length="90" Color="008AEAF4"/>
   </Map>
-  <Map Name="New Kaineng City" Length="120" Start="0" id="cnkc">
+  <Map Name="New Kaineng City" Length="120" Start="0" id="cnkc" ChestAPIID="new_kaineng_city_heros_choice_chest">
     <Event Name="Kaineng Blackout" Length="40" Color="8042C8D7"/>
     <Event Name="" Length="80" Color="008AEAF4"/>
   </Map>
-  <Map Name="Echovald Wilds" Length="120" Start="30" id="ctew">
+  <Map Name="Echovald Wilds" Length="120" Start="30" id="ctew" ChestAPIID="echovald_wilds_heros_choice_chest">
     <Event Name="Gang War" Length="35" Color="8042C8D7"/>
     <Event Name="" Length="35" Color="008AEAF4"/>
     <Event Name="Research Facility" Length="20" Color="808AEAF4"/>
     <Event Name="" Length="30" Color="008AEAF4"/>
   </Map>
-  <Map Name="Dragon's End" Length="120" Start="0" id="cde">
+  <Map Name="Dragon's End" Length="120" Start="0" id="cde" ChestAPIID="dragons_end_heros_choice_chest">
     <Event Name="Preparations" Length="60" Color="808AEAF4"/>
     <Event Name="Battle for the Jade Sea" Length="60" Color="8042C8D7"/>
+  </Map>
+  <Map Name="Scarlet's Invasion" Length="120" Start="60" id="scarlet">
+    <Event Name="Defeat Scarlet's minions" Length="15" Color="80d76464"/>
+    <Event Name="" Length="105" Color="00000000"/>
+  </Map>
+  <Map Name="Eye of the North" Length="120" Start="0" id="eotn">
+    <Event Name="Twisted Marionette" Length="20" Color="80d76464"/>
+    <Event Name="" Length="10" Color="00000000"/>
+    <Event Name="Battle For Lion's Arch" Length="15" Color="80d76464"/>
+    <Event Name="" Length="45" Color="00000000"/>
+    <Event Name="Tower of Nightmares" Length="15" Color="80d76464"/>
+    <Event Name="" Length="15" Color="00000000"/>
+  </Map>
+  <Map Name="Skywatch Archipelago" Length="120" Start="60" id="sotosa" ChestAPIID="skywatch_archipelago_heros_choice_chest">
+    <Event Name="Unlocking the Wizard's Tower" Length="25" Color="80e2ab49"/>
+    <Event Name="" Length="95" Color="00000000"/>
+  </Map>
+  <Map Name="Wizard's Tower" Length="120" Start="60" id="sotowt">
+    <Event Name="Target Practice" Length="40" Color="80e2ab49"/>
+    <Event Name="Target Practice &amp; Fly by Night" Length="15" Color="80c88836"/>
+    <Event Name="Fly by Night" Length="25" Color="80e2ab49"/>
+    <Event Name="" Length="40" Color="00000000"/>
+  </Map>
+  <Map Name="Amnytas" Length="120" Start="0" id="sotoam" ChestAPIID="amnytas_heros_choice_chest">
+    <Event Name="Defense of Amnytas" Length="25" Color="80e2ab49"/>
+    <Event Name="" Length="95" Color="00000000"/>
+  </Map>
+  <Map Name="Convergences" Length="180" Start="0" id="convergence">
+    <Event Name="Mount Balrior" Length="10" Color="80d76464"/>
+    <Event Name="" Length="50" Color="00000000"/>
+    <Event Name="Nexus of Eternity" Length="10" Color="80d76464"/>
+    <Event Name="" Length="20" Color="00000000"/>
+    <Event Name="Outer Nayos" Length="10" Color="80d76464"/>
+    <Event Name="" Length="80" Color="00000000"/>
+  </Map>
+  <Map Name="Janthir Syntri" Length="120" Start="30" id="jwjs">
+    <Event Name="Of Mists and Monsters" Length="25" Color="8092aaeb" WorldBossAPIID="mists_and_monsters_titans"/>
+    <Event Name="" Length="95" Color="00000000"/>
+  </Map>
+  <Map Name="Bava Nisos" Length="120" Start="80" id="jwbn">
+    <Event Name="A Titanic Voyage" Length="25" Color="8092aaeb"/>
+    <Event Name="" Length="95" Color="00000000"/>
+  </Map>
+  <Map Name="Castora Time" Length="120" Start="35" id="castoratime">
+    <Event Name="" Length="5" Color="8066696f"/>
+    <Event Name="Castora Day" Length="55" Color="80efe521"/>
+    <Event Name="" Length="5" Color="8066696f"/>
+    <Event Name="Castora Night" Length="55" Color="80587792"/>
+  </Map>
+  <Map Name="Shipwreck Strand" Length="120" Start="40" id="voess">
+    <Event Name="Hammerhart Rumble!" Length="20" Color="80f27e54"/>
+    <Event Name="" Length="100" Color="00000000"/>
+  </Map>
+  <Map Name="Starlit Weald" Length="120" Start="100" id="voesw">
+    <Event Name="Secrets of the Weald" Length="35" Color="80f27e54"/>
+    <Event Name="" Length="85" Color="00000000"/>
+  </Map>
+  <Map Name="Eternity's Garden" Length="120" Start="75" id="voeeg">
+    <Event Name="Shackles of the Ancients" Length="25" Color="80f27e54"/>
+    <Event Name="" Length="95" Color="00000000"/>
+  </Map>
+  <Map Name="Leyspring Hollows" Length="180" Start="120" id="voelh">
+    <Event Name="Depths of Cruelty" Length="30" Color="80f27e54"/>
+    <Event Name="" Length="150" Color="00000000"/>
   </Map>
 </GW2MapTimer>

@@ -95,23 +95,31 @@ TBOOL CXMLDocument::SaveToFile(TCHAR * sz)
 {
 	CString s = SaveToString();
 
-	HANDLE h = CreateFile(sz, GENERIC_WRITE, NULL, NULL, CREATE_ALWAYS, NULL, NULL);
+  // written to a temporary file that then replaces the original, so a crash or a full disk mid-write can't
+  // leave a truncated file (a config that fails to parse gets reset to defaults)
+  CString tempFile = CString( sz ) + _T( ".tmp" );
+
+	HANDLE h = CreateFile(tempFile.GetPointer(), GENERIC_WRITE, NULL, NULL, CREATE_ALWAYS, NULL, NULL);
 	if (h == INVALID_HANDLE_VALUE) 
     return false;
 
-  if ( !s.Length() )
+  TBOOL written = true;
+  if ( s.Length() )
   {
-    CloseHandle( h );
-    return true;
+	  char * sz8 = new char[s.Length() * 3];
+	  s.WriteAsMultiByte(sz8, s.Length() * 3);
+	  DWORD length = (DWORD)strlen( sz8 );
+	  DWORD b = 0;
+	  written = WriteFile(h, sz8, length, &b, NULL) && b == length;
+	  delete[] sz8;
   }
-
-	char * sz8 = new char[s.Length() * 3];
-	s.WriteAsMultiByte(sz8, s.Length() * 3);
-	DWORD b;
-	WriteFile(h, sz8, (TS32)strlen(sz8), &b, NULL);
 	CloseHandle(h);
 
-	delete[] sz8;
+  if ( !written || !MoveFileEx( tempFile.GetPointer(), sz, MOVEFILE_REPLACE_EXISTING | MOVEFILE_WRITE_THROUGH ) )
+  {
+    DeleteFile( tempFile.GetPointer() );
+    return false;
+  }
 
 	return true;
 }

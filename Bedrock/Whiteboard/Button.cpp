@@ -158,6 +158,6 @@ CWBItem * CWBButton::Factory( CWBItem *Root, CXMLNode &node, CRect &Pos )
 {
   CWBButton * button = new CWBButton( Root, Pos );
   if ( node.HasAttribute( _T( "text" ) ) )
-    button->SetText( node.GetAttribute( _T( "text" ) ) );
+    button->SetText( button->GetApplication()->LocalizeText( node.GetAttribute( _T( "text" ) ) ) );
   return button;
 }

@@ -90,13 +90,14 @@ CString FetchHTTP( LPCWSTR url, LPCWSTR path )
 
     if ( !WinHttpReadData( hRequest, (LPVOID)pszOutBuffer, dwSize, &dwDownloaded ) )
     {
+      SAFEDELETEA( pszOutBuffer );
       if ( hRequest ) WinHttpCloseHandle( hRequest );
       if ( hConnect ) WinHttpCloseHandle( hConnect );
       if ( hSession ) WinHttpCloseHandle( hSession );
       return "";
     }
 
-    data.Write( pszOutBuffer, dwSize );
+    data.Write( pszOutBuffer, dwDownloaded );
 
     SAFEDELETEA( pszOutBuffer );
   } while ( dwSize > 0 );
@@ -113,6 +114,11 @@ CString FetchHTTPS( LPCWSTR url, LPCWSTR path )
 {
   CString s1 = CString( url );
   CString s2 = CString( path );
+
+  // the log ends up in crash reports, keep API keys out of it (FetchAPIData appends the token last)
+  TS32 tokenPos = s2.Find( "access_token=" );
+  if ( tokenPos >= 0 )
+    s2 = s2.Substring( 0, tokenPos + 13 ) + "<hidden>";
 
   LOG_NFO( "[GW2TacO] Fetching URL: %s/%s", s1.GetPointer(), s2.GetPointer() );
 
@@ -137,8 +143,19 @@ CString FetchHTTPS( LPCWSTR url, LPCWSTR path )
   if ( bResults )
     bResults = WinHttpReceiveResponse( hRequest, NULL );
 
+  // the marker pack list is polled every second while offline, so failures must not leak the handles
+  auto closeHandles = [&]()
+  {
+    if ( hRequest ) WinHttpCloseHandle( hRequest );
+    if ( hConnect ) WinHttpCloseHandle( hConnect );
+    if ( hSession ) WinHttpCloseHandle( hSession );
+  };
+
   if ( !bResults )
+  {
+    closeHandles();
     return "";
+  }
 
   pszOutBuffer = nullptr;
 
@@ -148,22 +165,26 @@ CString FetchHTTPS( LPCWSTR url, LPCWSTR path )
   {
     dwSize = 0;
     if ( !WinHttpQueryDataAvailable( hRequest, &dwSize ) )
+    {
+      closeHandles();
       return "";
+    }
 
     pszOutBuffer = new char[ dwSize + 1 ];
 
     if ( !WinHttpReadData( hRequest, (LPVOID)pszOutBuffer, dwSize, &dwDownloaded ) )
+    {
+      SAFEDELETEA( pszOutBuffer );
+      closeHandles();
       return "";
+    }
 
-    data.Write( pszOutBuffer, dwSize );
+    data.Write( pszOutBuffer, dwDownloaded );
 
     SAFEDELETEA( pszOutBuffer );
   } while ( dwSize > 0 );
 
-
-  if ( hRequest ) WinHttpCloseHandle( hRequest );
-  if ( hConnect ) WinHttpCloseHandle( hConnect );
-  if ( hSession ) WinHttpCloseHandle( hSession );
+  closeHandles();
 
   return CString( (TS8*)data.GetData(), data.GetLength() );
 }
@@ -278,6 +299,8 @@ void CheckFestivalActive()
     auto& values = json.get<Array>( "pve" ).values();
     for ( auto v : values )
     {
+      if ( !v->is<Object>() )
+        continue;
       auto& obj = v->get<Object>();
       if ( obj.has<Number>( "id" ) )
         dailyAchies.insert( (int)obj.get<Number>( "id" ) );
@@ -289,6 +312,8 @@ void CheckFestivalActive()
     auto& values = json.get<Array>( "pvp" ).values();
     for ( auto v : values )
     {
+      if ( !v->is<Object>() )
+        continue;
       auto& obj = v->get<Object>();
       if ( obj.has<Number>( "id" ) )
         dailyAchies.insert( (int)obj.get<Number>( "id" ) );
@@ -300,6 +325,8 @@ void CheckFestivalActive()
     auto& values = json.get<Array>( "wvw" ).values();
     for ( auto v : values )
     {
+      if ( !v->is<Object>() )
+        continue;
       auto& obj = v->get<Object>();
       if ( obj.has<Number>( "id" ) )
         dailyAchies.insert( (int)obj.get<Number>( "id" ) );
@@ -311,6 +338,8 @@ void CheckFestivalActive()
     auto& values = json.get<Array>( "special" ).values();
     for ( auto v : values )
     {
+      if ( !v->is<Object>() )
+        continue;
       auto& obj = v->get<Object>();
       if ( obj.has<Number>( "id" ) )
         dailyAchies.insert( (int)obj.get<Number>( "id" ) );
@@ -442,7 +471,7 @@ void APIKey::FetchData()
                                  }
                                  else
                                  {
-                                   LOG_ERR( "[GW2TacO] API error: API key '%s - %s (%s)' doesn't have the 'characters' permission - account identification through Mumble Link will not be possible.", accountName.GetPointer(), keyName.GetPointer(), apiKey.GetPointer() );
+                                   LOG_ERR( "[GW2TacO] API error: API key '%s - %s' doesn't have the 'characters' permission - account identification through Mumble Link will not be possible.", accountName.GetPointer(), keyName.GetPointer() );
                                  }
 
                                  initialized = true;

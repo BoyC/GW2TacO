@@ -755,6 +755,8 @@ void FetchMarkerPacks()
       auto& values = json.get<Array>( "markerpacks" ).values();
       for ( auto v : values )
       {
+        if ( !v->is<Object>() ) // get<Object>() asserts and ends the process even in release builds
+          continue;
         auto& data = v->get<Object>();
         bool incomplete = false;
         MarkerPack pack;
@@ -954,7 +956,8 @@ bool MarkerPack::UpdateFromWeb()
       }
 
 
-      markerPack = FetchWeb( backupURL );
+      CString backupPack = FetchWeb( backupURL );
+      markerPack.Swap( backupPack ); // assigning would cut the zip data at its first NUL byte
     }
 
     if ( !markerPack.Length() )

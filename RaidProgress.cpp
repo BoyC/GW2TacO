@@ -97,6 +97,8 @@ void RaidProgress::OnDraw( CWBDrawAPI* API )
                                          auto wings = raidJson.get<Array>( "wings" ).values();
                                          for ( unsigned y = 0; y < wings.size(); y++ )
                                          {
+                                           if ( !wings[ y ]->is<Object>() )
+                                             continue;
                                            auto wing = wings[ y ]->get<Object>();
                                            Wing w;
                                            if ( wing.has<String>( "id" ) )
@@ -107,6 +109,8 @@ void RaidProgress::OnDraw( CWBDrawAPI* API )
                                              auto events = wing.get<Array>( "events" ).values();
                                              for ( unsigned int z = 0; z < events.size(); z++ )
                                              {
+                                               if ( !events[ z ]->is<Object>() )
+                                                 continue;
                                                auto _event = events[ z ]->get<Object>();
                                                RaidEvent e;
                                                if ( _event.has<String>( "id" ) )
@@ -126,7 +130,7 @@ void RaidProgress::OnDraw( CWBDrawAPI* API )
                                      }
                                    }
 
-                                   hasFullRaidInfo = true;
+                                   hasFullRaidInfo = raids.NumItems() > 0; // retry on the next fetch if the api failed
                                  }
 
                                  CString lastRaidStatus = CString( "{\"raids\":" ) + key->QueryAPI( "v2/account/raids" ) + "}";
@@ -136,6 +140,12 @@ void RaidProgress::OnDraw( CWBDrawAPI* API )
                                  if ( json.has<Array>( "raids" ) )
                                  {
                                    auto raidData = json.get<Array>( "raids" ).values();
+
+                                   // the api lists this week's clears only, so earlier ones must go after the weekly reset
+                                   for ( TS32 a = 0; a < raids.NumItems(); a++ )
+                                     for ( TS32 b = 0; b < raids[ a ].wings.NumItems(); b++ )
+                                       for ( TS32 c = 0; c < raids[ a ].wings[ b ].events.NumItems(); c++ )
+                                         raids[ a ].wings[ b ].events[ c ].finished = false;
 
                                    for ( unsigned int x = 0; x < raidData.size(); x++ )
                                    {
@@ -235,7 +245,7 @@ void RaidProgress::OnDraw( CWBDrawAPI* API )
       }
     }
   }
-  else
+  else if ( status == GW2::APIKeyManager::Status::OK ) // otherwise the status text is already drawn there
     f->Write( API, DICT( "waitingforapi" ), CPoint( 0, 0 ), 0xffffffff );
 
   DrawBorder( API );
